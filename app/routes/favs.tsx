@@ -1,5 +1,5 @@
-import HomePage from "src/global/pages/Home";
-import type { Route } from "./+types/home";
+import FavsPage from "src/global/pages/Favs";
+import type { Route } from "./+types/favs";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -8,6 +8,7 @@ export function meta({ }: Route.MetaArgs) {
   ];
 }
 
-export default function Home() {
-  return <HomePage />;
+
+export default function Favs() {
+  return <FavsPage />;
 }

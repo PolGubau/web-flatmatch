@@ -1,0 +1,111 @@
+import type { Room } from "src/entities/room/room";
+
+export const mockRooms: Room[] = [
+  {
+    id: "room_1",
+    status: "available",
+    title: "Habitación luminosa en piso compartido en Gràcia",
+    description: "Habitación con cama doble, escritorio y balcón en un piso con estudiantes internacionales.",
+    createdAt: new Date("2024-07-10"),
+    updatedAt: new Date(),
+    rentType: "shared",
+    location: {
+      address: "Carrer de Verdi 45",
+      city: "Barcelona",
+      state: "Catalunya",
+      country: "España",
+      lat: 41.4000,
+      lng: 2.1500,
+      postalCode: "08012",
+    },
+    price: {
+      amount: 480,
+      currency: "EUR",
+      paymentFrequency: "monthly",
+      isIncluded: false,
+      isNegotiable: true,
+      additionalCosts: {
+        utilities: 50,
+        deposit: 500,
+        otherFees: 20,
+      },
+    },
+    commodities: {
+      shared: {
+        hasWifi: true,
+        hasKitchen: true,
+        hasHeating: true,
+        hasAirConditioning: false,
+        hasLaundry: true,
+        hasElevator: false,
+        isWheelchairAccessible: false,
+      },
+      whole: {
+        area: 90,
+        bedrooms: { individual: 2, shared: 1, double: 0 },
+        bathrooms: 1,
+        extras: {
+          hasParking: false,
+          hasPool: false,
+          hasGarden: false,
+          hasTerrace: true,
+        },
+        appliances: {
+          hasTV: true,
+          hasWashingMachine: true,
+          hasDryer: false,
+          hasDishwasher: false,
+          hasMicrowave: true,
+          hasRefrigerator: true,
+          hasOven: true,
+          hasCoffeeMaker: true,
+        },
+        areUtilitiesIncluded: false,
+      },
+      room: {
+        area: 12,
+        bedType: "double",
+        hasWindow: true,
+        hasBalcony: true,
+        isFurnished: true,
+        hasPrivateBathroom: false,
+        hasWorkingDesk: true,
+      },
+    },
+    rules: {
+      petsAllowed: false,
+      smokingAllowed: false,
+      guestsAllowed: true,
+      coupleAllowed: false,
+      childrenAllowed: false,
+      partiesAllowed: false,
+      quietHours: { from: "22:00", to: "08:00" },
+    },
+    images: {
+      main: "/rooms/room_1_main.jpg",
+      gallery: ["/rooms/room_1_1.jpg", "/rooms/room_1_2.jpg"],
+    },
+    timings: {
+      availableFrom: new Date("2025-09-01"),
+      minimumStay: { unit: "month", value: 3 },
+      maximumStay: { unit: "month", value: 12 },
+    },
+    whoIsLiving: {
+      ownerLivesHere: false,
+      currentTenants: { male: 1, female: 2, other: 0 },
+    },
+    contact: {
+      owner: {
+        name: "Jordi Puig",
+        phone: "+34666666666",
+        email: "jordi.puig@barcelona.com",
+      },
+    },
+    isVerified: { date: new Date("2025-07-01") },
+    preferences: {
+      gender: { male: true, female: true, other: true },
+      age: { min: 20, max: 35 },
+      currentOccupation: { student: true, employed: true, unemployed: false, other: false },
+    },
+  },
+];
