@@ -2,23 +2,24 @@ import type { Route } from "./+types/room-details";
 
 export function meta({ data }: Route.MetaArgs) {
   return [
-    { title: `Room Details - ${data?.roomId}` },
+    { title: `Room Details - ${data}` },
     { name: "description", content: "Welcome to Flatmatch!" },
   ];
 }
 
-
-export async function loader({ params }: Route.LoaderArgs) {
-  //                           ^? { roomId: string }
-  return { roomId: params.roomId };
+export async function clientLoader({
+  params,
+}: Route.ClientLoaderArgs) {
+  return params.roomId;
 }
+
+
 
 
 export default function RoomDetails({
   params,
 }: Route.ComponentProps) {
   params.roomId;
-  //        ^ string
 
   return (
     <div>

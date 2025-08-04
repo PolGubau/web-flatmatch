@@ -1,7 +1,6 @@
 import HomePage from "src/global/pages/Home";
-import type { Route } from "./+types/home";
 
-export function meta({ }: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "Flatmatch" },
     { name: "description", content: "Welcome to Flatmatch!" },

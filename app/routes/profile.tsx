@@ -1,7 +1,6 @@
 import ProfilePage from "src/global/pages/Profile";
-import type { Route } from "./+types/profile";
 
-export function meta({ }: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "Flatmatch" },
     { name: "description", content: "Welcome to Flatmatch!" },

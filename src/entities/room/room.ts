@@ -50,7 +50,7 @@ export interface Room {
   }
 
   images: {
-    main: string; // URL to the main image
+    main: number; // Index of the main image in the gallery
     gallery: string[]; // Array of URLs for additional images
   };
 

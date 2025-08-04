@@ -1,6 +1,5 @@
-import type { Route } from "./+types/chat";
 
-export function meta({ }: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "Flatmatch" },
     { name: "description", content: "Welcome to Flatmatch!" },

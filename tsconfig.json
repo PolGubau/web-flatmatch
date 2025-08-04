@@ -5,6 +5,12 @@
     "**/.client/**/*",
     ".react-router/types/**/*"
   ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "oxlintrc.json"
+  ],
   "compilerOptions": {
     "lib": [
       "DOM",
@@ -26,7 +32,7 @@
     "baseUrl": ".",
     "paths": {
       "~/*": [
-        "app/src/*"
+        "src/*"
       ]
     },
     "esModuleInterop": true,

@@ -1,7 +1,6 @@
 import FavsPage from "src/global/pages/Favs";
-import type { Route } from "./+types/favs";
 
-export function meta({ }: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "Flatmatch" },
     { name: "description", content: "Welcome to Flatmatch!" },

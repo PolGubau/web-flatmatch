@@ -1,7 +1,6 @@
 import { FavouriteIcon, Home01Icon, Message01Icon, UserIcon } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { NavLink, Outlet } from 'react-router';
-import "../app.css";
+import { Link, NavLink, Outlet } from 'react-router';
 
 const footerMenuItems = [
   { icon: Home01Icon, label: 'Home', href: '/' },
@@ -16,15 +15,19 @@ const MainLayout = () => {
     <div className='grid grid-rows-[auto_1fr_auto] relative flex-col min-h-screen gap-4 overflow-hidden'>
       <header className='p-4 flex justify-between items-center'>
         <h1 className='text-primary'>Flatmatch</h1>
+
+        <Link to={"/publish-room"} className='bg-primary hover:brightness-75 transition-all rounded-full px-4 py-2 text-canvas text-sm font-semibold'>
+          Publica tu anuncio
+        </Link>
       </header>
 
-      <main className='overflow-y-auto px-6 max-w-7xl mx-auto w-full'><Outlet />
+      <main className='overflow-y-auto overflow-x-hidden px-6 max-w-7xl mx-auto w-full'><Outlet />
 
       </main>
       <footer className='inset-0 left-0 w-dvw bg-neutral-500/20 h-fit items-center justify-center flex z-50'>
         <ul className='grid grid-cols-4 min-w-sm w-full max-w-md'>
 
-          {footerMenuItems.map((item, index) => (<>
+          {footerMenuItems.map((item) => (
 
             <NavLink
               to={item.href}
@@ -33,13 +36,13 @@ const MainLayout = () => {
               ${isActive ? 'text-primary' : 'text-neutral-500'} 
               ${isPending ? 'text-primary-900' : 'text-neutral-500'} 
               `}
-              key={index}
+              key={item.href}
             >
               <HugeiconsIcon icon={item.icon} size={24} />
               <span className='text-xs'>{item.label}</span>
 
             </NavLink>
-          </>)
+          )
           )}
         </ul>
       </footer>
