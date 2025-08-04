@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { Room } from "~/entities/room/room";
 import { mockRooms } from "~/features/room/__mock__/rooms";
 import type { SwipeDirection } from "~/features/room/types/common";
-import { fetchRooms } from "../infra/room-api";
+import { RoomRepository } from "../infra/room-repository";
 export const useTinderCards = () => {
   const [rooms, setRooms] = useState<Room[]>(mockRooms);
   const [isFetching, setIsFetching] = useState(false);
@@ -34,7 +34,7 @@ export const useTinderCards = () => {
   async function prefetchMoreRooms() {
     setIsFetching(true);
     try {
-      const newRooms = await fetchRooms();
+      const newRooms = await RoomRepository.getAll();
 
       const newRoomsWithRandomId = newRooms.map(r => ({
         ...r,

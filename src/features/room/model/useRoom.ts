@@ -1,10 +1,14 @@
-import { useQuery } from "@tanstack/react-query"
-import { RoomRepository } from "../infra/room-repository"
+import { useQuery } from "@tanstack/react-query";
+import { RoomRepository } from "../infra/room-repository";
 
 export const useRoom = (id: string) => {
-  return useQuery({
+
+  const { data: room } = useQuery({
     queryKey: ["room", id],
-    queryFn: () => RoomRepository.getById(id),
+    queryFn: () => RoomRepository.getOne(id),
     enabled: !!id,
-  })
+  });
+
+  return { room };
+
 }

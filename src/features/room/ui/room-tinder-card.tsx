@@ -1,6 +1,7 @@
 import type { Room } from "~/entities/room/room";
 import { motion, useMotionValue, useTransform } from "motion/react";
 import type { SwipeDirection } from "../types/common";
+import { RoomTinderCardUI } from "./room-tinder-card-ui";
 
 type RoomTinderCardProps = {
   room: Room;
@@ -19,37 +20,35 @@ export const RoomTinderCard = ({ room, onSwipe, index }: RoomTinderCardProps) =>
 
 
   const rotate = useTransform(() => {
-    const amount = 5
+    const amount = 2
     const offset = isFront ? 0 : index % 2 === 0 ? -amount : amount;
     return `${rotateRaw.get() + offset}deg`;
   });
 
   const handleDragEnd = (_event: MouseEvent | TouchEvent, info: { offset: { x: number; y: number } }) => {
     if (Math.abs(info.offset.x) > 150) {
-      // Handle swipe left or right
-      console.log("Swiped", info.offset.x > 0 ? "right" : "left");
       onSwipe(room.id, info.offset.x > 0 ? "right" : "left");
     }
   }
 
-  return (<motion.div className="bg-red-300 p-2 h-full w-[80vw] max-w-[800px] rounded-lg hover:cursor-grab active:cursor-grabbing origin-bottom"
+  return (<motion.div className="h-[60vh] bg-neutral-500 overflow-hidden w-[80vw] max-w-[500px] rounded-3xl hover:cursor-grab active:cursor-grabbing origin-bottom shadow shadow-neutral-500/10"
     drag="x"
     dragElastic={0.2}
     dragConstraints={{ left: 0, right: 0 }}
     style={{
       gridRow: 1,
-      aspectRatio: 16 / 9,
-      gridColumn: 1, x, opacity, rotate: rotate, scale: size,
+      gridColumn: 1,
+      x,
+      opacity,
+      rotate: rotate,
+      scale: size,
       transition: "0.125s transform",
       zIndex: 1000 - index,
       pointerEvents: isFront ? "auto" : "none", // la de arriba es la interactiva
 
     }}
     onDragEnd={handleDragEnd}>
-    {index} - {room.id}
-    <img className="h-full w-full rounded-lg pointer-events-none object-cover"
-      src={room.images.gallery[room.images.main]} alt={room.title}
-    />
+    <RoomTinderCardUI room={room} />
 
   </motion.div>)
 }

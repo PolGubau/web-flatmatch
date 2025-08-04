@@ -1,10 +1,11 @@
-// Simula acceso a API externa
 
 import type { Room } from "src/entities/room/room"
 import { mockRooms } from "../__mock__/rooms"
 
+type Id = Room["id"]
 
-export const fetchRooms = async (): Promise<Room[]> => {
+export type GetAll = () => Promise<Room[]>
+export const getAllRooms: GetAll = async () => {
   await new Promise(r => {
     setTimeout(() => r(mockRooms), 500);
   });
@@ -12,6 +13,13 @@ export const fetchRooms = async (): Promise<Room[]> => {
   return mockRooms
 }
 
-export const fetchRoomById = async (id: string): Promise<Room | undefined> => {
+export type GetOne = (id: Id) => Promise<Room | undefined>
+export const getOneRoom: GetOne = async (id) => {
   return mockRooms.find(r => r.id === id)
 }
+
+export type GetMany = (ids: Id[]) => Promise<Room[]>
+export const getManyRooms: GetMany = async (ids) => {
+  return mockRooms.filter(r => ids.includes(r.id)) ?? []
+}
+ 

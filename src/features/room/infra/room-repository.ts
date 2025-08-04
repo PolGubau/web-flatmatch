@@ -1,7 +1,12 @@
-import type { Room } from "src/entities/room/room"
-import { fetchRooms, fetchRoomById } from "./room-api"
+import { getAllRooms, getManyRooms, getOneRoom, type GetAll, type GetMany, type GetOne } from "./room-api"
 
-export const RoomRepository = {
-  getAll: (): Promise<Room[]> => fetchRooms(),
-  getById: (id: string): Promise<Room | undefined> => fetchRoomById(id),
+type RoomRepository = {
+  getAll: GetAll
+  getOne: GetOne
+  getMany: GetMany
+}
+export const RoomRepository: RoomRepository = {
+  getAll: () => getAllRooms(),
+  getOne: (id) => getOneRoom(id),
+  getMany: (ids) => getManyRooms(ids),
 }
