@@ -3,9 +3,12 @@
 import type { Room } from "src/entities/room/room"
 import { mockRooms } from "../__mock__/rooms"
 
- 
+
 export const fetchRooms = async (): Promise<Room[]> => {
-  await new Promise(r => setTimeout(r, 300)) // simula delay
+  await new Promise(r => {
+    setTimeout(() => r(mockRooms), 500);
+  });
+
   return mockRooms
 }
 
