@@ -35,7 +35,7 @@ export function Step1() {
         })}
     >
       <input {...register('name')} />
-      {errors.name && errors.name.message}
+      {errors.name?.message}
 
       <input type="number" {...register('age', { valueAsNumber: true })} />
       <button type="submit"> Next </button>

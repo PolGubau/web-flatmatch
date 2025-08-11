@@ -1,0 +1,33 @@
+ul.room-details-gallery {
+  width: 100%;
+  max-height: 400px;
+  display: flex;  
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 2vw;
+  -webkit-overflow-scrolling: touch;
+
+  /* Chrome, Safari */
+	&::-webkit-scrollbar {
+		width: 0;
+		height: 0;
+	}
+
+	/* Firefox */
+	scrollbar-width: none;
+
+
+  li {
+    list-style-type: none;
+    background-color: var(--color-slate-400);
+    scroll-snap-align: center;
+    flex: 0 0 100%;
+  }
+   
+}
+
+
+
+
+ 
+ 
