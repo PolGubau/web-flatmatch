@@ -14,10 +14,11 @@ export const RoomTinderCard = ({ room, onSwipe, index }: RoomTinderCardProps) =>
   const isFront = index === 0;
 
   const x = useMotionValue(0);
-  const opacity = useTransform(x, [-150, 0, 150], [0.2, 1, 0.2]);
+  const y = useMotionValue(0);
+  const opacity = useTransform(x, [-150, 0, 150], [0.5, 1, 0.5]);
   const rotateRaw = useTransform(x, [-150, 150], [-10, 10]);
   const size = useTransform(x, [-150, 0, 150], [0.9, 1, 0.9]);
-
+  const colorOverlay = useTransform(x, [-200, 0, 200], ["#ff0000", "#ffffff00", "#0000ff"])
 
   const rotate = useTransform(() => {
     const amount = 2
@@ -31,10 +32,10 @@ export const RoomTinderCard = ({ room, onSwipe, index }: RoomTinderCardProps) =>
     }
   }
 
-  return (<motion.div className="h-[60vh] bg-neutral-500 overflow-hidden w-[80vw] max-w-[500px] rounded-3xl hover:cursor-grab active:cursor-grabbing origin-bottom shadow shadow-neutral-500/10"
-    drag="x"
+  return (<motion.div className="h-[60vh] bg-neutral-500 overflow-hidden w-[80vw] max-w-[500px] rounded-3xl hover:cursor-grab active:cursor-grabbing origin-bottom shadow shadow-neutral-500/10 relative"
+    drag
     dragElastic={0.2}
-    dragConstraints={{ left: 0, right: 0 }}
+    dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
     style={{
       gridRow: 1,
       gridColumn: 1,
@@ -48,6 +49,9 @@ export const RoomTinderCard = ({ room, onSwipe, index }: RoomTinderCardProps) =>
 
     }}
     onDragEnd={handleDragEnd}>
+    <motion.div className="absolute inset-0 w-full h-full z-10" style={{
+      backgroundColor: colorOverlay
+    }} />
     <RoomTinderCardUI room={room} />
 
   </motion.div>)

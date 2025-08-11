@@ -1,16 +1,9 @@
 import { StarIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import type { Room } from '~/entities/room/room'
+import { currencyFormat } from '~/shared/utils/formatters/numbers/currencyFormat'
 
 export function RoomTinderCardUI({ room }: { room: Room }) {
-
-  const formatPrice = (amount: number, currency: string) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency,
-      minimumFractionDigits: 0,
-    }).format(amount);
-  }
 
 
   return (
@@ -33,7 +26,7 @@ export function RoomTinderCardUI({ room }: { room: Room }) {
         <h2 className='text-canvas text-2xl text-pretty line-clamp-2'>{room.title} </h2>
 
         {room.price.amount && <p className='text-canvas/60 text-sm'>
-          {formatPrice(room.price.amount, room.price.currency)}
+          {currencyFormat(room.price.amount, room.price.currency)}
         </p>}
 
 

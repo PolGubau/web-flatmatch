@@ -210,7 +210,7 @@ export const mockRooms: Room[] = [
         email: "lucia@eixampleliving.es",
       },
     },
-    isVerified: { date: new Date("2025-07-15") },
+    isVerified: false,
     preferences: {
       gender: { male: true, female: true, other: false },
       age: { min: 22, max: 30 },
@@ -320,7 +320,7 @@ export const mockRooms: Room[] = [
         email: "marc@pisosants.com",
       },
     },
-    isVerified: { date: new Date("2025-07-05") },
+    isVerified: false,
     preferences: {
       gender: { male: true, female: true, other: true },
       age: { min: 25, max: 40 },

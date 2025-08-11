@@ -42,7 +42,7 @@ export const mockUser: User = {
       value: 10,
     },
   },
-  savedRoomIds: ["room_1", "room_5"],
+  savedRoomIds: ["room_1", "room_4"],
   listedRoomIds: ["room_10"],
   authProvider: "google",
   providerId: "google-oauth2|999999999999999",
