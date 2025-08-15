@@ -1,25 +1,56 @@
+import type { EditableRoom } from "~/entities/room/editable-room";
+import type { Room } from "~/entities/room/room";
+import type { Create, Delete, FindAll, FindById, FindMany, Update } from "~/shared/abstracts/repo";
+import { mockRooms } from "../__mock__/rooms";
+import type { RoomDto } from "./dto/room.dto";
 
-import type { Room } from "src/entities/room/room"
-import { mockRooms } from "../__mock__/rooms"
+export const getAllRooms: FindAll<RoomDto> = async () => {
+	await new Promise((r) => {
+		setTimeout(() => r(mockRooms), 500);
+	});
 
-type Id = Room["id"]
+	return mockRooms;
+};
 
-export type GetAll = () => Promise<Room[]>
-export const getAllRooms: GetAll = async () => {
-  await new Promise(r => {
-    setTimeout(() => r(mockRooms), 500);
-  });
+export const getOneRoom: FindById<RoomDto> = async (id) => {
+	const found = mockRooms.find((r) => r.id === id);
+	return found ?? null;
+};
 
-  return mockRooms
-}
+export const getManyRooms: FindMany<RoomDto> = async (ids) => {
+	return mockRooms.filter((r) => ids.includes(r.id)) ?? [];
+};
 
-export type GetOne = (id: Id) => Promise<Room | undefined>
-export const getOneRoom: GetOne = async (id) => {
-  return mockRooms.find(r => r.id === id)
-}
+export const createRoom: Create<RoomDto, EditableRoom> = async (editableRoom) => {
+	const newRoom = {
+		...editableRoom,
+		createdAt: new Date(),
+		id: crypto.randomUUID(),
+		updatedAt: new Date(),
+	};
+	mockRooms.push(newRoom);
+	return newRoom;
+};
 
-export type GetMany = (ids: Id[]) => Promise<Room[]>
-export const getManyRooms: GetMany = async (ids) => {
-  return mockRooms.filter(r => ids.includes(r.id)) ?? []
-}
- 
+export const deleteRoom: Delete = async (id) => {
+	const index = mockRooms.findIndex((r) => r.id === id);
+	if (index !== -1) {
+		mockRooms.splice(index, 1);
+		return true;
+	}
+	return false;
+};
+
+export const updateRoom: Update<RoomDto, EditableRoom> = async (id, data) => {
+	// 1. get the room
+	const room = mockRooms.find((r) => r.id === id);
+	if (!room) return null;
+
+	// 2. update the room
+	const updatedRoom: RoomDto = {
+		...room,
+		...data,
+	};
+	mockRooms[mockRooms.indexOf(room)] = updatedRoom;
+	return updatedRoom;
+};

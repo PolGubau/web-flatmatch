@@ -1,15 +1,59 @@
+ 
+
 @import "tailwindcss";
+@import "../src/shared/theme/colors.css";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@font-face {
+	font-family: "Bricolage";
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 800;
+	src: url(/Bricolage.ttf) format("truetype");
+}
+
+ 
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+  --font-sans: "Bricolage", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white dark:bg-gray-950;	
+  -webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
+}
+
+
+
+:root {
+  --vh: 1vh;
+}
+
+/* Support the new `dvh` unit so that dynamically shrinking iOS Safari UI works */
+@supports (height: 1dvh) {
+  :root {
+    --vh: 1dvh;
+  }
+}
+
+/* However when the app is installed as PWA use the `vh` unit to avoid weird layout issues */
+@media all and (display-mode: standalone) {
+  :root {
+    --vh: 1vh;
+  }
+}
+#modal-root {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+  min-height: calc(100 * var(--vh));
 }

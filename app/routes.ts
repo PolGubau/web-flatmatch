@@ -1,35 +1,31 @@
-import { type RouteConfig, index, route, layout, prefix } from "@react-router/dev/routes";
+import { index, layout, prefix, type RouteConfig, route } from "@react-router/dev/routes";
 
 export default [
-  layout("../src/global/layout/base-layout.tsx", [
+	layout("../src/global/layout/base-layout.tsx", [
+		// header + navbar
+		layout("../src/global/layout/main-layout.tsx", [
+			index("./routes/home.tsx"),
+			route("favs", "./routes/favs.tsx"),
+			route("chat", "./routes/chat.tsx"),
+			...prefix("profile", [
+				index("./routes/your-profile.tsx"),
+				route(":userId", "./routes/profile.tsx"),
+			]),
+			// details page
+			...prefix("room", [route(":roomId", "./routes/room-details.tsx")]),
+		]),
+		layout("../src/features/publish-room/ui/layout/form-layout.tsx", [
+			...prefix("publish", [
+				index("./routes/step1.tsx"),
+				route("type", "./routes/publish-form/step2-property.tsx"),
+			]),
+		]),
 
-    // header + navbar
-    layout("../src/global/layout/main-layout.tsx", [
-      index("./routes/home.tsx"),
-      route("favs", "./routes/favs.tsx"),
-      route("chat", "./routes/chat.tsx"),
-      route("profile", "./routes/profile.tsx"),
+		// route("publish-room", "./routes/publish-form/step1.tsx"),
 
-      // details page
-      ...prefix("room", [
-        route(":roomId", "./routes/room-details.tsx"),
-      ]),
-    ]),
-    layout("../src/features/publish-room/ui/layout/form-layout.tsx", [
-      ...prefix("publish", [
-        index("./routes/step1.tsx"),
-        route("type", "./routes/publish-form/step2-property.tsx"),
-      ]),
-    ]),
-
-
-    // route("publish-room", "./routes/publish-form/step1.tsx"),
-
-    // ...prefix("publish-room", [
-    //   index("./routes/publish-form/step1-type.tsx"),
-    //   route("step2-property", "./routes/publish-form/step2-property.tsx"),
-    // ]),
-
-
-  ]),
+		// ...prefix("publish-room", [
+		//   index("./routes/publish-form/step1-type.tsx"),
+		//   route("step2-property", "./routes/publish-form/step2-property.tsx"),
+		// ]),
+	]),
 ] satisfies RouteConfig;

@@ -7,8 +7,8 @@ type Props = {
 };
 
 export default function RoomDetails({ room }: Props) {
-	const image = room?.images.gallery[room.images.main];
-	const restOfImages = room?.images.gallery.filter((_, index) => index !== room.images.main);
+	const image = room?.images.main;
+	const restOfImages = room?.images.gallery;
 	return (
 		<section className="grid md:grid-cols-2 gap-4">
 			<ul className="room-details-gallery">

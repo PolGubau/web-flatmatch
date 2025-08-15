@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Room } from "~/entities/room/room";
 import { mockRooms } from "~/features/room/__mock__/rooms";
 import type { SwipeDirection } from "~/features/room/types/common";
+import type { RoomDto } from "../infra/dto/room.dto";
 import { RoomRepository } from "../infra/room-repository";
+import { roomAdapter } from "./adapter/room-adapter";
+import { listRoomsQuery } from "./queries/list-rooms.query";
 export const useTinderCards = () => {
 	const [bottomDrawerRoom, setBottomDrawerRoom] = useState<null | Room>(null);
 
-	const [rooms, setRooms] = useState<Room[]>(mockRooms);
+	const { rooms, isLoading } = listRoomsQuery();
+	const [roomsChunk, setRoomsChunk] = useState<Room[]>(rooms);
+
+	useEffect(() => {
+		setRoomsChunk(rooms);
+	}, [rooms]);
+
 	const [isFetching, setIsFetching] = useState(false);
 
 	function handleCloseDrawer() {
@@ -19,7 +28,7 @@ export const useTinderCards = () => {
 
 	function removeThisRoom(roomId: string) {
 		// 2. Delete the swiped room
-		setRooms((prev) => prev.filter((r) => r.id !== roomId));
+		setRoomsChunk((prev) => prev.filter((r) => r.id !== roomId));
 	}
 
 	function onSwipe(roomId: Room["id"], direction: SwipeDirection) {
@@ -38,7 +47,7 @@ export const useTinderCards = () => {
 		}
 
 		// Pre-fetch si quedan pocas y no estamos ya fetching
-		setRooms((prev) => {
+		setRoomsChunk((prev) => {
 			if (prev.length <= 2 && !isFetching) {
 				prefetchMoreRooms();
 			}
@@ -49,17 +58,18 @@ export const useTinderCards = () => {
 	async function prefetchMoreRooms() {
 		setIsFetching(true);
 		try {
-			const newRooms = await RoomRepository.getAll();
+			const roomDtos = await RoomRepository.findAll();
+			const rooms = roomDtos.map(roomAdapter.mapDtoToRoom);
 
-			const newRoomsWithRandomId = newRooms.map((r) => ({
+			const newRoomsWithRandomId = rooms.map((r) => ({
 				...r,
-				id: crypto.randomUUID(), // 👈 clave: nuevo ID único para que React no recicle DOM
+				id: crypto.randomUUID(),
 			}));
 
-			setRooms((prev) => [...prev, ...newRoomsWithRandomId]);
+			setRoomsChunk((prev) => [...prev, ...newRoomsWithRandomId]);
 		} finally {
 			setIsFetching(false);
 		}
 	}
-	return { bottomDrawerRoom, handleCloseDrawer, onSwipe, rooms };
+	return { bottomDrawerRoom, handleCloseDrawer, isLoading, onSwipe, rooms: roomsChunk };
 };

@@ -1,21 +1,19 @@
-import { StarIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import type { Room } from "~/entities/room/room";
+import { VerifiedChip } from "~/shared/ui/verified/chip";
 import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 
 export function RoomTinderCardUI({ room }: { room: Room }) {
+	const imagesAmount = (room.images.main ? 1 : 0) + room.images.gallery.length;
+	const imageMode = imagesAmount > 3 ? 3 : imagesAmount > 2 ? 2 : imagesAmount > 1 ? 1 : 0;
+	const { main, gallery } = room.images;
+
 	return (
 		// gradient from black to transparent
 		<article className="relative group w-full h-full bg-primary/10 pointer-events-none">
 			<div className="bg-gradient-to-tr from-black w-full h-full inset-0 absolute to-transparent rounded-lg" />
 
 			<header className="absolute bottom-0 left-0 p-4 pb-6 flex flex-col gap-2 z-10">
-				{room.isVerified && (
-					<div className="gap-1 flex w-fit items-center rounded-full text-canvas/90 bg-primary/70 backdrop-blur-md px-2 py-1 text-xs">
-						<HugeiconsIcon className="fill-canvas/80" icon={StarIcon} size={13} />
-						<span className="text-xs">Verificada</span>
-					</div>
-				)}
+				{room.isVerified && <VerifiedChip />}
 
 				<h2 className="text-canvas text-2xl text-pretty line-clamp-2">{room.title} </h2>
 
@@ -28,11 +26,21 @@ export function RoomTinderCardUI({ room }: { room: Room }) {
 				<p className="text-sm text-canvas/70 line-clamp-2">{room.description}</p>
 			</header>
 
-			<img
-				alt={room.title}
-				className="object-cover h-full object-bottom w-full"
-				src={room.images.gallery[room.images.main]}
-			/>
+			<div className={`grid h-full ${imageMode === 1 ? "grid-rows-[2fr_1fr]" : ""}`}>
+				<img alt={room.title} className="object-cover h-full object-bottom w-full" src={main} />
+				{(imageMode === 2 || imageMode === 3) && (
+					<div className={`grid ${imageMode === 2 ? "grid-cols-1" : "grid-cols-2"}`}>
+						{gallery.slice(0, 2).map((image) => (
+							<img
+								alt={room.title}
+								className="object-cover h-full object-bottom w-full"
+								key={image}
+								src={image}
+							/>
+						))}
+					</div>
+				)}
+			</div>
 		</article>
 	);
 }

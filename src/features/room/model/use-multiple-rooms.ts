@@ -6,7 +6,7 @@ type UseRoomsResponse = {
 	isLoading: boolean;
 };
 
-export const useRooms = (): UseRoomsResponse => {
+export const useRooms = (id:string[]): UseRoomsResponse => {
 	const { rooms, isLoading } = listRoomsQuery();
 	return { isLoading, rooms };
 };

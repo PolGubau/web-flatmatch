@@ -1,12 +1,9 @@
 import HomePage from "src/global/pages/Home";
 
 export function meta() {
-  return [
-    { title: "Flatmatch" },
-    { name: "description", content: "Welcome to Flatmatch!" },
-  ];
+	return [{ title: "Flatmatch" }, { content: "Welcome to Flatmatch!", name: "description" }];
 }
 
 export default function Home() {
-  return <HomePage />;
+	return <HomePage />;
 }

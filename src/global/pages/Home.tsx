@@ -4,12 +4,18 @@ import RoomDetails from "~/features/room/ui/details/room-details";
 import { RoomTinderCard } from "~/features/room/ui/room-tinder-card";
 
 export default function HomePage() {
-	const { rooms, onSwipe, bottomDrawerRoom, handleCloseDrawer } = useTinderCards();
+	const { rooms, onSwipe, bottomDrawerRoom, handleCloseDrawer, isLoading } = useTinderCards();
+
+	if (isLoading) return <div>Loading...</div>;
 
 	return (
 		<div className="grid grid-rows-1 grid-cols-1 gap-4 p-4 h-[80vh]">
 			<div className="grid place-items-center pt-10">
-				<Sheet isOpen={!!bottomDrawerRoom} onClose={handleCloseDrawer}>
+				<Sheet
+					isOpen={!!bottomDrawerRoom}
+					modalEffectRootId="modal-root"
+					onClose={handleCloseDrawer}
+				>
 					<Sheet.Container>
 						<Sheet.Header />
 						<Sheet.Content>

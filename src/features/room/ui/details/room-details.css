@@ -1,10 +1,11 @@
 ul.room-details-gallery {
+  /* padding-left: 20px; */
   width: 100%;
   max-height: 400px;
   display: flex;  
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  gap: 2vw;
+  gap: 1vw;
   -webkit-overflow-scrolling: touch;
 
   /* Chrome, Safari */

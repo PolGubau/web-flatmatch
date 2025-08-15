@@ -1,4 +1,4 @@
-export interface Room {
+export interface RoomDto {
 	// Metadata about a room
 	id: string;
 	title: string;
@@ -21,7 +21,6 @@ export interface Room {
 
 	// Pricing details
 	price: {
-		localePrice: string;
 		amount: number;
 		currency: string;
 		paymentFrequency: "monthly" | "weekly" | "daily"; // How often the rent is paid

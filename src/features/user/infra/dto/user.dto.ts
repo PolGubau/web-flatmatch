@@ -1,4 +1,4 @@
-export interface User {
+export interface UserDto {
 	id: string;
 	name: string;
 	lastname: string;
@@ -6,7 +6,7 @@ export interface User {
 	phone?: string;
 	avatarUrl?: string;
 
-	birthDate: Date;
+	birthDate: Date; // ISO (YYYY-MM-DD)
 	gender: "male" | "female" | "other" | "prefer_not_to_say";
 	occupation: "student" | "employed" | "unemployed" | "other";
 
