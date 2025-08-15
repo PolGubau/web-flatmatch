@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Room } from "~/entities/room/room";
-import { mockRooms } from "~/features/room/__mock__/rooms";
 import type { SwipeDirection } from "~/features/room/types/common";
-import type { RoomDto } from "../infra/dto/room.dto";
 import { RoomRepository } from "../infra/room-repository";
 import { roomAdapter } from "./adapter/room-adapter";
 import { listRoomsQuery } from "./queries/list-rooms.query";

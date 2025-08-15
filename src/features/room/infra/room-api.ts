@@ -1,5 +1,4 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
-import type { Room } from "~/entities/room/room";
 import type { Create, Delete, FindAll, FindById, FindMany, Update } from "~/shared/abstracts/repo";
 import { mockRooms } from "../__mock__/rooms";
 import type { RoomDto } from "./dto/room.dto";
