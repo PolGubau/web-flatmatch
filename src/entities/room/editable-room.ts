@@ -1,7 +1,4 @@
-import type { Room } from "./room";
+import type z from "zod";
+import type { EditableRoomSchema } from "./editable-room.schema";
 
-export type EditableRoom = Omit<Room, "id" | "createdAt" | "updatedAt"> & {
-	createdAt?: Date;
-	updatedAt?: Date;
-	id?: string;
-};
+export type EditableRoom = z.infer<typeof EditableRoomSchema>;

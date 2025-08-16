@@ -14,9 +14,10 @@ export default [
 			// details page
 			...prefix("room", [route(":roomId", "./routes/room-details.tsx")]),
 		]),
+
 		layout("../src/features/publish-room/ui/layout/form-layout.tsx", [
 			...prefix("publish", [
-				index("./routes/step1.tsx"),
+				index("./routes/step-1.tsx"),
 				route("type", "./routes/publish-form/step2-property.tsx"),
 			]),
 		]),
