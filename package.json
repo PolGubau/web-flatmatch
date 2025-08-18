@@ -10,6 +10,7 @@
 		"motion": "^12.23.12",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
+		"react-leaflet": "^5.0.0",
 		"react-modal-sheet": "^4.4.0",
 		"react-router": "^7.7.1",
 		"zustand": "^5.0.7"
@@ -28,7 +29,7 @@
 		"tailwindcss": "^4.1.4",
 		"typescript": "^5.8.3",
 		"vite": "^6.3.3",
- 		"vite-tsconfig-paths": "^5.1.4",
+		"vite-tsconfig-paths": "^5.1.4",
 		"zod": "^4.0.14"
 	},
 	"name": "flatmatch-web",

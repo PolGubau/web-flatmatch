@@ -11,7 +11,7 @@ export const useTinderCards = () => {
 	const [roomsChunk, setRoomsChunk] = useState<Room[]>(rooms);
 
 	useEffect(() => {
-		setRoomsChunk(rooms);
+		rooms && setRoomsChunk(rooms);
 	}, [rooms]);
 
 	const [isFetching, setIsFetching] = useState(false);

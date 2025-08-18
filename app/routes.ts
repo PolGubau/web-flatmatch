@@ -17,8 +17,8 @@ export default [
 
 		layout("../src/features/publish-room/ui/layout/form-layout.tsx", [
 			...prefix("publish", [
-				index("./routes/step-1.tsx"),
-				route("type", "./routes/publish-form/step2-property.tsx"),
+				index("./routes/publish-form/step-1.tsx"),
+				route("location", "./routes/publish-form/step-2.tsx"),
 			]),
 		]),
 

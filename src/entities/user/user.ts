@@ -38,7 +38,7 @@ export interface User {
 			unemployed: boolean;
 			other: boolean;
 		};
-		rentType: ("shared" | "single" | "entire")[];
+		rentType: ("shared" | "room" | "entire")[];
 		maxBudget: number;
 		moveInDate?: string; // YYYY-MM-DD
 		duration?: {

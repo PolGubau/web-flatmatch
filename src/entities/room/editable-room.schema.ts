@@ -1,20 +1,22 @@
 import { z } from "zod";
 
-export const RentTypeSchema = z.enum(["single", "shared", "entire"]);
+export const RentTypeSchema = z.enum(["room", "shared", "entire"]);
 export const PaymentFrequencySchema = z.enum(["monthly", "weekly", "daily"]);
 export const StayUnitSchema = z.enum(["day", "week", "month", "year"]);
 export const BedTypeSchema = z.enum(["single", "double", "bunk", "sofa", "none"]);
 export const RoomStatusSchema = z.enum(["available", "booked", "unlisted"]);
 
+export const AvailableCitiesSchema = z.enum(["rome", "bcn"]);
+export type AvailableCity = z.infer<typeof AvailableCitiesSchema>;
+
 // Sub-schemas
 export const LocationSchema = z.object({
 	address: z.string(),
-	city: z.string(),
+	city: AvailableCitiesSchema.default("bcn"),
 	country: z.string(),
 	lat: z.number(),
 	lng: z.number(),
 	postalCode: z.string().optional(),
-	state: z.string(),
 });
 
 export const PriceSchema = z.object({
@@ -80,7 +82,7 @@ export const CommoditiesRoomSchema = z.object({
 
 export const CommoditiesSchema = z.object({
 	room: CommoditiesRoomSchema.optional(),
-	shared: CommoditiesSharedSchema,
+	shared: CommoditiesSharedSchema.optional(),
 	whole: CommoditiesWholeSchema.optional(),
 });
 
@@ -175,7 +177,7 @@ export const EditableRoomSchema = z.object({
 
 	contact: ContactSchema,
 	description: z.string(),
- 
+
 	images: ImagesSchema,
 
 	isVerified: VerificationSchema,
@@ -192,5 +194,5 @@ export const EditableRoomSchema = z.object({
 
 	timings: TimingsSchema,
 	title: z.string(),
- 	whoIsLiving: WhoIsLivingSchema,
+	whoIsLiving: WhoIsLivingSchema,
 });

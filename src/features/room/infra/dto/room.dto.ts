@@ -6,7 +6,7 @@ export interface RoomDto {
 	createdAt: Date;
 	updatedAt: Date;
 
-	rentType: "single" | "shared" | "entire";
+	rentType: "room" | "shared" | "entire";
 
 	// Location details
 	location: {
@@ -126,7 +126,7 @@ export interface RoomDto {
 }
 
 export interface Commodities {
-	shared: {
+	shared?: {
 		hasWifi: boolean;
 		hasKitchen: boolean;
 		hasHeating: boolean;
