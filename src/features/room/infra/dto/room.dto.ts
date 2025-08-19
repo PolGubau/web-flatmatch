@@ -125,21 +125,8 @@ export interface RoomDto {
 }
 
 export interface Commodities {
-	shared?: {
-		hasWifi: boolean;
-		hasKitchen: boolean;
-		hasHeating: boolean;
-		hasAirConditioning: boolean;
-		hasLaundry: boolean;
-		hasElevator: boolean;
-		isWheelchairAccessible: boolean;
-	};
-
 	whole: {
-		area: {
-			value: number;
-			unit: "m2";
-		};
+		area: number;
 		bedrooms: {
 			individual: number;
 			shared: number;
@@ -152,8 +139,13 @@ export interface Commodities {
 			hasTerrace: boolean;
 		};
 		appliances: {
+			hasWifi: boolean;
+			hasHeating: boolean;
+			hasAirConditioning: boolean;
+			hasLaundry: boolean;
+			hasElevator: boolean;
+			isWheelchairAccessible: boolean;
 			hasTV: boolean;
-			hasWashingMachine: boolean;
 			hasDryer: boolean;
 			hasDishwasher: boolean;
 			hasMicrowave: boolean;

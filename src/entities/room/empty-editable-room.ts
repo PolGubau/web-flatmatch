@@ -3,22 +3,23 @@ import type { EditableRoom } from "./editable-room";
 export const emptyEditableRoom: EditableRoom = {
 	commodities: {
 		room: undefined,
-		shared: undefined,
 		whole: {
 			appliances: {
+				hasAirConditioning: false,
 				hasCoffeeMaker: false,
 				hasDishwasher: false,
 				hasDryer: false,
+				hasElevator: false,
+				hasHeating: false,
+				hasLaundry: false,
 				hasMicrowave: false,
 				hasOven: false,
 				hasRefrigerator: false,
 				hasTV: false,
-				hasWashingMachine: false,
+				hasWifi: false,
+				isWheelchairAccessible: false,
 			},
-			area: {
-				unit: "m2",
-				value: 0,
-			},
+			area: 0,
 			areUtilitiesIncluded: false,
 			bathrooms: 0,
 			bedrooms: {

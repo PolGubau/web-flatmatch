@@ -31,31 +31,23 @@ export const PriceSchema = z.object({
 	paymentFrequency: PaymentFrequencySchema,
 });
 
-export const CommoditiesSharedSchema = z.object({
-	hasAirConditioning: z.boolean(),
-	hasElevator: z.boolean(),
-	hasHeating: z.boolean(),
-	hasKitchen: z.boolean(),
-	hasLaundry: z.boolean(),
-	hasWifi: z.boolean(),
-	isWheelchairAccessible: z.boolean(),
-});
-
 export const CommoditiesWholeSchema = z.object({
 	appliances: z.object({
+		hasAirConditioning: z.boolean(),
 		hasCoffeeMaker: z.boolean(),
 		hasDishwasher: z.boolean(),
 		hasDryer: z.boolean(),
+		hasElevator: z.boolean(),
+		hasHeating: z.boolean(),
+		hasLaundry: z.boolean(),
 		hasMicrowave: z.boolean(),
 		hasOven: z.boolean(),
 		hasRefrigerator: z.boolean(),
 		hasTV: z.boolean(),
-		hasWashingMachine: z.boolean(),
+		hasWifi: z.boolean(),
+		isWheelchairAccessible: z.boolean(),
 	}),
-	area: z.object({
-		unit: z.enum(["m2"]).default("m2"),
-		value: z.number(),
-	}),
+	area: z.number(),
 	areUtilitiesIncluded: z.boolean(),
 	bathrooms: z.number(),
 	bedrooms: z.object({
@@ -82,7 +74,6 @@ export const CommoditiesRoomSchema = z.object({
 
 export const CommoditiesSchema = z.object({
 	room: CommoditiesRoomSchema.optional(),
-	shared: CommoditiesSharedSchema.optional(),
 	whole: CommoditiesWholeSchema,
 });
 

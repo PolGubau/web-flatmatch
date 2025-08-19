@@ -20,6 +20,7 @@ export default [
 				index("./routes/publish-form/step-1.tsx"),
 				route("location", "./routes/publish-form/step-2.tsx"),
 				route("commodities", "./routes/publish-form/step-3.tsx"),
+				route("company", "./routes/publish-form/step-4.tsx"),
 			]),
 		]),
 

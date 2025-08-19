@@ -38,23 +38,9 @@ export default function FormLayout() {
 
 				<h1 className="text-2xl font-bold">Publish a new place</h1>
 			</header>
-			<section className="">
+			<section className="overflow-y-auto">
 				<Outlet />
 			</section>
-			{/* <footer className="p-6 flex items-center justify-between">
-				{steps.map((step, index) => (
-					<span
-						className={`
-						${isDone(index) ? "text-gray-500" : ""}
-						${isBeingDone(index) ? "font-bold" : ""}
-						flex gap-1 items-center`}
-						key={step.label}
-					>
-						<HugeiconsIcon icon={step.icon} />
-						<span className="text-sm max-sm:hidden">{step.label}</span>
-					</span>
-				))}
-			</footer> */}
 		</div>
 	);
 }

@@ -1,27 +1,38 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+	Bathtub01Icon,
 	BedBunkIcon,
 	BedIcon,
 	CarParking02Icon,
 	Coffee02Icon,
+	DeskIcon,
 	DishWasherIcon,
+	FastWindIcon,
 	HairDryerIcon,
 	MicrowaveIcon,
 	OvenIcon,
+	PatioIcon,
 	PoolIcon,
+	PulleyIcon,
 	RefrigeratorIcon,
 	Shirt01Icon,
 	Sink01Icon,
 	SquareArrowExpand01Icon,
+	TemperatureIcon,
 	TerraceIcon,
 	Tree04Icon,
 	Tv01Icon,
+	Wardrobe01Icon,
+	WheelchairIcon,
+	Wifi02Icon,
+	WindowsNewIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
+import type { Room } from "~/entities/room/room";
 import { Input } from "~/shared/components/ui/input";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
@@ -43,20 +54,22 @@ export function CommoditiesForm() {
 		resolver: zodResolver(Step3Schema),
 	});
 
+	console.info(errors);
+
 	return (
 		<form
-			className="grid grid-rows-[1fr_auto] gap-2 h-full"
+			className="grid grid-rows-[1fr_auto] max-h-[85vh] gap-2 h-full"
 			onSubmit={handleSubmit(
 				(values) => {
 					setData(values);
-					// navigate("/publish/location", { replace: true });
+					navigate("/publish/company", { replace: true });
 				},
 				(errors) => {
 					console.error(errors);
 				},
 			)}
 		>
-			<fieldset className="flex flex-col gap-6">
+			<fieldset className="grid gap-6 overflow-y-auto">
 				<legend className="text-lg pb-12">Select commodities</legend>
 				<header className="grid grid-cols-2 gap-4 items-center">
 					<div>
@@ -68,10 +81,9 @@ export function CommoditiesForm() {
 							id="area"
 							max={999}
 							min={0}
-							type="number"
-							{...register("commodities.whole.area.value", {
+							placeholder="Enter area in m²"
+							{...register("commodities.whole.area", {
 								required: true,
-								valueAsNumber: true,
 							})}
 						/>
 					</div>
@@ -84,6 +96,7 @@ export function CommoditiesForm() {
 							id="bathrooms"
 							max={10}
 							min={0}
+							placeholder="Enter number of bathrooms"
 							type="number"
 							{...register("commodities.whole.bathrooms", {
 								required: true,
@@ -104,10 +117,9 @@ export function CommoditiesForm() {
 								id="bathrooms-ind"
 								max={10}
 								min={0}
-								type="number"
+								placeholder="Enter number of private bedrooms"
 								{...register("commodities.whole.bedrooms.individual", {
 									required: true,
-									valueAsNumber: true,
 								})}
 							/>
 						</li>
@@ -116,6 +128,7 @@ export function CommoditiesForm() {
 								<span className="text-sm">Shared</span>
 							</label>
 							<Input
+								defaultValue={0}
 								icon={BedBunkIcon}
 								id="bathrooms-shared"
 								max={999}
@@ -134,7 +147,7 @@ export function CommoditiesForm() {
 					<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
 						{Object.entries(data.commodities.whole.appliances).map(([key, value]) => {
 							const field = register(`commodities.whole.appliances.${key}` as any);
-							const data = commoditiesMap[key];
+							const data = commoditiesMap[key as keyof typeof commoditiesMap];
 							return (
 								<li className="flex group cursor-pointer" key={key}>
 									<label
@@ -153,6 +166,7 @@ export function CommoditiesForm() {
 						})}
 					</ul>
 				</div>
+
 				<div className="flex flex-col gap-1">
 					<h3>Extra spaces</h3>
 					<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
@@ -183,11 +197,141 @@ export function CommoditiesForm() {
 						<span className="">Are utilities included?</span>
 					</label>
 				</div>
+
+				<section className="border-t border-foreground/10 pt-4">
+					<div className="flex flex-col gap-4">
+						<h3>Room appliances</h3>
+
+						<header className="grid gap-4 grid-cols-2 items-center">
+							<div>
+								<label className="flex gap-2" htmlFor="area">
+									<span className="text-sm">Area (in m²)</span>
+								</label>
+								<Input
+									icon={SquareArrowExpand01Icon}
+									id="area"
+									max={999}
+									min={0}
+									placeholder="Enter area in m²"
+									{...register("commodities.room.area", {
+										required: true,
+										valueAsNumber: true,
+									})}
+								/>
+							</div>
+							<div className="flex gap-2 items-center">
+								<label htmlFor="bed-type">Bed Type</label>
+
+								<select {...register("commodities.room.bedType")} id="bed-type">
+									<option value="single">single</option>
+									<option value="double">double</option>
+									<option value="bunk">bunk</option>
+									<option value="sofa">sofa</option>
+									<option value="none">none</option>
+								</select>
+							</div>
+						</header>
+						<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
+							<li className="flex group cursor-pointer">
+								<label
+									className={
+										"has-checked:bg-primary/20 has-checked:hover:bg-primary/10 bg-secondary/5 hover:bg-foreground/10 transition-all p-4 w-full h-full rounded-xl gap-4"
+									}
+								>
+									<div className="flex gap-2">
+										<HugeiconsIcon icon={PatioIcon} size={20} />
+										<span className="text-sm line-clamp-1">{"Has Balcony"}</span>
+									</div>
+									<input
+										className="sr-only"
+										type="checkbox"
+										{...register("commodities.room.hasBalcony")}
+										defaultChecked={data.commodities.room?.hasBalcony}
+									/>
+								</label>
+							</li>
+							<li className="flex group cursor-pointer">
+								<label
+									className={
+										"has-checked:bg-primary/20 has-checked:hover:bg-primary/10 bg-secondary/5 hover:bg-foreground/10 transition-all p-4 w-full h-full rounded-xl gap-4"
+									}
+								>
+									<div className="flex gap-2">
+										<HugeiconsIcon icon={WindowsNewIcon} size={20} />
+										<span className="text-sm line-clamp-1">{"Has Window"}</span>
+									</div>
+									<input
+										className="sr-only"
+										type="checkbox"
+										{...register("commodities.room.hasWindow")}
+										defaultChecked={data.commodities.room?.hasWindow}
+									/>
+								</label>
+							</li>
+							<li className="flex group cursor-pointer">
+								<label
+									className={
+										"has-checked:bg-primary/20 has-checked:hover:bg-primary/10 bg-secondary/5 hover:bg-foreground/10 transition-all p-4 w-full h-full rounded-xl gap-4"
+									}
+								>
+									<div className="flex gap-2">
+										<HugeiconsIcon icon={DeskIcon} size={20} />
+										<span className="text-sm line-clamp-1">{"Has Working Desk"}</span>
+									</div>
+									<input
+										className="sr-only"
+										type="checkbox"
+										{...register("commodities.room.hasWorkingDesk")}
+										defaultChecked={data.commodities.room?.hasWorkingDesk}
+									/>
+								</label>
+							</li>
+							<li className="flex group cursor-pointer">
+								<label
+									className={
+										"has-checked:bg-primary/20 has-checked:hover:bg-primary/10 bg-secondary/5 hover:bg-foreground/10 transition-all p-4 w-full h-full rounded-xl gap-4"
+									}
+								>
+									<div className="flex gap-2">
+										<HugeiconsIcon icon={Wardrobe01Icon} size={20} />
+										<span className="text-sm line-clamp-1">{"Is furnished?"}</span>
+									</div>
+									<input
+										className="sr-only"
+										type="checkbox"
+										{...register("commodities.room.isFurnished")}
+										defaultChecked={data.commodities.room?.isFurnished}
+									/>
+								</label>
+							</li>
+							<li className="flex group cursor-pointer">
+								<label
+									className={
+										"has-checked:bg-primary/20 has-checked:hover:bg-primary/10 bg-secondary/5 hover:bg-foreground/10 transition-all p-4 w-full h-full rounded-xl gap-4"
+									}
+								>
+									<div className="flex gap-2">
+										<HugeiconsIcon icon={Bathtub01Icon} size={20} />
+										<span className="text-sm line-clamp-1">{"Has own Bathroom?"}</span>
+									</div>
+									<input
+										className="sr-only"
+										type="checkbox"
+										{...register("commodities.room.hasPrivateBathroom")}
+										defaultChecked={data.commodities.room?.hasPrivateBathroom}
+									/>
+								</label>
+							</li>
+						</ul>
+					</div>
+				</section>
 			</fieldset>
 
 			<footer className="flex flex-col gap-1">
 				{errors.commodities && (
-					<p className="text-error text-sm p-4 rounded-xl bg-error/10">{JSON.stringify(errors)}</p>
+					<pre className="text-error text-sm p-4 rounded-xl bg-error/10">
+						{/* {JSON.stringify(errors.commodities.whole, null, 2)} */}
+					</pre>
 				)}
 				<FormFooterButtons backHref={"/publish/location"} />
 			</footer>
@@ -214,7 +358,14 @@ const extrasMap: Record<string, { label: string; icon: IconSvgElement }> = {
 	},
 };
 
-const commoditiesMap: Record<string, { label: string; icon: IconSvgElement }> = {
+const commoditiesMap: Record<
+	keyof Room["commodities"]["whole"]["appliances"],
+	{ label: string; icon: IconSvgElement }
+> = {
+	hasAirConditioning: {
+		icon: FastWindIcon,
+		label: "Air Conditioning",
+	},
 	hasCoffeeMaker: {
 		icon: Coffee02Icon,
 		label: "Coffee Maker",
@@ -226,6 +377,18 @@ const commoditiesMap: Record<string, { label: string; icon: IconSvgElement }> = 
 	hasDryer: {
 		icon: HairDryerIcon,
 		label: "Dryer",
+	},
+	hasElevator: {
+		icon: PulleyIcon,
+		label: "Elevator",
+	},
+	hasHeating: {
+		icon: TemperatureIcon,
+		label: "Heating",
+	},
+	hasLaundry: {
+		icon: Shirt01Icon,
+		label: "Wash Machine",
 	},
 	hasMicrowave: {
 		icon: MicrowaveIcon,
@@ -243,8 +406,13 @@ const commoditiesMap: Record<string, { label: string; icon: IconSvgElement }> = 
 		icon: Tv01Icon,
 		label: "TV",
 	},
-	hasWashingMachine: {
-		icon: Shirt01Icon,
-		label: "Wash Machine",
+
+	hasWifi: {
+		icon: Wifi02Icon,
+		label: "WiFi",
+	},
+	isWheelchairAccessible: {
+		icon: WheelchairIcon,
+		label: "Wheelchair Accessible",
 	},
 };

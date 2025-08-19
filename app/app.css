@@ -57,3 +57,44 @@ body {
   height: 100%;
   min-height: calc(100 * var(--vh));
 }
+
+select,
+::picker(select) {
+  /* appearance: base-select; */
+  @apply placeholder:text-foreground/70 border-foreground/30 flex rounded-xl min-w-0 border-2 px-2 py-1 transition-all outline-none focus-visible:border-foreground;
+}
+select::picker-icon {
+  color: #999999;
+  transition: 0.4s rotate;
+}
+select:open::picker-icon {
+  rotate: 180deg;
+}
+
+::picker(select) {
+  border: none;
+  @apply bg-transparent text-foreground flex flex-col;
+}
+
+option {
+  border: 1px solid #dddddd;
+  @apply bg-canvas p-2 gap-4;
+  transition: 0.4s;
+}
+option:first-of-type {
+  border-radius: 8px 8px 0 0;
+}
+
+option:last-of-type {
+  border-radius: 0 0 8px 8px;
+}
+
+option:not(option:last-of-type) {
+  border-bottom: none;
+}
+ 
+
+option:hover,
+option:focus {
+  @apply brightness-90 outline outline-foreground/50;
+}

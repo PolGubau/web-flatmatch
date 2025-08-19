@@ -32,7 +32,7 @@ export default function RoomDetails({ room }: Props) {
 				</p>
 
 				<ul>
-					<li>{room?.commodities.whole?.area.value}</li>
+					<li>{room?.commodities.whole?.area}</li>
 				</ul>
 			</div>
 		</section>
