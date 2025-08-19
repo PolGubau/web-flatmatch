@@ -52,11 +52,13 @@ export const CommoditiesWholeSchema = z.object({
 		hasTV: z.boolean(),
 		hasWashingMachine: z.boolean(),
 	}),
-	area: z.number(),
+	area: z.object({
+		unit: z.enum(["m2"]).default("m2"),
+		value: z.number(),
+	}),
 	areUtilitiesIncluded: z.boolean(),
 	bathrooms: z.number(),
 	bedrooms: z.object({
-		double: z.number(),
 		individual: z.number(),
 		shared: z.number(),
 	}),
@@ -81,7 +83,7 @@ export const CommoditiesRoomSchema = z.object({
 export const CommoditiesSchema = z.object({
 	room: CommoditiesRoomSchema.optional(),
 	shared: CommoditiesSharedSchema.optional(),
-	whole: CommoditiesWholeSchema.optional(),
+	whole: CommoditiesWholeSchema,
 });
 
 export const RulesSchema = z.object({

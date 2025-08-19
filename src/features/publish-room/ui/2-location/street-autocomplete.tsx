@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 import { AutoComplete } from "~/shared/components/ui/autocomplete";
 
@@ -71,6 +71,11 @@ export function StreetAutocomplete({ value = "", onChange, field }: StreetAutoco
 	const [query, setQuery] = useState<string>(value);
 	const [selectedValue, setSelectedValue] = useState<string>("");
 
+	useEffect(() => {
+		setQuery(value);
+		setSelectedValue(value);
+	}, [value]);
+
 	const debouncedQuery = useDebounce(query, 400);
 
 	const { data, isLoading } = useQuery({
@@ -90,18 +95,24 @@ export function StreetAutocomplete({ value = "", onChange, field }: StreetAutoco
 	};
 
 	return (
-		<AutoComplete
-			{...field}
-			emptyMessage={
-				query.length < 3 ? "Escribe al menos 3 caracteres" : "No se encontraron resultados"
-			}
-			isLoading={isLoading}
-			items={data?.map((d) => ({ label: d.name, value: d.name })) ?? []}
-			onSearchValueChange={setQuery}
-			onSelectedValueChange={handleSelectedPlace}
-			placeholder="Busca una dirección..."
-			searchValue={query}
-			selectedValue={selectedValue}
-		/>
+		<div className="flex flex-col gap-1">
+			<label className="text-sm" htmlFor="location.address">
+				Address
+			</label>
+			<AutoComplete
+				{...field}
+				emptyMessage={
+					query.length < 3 ? "Escribe al menos 3 caracteres" : "No se encontraron resultados"
+				}
+				id="location.address"
+				isLoading={isLoading}
+				items={data?.map((d) => ({ label: d.name, value: d.name })) ?? []}
+				onSearchValueChange={setQuery}
+				onSelectedValueChange={handleSelectedPlace}
+				placeholder="Busca una dirección..."
+				searchValue={query}
+				selectedValue={selectedValue}
+			/>
+		</div>
 	);
 }

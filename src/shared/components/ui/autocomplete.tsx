@@ -91,7 +91,10 @@ export function AutoComplete<T extends string>({
 						}}
 						onOpenAutoFocus={(e) => e.preventDefault()}
 					>
-						<CommandList className="w-full min-w-[200px] p-0 max-w-4xl flex flex-col ">
+						<CommandList
+							className="w-[90vw] p-0 max-w-4xl rounded-lg border border-foreground/30 bg-canvas"
+							style={{ zIndex: 9999 }}
+						>
 							{isLoading && (
 								<CommandPrimitive.Loading>
 									<div className="p-1">

@@ -4,7 +4,34 @@ export const emptyEditableRoom: EditableRoom = {
 	commodities: {
 		room: undefined,
 		shared: undefined,
-		whole: undefined,
+		whole: {
+			appliances: {
+				hasCoffeeMaker: false,
+				hasDishwasher: false,
+				hasDryer: false,
+				hasMicrowave: false,
+				hasOven: false,
+				hasRefrigerator: false,
+				hasTV: false,
+				hasWashingMachine: false,
+			},
+			area: {
+				unit: "m2",
+				value: 0,
+			},
+			areUtilitiesIncluded: false,
+			bathrooms: 0,
+			bedrooms: {
+				individual: 0,
+				shared: 0,
+			},
+			extras: {
+				hasGarden: false,
+				hasParking: false,
+				hasPool: false,
+				hasTerrace: false,
+			},
+		},
 	},
 	contact: {
 		owner: {

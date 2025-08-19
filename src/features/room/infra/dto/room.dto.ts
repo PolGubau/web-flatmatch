@@ -135,12 +135,14 @@ export interface Commodities {
 		isWheelchairAccessible: boolean;
 	};
 
-	whole?: {
-		area: number; // m² totales
+	whole: {
+		area: {
+			value: number;
+			unit: "m2";
+		};
 		bedrooms: {
 			individual: number;
 			shared: number;
-			double: number;
 		};
 		bathrooms: number;
 		extras: {

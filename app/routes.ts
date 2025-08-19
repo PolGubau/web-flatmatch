@@ -19,6 +19,7 @@ export default [
 			...prefix("publish", [
 				index("./routes/publish-form/step-1.tsx"),
 				route("location", "./routes/publish-form/step-2.tsx"),
+				route("commodities", "./routes/publish-form/step-3.tsx"),
 			]),
 		]),
 

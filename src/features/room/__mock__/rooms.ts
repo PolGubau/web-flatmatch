@@ -32,10 +32,13 @@ export const mockRooms: RoomDto[] = [
 					hasTV: true,
 					hasWashingMachine: true,
 				},
-				area: 90,
+				area: {
+					unit: "m2",
+					value: 90,
+				},
 				areUtilitiesIncluded: false,
 				bathrooms: 1,
-				bedrooms: { double: 0, individual: 2, shared: 1 },
+				bedrooms: { individual: 2, shared: 1 },
 				extras: {
 					hasGarden: false,
 					hasParking: false,
@@ -143,10 +146,13 @@ export const mockRooms: RoomDto[] = [
 					hasTV: true,
 					hasWashingMachine: true,
 				},
-				area: 110,
+				area: {
+					unit: "m2",
+					value: 100,
+				},
 				areUtilitiesIncluded: true,
 				bathrooms: 2,
-				bedrooms: { double: 0, individual: 3, shared: 0 },
+				bedrooms: { individual: 3, shared: 0 },
 				extras: {
 					hasGarden: false,
 					hasParking: true,
@@ -252,10 +258,13 @@ export const mockRooms: RoomDto[] = [
 					hasTV: true,
 					hasWashingMachine: true,
 				},
-				area: 85,
+				area: {
+					unit: "m2",
+					value: 70,
+				},
 				areUtilitiesIncluded: false,
 				bathrooms: 1,
-				bedrooms: { double: 2, individual: 1, shared: 0 },
+				bedrooms: { individual: 3, shared: 0 },
 				extras: {
 					hasGarden: false,
 					hasParking: false,
@@ -363,10 +372,13 @@ export const mockRooms: RoomDto[] = [
 					hasTV: false,
 					hasWashingMachine: true,
 				},
-				area: 70,
+				area: {
+					unit: "m2",
+					value: 70,
+				},
 				areUtilitiesIncluded: false,
 				bathrooms: 1,
-				bedrooms: { double: 0, individual: 2, shared: 0 },
+				bedrooms: { individual: 2, shared: 0 },
 				extras: {
 					hasGarden: false,
 					hasParking: false,

@@ -13,10 +13,7 @@ import { cn } from "~/shared/utils/utils";
 function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
 	return (
 		<CommandPrimitive
-			className={cn(
-				"bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md",
-				className,
-			)}
+			className={cn("flex h-full w-full flex-col overflow-hidden rounded-lg", className)}
 			data-slot="command"
 			{...props}
 		/>
@@ -76,7 +73,10 @@ function CommandInput({
 function CommandList({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.List>) {
 	return (
 		<CommandPrimitive.List
-			className={cn("max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto", className)}
+			className={cn(
+				"max-h-[300px] rounded-xl scroll-py-1 overflow-x-hidden overflow-y-auto",
+				className,
+			)}
 			data-slot="command-list"
 			{...props}
 		/>

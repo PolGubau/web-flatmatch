@@ -1,5 +1,4 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
-import type { AvailableCity } from "~/entities/room/editable-room.schema";
 import type { Room } from "~/entities/room/room";
 import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 import type { RoomDto } from "../../infra/dto/room.dto";
@@ -8,10 +7,7 @@ import type { RoomDto } from "../../infra/dto/room.dto";
 export function mapDtoToRoom(dto: RoomDto): Room {
 	return {
 		...dto,
-		location: {
-			...dto.location,
-			city: dto.location.city as AvailableCity,
-		},
+
 		price: {
 			...dto.price,
 			localePrice: currencyFormat(dto.price.amount, dto.price.currency),
