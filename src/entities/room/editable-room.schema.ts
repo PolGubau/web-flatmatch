@@ -5,18 +5,16 @@ export const PaymentFrequencySchema = z.enum(["monthly", "weekly", "daily"]);
 export const StayUnitSchema = z.enum(["day", "week", "month", "year"]);
 export const BedTypeSchema = z.enum(["single", "double", "bunk", "sofa", "none"]);
 export const RoomStatusSchema = z.enum(["available", "booked", "unlisted"]);
-
-export const AvailableCitiesSchema = z.enum(["rome", "bcn"]);
-export type AvailableCity = z.infer<typeof AvailableCitiesSchema>;
+export const ZipCodeSchema = z.string().regex(/^\d{5}$/, "El código postal debe tener 5 dígitos");
 
 // Sub-schemas
 export const LocationSchema = z.object({
 	address: z.string(),
-	city: AvailableCitiesSchema.default("bcn"),
+	city: z.string().default("Barcelona"),
 	country: z.string(),
 	lat: z.number(),
 	lng: z.number(),
-	postalCode: z.string().optional(),
+	postalCode: ZipCodeSchema.optional(),
 });
 
 export const PriceSchema = z.object({

@@ -1,12 +1,13 @@
-// ui/Step1.tsx
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HutIcon, MeetingRoomIcon, SlideshareIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
+import { RadioBox } from "../shared/radiobox";
 
 const RENT_TYPES = [
 	{
@@ -31,11 +32,10 @@ const RENT_TYPES = [
 		value: "entire",
 	},
 ];
-
-/**
- * First step of room publishing flow.
- * Lets the user select rent type.
- */
+const Step1Schema = EditableRoomSchema.pick({
+	rentType: true,
+});
+export type Step1SchemaType = z.infer<typeof Step1Schema>;
 export function Step1() {
 	const navigate = useNavigate();
 	const { data, setData } = useFormState();
@@ -44,49 +44,47 @@ export function Step1() {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm({
+	} = useForm<Step1SchemaType>({
 		defaultValues: { ...data },
-		resolver: zodResolver(EditableRoomSchema),
+		resolver: zodResolver(Step1Schema),
 	});
 
 	return (
 		<form
 			className="grid grid-rows-[1fr_auto] gap-2 h-full"
-			onSubmit={handleSubmit((values) => {
-				setData(values);
-				navigate("/publish/location", { replace: true });
-			})}
+			onSubmit={handleSubmit(
+				(values) => {
+					setData(values);
+					navigate("/publish/location", { replace: true });
+				},
+				(errors) => {
+					console.error(errors);
+				},
+			)}
 		>
 			<fieldset>
 				<legend className="text-lg pb-12">What are you renting?</legend>
-
-				<ul className="grid grid-rows-3 gap-6 min-h-40 w-full max-w-4xl mx-auto min-w-[300px]">
-					{RENT_TYPES.map(({ id, label, value, icon, description }) => (
-						<li className="flex group" key={id}>
-							<label className="has-checked:bg-primary/20 bg-secondary/10 p-6 w-full h-full grid items-center grid-cols-[1fr_auto] rounded-xl gap-6">
-								<div className="flex items-end gap-2">
-									<HugeiconsIcon icon={icon} size={40} />
-									<span className="text-xl">{label}</span>
-								</div>
-								<input
-									className="outline-0 checked:accent-primary "
-									type="radio"
-									{...register("rentType", { required: "Rent type is required" })}
-									value={value}
-								/>
-								<p className="text-foreground/80 text-sm text-pretty">{description}</p>
-							</label>
-						</li>
-					))}
+				<ul className="grid grid-rows-3 gap-2 min-h-40 w-full max-w-4xl mx-auto min-w-[300px]">
+					{RENT_TYPES.map(({ id, label, value, icon, description }) => {
+						const field = register("rentType", { required: "Rent type is required" });
+						return (
+							<RadioBox<"rentType">
+								description={description}
+								field={field}
+								icon={icon}
+								key={id}
+								label={label}
+								value={value}
+							/>
+						);
+					})}
 				</ul>
 			</fieldset>
-
 			<footer className="flex flex-col gap-1">
 				{errors.rentType && (
 					<p className="text-error text-sm p-4 rounded-xl bg-error/10">{errors.rentType.message}</p>
 				)}
-
-				<FormFooterButtons canGoBack={false} />
+				<FormFooterButtons />
 			</footer>
 		</form>
 	);

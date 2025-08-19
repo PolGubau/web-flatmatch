@@ -71,7 +71,6 @@ export const mockRooms: RoomDto[] = [
 			lat: 41.4,
 			lng: 2.15,
 			postalCode: "08012",
-			state: "Catalunya",
 		},
 		preferences: {
 			age: { max: 35, min: 20 },
@@ -181,7 +180,6 @@ export const mockRooms: RoomDto[] = [
 			lat: 41.3902,
 			lng: 2.1649,
 			postalCode: "08036",
-			state: "Catalunya",
 		},
 		preferences: {
 			age: { max: 30, min: 22 },
@@ -293,7 +291,6 @@ export const mockRooms: RoomDto[] = [
 			lat: 41.3758,
 			lng: 2.1343,
 			postalCode: "08028",
-			state: "Catalunya",
 		},
 		preferences: {
 			age: { max: 40, min: 25 },
@@ -401,7 +398,6 @@ export const mockRooms: RoomDto[] = [
 			lat: 41.411,
 			lng: 2.1895,
 			postalCode: "08026",
-			state: "Catalunya",
 		},
 		preferences: {
 			age: { max: 28, min: 18 },

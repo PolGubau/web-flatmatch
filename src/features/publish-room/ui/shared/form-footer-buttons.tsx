@@ -3,16 +3,15 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "react-router";
 
 type Props = {
-	canGoBack?: boolean;
+	backHref?: string;
 };
-export function FormFooterButtons({ canGoBack = true }: Props) {
+export function FormFooterButtons({ backHref = "" }: Props) {
 	return (
 		<nav className="flex items-center gap-2 w-full justify-end-safe">
-			{canGoBack && (
+			{backHref?.length > 0 && (
 				<Link
 					className="cursor-pointer hover:brightness-80 transition-all p-4 rounded-full flex gap-1 hover:underline items-center"
-					to={"/publish"}
-					type="submit"
+					to={backHref}
 				>
 					<HugeiconsIcon icon={ArrowLeft01Icon} size={20} />
 					Back
