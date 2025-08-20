@@ -1,4 +1,5 @@
 import { Calendar03Icon, UserAccountIcon, WorkIcon } from "@hugeicons/core-free-icons";
+import { useTranslation } from "react-i18next";
 import { mockUsers } from "~/features/user/__mock__/users";
 import type { Item } from "~/features/user/ui/profile/chip-item";
 import ProfileChipList from "~/features/user/ui/profile/chip-list";
@@ -10,21 +11,21 @@ type Props = {
 };
 
 export default function ProfilePage({ userId }: Props) {
+	const { t } = useTranslation();
 	const user = mockUsers.find((user) => user.id === userId);
 	if (!user) return null;
-
 	const chips: Item[] = [
 		{
 			icon: UserAccountIcon,
-			label: user.gender,
+			label: t(user.gender),
 		},
 		{
 			icon: Calendar03Icon,
-			label: `${dateToYearsAgo(user.birthDate)} years`,
+			label: t("years", { count: dateToYearsAgo(user.birthDate) }),
 		},
 		{
 			icon: WorkIcon,
-			label: user.occupation,
+			label: t(user.occupation),
 		},
 	];
 	return (

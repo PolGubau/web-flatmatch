@@ -1,15 +1,16 @@
+import { useTranslation } from "react-i18next";
 
 export function meta() {
-  return [
-    { title: "Flatmatch" },
-    { name: "description", content: "Welcome to Flatmatch!" },
-  ];
+	return [{ title: "Flatmatch" }, { content: "Welcome to Flatmatch!", name: "description" }];
 }
 
-
 export default function Chat() {
-  return <>
-    <h1>Chat</h1>
-    <p>Welcome to the chat!</p>
-  </>
+	const { t } = useTranslation();
+
+	return (
+		<>
+			<h1>{t("shared")}</h1>
+			<p>Hola</p>
+		</>
+	);
 }

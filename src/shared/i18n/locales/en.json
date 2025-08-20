@@ -1,0 +1,22 @@
+{
+	"chat": "Chat",
+	"employed": "Employed",
+	"entire": "Entire Apartment",
+	"favourites": "Favourites",
+	"female": "Female",
+	"home": "Home",
+	"loading": "Loading...",
+	"location": "Location",
+	"male": "Male",
+	"other": "Other",
+	"prefer_not_to_say": "Prefer not to say",
+	"profile": "Profile",
+	"publish_place": "Publish Place",
+	"room": "Room",
+	"roommates": "{{count}} roommates",
+	"shared": "Shared Room",
+	"student": "Student",
+	"unemployed": "Unemployed",
+	"verified": "Verified",
+	"years": "{{count}} years"
+}

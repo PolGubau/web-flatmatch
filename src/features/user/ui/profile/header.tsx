@@ -19,7 +19,7 @@ export default function ProfileHeader({ name, lastname, avatarUrl, aboutMe }: Pr
 					<VerifiedStar />
 				</div>
 
-				<p className="text-foreground/80">{aboutMe || "No hay descripción disponible."}</p>
+				<p className="text-foreground/80">{aboutMe}</p>
 			</div>
 		</header>
 	);

@@ -1,15 +1,24 @@
 import { FavouriteIcon, Home01Icon, Message01Icon, UserIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+import { useTranslation } from "react-i18next";
 import { Link, NavLink, Outlet } from "react-router";
+import type { TranslationKey } from "~/shared/i18n/i18n";
 
-const footerMenuItems = [
-	{ href: "/", icon: Home01Icon, label: "Home" },
-	{ href: "/favs", icon: FavouriteIcon, label: "Favourites" },
-	{ href: "/chat", icon: Message01Icon, label: "Chat" },
-	{ href: "/profile", icon: UserIcon, label: "Profile" },
+type FooterMenuItem = {
+	href: string;
+	icon: IconSvgElement;
+	label: TranslationKey;
+};
+
+const footerMenuItems: FooterMenuItem[] = [
+	{ href: "/", icon: Home01Icon, label: "home" },
+	{ href: "/favs", icon: FavouriteIcon, label: "favourites" },
+	{ href: "/chat", icon: Message01Icon, label: "chat" },
+	{ href: "/profile", icon: UserIcon, label: "profile" },
 ];
 
 const MainLayout = () => {
+	const { t } = useTranslation();
 	return (
 		<div className="grid grid-rows-[auto_1fr_auto] relative flex-col min-h-screen gap-4 overflow-hidden">
 			<header className="p-4 flex justify-between items-center">
@@ -19,7 +28,7 @@ const MainLayout = () => {
 					className="bg-primary hover:brightness-75 transition-all rounded-full px-4 py-2 text-canvas text-sm font-semibold"
 					to={"/publish"}
 				>
-					Publish place
+					{t("publish_place")}
 				</Link>
 			</header>
 
@@ -39,7 +48,7 @@ const MainLayout = () => {
 							to={item.href}
 						>
 							<HugeiconsIcon icon={item.icon} size={24} />
-							<span className="text-xs">{item.label}</span>
+							<span className="text-xs">{t(item.label)}</span>
 						</NavLink>
 					))}
 				</ul>
