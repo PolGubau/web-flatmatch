@@ -48,12 +48,6 @@ export function AutoComplete<T extends string>({
 		onSearchValueChange("");
 	};
 
-	const onInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-		if (!e.relatedTarget?.hasAttribute("cmdk-list") && labels[selectedValue] !== searchValue) {
-			reset();
-		}
-	};
-
 	const onSelectItem = (inputValue: string) => {
 		if (inputValue === selectedValue) {
 			reset();
@@ -71,7 +65,6 @@ export function AutoComplete<T extends string>({
 					<PopoverAnchor asChild>
 						<CommandPrimitive.Input
 							asChild
-							onBlur={onInputBlur}
 							onFocus={() => setOpen(true)}
 							onKeyDown={(e) => setOpen(e.key !== "Escape")}
 							onMouseDown={() => setOpen((open) => !!searchValue || !open)}

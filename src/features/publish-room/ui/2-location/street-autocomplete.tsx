@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { AutoComplete } from "~/shared/components/ui/autocomplete";
+import { useDebounce } from "~/shared/hooks/use-debounce";
 
 type StreetRef = {
 	name: string;
@@ -23,20 +25,6 @@ interface OpenDirection {
 		postcode?: string;
 		country?: string;
 	};
-}
-
-/**
- * Hook debounce para evitar llamadas innecesarias
- */
-function useDebounce<T>(value: T, delay: number): T {
-	const [debounced, setDebounced] = useState(value);
-
-	React.useEffect(() => {
-		const handler = setTimeout(() => setDebounced(value), delay);
-		return () => clearTimeout(handler);
-	}, [value, delay]);
-
-	return debounced;
 }
 
 const fetchPredictions = async (value: string): Promise<StreetRef[]> => {
@@ -68,6 +56,7 @@ type StreetAutocompleteProps = {
  * Autocomplete de calles (Nominatim + React Query + Debounce)
  */
 export function StreetAutocomplete({ value = "", onChange, field }: StreetAutocompleteProps) {
+	const {t}=useTranslation()
 	const [query, setQuery] = useState<string>(value);
 	const [selectedValue, setSelectedValue] = useState<string>("");
 
@@ -97,7 +86,7 @@ export function StreetAutocomplete({ value = "", onChange, field }: StreetAutoco
 	return (
 		<div className="flex flex-col gap-1">
 			<label className="text-sm" htmlFor="location.address">
-				Address
+				{t("address")}
 			</label>
 			<AutoComplete
 				{...field}

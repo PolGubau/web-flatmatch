@@ -21,7 +21,7 @@ export default function RoomDetails({ room }: Props) {
 	const { female, male, other } = room.whoIsLiving.currentTenants;
 	const peopleAmount = female + male + other;
 	return (
-		<section className="grid md:grid-cols-2 gap-4">
+		<section className="grid md:grid-cols-2 gap-4 mx-auto max-w-4xl">
 			<ul className="room-details-gallery">
 				<li>
 					<RoomDetailsImage alt={room.title} src={image} />
