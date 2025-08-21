@@ -139,8 +139,8 @@ export default function RoomDetails({ room }: Props) {
 				</div>
 			</section>
 			<footer
-				className="sticky bottom-0 bg-canvas grid grid-cols-2 gap-4 p-4"
-				style={{ zIndex: 999 }}
+				className="sticky bottom-0 bg-canvas grid grid-cols-2 gap-4 p-4 mx-auto md:max-w-4xl"
+				style={{ zIndex: 1001 }}
 			>
 				<Button asChild type="button">
 					<Link to={`tel:${room.contact.agent?.phone}`}>
