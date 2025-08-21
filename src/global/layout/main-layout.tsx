@@ -2,6 +2,7 @@ import { FavouriteIcon, Home01Icon, Message01Icon, UserIcon } from "@hugeicons/c
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, Outlet } from "react-router";
+import { Toaster } from "~/shared/components/ui/sonner";
 import type { TranslationKey } from "~/shared/i18n/i18n";
 
 type FooterMenuItem = {
@@ -20,9 +21,9 @@ const footerMenuItems: FooterMenuItem[] = [
 const MainLayout = () => {
 	const { t } = useTranslation();
 	return (
-		<div className="grid grid-rows-[auto_1fr_auto] relative flex-col h-dvh gap-4 overflow-hidden bg-canvas text-foreground">
+		<div className="grid grid-rows-[auto_1fr_auto] md:grid-rows-[auto_1fr] relative flex-col h-dvh gap-4 overflow-hidden bg-canvas text-foreground">
 			<header
-				className="p-4 flex justify-between items-center backdrop-blur-md"
+				className="p-2 md:p-4 pl-4 flex justify-between items-center backdrop-blur-md"
 				style={{ zIndex: 11 }}
 			>
 				<h1 className="text-primary">Flatmatch</h1>
@@ -52,7 +53,7 @@ const MainLayout = () => {
 				</Link>
 			</header>
 
-			<main className="overflow-visible max-w-7xl mx-auto w-full">
+			<main className="overflow-visible max-w-7xl mx-auto w-full h-full ">
 				<Outlet />
 			</main>
 			<footer

@@ -6,7 +6,7 @@ export function meta() {
 
 export default function Favs() {
 	return (
-		<div className="overflow-y-auto overflow-x-hidden max-w-4xl mx-auto px-4 md:px-6 ">
+		<div className="overflow-y-auto overflow-x-hidden max-w-4xl mx-auto px-4 md:px-6">
 			<FavsPage />
 		</div>
 	);

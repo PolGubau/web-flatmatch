@@ -1,5 +1,7 @@
 {
 	"address": "Address",
+	"bathrooms": "{{count}} baths",
+	"bedrooms": "{{count}} rooms",
 	"chat": "Chat",
 	"employed": "Employed",
 	"entire": "Entire Apartment",
@@ -9,6 +11,7 @@
 	"loading": "Loading...",
 	"location": "Location",
 	"male": "Male",
+	"not_verified": "Not Verified",
 	"other": "Other",
 	"prefer_not_to_say": "Prefer not to say",
 	"profile": "Profile",
@@ -16,6 +19,7 @@
 	"room": "Room",
 	"roommates": "{{count}} roommates",
 	"shared": "Shared Room",
+	"square_meters": "{{count}} m²",
 	"student": "Student",
 	"unemployed": "Unemployed",
 	"verified": "Verified",

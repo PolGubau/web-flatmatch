@@ -1,24 +1,13 @@
-import { Loading02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { useTranslation } from "react-i18next";
 import { Sheet } from "react-modal-sheet";
 import { useTinderCards } from "~/features/room/model/use-tinder-cards";
 import RoomDetails from "~/features/room/ui/details/room-details";
 import { RoomTinderCard } from "~/features/room/ui/room-tinder-card";
+import { LoadingSection } from "~/shared/components/LoadingSection";
 
 export default function HomePage() {
-	const { t } = useTranslation();
 	const { rooms, onSwipe, bottomDrawerRoom, handleCloseDrawer, isLoading } = useTinderCards();
 
-	if (isLoading)
-		return (
-			<div className="w-full h-full grid place-items-center p-4">
-				<div className="flex flex-col gap-2 items-center">
-					<HugeiconsIcon className="animate-rotate" icon={Loading02Icon} />
-					{t("loading")}
-				</div>
-			</div>
-		);
+	if (isLoading) return <LoadingSection />;
 
 	return (
 		<div className="grid grid-rows-1 grid-cols-1 gap-4 p-4 h-[80vh]">
@@ -30,7 +19,7 @@ export default function HomePage() {
 				>
 					<Sheet.Container>
 						<Sheet.Header />
-						<Sheet.Content className="overflow-y-auto pb-10">
+						<Sheet.Content className="">
 							{bottomDrawerRoom && <RoomDetails room={bottomDrawerRoom} />}
 						</Sheet.Content>
 					</Sheet.Container>
