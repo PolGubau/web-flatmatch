@@ -56,7 +56,7 @@ type StreetAutocompleteProps = {
  * Autocomplete de calles (Nominatim + React Query + Debounce)
  */
 export function StreetAutocomplete({ value = "", onChange, field }: StreetAutocompleteProps) {
-	const {t}=useTranslation()
+	const { t } = useTranslation();
 	const [query, setQuery] = useState<string>(value);
 	const [selectedValue, setSelectedValue] = useState<string>("");
 

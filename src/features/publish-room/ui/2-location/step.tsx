@@ -7,7 +7,6 @@ import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { MapWithMarker } from "~/shared/components/map";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
-import { RadioBox } from "../shared/radiobox";
 import bcn from "./assets/bcn.svg";
 import rome from "./assets/rome.svg";
 import { StreetAutocomplete } from "./street-autocomplete";
@@ -57,7 +56,7 @@ export function LocationForm() {
 			})}
 		>
 			<fieldset className="flex flex-col gap-6">
-				<legend className="text-lg pb-12">Where is your room located?</legend>
+				<legend className="text-lg pb-10">Where is your room located?</legend>
 				<StreetAutocomplete
 					field={field}
 					onChange={(v) => {

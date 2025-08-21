@@ -108,9 +108,9 @@ export const emptyEditableRoom: EditableRoom = {
 	title: "",
 	whoIsLiving: {
 		currentTenants: {
-			female: 0,
-			male: 0,
-			other: 0,
+			female: null as unknown as number,
+			male: null as unknown as number,
+			other: null as unknown as number,
 		},
 		ownerLivesHere: false,
 	},

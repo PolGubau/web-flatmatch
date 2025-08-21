@@ -11,7 +11,7 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import  "~/shared/i18n/i18n";
+import "~/shared/i18n/i18n";
 
 export const links: Route.LinksFunction = () => [
 	{ href: "https://fonts.googleapis.com", rel: "preconnect" },

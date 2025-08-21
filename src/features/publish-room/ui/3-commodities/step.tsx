@@ -70,7 +70,7 @@ export function CommoditiesForm() {
 			)}
 		>
 			<fieldset className="grid gap-6 overflow-y-auto">
-				<legend className="text-lg pb-12">Select commodities</legend>
+				<legend className="text-lg pb-10">Select commodities</legend>
 				<header className="grid grid-cols-2 gap-4 items-center">
 					<div>
 						<label className="flex gap-2" htmlFor="area">
@@ -84,6 +84,7 @@ export function CommoditiesForm() {
 							placeholder="Enter area in m²"
 							{...register("commodities.whole.area", {
 								required: true,
+								valueAsNumber: true,
 							})}
 						/>
 					</div>
@@ -120,6 +121,7 @@ export function CommoditiesForm() {
 								placeholder="Enter number of private bedrooms"
 								{...register("commodities.whole.bedrooms.individual", {
 									required: true,
+									valueAsNumber: true,
 								})}
 							/>
 						</li>

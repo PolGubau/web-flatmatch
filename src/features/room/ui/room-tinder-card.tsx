@@ -12,12 +12,10 @@ export const RoomTinderCard = ({ room, onSwipe, index }: RoomTinderCardProps) =>
 	const isFront = index === 0;
 
 	const x = useMotionValue(0);
-	const _y = useMotionValue(0);
 	const opacity = useTransform(x, [-150, 0, 150], [0.5, 1, 0.5]);
 	const rotateRaw = useTransform(x, [-150, 150], [-10, 10]);
 	const size = useTransform(x, [-150, 0, 150], [0.9, 1, 0.9]);
 
-	
 	const colorOverlay = useTransform(x, [-200, 0, 200], ["#ff0000", "#ffffff00", "#0000ff"]);
 
 	const rotate = useTransform(() => {
@@ -43,7 +41,7 @@ export const RoomTinderCard = ({ room, onSwipe, index }: RoomTinderCardProps) =>
 			className="h-[60vh] bg-neutral-500 overflow-hidden w-[80vw] max-w-[500px] rounded-3xl hover:cursor-grab active:cursor-grabbing origin-bottom shadow shadow-neutral-500/10 relative"
 			drag
 			dragConstraints={{ bottom: 0, left: 0, right: 0, top: 0 }}
-			dragElastic={0.2}
+			dragElastic={0.5}
 			onDragEnd={handleDragEnd}
 			style={{
 				gridColumn: 1,

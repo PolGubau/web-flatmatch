@@ -44,7 +44,9 @@ export function MapWithMarker({ lat, lon, zoom = 15, interactive = true }: MapPr
 				/>
 				<Marker position={[lat, lon]}>
 					<Popup>
-						A pretty CSS3 popup. <br /> Easily customizable.
+						<span>
+							Marker at {lat}, {lon}
+						</span>
 					</Popup>
 				</Marker>
 				<Recenter lat={lat} lon={lon} zoom={zoom} />

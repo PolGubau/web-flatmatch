@@ -20,7 +20,7 @@ const footerMenuItems: FooterMenuItem[] = [
 const MainLayout = () => {
 	const { t } = useTranslation();
 	return (
-		<div className="grid grid-rows-[auto_1fr_auto] relative flex-col min-h-screen gap-4 overflow-hidden">
+		<div className="grid grid-rows-[auto_1fr_auto] relative flex-col min-h-dvh gap-4 overflow-hidden">
 			<header className="p-4 flex justify-between items-center">
 				<h1 className="text-primary">Flatmatch</h1>
 

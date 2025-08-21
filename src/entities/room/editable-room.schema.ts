@@ -5,11 +5,11 @@ export const PaymentFrequencySchema = z.enum(["monthly", "weekly", "daily"]);
 export const StayUnitSchema = z.enum(["day", "week", "month", "year"]);
 export const BedTypeSchema = z.enum(["single", "double", "bunk", "sofa", "none"]);
 export const RoomStatusSchema = z.enum(["available", "booked", "unlisted"]);
-export const ZipCodeSchema = z.string().regex(/^\d{5}$/, "El código postal debe tener 5 dígitos");
+export const ZipCodeSchema = z.string().regex(/^\d{5}$/, "Selecciona una calle correcta");
 
 // Sub-schemas
 export const LocationSchema = z.object({
-	address: z.string(),
+	address: z.string().min(2),
 	city: z.string().default("Barcelona"),
 	country: z.string(),
 	lat: z.number(),
