@@ -39,7 +39,7 @@ export function MetadataForm() {
 			onSubmit={handleSubmit(
 				(values) => {
 					setData(values);
-					// navigate("/publish/location", { replace: true });
+					navigate("/publish/preferences", { replace: true });
 				},
 				(errors) => {
 					console.error(errors);
@@ -47,13 +47,14 @@ export function MetadataForm() {
 			)}
 		>
 			<fieldset className="flex flex-col gap-6 overflow-y-auto">
-				<legend className="text-lg pb-10">Who is living there?</legend>
+				<legend className="text-lg pb-10">Add Metadata</legend>
 
 				<Input
 					id="bedrooms-male"
 					label="Title"
-					minLength={0}
+					minLength={5}
 					placeholder="Big and spacious room near train station..."
+					required
 					{...register("title", {
 						required: true,
 					})}
@@ -61,8 +62,9 @@ export function MetadataForm() {
 
 				<Textarea
 					label="Description"
-					minLength={0}
+					minLength={10}
 					placeholder="How many female tenants?"
+					required
 					{...register("description", {
 						required: true,
 					})}
@@ -80,10 +82,11 @@ export function MetadataForm() {
 			</fieldset>
 
 			<footer className="flex flex-col gap-1">
-				{(errors.description || errors.title) && (
+				{(errors.description || errors.title || errors.images) && (
 					<p className="text-error text-sm p-4 rounded-xl bg-error/10">
-						{JSON.stringify(errors.description?.message)}
-						{JSON.stringify(errors.title?.message)}
+						{JSON.stringify(errors.description)}
+						{JSON.stringify(errors.title)}
+						{JSON.stringify(errors.images)}
 					</p>
 				)}
 				<FormFooterButtons backHref={"/publish/company"} />
