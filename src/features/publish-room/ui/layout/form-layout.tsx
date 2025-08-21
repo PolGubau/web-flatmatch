@@ -30,7 +30,7 @@ export default function FormLayout() {
 	// const isBeingDone = (index: number) => index === currentStep;
 
 	return (
-		<div className=" min-h-screen grid grid-rows-[auto_1fr_auto] gap-2 py-6 max-w-4xl mx-auto px-6 w-full">
+		<div className=" min-h-dvh grid grid-rows-[auto_1fr_auto] gap-2 py-6 max-w-4xl mx-auto px-6 w-full">
 			<header className="w-full pt-6flex flex-col gap-1">
 				<Link className="text-sm hover:underline w-fit" to={"/"}>
 					&larr; Go back
