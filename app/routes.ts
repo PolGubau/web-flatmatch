@@ -21,6 +21,7 @@ export default [
 				route("location", "./routes/publish-form/step-2.tsx"),
 				route("commodities", "./routes/publish-form/step-3.tsx"),
 				route("company", "./routes/publish-form/step-4.tsx"),
+				route("metadata", "./routes/publish-form/step-5.tsx"),
 			]),
 		]),
 

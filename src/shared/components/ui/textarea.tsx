@@ -3,12 +3,12 @@ import type * as React from "react";
 
 import { cn } from "~/shared/utils/utils";
 
-type InputProps = React.ComponentProps<"input"> & {
+type TextareaProps = React.ComponentProps<"textarea"> & {
 	icon?: IconSvgElement;
 	label?: string;
 };
 
-function Input({ className, type, icon, label, ...props }: InputProps) {
+function Textarea({ className, icon, label, ...props }: TextareaProps) {
 	return (
 		<div className="flex flex-col gap-1">
 			{label && (
@@ -26,9 +26,10 @@ function Input({ className, type, icon, label, ...props }: InputProps) {
 					/>
 				)}
 
-				<input
+				<textarea
 					className={cn(
 						"file:text-foreground file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium",
+						"min-h-20",
 						"disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
 						"placeholder:text-foreground/70 placeholder:text-sm border-foreground/30 flex h-12 rounded-xl w-full min-w-0 border-2 pr-2 pl-4 py-1 transition-[color,box-shadow] outline-none",
 						"focus-visible:border-foreground",
@@ -38,8 +39,7 @@ function Input({ className, type, icon, label, ...props }: InputProps) {
 						},
 						className,
 					)}
-					data-slot="input"
-					type={type}
+					data-slot="textarea"
 					{...props}
 				/>
 			</div>
@@ -47,4 +47,4 @@ function Input({ className, type, icon, label, ...props }: InputProps) {
 	);
 }
 
-export { Input };
+export { Textarea };

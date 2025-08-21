@@ -20,13 +20,13 @@ export default function RoomDetails({ room }: Props) {
 	const restOfImages = room.images.gallery;
 	const { female, male, other } = room.whoIsLiving.currentTenants;
 	const peopleAmount = female + male + other;
+
+	// Gallery with the main first
+	const sortedImages = [restOfImages[image], ...restOfImages.filter((_, i) => i !== image)];
 	return (
 		<section className="grid md:grid-cols-2 gap-4 mx-auto max-w-4xl">
 			<ul className="room-details-gallery">
-				<li>
-					<RoomDetailsImage alt={room.title} src={image} />
-				</li>
-				{restOfImages.map((src) => (
+				{sortedImages.map((src) => (
 					<li key={src}>
 						<RoomDetailsImage alt={room.title} src={src} />
 					</li>

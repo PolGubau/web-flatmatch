@@ -58,7 +58,7 @@ export const mockRooms: RoomDto[] = [
 				"https://images.unsplash.com/photo-1615800002234-05c4d488696c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
 				"https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
 			],
-			main: "https://plus.unsplash.com/premium_photo-1676823553207-758c7a66e9bb?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+			main: 0,
 		},
 		isVerified: { date: new Date("2025-07-01") },
 		location: {
@@ -164,7 +164,7 @@ export const mockRooms: RoomDto[] = [
 			gallery: [
 				"https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
 			],
-			main: "https://images.unsplash.com/photo-1615800002234-05c4d488696c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
+			main: 0,
 		},
 		isVerified: false,
 		location: {
@@ -272,7 +272,7 @@ export const mockRooms: RoomDto[] = [
 				"https://images.unsplash.com/photo-1615800002234-05c4d488696c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
 				"https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
 			],
-			main: "https://images.unsplash.com/photo-1462826303086-329426d1aef5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHJvb218ZW58MHx8MHx8fDA%3D",
+			main: 0,
 		},
 		isVerified: false,
 		location: {
@@ -376,7 +376,7 @@ export const mockRooms: RoomDto[] = [
 		id: "room_4",
 		images: {
 			gallery: [],
-			main: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cm9vbXxlbnwwfHwwfHx8MA%3D%3D",
+			main: 0,
 		},
 		isVerified: { date: new Date("2025-07-10") },
 		location: {

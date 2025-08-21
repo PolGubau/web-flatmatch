@@ -44,7 +44,7 @@ export const emptyEditableRoom: EditableRoom = {
 	description: "",
 	images: {
 		gallery: [],
-		main: "",
+		main: 0,
 	},
 	isVerified: false,
 	location: {

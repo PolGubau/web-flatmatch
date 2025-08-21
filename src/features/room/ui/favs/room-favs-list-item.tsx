@@ -19,7 +19,7 @@ export function RoomFavsListItem({ room }: Props) {
 					<img
 						alt={`Room ${room.id}`}
 						className=" w-24 h-full object-cover"
-						src={room.images.main}
+						src={room.images.gallery[room.images.main]}
 					/>
 
 					<div className="absolute top-1 right-1 ring-neutral-200 group-hover:ring-neutral-300 text-foreground/50">

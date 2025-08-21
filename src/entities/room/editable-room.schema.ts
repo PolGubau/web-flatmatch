@@ -94,8 +94,8 @@ export const RulesSchema = z.object({
 });
 
 export const ImagesSchema = z.object({
-	gallery: z.array(z.string()),
-	main: z.string(),
+	gallery: z.array(z.union([z.instanceof(File), z.string()])).min(1),
+	main: z.number().min(1),
 });
 
 export const TimingsSchema = z.object({

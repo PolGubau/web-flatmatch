@@ -21,12 +21,21 @@ export const getManyRooms: FindMany<RoomDto> = async (ids) => {
 };
 
 export const createRoom: Create<RoomDto, EditableRoom> = async (editableRoom) => {
-	const newRoom = {
+	const roomsSrc = editableRoom.images.gallery.map((image) => {
+		return typeof image === "string" ? image : URL.createObjectURL(image);
+	});
+
+	const newRoom: RoomDto = {
 		...editableRoom,
 		createdAt: new Date(),
 		id: crypto.randomUUID(),
+		images: {
+			...editableRoom.images,
+			gallery: roomsSrc,
+		},
 		updatedAt: new Date(),
 	};
+
 	mockRooms.push(newRoom);
 	return newRoom;
 };
@@ -49,6 +58,9 @@ export const updateRoom: Update<RoomDto, EditableRoom> = async (id, data) => {
 	const updatedRoom: RoomDto = {
 		...room,
 		...data,
+		images: {
+			...room.images,
+		},
 	};
 	mockRooms[mockRooms.indexOf(room)] = updatedRoom;
 	return updatedRoom;

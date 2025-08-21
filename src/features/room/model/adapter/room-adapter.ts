@@ -32,6 +32,7 @@ function roomToEditable(room: Room): EditableRoom {
 	// biome-ignore lint/correctness/noUnusedVariables: We want to exclude those values
 	const { id, createdAt, updatedAt, ...editableRoom } = room;
 
+
 	return editableRoom;
 }
 

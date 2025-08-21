@@ -51,7 +51,7 @@ export interface RoomDto {
 	};
 
 	images: {
-		main: string; // URL of the main image
+		main: number;
 		gallery: string[]; // Array of URLs for additional images
 	};
 

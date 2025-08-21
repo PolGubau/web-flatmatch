@@ -7,6 +7,8 @@ export function RoomTinderCardUI({ room }: { room: Room }) {
 	const imageMode = imagesAmount > 3 ? 3 : imagesAmount > 2 ? 2 : imagesAmount > 1 ? 1 : 0;
 	const { main, gallery } = room.images;
 
+	const sortedImages = [gallery[main], ...gallery.filter((_, i) => i !== main)];
+
 	return (
 		// gradient from black to transparent
 		<article className="relative group w-full h-full bg-primary/10 pointer-events-none">
@@ -27,10 +29,14 @@ export function RoomTinderCardUI({ room }: { room: Room }) {
 			</header>
 
 			<div className={`grid h-full ${imageMode === 1 ? "grid-rows-[2fr_1fr]" : ""}`}>
-				<img alt={room.title} className="object-cover h-full object-bottom w-full" src={main} />
+				<img
+					alt={room.title}
+					className="object-cover h-full object-bottom w-full"
+					src={sortedImages[0]}
+				/>
 				{(imageMode === 2 || imageMode === 3) && (
 					<div className={`grid ${imageMode === 2 ? "grid-cols-1" : "grid-cols-2"}`}>
-						{gallery.slice(0, 2).map((image) => (
+						{sortedImages.slice(0, 2).map((image) => (
 							<img
 								alt={room.title}
 								className="object-cover h-full object-bottom w-full"

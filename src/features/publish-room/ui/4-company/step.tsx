@@ -30,7 +30,7 @@ export function CompanyForm() {
 			onSubmit={handleSubmit(
 				(values) => {
 					setData(values);
-					// navigate("/publish/location", { replace: true });
+					navigate("/publish/metadata", { replace: true });
 				},
 				(errors) => {
 					console.error(errors);

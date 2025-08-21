@@ -1,14 +1,14 @@
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Link } from "react-router";
+import { Link, type To } from "react-router";
 
 type Props = {
-	backHref?: string;
+	backHref?: To;
 };
 export function FormFooterButtons({ backHref = "" }: Props) {
 	return (
 		<nav className="flex items-center gap-2 w-full justify-end-safe">
-			{backHref?.length > 0 && (
+			{backHref.toString().length > 0 && (
 				<Link
 					className="cursor-pointer hover:brightness-80 transition-all p-4 rounded-full flex gap-1 hover:underline items-center"
 					to={backHref}
