@@ -18,7 +18,7 @@ export function FormFooterButtons({ backHref = "" }: Props) {
 				</Link>
 			)}
 			<button
-				className="cursor-pointer hover:brightness-80 transition-all bg-primary p-4 px-8 justify-end text-white rounded-full flex gap-1 items-center"
+				className="cursor-pointer hover:brightness-80 transition-all bg-primary p-4 px-8 max-md:py-2 justify-end text-white rounded-full flex gap-1 items-center"
 				type="submit"
 			>
 				Next

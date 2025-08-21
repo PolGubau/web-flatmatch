@@ -21,9 +21,9 @@ export const RadioBox = <T extends string>({
 }: RadioBoxProps<T>) => {
 	return (
 		<li className="flex group cursor-pointer" key={value}>
-			<label className="has-checked:bg-primary/20 bg-secondary/10 hover:brightness-75 transition-all p-6 w-full h-full grid items-center grid-cols-[1fr_auto] rounded-xl gap-6">
+			<label className="has-checked:bg-primary/20 bg-secondary/10 hover:brightness-75 transition-all p-4 md:p-6 w-full h-full grid items-center grid-cols-[1fr_auto] rounded-xl gap-3 md:gap-6">
 				<div className="flex items-end gap-2">
-					{icon ? <HugeiconsIcon icon={icon} size={40} /> : customIcon}
+					{icon ? <HugeiconsIcon icon={icon} size={36} /> : customIcon}
 					<span className="text-xl">{label}</span>
 				</div>
 				<input
