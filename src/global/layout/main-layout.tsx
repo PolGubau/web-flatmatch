@@ -20,35 +20,58 @@ const footerMenuItems: FooterMenuItem[] = [
 const MainLayout = () => {
 	const { t } = useTranslation();
 	return (
-		<div className="grid grid-rows-[auto_1fr_auto] relative flex-col min-h-dvh gap-4 overflow-hidden">
-			<header className="p-4 flex justify-between items-center">
+		<div className="grid grid-rows-[auto_1fr_auto] relative flex-col h-dvh gap-4 overflow-hidden bg-canvas text-foreground">
+			<header
+				className="p-4 flex justify-between items-center backdrop-blur-md"
+				style={{ zIndex: 11 }}
+			>
 				<h1 className="text-primary">Flatmatch</h1>
 
+				<ul className="flex gap-2 items-center max-md:hidden">
+					{footerMenuItems.map((item) => (
+						<NavLink
+							className={({ isActive, isPending }) => `
+						flex items-center justify-center gap-1 hover:bg-foreground/5 transition-colors cursor-pointer px-4 py-1 rounded-full
+						${isActive ? "text-primary" : "text-neutral-500"} 
+						${isPending ? "text-primary-900" : "text-neutral-500"} 
+              `}
+							key={item.href}
+							to={item.href}
+						>
+							<HugeiconsIcon icon={item.icon} size={18} />
+							<span className="text-xs">{t(item.label)}</span>
+						</NavLink>
+					))}
+				</ul>
+
 				<Link
-					className="bg-primary hover:brightness-75 transition-all rounded-full px-4 py-2 text-canvas text-sm font-semibold"
+					className="bg-primary hover:brightness-75 transition-all rounded-full px-4 py-2 text-canvas text-sm font-semibold line-clamp-1 truncate"
 					to={"/publish"}
 				>
 					{t("publish_place")}
 				</Link>
 			</header>
 
-			<main className="overflow-y-auto overflow-x-hidden px-6 max-w-7xl mx-auto w-full">
+			<main className="overflow-visible max-w-7xl mx-auto w-full">
 				<Outlet />
 			</main>
-			<footer className="inset-0 left-0 w-dvw bg-neutral-500/20 h-fit items-center justify-center flex z-50">
+			<footer
+				className="inset-0 left-0 w-dvw bg-neutral-500/10 h-fit items-center justify-center flex md:hidden backdrop-blur-md"
+				style={{ zIndex: 11 }}
+			>
 				<ul className="grid grid-cols-4 min-w-sm w-full max-w-md">
 					{footerMenuItems.map((item) => (
 						<NavLink
 							className={({ isActive, isPending }) => `
-              flex flex-col items-center justify-center gap-1 hover:bg-foreground/5 transition-colors cursor-pointer px-2 py-4
+              flex flex-col items-center justify-center gap-1 hover:bg-foreground/5 transition-colors cursor-pointer px-2 py-2 pt-3 md:py-4
               ${isActive ? "text-primary" : "text-neutral-500"} 
               ${isPending ? "text-primary-900" : "text-neutral-500"} 
               `}
 							key={item.href}
 							to={item.href}
 						>
-							<HugeiconsIcon icon={item.icon} size={24} />
-							<span className="text-xs">{t(item.label)}</span>
+							<HugeiconsIcon icon={item.icon} size={22} />
+							<span className="text-[0.6em]">{t(item.label)}</span>
 						</NavLink>
 					))}
 				</ul>

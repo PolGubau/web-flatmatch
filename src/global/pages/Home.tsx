@@ -30,7 +30,7 @@ export default function HomePage() {
 				>
 					<Sheet.Container>
 						<Sheet.Header />
-						<Sheet.Content>
+						<Sheet.Content className="overflow-y-auto pb-10">
 							{bottomDrawerRoom && <RoomDetails room={bottomDrawerRoom} />}
 						</Sheet.Content>
 					</Sheet.Container>

@@ -10,5 +10,9 @@ export async function clientLoader({ params }: Route.ClientLoaderArgs) {
 }
 
 export default function ProfileRoute({ params }: Route.ComponentProps) {
-	return <ProfilePage userId={params.userId} />;
+	return (
+		<div className="overflow-y-auto overflow-x-hidden max-3-xl mx-auto px-4 md:px-6 ">
+			<ProfilePage userId={params.userId} />
+		</div>
+	);
 }

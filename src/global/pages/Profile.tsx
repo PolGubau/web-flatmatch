@@ -29,7 +29,7 @@ export default function ProfilePage({ userId }: Props) {
 		},
 	];
 	return (
-		<main className="max-4-xl mx-auto flex flex-col gap-4">
+		<div className="flex flex-col gap-4">
 			<ProfileHeader
 				aboutMe={user.aboutMe}
 				avatarUrl={user.avatarUrl}
@@ -38,6 +38,6 @@ export default function ProfilePage({ userId }: Props) {
 			/>
 
 			<ProfileChipList items={chips} />
-		</main>
+		</div>
 	);
 }

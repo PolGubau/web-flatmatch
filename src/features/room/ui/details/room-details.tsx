@@ -35,16 +35,20 @@ export default function RoomDetails({ room }: Props) {
 
 			<div className="flex flex-col gap-2 p-4">
 				<ul className="flex items-center gap-4">
-					<li>{t(room.rentType)}</li>
-					<li>{t("roommates", { count: peopleAmount })}</li>
+					<li>
+						<span className="text-xs">{t(room.rentType)}</span>
+					</li>
+					<li>
+						<span className="text-xs">{t("roommates", { count: peopleAmount })}</span>
+					</li>
 				</ul>
 				<h1 className="text-pretty text-2xl max-md:max-w-md">{room.title}</h1>
 				<span className="text-lg text-foreground/80"> {room.price.localePrice} </span>
 				<p>{room.location.address}</p>
 				<p className="text-foreground/80">{room.description}</p>
 				<ul>
-					<li className="flex gap-2">
-						<HugeiconsIcon icon={ArrowAllDirectionIcon} />
+					<li className="flex gap-1 items-center">
+						<HugeiconsIcon icon={ArrowAllDirectionIcon} size={20} />
 						<span>
 							{room.commodities.whole?.area}
 							<span>m²</span>

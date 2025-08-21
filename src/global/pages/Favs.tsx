@@ -5,9 +5,5 @@ import { mockUsers } from "~/features/user/__mock__/users";
 export default function FavsPage() {
 	const { savedRoomIds } = mockUsers[0];
 	const { rooms } = listMultipleRoomsQuery(savedRoomIds ?? []);
-	return (
-		<div>
-			<RoomList rooms={rooms} />
-		</div>
-	);
+	return <RoomList rooms={rooms} />;
 }

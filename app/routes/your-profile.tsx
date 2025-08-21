@@ -7,5 +7,9 @@ export function meta() {
 
 export default function Profile() {
 	const user = mockUsers[0];
-	return <ProfilePage userId={user.id} />;
+	return (
+		<div className="overflow-y-auto overflow-x-hidden max-w-4xl mx-auto px-4 md:px-6 ">
+			<ProfilePage userId={user.id} />
+		</div>
+	);
 }

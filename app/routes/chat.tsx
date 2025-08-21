@@ -7,9 +7,9 @@ export function meta() {
 
 export default function Chat() {
 	return (
-		<>
+		<main className="px-6 overflow-y-auto overflow-x-hidden">
 			<h1>Chat</h1>
 			<p>Chat isn't available yet.</p>
-		</>
+		</main>
 	);
 }

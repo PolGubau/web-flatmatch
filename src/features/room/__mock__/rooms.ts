@@ -375,7 +375,11 @@ export const mockRooms: RoomDto[] = [
 			"Ideal para estudiantes con presupuesto ajustado, en zona bien comunicada y tranquila.",
 		id: "room_4",
 		images: {
-			gallery: [],
+			gallery: [
+				"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHJvb218ZW58MHx8MHx8fDA%3D",
+				"https://images.unsplash.com/photo-1615800002234-05c4d488696c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
+				"https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
+			],
 			main: 0,
 		},
 		isVerified: { date: new Date("2025-07-10") },

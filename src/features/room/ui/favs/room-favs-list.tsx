@@ -1,14 +1,15 @@
-import type { Room } from '~/entities/room/room'
-import { RoomFavsListItem } from './room-favs-list-item'
+import type { Room } from "~/entities/room/room";
+import { RoomFavsListItem } from "./room-favs-list-item";
+
 type Props = {
-  rooms: Room[]
-}
+	rooms: Room[];
+};
 export function RoomList({ rooms }: Props) {
-  return (
-    <ul className="flex flex-col gap-2">
-      {rooms?.map((room) => (
-        <RoomFavsListItem key={room.id} room={room} />
-      ))}
-    </ul>
-  )
+	return (
+		<ul className="flex flex-col gap-3">
+			{rooms?.map((room) => (
+				<RoomFavsListItem key={room.id} room={room} />
+			))}
+		</ul>
+	);
 }

@@ -41,7 +41,7 @@ export const RoomTinderCard = ({ room, onSwipe, index }: RoomTinderCardProps) =>
 			className="h-[60vh] bg-neutral-500 overflow-hidden w-[80vw] max-w-[500px] rounded-3xl hover:cursor-grab active:cursor-grabbing origin-bottom shadow shadow-neutral-500/10 relative"
 			drag
 			dragConstraints={{ bottom: 0, left: 0, right: 0, top: 0 }}
-			dragElastic={0.5}
+			dragElastic={1}
 			onDragEnd={handleDragEnd}
 			style={{
 				gridColumn: 1,
@@ -52,11 +52,11 @@ export const RoomTinderCard = ({ room, onSwipe, index }: RoomTinderCardProps) =>
 				scale: size,
 				transition: "0.125s transform",
 				x,
-				zIndex: 1000 - index,
+				zIndex: 10 - index,
 			}}
 		>
 			<motion.div
-				className="absolute inset-0 w-full h-full z-10"
+				className="absolute inset-0 w-full h-full"
 				style={{
 					backgroundColor: colorOverlay,
 				}}
