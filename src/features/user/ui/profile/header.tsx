@@ -19,7 +19,7 @@ export default function ProfileHeader({ name, lastname, avatarUrl, aboutMe }: Pr
 					<VerifiedStar />
 				</div>
 
-				<p className="text-foreground/80">{aboutMe}</p>
+				<p className="text-foreground/80 max-md:text-sm">{aboutMe}</p>
 			</div>
 		</header>
 	);

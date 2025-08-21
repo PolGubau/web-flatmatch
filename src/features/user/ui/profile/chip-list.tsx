@@ -12,8 +12,10 @@ export default function ProfileChipList({ items }: Props) {
 					className="p-2 px-3 rounded-2xl bg-foreground/5 w-fit flex items-center gap-2"
 					key={item.label}
 				>
-					<HugeiconsIcon icon={item.icon} />
-					<p className="first-letter:capitalize">{item.label}</p>
+					<HugeiconsIcon icon={item.icon} size={20} />
+					<p className="first-letter:capitalize max-md:text-xs line-clamp-1 truncate">
+						{item.label}
+					</p>
 				</li>
 			))}
 		</ul>
