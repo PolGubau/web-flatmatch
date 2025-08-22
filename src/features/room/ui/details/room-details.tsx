@@ -45,7 +45,7 @@ export default function RoomDetails({ room }: Props) {
 	return (
 		<div className="relative overflow-y-auto h-full">
 			<section className="grid md:grid-cols-2 gap-4 mx-auto max-w-4xl">
-				<ul className="room-details-gallery">
+				<ul className="room-details-gallery md:sticky md:top-0">
 					{sortedImages.map((src) => (
 						<li key={src}>
 							<RoomDetailsImage alt={room.title} src={src} />
