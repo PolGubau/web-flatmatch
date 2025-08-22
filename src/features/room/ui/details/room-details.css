@@ -20,8 +20,8 @@ ul.room-details-gallery {
 
   li {
     list-style-type: none;
-    background-color: var(--color-slate-400);
     scroll-snap-align: center;
+    object-fit: cover;
     flex: 0 0 100%;
   }
    

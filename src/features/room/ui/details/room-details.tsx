@@ -54,7 +54,7 @@ export default function RoomDetails({ room }: Props) {
 				</ul>
 
 				<div className="flex flex-col gap-8 px-4">
-					<header className="grid grid-cols-[1fr_auto] gap-2 items-center">
+					<header className="grid grid-cols-[1fr_auto] gap-2 items-center sticky top-0 bg-background z-10">
 						<div className="flex flex-col gap-1">
 							<p className="text-lg text-foreground/80 flex gap-1 items-center">
 								<span className="font-semibold text-xl">{room.price.localePrice}</span>
@@ -124,11 +124,24 @@ export default function RoomDetails({ room }: Props) {
 					<p className="text-foreground/80">{room.description}</p>
 					<article className="p-4 border-t border-foreground/10 flex flex-col gap-2">
 						<h3>{t("commodities")}</h3>
-						<ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 items-center">
+						<ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2 items-center">
 							{Object.keys(room.commodities.whole.appliances).map((key) => {
+								const value =
+									room.commodities.whole.appliances[
+										key as keyof typeof room.commodities.whole.appliances
+									];
 								const match = commoditiesMap[key as keyof typeof commoditiesMap];
+								if (!match) {
+									return;
+								}
 								return (
-									<li className="flex items-center gap-2" key={key}>
+									<li
+										className={cn("flex items-center gap-2 p-2 rounded-xl", {
+											"bg-success/20": value,
+											"opacity-50 bg-error/10": !value,
+										})}
+										key={key}
+									>
 										<HugeiconsIcon icon={match.icon} size={25} />
 										<span className="text-sm line-clamp-1 truncate">{t(match.label)}</span>
 									</li>
@@ -140,12 +153,20 @@ export default function RoomDetails({ room }: Props) {
 						<h3>{t("extra_spaces")}</h3>
 						<ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 items-center">
 							{Object.keys(room.commodities.whole.extras).map((key) => {
+								const value =
+									room.commodities.whole.extras[key as keyof typeof room.commodities.whole.extras];
 								const match = extrasMap[key as keyof typeof extrasMap];
 								if (!match) {
 									return;
 								}
 								return (
-									<li className="flex items-center gap-2" key={key}>
+									<li
+										className={cn("flex items-center gap-2 p-2 rounded-xl", {
+											"bg-success/20": value,
+											"opacity-50 bg-error/10": !value,
+										})}
+										key={key}
+									>
 										<HugeiconsIcon icon={match.icon} size={25} />
 										<span className="text-sm line-clamp-1 truncate">{t(match.label)}</span>
 									</li>
