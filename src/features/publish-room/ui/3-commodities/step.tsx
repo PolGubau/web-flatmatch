@@ -3,36 +3,19 @@ import {
 	Bathtub01Icon,
 	BedBunkIcon,
 	BedIcon,
-	CarParking02Icon,
-	Coffee02Icon,
 	DeskIcon,
-	DishWasherIcon,
-	FastWindIcon,
-	HairDryerIcon,
-	MicrowaveIcon,
-	OvenIcon,
 	PatioIcon,
-	PoolIcon,
-	PulleyIcon,
-	RefrigeratorIcon,
-	Shirt01Icon,
 	Sink01Icon,
 	SquareArrowExpand01Icon,
-	TemperatureIcon,
-	TerraceIcon,
-	Tree04Icon,
-	Tv01Icon,
 	Wardrobe01Icon,
-	WheelchairIcon,
-	Wifi02Icon,
 	WindowsNewIcon,
 } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
-import type { Room } from "~/entities/room/room";
+import { commoditiesMap, extrasMap } from "~/shared/base/commodities";
 import { Input } from "~/shared/components/ui/input";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
@@ -340,81 +323,3 @@ export function CommoditiesForm() {
 		</form>
 	);
 }
-
-const extrasMap: Record<string, { label: string; icon: IconSvgElement }> = {
-	hasGarden: {
-		icon: Tree04Icon,
-		label: "Garden",
-	},
-	hasParking: {
-		icon: CarParking02Icon,
-		label: "Parking",
-	},
-	hasPool: {
-		icon: PoolIcon,
-		label: "Pool",
-	},
-	hasTerrace: {
-		icon: TerraceIcon,
-		label: "Terrace",
-	},
-};
-
-const commoditiesMap: Record<
-	keyof Room["commodities"]["whole"]["appliances"],
-	{ label: string; icon: IconSvgElement }
-> = {
-	hasAirConditioning: {
-		icon: FastWindIcon,
-		label: "Air Conditioning",
-	},
-	hasCoffeeMaker: {
-		icon: Coffee02Icon,
-		label: "Coffee Maker",
-	},
-	hasDishwasher: {
-		icon: DishWasherIcon,
-		label: "Dishwasher",
-	},
-	hasDryer: {
-		icon: HairDryerIcon,
-		label: "Dryer",
-	},
-	hasElevator: {
-		icon: PulleyIcon,
-		label: "Elevator",
-	},
-	hasHeating: {
-		icon: TemperatureIcon,
-		label: "Heating",
-	},
-	hasLaundry: {
-		icon: Shirt01Icon,
-		label: "Wash Machine",
-	},
-	hasMicrowave: {
-		icon: MicrowaveIcon,
-		label: "Microwave",
-	},
-	hasOven: {
-		icon: OvenIcon,
-		label: "Oven",
-	},
-	hasRefrigerator: {
-		icon: RefrigeratorIcon,
-		label: "Refrigerator",
-	},
-	hasTV: {
-		icon: Tv01Icon,
-		label: "TV",
-	},
-
-	hasWifi: {
-		icon: Wifi02Icon,
-		label: "WiFi",
-	},
-	isWheelchairAccessible: {
-		icon: WheelchairIcon,
-		label: "Wheelchair Accessible",
-	},
-};
