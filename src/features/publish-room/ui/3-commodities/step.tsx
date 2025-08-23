@@ -11,6 +11,7 @@ import {
 	WindowsNewIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { ErrorBoundary } from "app/root";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import type z from "zod";
@@ -144,7 +145,7 @@ export function CommoditiesForm() {
 											<HugeiconsIcon icon={data.icon} size={20} />
 											<span className="text-sm line-clamp-1">{data.label}</span>
 										</div>
-										<input className="sr-only" type="checkbox" {...field} defaultChecked={value} />
+										<input className="hidden" type="checkbox" {...field} defaultChecked={value} />
 									</label>
 								</li>
 							);
@@ -169,7 +170,7 @@ export function CommoditiesForm() {
 											<HugeiconsIcon icon={data.icon} size={20} />
 											<span className="text-sm">{data.label}</span>
 										</div>
-										<input className="sr-only" type="checkbox" {...field} defaultChecked={value} />
+										<input className="hidden" type="checkbox" {...field} defaultChecked={value} />
 									</label>
 								</li>
 							);
@@ -184,38 +185,34 @@ export function CommoditiesForm() {
 				</div>
 
 				<section className="border-t border-foreground/10 pt-4">
-					<div className="flex flex-col gap-4">
+					<div className="flex flex-col gap-8">
 						<h3>Room appliances</h3>
 
-						<header className="grid gap-4 grid-cols-2 items-center">
-							<div>
-								<label className="flex gap-2" htmlFor="area">
-									<span className="text-sm">Area (in m²)</span>
-								</label>
-								<Input
-									icon={SquareArrowExpand01Icon}
-									id="area"
-									max={999}
-									min={0}
-									placeholder="Enter area in m²"
-									{...register("commodities.room.area", {
-										required: true,
-										valueAsNumber: true,
-									})}
-								/>
-							</div>
-							<div className="flex gap-2 items-center">
-								<label htmlFor="bed-type">Bed Type</label>
+						<Input
+							className="w-fit"
+							icon={SquareArrowExpand01Icon}
+							id="area"
+							label="Area (in m²)"
+							max={999}
+							min={0}
+							placeholder="Enter area in m²"
+							{...register("commodities.room.area", {
+								required: true,
+								valueAsNumber: true,
+							})}
+						/>
+						<div className="flex gap-2 items-center">
+							<label htmlFor="bed-type">Bed Type</label>
 
-								<select {...register("commodities.room.bedType")} id="bed-type">
-									<option value="single">single</option>
-									<option value="double">double</option>
-									<option value="bunk">bunk</option>
-									<option value="sofa">sofa</option>
-									<option value="none">none</option>
-								</select>
-							</div>
-						</header>
+							<select {...register("commodities.room.bedType")} id="bed-type">
+								<option value="single">single</option>
+								<option value="double">double</option>
+								<option value="bunk">bunk</option>
+								<option value="sofa">sofa</option>
+								<option value="none">none</option>
+							</select>
+						</div>
+
 						<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
 							<li className="flex group cursor-pointer">
 								<label
@@ -228,7 +225,7 @@ export function CommoditiesForm() {
 										<span className="text-sm line-clamp-1">{"Has Balcony"}</span>
 									</div>
 									<input
-										className="sr-only"
+										className="hidden"
 										type="checkbox"
 										{...register("commodities.room.hasBalcony")}
 										defaultChecked={data.commodities.room?.hasBalcony}
@@ -246,7 +243,7 @@ export function CommoditiesForm() {
 										<span className="text-sm line-clamp-1">{"Has Window"}</span>
 									</div>
 									<input
-										className="sr-only"
+										className="hidden"
 										type="checkbox"
 										{...register("commodities.room.hasWindow")}
 										defaultChecked={data.commodities.room?.hasWindow}
@@ -264,7 +261,7 @@ export function CommoditiesForm() {
 										<span className="text-sm line-clamp-1">{"Has Working Desk"}</span>
 									</div>
 									<input
-										className="sr-only"
+										className="hidden"
 										type="checkbox"
 										{...register("commodities.room.hasWorkingDesk")}
 										defaultChecked={data.commodities.room?.hasWorkingDesk}
@@ -282,7 +279,7 @@ export function CommoditiesForm() {
 										<span className="text-sm line-clamp-1">{"Is furnished?"}</span>
 									</div>
 									<input
-										className="sr-only"
+										className="hidden"
 										type="checkbox"
 										{...register("commodities.room.isFurnished")}
 										defaultChecked={data.commodities.room?.isFurnished}
@@ -300,7 +297,7 @@ export function CommoditiesForm() {
 										<span className="text-sm line-clamp-1">{"Has own Bathroom?"}</span>
 									</div>
 									<input
-										className="sr-only"
+										className="hidden"
 										type="checkbox"
 										{...register("commodities.room.hasPrivateBathroom")}
 										defaultChecked={data.commodities.room?.hasPrivateBathroom}
