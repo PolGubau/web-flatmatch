@@ -12,6 +12,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "~/shared/i18n/i18n";
+import { LoadingSection } from "~/shared/components/LoadingSection";
 import { Toaster } from "~/shared/components/ui/sonner";
 
 export const links: Route.LinksFunction = () => [
@@ -27,7 +28,11 @@ export const links: Route.LinksFunction = () => [
 	},
 ];
 export function HydrateFallback() {
-	return <div>Loading...</div>;
+	return (
+		<main className="w-screen h-dvh grid place-items-center">
+			<LoadingSection />
+		</main>
+	);
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
