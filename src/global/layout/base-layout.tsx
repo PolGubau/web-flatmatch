@@ -6,6 +6,7 @@ import "../app.css";
 export const BaseLayout = () => {
 	const navigation = useNavigation();
 	const isNavigating = Boolean(navigation.location);
+
 	return (
 		<div className="bg-canvas text-foreground">
 			<Toaster />

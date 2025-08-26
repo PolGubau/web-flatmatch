@@ -12,6 +12,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "~/shared/i18n/i18n";
+import { AuthContextProvider } from "~/global/supabase/auth-context";
 import { LoadingSection } from "~/shared/components/LoadingSection";
 import { Toaster } from "~/shared/components/ui/sonner";
 
@@ -64,10 +65,12 @@ export default function App() {
 	});
 
 	return (
-		<QueryClientProvider client={queryClient}>
-			<Outlet />
-			<ReactQueryDevtools buttonPosition="bottom-right" />
-		</QueryClientProvider>
+		<AuthContextProvider>
+			<QueryClientProvider client={queryClient}>
+				<Outlet />
+				<ReactQueryDevtools buttonPosition="bottom-right" />
+			</QueryClientProvider>
+		</AuthContextProvider>
 	);
 }
 

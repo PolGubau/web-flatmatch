@@ -2,7 +2,6 @@ import { FavouriteIcon, Home01Icon, Message01Icon, UserIcon } from "@hugeicons/c
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, Outlet } from "react-router";
-import { Toaster } from "~/shared/components/ui/sonner";
 import type { TranslationKey } from "~/shared/i18n/i18n";
 
 type FooterMenuItem = {

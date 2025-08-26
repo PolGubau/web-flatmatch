@@ -2,6 +2,11 @@ import { index, layout, prefix, type RouteConfig, route } from "@react-router/de
 
 export default [
 	layout("../src/global/layout/base-layout.tsx", [
+		...prefix("auth", [
+			route("login", "./routes/auth/login.tsx"),
+			route("register", "./routes/auth/register.tsx"),
+		]),
+
 		// header + navbar
 		layout("../src/global/layout/main-layout.tsx", [
 			index("./routes/home.tsx"),
