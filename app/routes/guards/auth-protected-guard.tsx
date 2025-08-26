@@ -1,12 +1,13 @@
-import { Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import { useSession } from "~/shared/context/session-context";
-import LoginPage from "../auth/login";
 
 const AuthProtectedRoute = () => {
 	const { session } = useSession();
+
 	if (!session) {
+		console.log("Session checked and not found");
 		// or you can redirect to a different page and show a message
-		return <LoginPage redirectedBecauseGuard={true} />;
+		return <Navigate replace to="/auth/login?redirectedByGuard=true" />;
 	}
 	return <Outlet />;
 };

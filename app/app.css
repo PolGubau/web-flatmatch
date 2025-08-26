@@ -2,6 +2,7 @@
 
 @import "tailwindcss";
 @import "../src/shared/theme/colors.css";
+@import "../src/shared/theme/animations.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 

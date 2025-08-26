@@ -1,4 +1,4 @@
-import { VerifiedStar } from "~/shared/ui/verified/star";
+import { VerifiedStar } from "~/shared/components/ui/verified/star";
 import { ProfileAvatar } from "./avatar";
 
 type ProfileHeaderProps = {

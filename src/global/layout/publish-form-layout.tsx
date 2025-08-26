@@ -1,4 +1,5 @@
 import { Link, Outlet } from "react-router";
+import { GoHomeButton } from "~/shared/components/go-home-button";
 
 // const steps = [
 // 	{
@@ -31,10 +32,8 @@ export default function FormLayout() {
 
 	return (
 		<div className=" min-h-dvh grid grid-rows-[auto_1fr_auto] gap-2 py-3 md:py-6 max-w-4xl mx-auto px-4 md:px-6 w-full">
-			<header className="w-full pt-6flex flex-col gap-1">
-				<Link className="text-sm hover:underline w-fit" to={"/"}>
-					&larr; Go back
-				</Link>
+			<header className="w-full pt-6 flex flex-col gap-1">
+				<GoHomeButton />
 
 				<h1 className="text-2xl font-bold">Publish a new place</h1>
 			</header>

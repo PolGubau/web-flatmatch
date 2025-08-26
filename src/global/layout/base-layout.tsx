@@ -1,17 +1,19 @@
 import { Outlet, useNavigation } from "react-router";
-import { LoadingSection } from "~/shared/components/LoadingSection";
+import { LoadingSection } from "~/shared/components/pages/LoadingSection";
 import { Toaster } from "~/shared/components/ui/sonner";
 import "../app.css";
+import { OneTapComponent } from "../ui/dign-in-google";
 
-export const BaseLayout = () => {
+export default function BaseLayout() {
 	const navigation = useNavigation();
 	const isNavigating = Boolean(navigation.location);
 
 	return (
-		<div className="bg-canvas text-foreground">
-			<Toaster />
+		<div className="bg-foreground/10 text-foreground w-screen h-dvh">
 			{isNavigating && <LoadingSection />}
 			<Outlet />
+			<Toaster />
+			<OneTapComponent />
 		</div>
 	);
-};
+}

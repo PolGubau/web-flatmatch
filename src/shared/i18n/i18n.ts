@@ -2,7 +2,15 @@ import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
 import { initReactI18next } from "react-i18next";
-import en from "./locales/en.json";
+import en from "./locales/en.json" with { type: "json" };
+
+export type TranslationKey = keyof typeof resources.en.ns1;
+
+const keys = Object.keys(en) as (keyof typeof en)[];
+export const TranslationKeys = Object.fromEntries(keys.map((k) => [k, k])) as {
+	[K in TranslationKey]: K;
+};
+
 export const defaultNS = "ns1";
 
 export const resources = {
@@ -13,8 +21,6 @@ export const resources = {
 		ns1: en,
 	},
 } as const;
-
-export type TranslationKey = keyof typeof resources.en.ns1;
 
 i18n
 	.use(LanguageDetector)

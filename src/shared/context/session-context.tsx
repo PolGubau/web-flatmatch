@@ -1,7 +1,8 @@
 import type { Session } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "~/global/supabase/client";
-import { LoadingSection } from "../components/LoadingSection";
+import { LoadingSection } from "../components/pages/LoadingSection";
+import { TranslationKeys } from "../i18n/i18n";
 
 const SessionContext = createContext<{
 	session: Session | null;
@@ -20,22 +21,23 @@ export const useSession = () => {
 type Props = { children: React.ReactNode };
 export const SessionProvider = ({ children }: Props) => {
 	const [session, setSession] = useState<Session | null>(null);
-	const [isLoading, setIsLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: We want to run this effect only once on mount
 	useEffect(() => {
-		const authStateListener = supabase.auth.onAuthStateChange(async (_, session) => {
+		const {
+			data: { subscription },
+		} = supabase.auth.onAuthStateChange(async (_event, session) => {
 			setSession(session);
 			setIsLoading(false);
 		});
 
-		return () => {
-			authStateListener.data.subscription.unsubscribe();
-		};
+		return () => subscription.unsubscribe();
 	}, [supabase]);
 
 	return (
 		<SessionContext.Provider value={{ session }}>
-			{isLoading ? <LoadingSection title="loading_user" /> : children}
+			{isLoading ? <LoadingSection label={TranslationKeys.loading_user} /> : children}
 		</SessionContext.Provider>
 	);
 };

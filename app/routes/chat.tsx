@@ -1,3 +1,6 @@
+import { PleaseSignInPage } from "~/shared/components/pages/PleaseSignInPage";
+import { useSession } from "~/shared/context/session-context";
+
 export function meta() {
 	return [
 		{ title: "Chat | Flatmatch" },
@@ -6,6 +9,11 @@ export function meta() {
 }
 
 export default function Chat() {
+	const { session } = useSession();
+
+	if (!session) {
+		return <PleaseSignInPage />;
+	}
 	return (
 		<div className="overflow-y-auto overflow-x-hidden max-w-4xl mx-auto px-4 md:px-6 ">
 			<h1>Chat</h1>

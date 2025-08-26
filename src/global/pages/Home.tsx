@@ -2,7 +2,7 @@ import { Sheet } from "react-modal-sheet";
 import { useTinderCards } from "~/features/room/model/use-tinder-cards";
 import RoomDetails from "~/features/room/ui/details/room-details";
 import { RoomTinderCard } from "~/features/room/ui/room-tinder-card";
-import { LoadingSection } from "~/shared/components/LoadingSection";
+import { LoadingSection } from "~/shared/components/pages/LoadingSection";
 
 export default function HomePage() {
 	const { rooms, onSwipe, bottomDrawerRoom, handleCloseDrawer, isLoading } = useTinderCards();

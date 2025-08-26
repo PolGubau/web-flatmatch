@@ -1,5 +1,5 @@
 import type { Room } from "~/entities/room/room";
-import { VerifiedChip } from "~/shared/ui/verified/chip";
+import { VerifiedChip } from "~/shared/components/ui/verified/chip";
 import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 
 export function RoomTinderCardUI({ room }: { room: Room }) {

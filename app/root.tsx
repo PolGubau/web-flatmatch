@@ -13,7 +13,7 @@ import "./app.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "~/shared/i18n/i18n";
 import { AuthContextProvider } from "~/global/supabase/auth-context";
-import { LoadingSection } from "~/shared/components/LoadingSection";
+import { LoadingSection } from "~/shared/components/pages/LoadingSection";
 import { Toaster } from "~/shared/components/ui/sonner";
 
 export const links: Route.LinksFunction = () => [
@@ -46,6 +46,28 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Links />
 			</head>
 			<body id="modal-root">
+				<div
+					data-auto_select="true"
+					data-callback="handleSignInWithGoogle"
+					data-client_id="<client ID>"
+					data-context="signin"
+					data-itp_support="true"
+					data-nonce=""
+					data-use_fedcm_for_prompt="true"
+					data-ux_mode="popup"
+					id="g_id_onload"
+				></div>
+
+				<div
+					className="g_id_signin"
+					data-logo_alignment="left"
+					data-shape="pill"
+					data-size="large"
+					data-text="signin_with"
+					data-theme="outline"
+					data-type="standard"
+				></div>
+
 				{children}
 				<ScrollRestoration />
 				<Scripts />

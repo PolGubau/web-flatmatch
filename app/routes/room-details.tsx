@@ -3,7 +3,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "react-router";
 import { useRoom } from "~/features/room/model/use-room";
 import RoomDetails from "~/features/room/ui/details/room-details";
-import { LoadingSection } from "~/shared/components/LoadingSection";
+import { LoadingSection } from "~/shared/components/pages/LoadingSection";
 import type { Route } from "./+types/room-details";
 
 export function meta({ data }: Route.MetaArgs) {
