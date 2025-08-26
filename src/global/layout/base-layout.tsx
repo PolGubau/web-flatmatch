@@ -2,7 +2,7 @@ import { Outlet, useNavigation } from "react-router";
 import { LoadingSection } from "~/shared/components/pages/LoadingSection";
 import { Toaster } from "~/shared/components/ui/sonner";
 import "../app.css";
-import { OneTapComponent } from "../ui/dign-in-google";
+import { OneTapComponent } from "../ui/sign-in-google";
 
 export default function BaseLayout() {
 	const navigation = useNavigation();
