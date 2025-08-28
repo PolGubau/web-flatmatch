@@ -68,7 +68,7 @@ export const mockRooms: Room[] = [
 			lng: 2.15,
 			postalCode: "08012",
 		},
-		ownerId: "user_1",
+		ownerId: "acdada83-28f4-47f6-b0e8-418792bf1706",
 		preferences: {
 			age: { max: 35, min: 20 },
 			currentOccupation: { employed: true, other: false, student: true, unemployed: false },
@@ -175,7 +175,7 @@ export const mockRooms: Room[] = [
 			lng: 2.1649,
 			postalCode: "08036",
 		},
-		ownerId: "user_2",
+		ownerId: "acdada83-28f4-47f6-b0e8-418792bf1706",
 		preferences: {
 			age: { max: 30, min: 22 },
 			currentOccupation: { employed: true, other: false, student: true, unemployed: false },
@@ -284,7 +284,7 @@ export const mockRooms: Room[] = [
 			lng: 2.1343,
 			postalCode: "08028",
 		},
-		ownerId: "user_3",
+		ownerId: "acdada83-28f4-47f6-b0e8-418792bf1706",
 		preferences: {
 			age: { max: 40, min: 25 },
 			currentOccupation: { employed: true, other: false, student: false, unemployed: false },
@@ -393,7 +393,7 @@ export const mockRooms: Room[] = [
 			lng: 2.1895,
 			postalCode: "08026",
 		},
-		ownerId: "user_4",
+		ownerId: "acdada83-28f4-47f6-b0e8-418792bf1706",
 		preferences: {
 			age: { max: 28, min: 18 },
 			currentOccupation: { employed: false, other: false, student: true, unemployed: false },
