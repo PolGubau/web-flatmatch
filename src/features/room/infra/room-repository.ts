@@ -1,6 +1,6 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
+import type { RoomWithVerification } from "~/entities/room/room";
 import type { AbstractRepository } from "~/shared/abstracts/repo";
-import type { RoomDto } from "./dto/room.dto";
 import {
 	createRoom,
 	deleteRoom,
@@ -10,7 +10,7 @@ import {
 	updateRoom,
 } from "./room-api";
 
-type RoomRepository = AbstractRepository<RoomDto, EditableRoom>;
+type RoomRepository = AbstractRepository<RoomWithVerification, EditableRoom>;
 export const RoomRepository: RoomRepository = {
 	create: (data) => createRoom(data),
 	delete: (id) => deleteRoom(id),

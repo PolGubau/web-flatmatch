@@ -4,3 +4,7 @@ import type { RoomSchema } from "./room.schema";
 
 export type Room = z.infer<typeof RoomSchema>;
 export type Commodities = z.infer<typeof CommoditiesSchema>;
+
+export type RoomWithVerification = Room & {
+	isVerified: boolean;
+};

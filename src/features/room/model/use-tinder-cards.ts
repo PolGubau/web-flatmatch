@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import type { Room } from "~/entities/room/room";
+import type { Room, RoomWithVerification } from "~/entities/room/room";
 import type { SwipeDirection } from "~/features/room/types/common";
 import { RoomRepository } from "../infra/room-repository";
-import { roomAdapter } from "./adapter/room-adapter";
 import { listRoomsQuery } from "./queries/list-rooms.query";
 export const useTinderCards = () => {
-	const [bottomDrawerRoom, setBottomDrawerRoom] = useState<null | Room>(null);
+	const [bottomDrawerRoom, setBottomDrawerRoom] = useState<null | RoomWithVerification>(null);
 
 	const { rooms, isLoading } = listRoomsQuery();
-	const [roomsChunk, setRoomsChunk] = useState<Room[]>(rooms);
+	const [roomsChunk, setRoomsChunk] = useState<RoomWithVerification[]>(rooms);
 
 	useEffect(() => {
 		rooms && setRoomsChunk(rooms);
@@ -20,11 +19,11 @@ export const useTinderCards = () => {
 		setBottomDrawerRoom(null);
 	}
 
-	function getRoom(roomId: string) {
+	function getRoom(roomId: Room["id"]): RoomWithVerification | undefined {
 		return rooms.find((r) => r.id === roomId);
 	}
 
-	function removeThisRoom(roomId: string) {
+	function removeThisRoom(roomId: Room["id"]) {
 		// 2. Delete the swiped room
 		setRoomsChunk((prev) => prev.filter((r) => r.id !== roomId));
 	}
@@ -56,8 +55,7 @@ export const useTinderCards = () => {
 	async function prefetchMoreRooms() {
 		setIsFetching(true);
 		try {
-			const roomDtos = await RoomRepository.findAll();
-			const rooms = roomDtos.map(roomAdapter.mapDtoToRoom);
+			const rooms = await RoomRepository.findAll();
 
 			const newRoomsWithRandomId = rooms.map((r) => ({
 				...r,

@@ -1,6 +1,6 @@
-import type { RoomDto } from "../infra/dto/room.dto";
+import type { Room } from "~/entities/room/room";
 
-export const mockRooms: RoomDto[] = [
+export const mockRooms: Room[] = [
 	{
 		commodities: {
 			room: {
@@ -48,7 +48,7 @@ export const mockRooms: RoomDto[] = [
 				phone: "+34666666666",
 			},
 		},
-		createdAt: new Date("2024-07-10"),
+		createdAt: "2024-07-10",
 		description:
 			"Habitación con cama doble, escritorio y balcón en un piso con estudiantes internacionales.",
 		id: "room_1",
@@ -60,7 +60,6 @@ export const mockRooms: RoomDto[] = [
 			],
 			main: 0,
 		},
-		isVerified: { date: new Date("2025-07-01") },
 		location: {
 			address: "Carrer de Verdi 45",
 			city: "Barcelona",
@@ -69,6 +68,7 @@ export const mockRooms: RoomDto[] = [
 			lng: 2.15,
 			postalCode: "08012",
 		},
+		ownerId: "user_1",
 		preferences: {
 			age: { max: 35, min: 20 },
 			currentOccupation: { employed: true, other: false, student: true, unemployed: false },
@@ -84,6 +84,7 @@ export const mockRooms: RoomDto[] = [
 			currency: "EUR",
 			isIncluded: false,
 			isNegotiable: true,
+			localePrice: "480 €",
 			paymentFrequency: "monthly",
 		},
 		rentType: "shared",
@@ -98,12 +99,12 @@ export const mockRooms: RoomDto[] = [
 		},
 		status: "available",
 		timings: {
-			availableFrom: new Date("2025-09-01"),
+			availableFrom: "2025-09-01",
 			maximumStay: { unit: "month", value: 12 },
 			minimumStay: { unit: "month", value: 3 },
 		},
 		title: "Habitación luminosa en piso compartido en Gràcia",
-		updatedAt: new Date(),
+		updatedAt: new Date().toISOString(),
 		whoIsLiving: {
 			currentTenants: { female: 2, male: 1, other: 0 },
 			ownerLivesHere: false,
@@ -156,7 +157,7 @@ export const mockRooms: RoomDto[] = [
 				phone: "+34678901234",
 			},
 		},
-		createdAt: new Date("2024-07-12"),
+		createdAt: "2024-07-12",
 		description:
 			"Cómoda habitación con cama individual, escritorio y baño privado en piso moderno y tranquilo.",
 		id: "room_2",
@@ -166,7 +167,6 @@ export const mockRooms: RoomDto[] = [
 			],
 			main: 0,
 		},
-		isVerified: false,
 		location: {
 			address: "Carrer de Mallorca 120",
 			city: "Barcelona",
@@ -175,6 +175,7 @@ export const mockRooms: RoomDto[] = [
 			lng: 2.1649,
 			postalCode: "08036",
 		},
+		ownerId: "user_2",
 		preferences: {
 			age: { max: 30, min: 22 },
 			currentOccupation: { employed: true, other: false, student: true, unemployed: false },
@@ -190,6 +191,7 @@ export const mockRooms: RoomDto[] = [
 			currency: "EUR",
 			isIncluded: true,
 			isNegotiable: false,
+			localePrice: "600 €",
 			paymentFrequency: "monthly",
 		},
 		rentType: "shared",
@@ -204,12 +206,12 @@ export const mockRooms: RoomDto[] = [
 		},
 		status: "available",
 		timings: {
-			availableFrom: new Date("2025-10-01"),
+			availableFrom: new Date("2025-10-01").toISOString(),
 			maximumStay: { unit: "month", value: 12 },
 			minimumStay: { unit: "month", value: 6 },
 		},
 		title: "Habitación individual con baño privado en Eixample",
-		updatedAt: new Date(),
+		updatedAt: new Date().toISOString(),
 		whoIsLiving: {
 			currentTenants: { female: 0, male: 2, other: 0 },
 			ownerLivesHere: false,
@@ -262,7 +264,7 @@ export const mockRooms: RoomDto[] = [
 				phone: "+34932123456",
 			},
 		},
-		createdAt: new Date("2024-07-15"),
+		createdAt: "2024-07-15",
 		description:
 			"Espaciosa habitación doble con salida a terraza privada, ideal para parejas o trabajadores.",
 		id: "room_3",
@@ -274,7 +276,6 @@ export const mockRooms: RoomDto[] = [
 			],
 			main: 0,
 		},
-		isVerified: false,
 		location: {
 			address: "Carrer de Sants 202",
 			city: "Barcelona",
@@ -283,6 +284,7 @@ export const mockRooms: RoomDto[] = [
 			lng: 2.1343,
 			postalCode: "08028",
 		},
+		ownerId: "user_3",
 		preferences: {
 			age: { max: 40, min: 25 },
 			currentOccupation: { employed: true, other: false, student: false, unemployed: false },
@@ -298,6 +300,7 @@ export const mockRooms: RoomDto[] = [
 			currency: "EUR",
 			isIncluded: false,
 			isNegotiable: false,
+			localePrice: "700 €",
 			paymentFrequency: "monthly",
 		},
 		rentType: "shared",
@@ -312,12 +315,12 @@ export const mockRooms: RoomDto[] = [
 		},
 		status: "booked",
 		timings: {
-			availableFrom: new Date("2025-09-15"),
+			availableFrom: new Date("2025-09-15").toISOString(),
 			maximumStay: { unit: "month", value: 6 },
 			minimumStay: { unit: "month", value: 2 },
 		},
 		title: "Habitación amplia con terraza en Sants",
-		updatedAt: new Date(),
+		updatedAt: new Date().toISOString(),
 		whoIsLiving: {
 			currentTenants: { female: 1, male: 0, other: 0 },
 			ownerLivesHere: true,
@@ -370,7 +373,7 @@ export const mockRooms: RoomDto[] = [
 				phone: "+34666666667",
 			},
 		},
-		createdAt: new Date("2024-06-30"),
+		createdAt: "2024-06-30",
 		description:
 			"Ideal para estudiantes con presupuesto ajustado, en zona bien comunicada y tranquila.",
 		id: "room_4",
@@ -382,7 +385,6 @@ export const mockRooms: RoomDto[] = [
 			],
 			main: 0,
 		},
-		isVerified: { date: new Date("2025-07-10") },
 		location: {
 			address: "Carrer de Rogent 78",
 			city: "Barcelona",
@@ -391,6 +393,7 @@ export const mockRooms: RoomDto[] = [
 			lng: 2.1895,
 			postalCode: "08026",
 		},
+		ownerId: "user_4",
 		preferences: {
 			age: { max: 28, min: 18 },
 			currentOccupation: { employed: false, other: false, student: true, unemployed: false },
@@ -406,6 +409,7 @@ export const mockRooms: RoomDto[] = [
 			currency: "EUR",
 			isIncluded: false,
 			isNegotiable: true,
+			localePrice: "350 €",
 			paymentFrequency: "monthly",
 		},
 		rentType: "shared",
@@ -420,12 +424,12 @@ export const mockRooms: RoomDto[] = [
 		},
 		status: "available",
 		timings: {
-			availableFrom: new Date("2025-08-20"),
+			availableFrom: new Date("2025-08-20").toISOString(),
 			maximumStay: { unit: "month", value: 6 },
 			minimumStay: { unit: "month", value: 1 },
 		},
 		title: "Habitación económica en piso familiar en El Clot",
-		updatedAt: new Date(),
+		updatedAt: new Date().toISOString(),
 		whoIsLiving: {
 			currentTenants: { female: 1, male: 0, other: 0 },
 			ownerLivesHere: true,

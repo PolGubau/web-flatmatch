@@ -1,11 +1,11 @@
-import type { Room } from "~/entities/room/room";
+import type { Room, RoomWithVerification } from "~/entities/room/room";
 import { useDeleteRoomMutation } from "./mutations/delete-room.mutation";
 import { useUpdateRoomMutation } from "./mutations/update-room.mutation";
 import { getRoomQuery } from "./queries/get-room.query";
 
 type UseRoomResponse = {
 	isLoading: boolean;
-	room: Room | null;
+	room: RoomWithVerification | null;
 	deleteRoom: (id: string) => void;
 	updateRoom: (room: Room) => void;
 };

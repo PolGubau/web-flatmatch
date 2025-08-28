@@ -1,10 +1,12 @@
 import { z } from "zod";
 
 export const RentTypeSchema = z.enum(["room", "shared", "entire"]);
+export type RentType = z.infer<typeof RentTypeSchema>;
 export const PaymentFrequencySchema = z.enum(["monthly", "weekly", "daily"]);
 export const StayUnitSchema = z.enum(["day", "week", "month", "year"]);
 export const BedTypeSchema = z.enum(["single", "double", "bunk", "sofa", "none"]);
 export const RoomStatusSchema = z.enum(["available", "booked", "unlisted"]);
+export type RoomStatus = z.infer<typeof RoomStatusSchema>;
 export const ZipCodeSchema = z.string().regex(/^\d{5}$/, "Selecciona una calle correcta");
 
 // Sub-schemas
@@ -16,6 +18,7 @@ export const LocationSchema = z.object({
 	lng: z.number(),
 	postalCode: ZipCodeSchema.optional(),
 });
+export type RoomLocation = z.infer<typeof LocationSchema>;
 
 export const PriceSchema = z.object({
 	additionalCosts: z.object({
@@ -30,6 +33,7 @@ export const PriceSchema = z.object({
 	localePrice: z.string(),
 	paymentFrequency: PaymentFrequencySchema,
 });
+export type RoomPrice = z.infer<typeof PriceSchema>;
 
 export const CommoditiesWholeSchema = z.object({
 	appliances: z.object({
@@ -61,7 +65,7 @@ export const CommoditiesWholeSchema = z.object({
 		hasTerrace: z.boolean(),
 	}),
 });
-
+export type RoomCommoditiesWhole = z.infer<typeof CommoditiesWholeSchema>;
 export const CommoditiesRoomSchema = z.object({
 	area: z.number(),
 	bedType: BedTypeSchema,
@@ -71,11 +75,13 @@ export const CommoditiesRoomSchema = z.object({
 	hasWorkingDesk: z.boolean(),
 	isFurnished: z.boolean(),
 });
+export type RoomCommoditiesRoom = z.infer<typeof CommoditiesRoomSchema>;
 
 export const CommoditiesSchema = z.object({
 	room: CommoditiesRoomSchema.optional(),
 	whole: CommoditiesWholeSchema,
 });
+export type RoomCommodities = z.infer<typeof CommoditiesSchema>;
 
 export const RulesSchema = z.object({
 	childrenAllowed: z.boolean(),
@@ -92,15 +98,17 @@ export const RulesSchema = z.object({
 	]),
 	smokingAllowed: z.boolean(),
 });
+export type RoomRules = z.infer<typeof RulesSchema>;
 
 export const ImagesSchema = z.object({
 	gallery: z.array(z.union([z.instanceof(File), z.string()])).min(1),
 	main: z.number(),
 });
+export type RoomImages = z.infer<typeof ImagesSchema>;
 
 export const TimingsSchema = z.object({
-	availableFrom: z.coerce.date(),
-	availableUntil: z.coerce.date().optional(),
+	availableFrom: z.string(),
+	availableUntil: z.string().optional(),
 	maximumStay: z.union([
 		z.object({
 			unit: StayUnitSchema,
@@ -113,6 +121,7 @@ export const TimingsSchema = z.object({
 		value: z.number(),
 	}),
 });
+export type RoomTimings = z.infer<typeof TimingsSchema>;
 
 export const WhoIsLivingSchema = z.object({
 	currentTenants: z.object({
@@ -122,6 +131,7 @@ export const WhoIsLivingSchema = z.object({
 	}),
 	ownerLivesHere: z.boolean(),
 });
+export type RoomWhoIsLiving = z.infer<typeof WhoIsLivingSchema>;
 
 export const ContactSchema = z.object({
 	agent: z
@@ -137,7 +147,7 @@ export const ContactSchema = z.object({
 		phone: z.string(),
 	}),
 });
-
+export type RoomContact = z.infer<typeof ContactSchema>;
 export const PreferencesSchema = z.object({
 	age: z.object({
 		max: z.number(),
@@ -155,13 +165,7 @@ export const PreferencesSchema = z.object({
 		other: z.boolean(),
 	}),
 });
-
-export const VerificationSchema = z.union([
-	z.literal(false),
-	z.object({
-		date: z.coerce.date(),
-	}),
-]);
+export type RoomPreferences = z.infer<typeof PreferencesSchema>;
 
 export const EditableRoomSchema = z.object({
 	commodities: CommoditiesSchema,
@@ -170,8 +174,6 @@ export const EditableRoomSchema = z.object({
 	description: z.string(),
 
 	images: ImagesSchema,
-
-	isVerified: VerificationSchema,
 
 	location: LocationSchema,
 

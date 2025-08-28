@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import type { Room } from "~/entities/room/room";
+import type { Room, RoomWithVerification } from "~/entities/room/room";
 import { listAllRoomsService } from "../services/room.service";
 
 /**
@@ -9,13 +9,13 @@ import { listAllRoomsService } from "../services/room.service";
 
 type ListRoomResponse = {
 	isLoading: boolean;
-	rooms: Room[];
+	rooms: RoomWithVerification[];
 };
 
 type ListRoomQuery = () => ListRoomResponse;
 
 export const listRoomsQuery: ListRoomQuery = () => {
-	const { data, isLoading } = useQuery<Room[]>({
+	const { data, isLoading } = useQuery<RoomWithVerification[]>({
 		queryFn: listAllRoomsService,
 		queryKey: ["rooms"],
 	});

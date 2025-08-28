@@ -46,7 +46,6 @@ export const emptyEditableRoom: EditableRoom = {
 		gallery: [],
 		main: 0,
 	},
-	isVerified: false,
 	location: {
 		address: "",
 		city: "bcn",
@@ -97,7 +96,7 @@ export const emptyEditableRoom: EditableRoom = {
 	},
 	status: "available",
 	timings: {
-		availableFrom: new Date(),
+		availableFrom: new Date().toISOString(),
 		availableUntil: undefined,
 		maximumStay: undefined,
 		minimumStay: {

@@ -13,20 +13,20 @@ type Props = React.ComponentProps<typeof Calendar> & {
 };
 export function DatePicker({ className, name, placeholder, ...props }: Props) {
 	const [open, setOpen] = React.useState<boolean>(false);
-	const [date, setDate] = React.useState<Date | null>(null);
+	const [date, setDate] = React.useState<string | null>(null);
 
 	return (
 		<>
 			<input
 				hidden
 				name={name}
-				onChange={(e) => setDate(new Date(e.target.value))}
-				value={date?.toISOString()}
+				onChange={(e) => setDate(e.target.value)}
+				value={date ?? undefined}
 			/>
 			<Popover onOpenChange={setOpen} open={open}>
 				<PopoverTrigger asChild>
 					<Button className=" justify-between font-normal" id="date" variant="outline">
-						{date ? date.toLocaleDateString() : placeholder}
+						{date ? date : placeholder}
 						<HugeiconsIcon icon={ArrowDown01Icon} />
 					</Button>
 				</PopoverTrigger>
@@ -36,10 +36,10 @@ export function DatePicker({ className, name, placeholder, ...props }: Props) {
 						captionLayout="dropdown"
 						mode="single"
 						onSelect={(date) => {
-							setDate(date);
+							setDate(date?.toISOString() ?? null);
 							setOpen(false);
 						}}
-						selected={date}
+						selected={date ? new Date(date) : undefined}
 					/>
 				</PopoverContent>
 			</Popover>

@@ -1,10 +1,10 @@
 import { motion, useMotionValue, useTransform } from "motion/react";
-import type { Room } from "~/entities/room/room";
+import type { Room, RoomWithVerification } from "~/entities/room/room";
 import type { SwipeDirection } from "../types/common";
 import { RoomTinderCardUI } from "./room-tinder-card-ui";
 
 type RoomTinderCardProps = {
-	room: Room;
+	room: RoomWithVerification;
 	onSwipe: (roomId: Room["id"], direction: SwipeDirection) => void;
 	index: number;
 };
