@@ -21,7 +21,8 @@ export const useUpdateUser: UseUpdateUser = (id) => {
 		mutationFn: (updates: Partial<User>) => {
 			return UserRepository.update(id, updates);
 		},
-		onError: (_err, _updates, context) => {
+		onError: (err, _updates, context) => {
+			console.log(err);
 			// Rollback si hay error
 			if (context?.previousUser) {
 				queryClient.setQueryData(["user", id], context.previousUser);
@@ -46,6 +47,7 @@ export const useUpdateUser: UseUpdateUser = (id) => {
 		},
 
 		onSuccess: (updatedUser) => {
+			console.log("User updated successfully");
 			if (updatedUser) {
 				// actualiza el cache del usuario individual
 				queryClient.setQueryData<User>(["user", id], updatedUser);

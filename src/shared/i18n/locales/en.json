@@ -5,6 +5,7 @@
 	"bedrooms": "{{count}} rooms",
 	"bio_placeholder": "I'm searching a 2 rooms apartment...",
 	"birthdate": "Birthdate",
+	"birthdate_placeholder": "Select your birthdate",
 	"chat": "Chat",
 	"coffee_maker": "Coffee Maker",
 	"commodities": "Commodities",

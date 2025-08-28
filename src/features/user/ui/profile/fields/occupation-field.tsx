@@ -1,6 +1,7 @@
 import type React from "react";
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
+import { Label } from "~/shared/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -23,9 +24,7 @@ export const OccupationField = ({ ...props }: Props) => {
 
 	return (
 		<fieldset className="grid md:grid-cols-[1fr_2fr] gap-2">
-			<label className="text-sm font-medium px-2" htmlFor={id}>
-				{t("your_occupation")}
-			</label>
+			<Label htmlFor={id}>{t("your_occupation")}</Label>
 			<Select {...mergedProps}>
 				<SelectTrigger className="w-[180px]">
 					<SelectValue placeholder={t("select_occupation")} />

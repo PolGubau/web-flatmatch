@@ -8,7 +8,7 @@ export const dtoToDomain = (u: UserDB): User => ({
 	aboutMe: u.about_me ?? undefined,
 	authProvider: u.auth_provider ?? undefined,
 	avatarUrl: u.avatar_url ?? undefined,
-	birthDate: u.birth_date ? new Date(u.birth_date) : null,
+	birthDate: u.birth_date ?? null,
 	createdAt: u.created_at ? new Date(u.created_at) : new Date(),
 	email: u.email,
 	gender: (u.gender as Gender) ?? "unknown",
@@ -36,7 +36,7 @@ export const domainToDb = (dto: Partial<User>): Partial<UserDB> => ({
 	about_me: dto.aboutMe ?? null,
 	auth_provider: dto.authProvider ?? null,
 	avatar_url: dto.avatarUrl ?? null,
-	birth_date: dto.birthDate?.toISOString().split("T")[0] ?? null, // YYYY-MM-DD
+	birth_date: dto.birthDate ?? null, // YYYY-MM-DD
 	email: dto.email,
 	gender: dto.gender,
 	languages_spoken: dto.languagesSpoken ?? null,

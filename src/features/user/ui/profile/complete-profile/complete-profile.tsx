@@ -1,7 +1,7 @@
 import type { User } from "~/entities/user/user";
 import { ChangeBioForm } from "./change-bio-form";
-import { ChangeOccupationForm } from "./change-occupation-form";
 import { ChangeBirthdateForm } from "./change-birthdate-form";
+import { ChangeOccupationForm } from "./change-occupation-form";
 
 type Props = {
 	aboutMe: User["aboutMe"] | null;

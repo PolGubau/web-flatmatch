@@ -43,7 +43,7 @@ export const UserSchema = z.object({
 	authProvider: z.string().optional(),
 	avatarUrl: z.url().optional(),
 
-	birthDate: z.date().nullable(),
+	birthDate: z.string().nullable(),
 
 	createdAt: z.date(),
 	email: z.string().email(),

@@ -29,7 +29,9 @@ export default function ProfilePage({ userId, isYours }: Props) {
 		},
 		{
 			icon: Calendar03Icon,
-			label: user.birthDate ? t("years", { count: dateToYearsAgo(user.birthDate) }) : t("unknown"),
+			label: user.birthDate
+				? t("years", { count: dateToYearsAgo(new Date(user.birthDate)) })
+				: t("unknown"),
 		},
 		{
 			icon: WorkIcon,

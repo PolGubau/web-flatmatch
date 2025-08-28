@@ -5,7 +5,7 @@ import type * as React from "react";
 import { cn } from "~/shared/utils/utils";
 
 const buttonVariants = cva(
-	"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-error/20 dark:aria-invalid:ring-error/40 aria-invalid:border-error cursor-pointer",
+	"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-foreground/50 focus-visible:ring-2 aria-invalid:ring-error/20 dark:aria-invalid:ring-error/40 aria-invalid:border-error cursor-pointer",
 	{
 		defaultVariants: {
 			size: "default",
@@ -22,10 +22,10 @@ const buttonVariants = cva(
 				default: "bg-primary text-canvas shadow-xs hover:bg-primary/90",
 				destructive:
 					"bg-error text-white shadow-xs hover:bg-error/90 focus-visible:ring-error/20 dark:focus-visible:ring-error/40 dark:bg-error/60",
-				ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+				ghost: "hover:bg-foreground/10 hover:text-foreground",
 				link: "text-primary underline-offset-4 hover:underline",
 				outline:
-					"border bg-canvas shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+					"bg-transparent border-2 border-foreground/30 shadow-xs hover:bg-foreground/5 text-foreground/80 hover:text-foreground",
 				secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
 			},
 		},
