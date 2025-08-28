@@ -8,7 +8,6 @@ export function meta() {
 
 export default function Profile() {
 	const { session } = useSession();
-
 	if (!session) {
 		return <PleaseSignInPage />;
 	}
@@ -17,7 +16,7 @@ export default function Profile() {
 
 	return (
 		<div className="overflow-y-auto overflow-x-hidden max-w-4xl mx-auto px-4 md:px-6 ">
-			<ProfilePage userId={userId} />
+			<ProfilePage isYours userId={userId} />
 		</div>
 	);
 }

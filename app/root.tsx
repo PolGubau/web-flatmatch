@@ -46,28 +46,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Links />
 			</head>
 			<body id="modal-root">
-				<div
-					data-auto_select="true"
-					data-callback="handleSignInWithGoogle"
-					data-client_id="<client ID>"
-					data-context="signin"
-					data-itp_support="true"
-					data-nonce=""
-					data-use_fedcm_for_prompt="true"
-					data-ux_mode="popup"
-					id="g_id_onload"
-				></div>
-
-				<div
-					className="g_id_signin"
-					data-logo_alignment="left"
-					data-shape="pill"
-					data-size="large"
-					data-text="signin_with"
-					data-theme="outline"
-					data-type="standard"
-				></div>
-
 				{children}
 				<ScrollRestoration />
 				<Scripts />

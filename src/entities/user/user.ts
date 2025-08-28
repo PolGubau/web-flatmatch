@@ -1,57 +1,62 @@
-export interface User {
-	id: string;
-	name: string;
-	lastname: string;
-	email: string;
-	phone?: string;
-	avatarUrl?: string;
+import { z } from "zod";
 
-	birthDate: Date;
-	gender: "male" | "female" | "other" | "prefer_not_to_say";
-	occupation: "student" | "employed" | "unemployed" | "other";
+// Enum-like strings
+export const GenderSchema = z.enum(["male", "female", "other", "prefer_not_to_say", "unknown"]);
+export type Gender = z.infer<typeof GenderSchema>;
 
-	createdAt: Date;
-	updatedAt: Date;
+export const OccupationSchema = z.enum(["student", "employed", "unemployed", "other"]);
+export type Occupation = z.infer<typeof OccupationSchema>;
 
-	aboutMe?: string; // breve bio para el perfil público
-	languagesSpoken?: string[]; // ej: ['es', 'en', 'fr']
-	isVerified: {
-		email: boolean;
-		phone: boolean;
-		idCheck: boolean;
-	};
+// Preferences
+export const PreferencesSchema = z.object({
+	age: z.object({
+		max: z.number(),
+		min: z.number(),
+	}),
+	duration: z
+		.object({
+			unit: z.enum(["month", "year"]),
+			value: z.number(),
+		})
+		.optional(),
+	gender: z.object({
+		female: z.boolean(),
+		male: z.boolean(),
+		other: z.boolean(),
+	}),
+	maxBudget: z.number(),
+	moveInDate: z.string().optional(), // YYYY-MM-DD
+	occupation: z.object({
+		employed: z.boolean(),
+		other: z.boolean(),
+		student: z.boolean(),
+		unemployed: z.boolean(),
+	}),
+	rentType: z.array(z.enum(["shared", "room", "entire"])),
+});
+export type Preferences = z.infer<typeof PreferencesSchema>;
 
-	// Qué busca
-	preferences: {
-		gender: {
-			male: boolean;
-			female: boolean;
-			other: boolean;
-		};
-		age: {
-			min: number;
-			max: number;
-		};
-		occupation: {
-			student: boolean;
-			employed: boolean;
-			unemployed: boolean;
-			other: boolean;
-		};
-		rentType: ("shared" | "room" | "entire")[];
-		maxBudget: number;
-		moveInDate?: string; // YYYY-MM-DD
-		duration?: {
-			unit: "month" | "year";
-			value: number;
-		};
-	};
+// User
+export const UserSchema = z.object({
+	aboutMe: z.string().max(200).optional(),
 
-	// Relacional
-	savedRoomIds?: string[];
-	listedRoomIds?: string[];
+	authProvider: z.string().optional(),
+	avatarUrl: z.url().optional(),
 
-	// Login info (si usas auth externa)
-	authProvider?: "credentials" | "google" | "facebook";
-	providerId?: string; // ID externo (si aplica)
-}
+	birthDate: z.date().nullable(),
+
+	createdAt: z.date(),
+	email: z.string().email(),
+	gender: GenderSchema,
+	id: z.string(),
+	languagesSpoken: z.array(z.string()).optional(),
+	lastname: z.string(),
+	name: z.string(),
+	occupation: OccupationSchema,
+	phone: z.string().optional(),
+
+	preferences: PreferencesSchema,
+	providerId: z.string().optional(),
+	updatedAt: z.date(),
+});
+export type User = z.infer<typeof UserSchema>;

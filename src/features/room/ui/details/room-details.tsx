@@ -3,24 +3,20 @@ import {
 	BedDoubleIcon,
 	CancelCircleIcon,
 	FavouriteIcon,
-	Mail01Icon,
 	SecurityCheckIcon,
 	Sink01Icon,
-	TelephoneIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router";
 import type { Room } from "~/entities/room/room";
 import { mockUsers } from "~/features/user/__mock__/users";
+import { commoditiesMap, extrasMap } from "~/shared/base/commodities";
 import { MapWithMarker } from "~/shared/components/map";
-import { Button } from "~/shared/components/ui/button";
 import { cn } from "~/shared/utils/utils";
 import CopyRoomLinkButton from "./copy-room-link-button";
+import { ContactButtons } from "./footer/contact-buttons";
 import { RoomDetailsImage } from "./image";
 import "./room-details.css";
-import { commoditiesMap, extrasMap } from "~/shared/base/commodities";
-import { ContactButtons } from "./footer/contact-buttons";
 
 type Props = {
 	room: Room;
@@ -37,8 +33,7 @@ export default function RoomDetails({ room }: Props) {
 	const { female, male, other } = room.whoIsLiving.currentTenants;
 	const peopleAmount = female + male + other;
 
-	const user = mockUsers[0];
-	const isFavourite = user.savedRoomIds?.includes(room.id);
+	const isFavourite = false;
 
 	// Gallery with the main first
 	const sortedImages = [restOfImages[image], ...restOfImages.filter((_, i) => i !== image)];

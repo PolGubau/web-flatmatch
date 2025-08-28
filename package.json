@@ -22,6 +22,7 @@
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"cmdk": "^1.1.1",
+		"date-fns": "^4.1.0",
 		"google-one-tap": "^1.0.6",
 		"i18next": "^25.3.6",
 		"i18next-browser-languagedetector": "^8.2.0",
@@ -32,6 +33,7 @@
 		"motion": "^12.23.12",
 		"next-themes": "^0.4.6",
 		"react": "^19.1.0",
+		"react-day-picker": "^9.9.0",
 		"react-dom": "^19.1.0",
 		"react-i18next": "^15.6.1",
 		"react-leaflet": "^5.0.0",
@@ -56,6 +58,7 @@
 		"jiti": "^2.5.1",
 		"react-hook-form": "^7.62.0",
 		"tailwindcss": "^4.1.4",
+		"tailwindcss-animate": "^1.0.7",
 		"tw-animate-css": "^1.3.7",
 		"typescript": "^5.8.3",
 		"vite": "^6.3.3",
@@ -69,7 +72,8 @@
 		"dev": "react-router dev",
 		"lint": "pnpm exec biome lint --write --unsafe ./src ./app",
 		"start": "react-router-serve ./build/server/index.js",
-		"typecheck": "react-router typegen && tsc"
+		"typecheck": "react-router typegen && tsc",
+		"update-types": "supabase gen types typescript --project-id https://eazucuralkbhkzrztanc.supabase.co --schema public > src/global/supabase/types.ts"
 	},
 	"type": "module"
 }

@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 import { type HTMLAttributes, useMemo, useState } from "react";
 import { cn } from "~/shared/utils/utils";
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "./command";
-import { Input } from "./input";
+import { Input } from "./input/input";
 import { Popover, PopoverAnchor, PopoverContent } from "./popover";
 import { Skeleton } from "./skeleton";
 

@@ -1,14 +1,16 @@
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import type * as React from "react";
-
+import type { Breakpoints } from "~/shared/types/common";
 import { cn } from "~/shared/utils/utils";
+import { inputTheme } from "./theme";
 
-type InputProps = React.ComponentProps<"input"> & {
+type InputProps = Omit<React.ComponentProps<"input">, "size"> & {
 	icon?: IconSvgElement;
 	label?: string;
+	size?: Breakpoints;
 };
 
-function Input({ className, type, icon, label, ...props }: InputProps) {
+function Input({ className, type, icon, label, size = "md", ...props }: InputProps) {
 	return (
 		<div className="flex flex-col gap-1">
 			{label && (
@@ -28,17 +30,13 @@ function Input({ className, type, icon, label, ...props }: InputProps) {
 
 				<input
 					className={cn(
-						"file:text-foreground file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium",
-						"disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-						"",
-						"placeholder:text-foreground/70 placeholder:text-sm border-foreground/30 flex h-12 rounded-xl w-full min-w-0 border-2 pr-2 pl-4 py-1 transition-[color,box-shadow] outline-none",
-						"focus-visible:border-foreground",
-						"aria-invalid:ring-error/20 dark:aria-invalid:ring-error/40 aria-invalid:border-error",
+						inputTheme,
 						{
-							"pl-10": icon,
+							"pl-10": !!icon,
 						},
 						className,
 					)}
+					data-size={size}
 					data-slot="input"
 					type={type}
 					{...props}

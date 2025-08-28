@@ -17,7 +17,7 @@ import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { commoditiesMap, extrasMap } from "~/shared/base/commodities";
-import { Input } from "~/shared/components/ui/input";
+import { Input } from "~/shared/components/ui/input/input";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 

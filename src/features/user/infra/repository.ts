@@ -1,9 +1,9 @@
 import type { EditableUser } from "~/entities/user/editable-user";
+import type { User } from "~/entities/user/user";
 import type { AbstractRepository } from "~/shared/abstracts/repo";
 import { createUser, deleteUser, getAllUsers, getManyUsers, getOneUser, updateUser } from "./api";
-import type { UserDto } from "./dto/user.dto";
 
-type UserRepository = AbstractRepository<UserDto, EditableUser>;
+type UserRepository = AbstractRepository<User, EditableUser>;
 export const UserRepository: UserRepository = {
 	create: (data) => createUser(data),
 	delete: (id) => deleteUser(id),

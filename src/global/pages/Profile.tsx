@@ -1,19 +1,27 @@
 import { Calendar03Icon, UserAccountIcon, WorkIcon } from "@hugeicons/core-free-icons";
 import { useTranslation } from "react-i18next";
-import { mockUsers } from "~/features/user/__mock__/users";
+import { useUser } from "~/features/user/model/use-user";
 import type { Item } from "~/features/user/ui/profile/chip-item";
 import ProfileChipList from "~/features/user/ui/profile/chip-list";
+import { CompleteProfile } from "~/features/user/ui/profile/complete-profile/complete-profile";
 import ProfileHeader from "~/features/user/ui/profile/header";
 import { dateToYearsAgo } from "~/shared/utils/formatters/dates/date-to-years-ago";
 
 type Props = {
 	userId: string;
+	isYours: boolean;
 };
 
-export default function ProfilePage({ userId }: Props) {
-	const { t } = useTranslation();
-	const user = mockUsers.find((user) => user.id === userId);
-	if (!user) return null;
+export default function ProfilePage({ userId, isYours }: Props) {
+	const { data: user, isLoading, dataUpdatedAt } = useUser(userId);
+	// get user by id
+	const { t, i18n } = useTranslation();
+	if (!user) {
+		return <div>This user is not available</div>;
+	}
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
 	const chips: Item[] = [
 		{
 			icon: UserAccountIcon,
@@ -21,11 +29,11 @@ export default function ProfilePage({ userId }: Props) {
 		},
 		{
 			icon: Calendar03Icon,
-			label: t("years", { count: dateToYearsAgo(user.birthDate) }),
+			label: user.birthDate ? t("years", { count: dateToYearsAgo(user.birthDate) }) : t("unknown"),
 		},
 		{
 			icon: WorkIcon,
-			label: t(user.occupation),
+			label: user.occupation ? t(user.occupation) : t("unknown"),
 		},
 	];
 	return (
@@ -38,6 +46,19 @@ export default function ProfilePage({ userId }: Props) {
 			/>
 
 			<ProfileChipList items={chips} />
+
+			{isYours && (
+				<CompleteProfile
+					aboutMe={user.aboutMe}
+					birthDate={user.birthDate}
+					occupation={user.occupation}
+					userId={user.id}
+				/>
+			)}
+
+			<footer>
+				<small>Last updated: {new Date(dataUpdatedAt).toLocaleString(i18n.language)}</small>
+			</footer>
 		</div>
 	);
 }

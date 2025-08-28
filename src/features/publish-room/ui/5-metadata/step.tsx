@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
-import { Input } from "~/shared/components/ui/input";
+import { Input } from "~/shared/components/ui/input/input";
 import { Textarea } from "~/shared/components/ui/textarea";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";

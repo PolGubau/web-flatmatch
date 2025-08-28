@@ -1,3 +1,3 @@
-import type { UserDto } from "~/features/user/infra/dto/user.dto";
+import type { User } from "./user";
 
-export type EditableUser = Omit<UserDto, "id" | "createdAt" | "updatedAt">;
+export type EditableUser = Omit<User, "id" | "createdAt" | "updatedAt">;

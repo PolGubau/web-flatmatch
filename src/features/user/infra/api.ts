@@ -1,56 +1,79 @@
 import type { EditableUser } from "~/entities/user/editable-user";
 import type { User } from "~/entities/user/user";
+import { supabase } from "~/global/supabase/client";
+import type { Tables } from "~/global/supabase/types";
+import type { Inserts, Updates } from "~/global/supabase/types-helpers";
 import type { Create, Delete, FindAll, FindById, FindMany, Update } from "~/shared/abstracts/repo";
-import { mockUsers } from "../__mock__/users";
-import type { UserDto } from "./dto/user.dto";
+import { userMapper } from "./mappers/user.mapper";
 
-export const getAllUsers: FindAll<UserDto> = async () => {
-	await new Promise((r) => {
-		setTimeout(() => r(mockUsers), 500);
-	});
+export type UserDB = Tables<"users">;
+export type InsertUser = Inserts<"users">;
+export type UpdateUser = Updates<"users">;
 
-	return mockUsers;
+/**
+ * Get all users
+ */
+export const getAllUsers: FindAll<User> = async (): Promise<User[]> => {
+	const { data, error } = await supabase.from("users").select("*");
+	if (error) throw error;
+	return data.map(userMapper.toDomain);
 };
 
-export const getOneUser: FindById<UserDto> = async (id) => {
-	const found = mockUsers.find((r) => r.id === id);
-	return found ?? null;
+/**
+ * Get one user by id
+ */
+export const getOneUser: FindById<User> = async (id): Promise<User | null> => {
+	const { data, error } = await supabase.from("users").select("*").eq("id", id).maybeSingle();
+
+	if (error) throw error;
+	return data ? userMapper.toDomain(data) : null;
 };
 
-export const getManyUsers: FindMany<UserDto> = async (ids) => {
-	return mockUsers.filter((r) => ids.includes(r.id)) ?? [];
+/**
+ * Get many users by ids
+ */
+export const getManyUsers: FindMany<User> = async (ids): Promise<User[]> => {
+	const { data, error } = await supabase.from("users").select("*").in("id", ids);
+	if (error) throw error;
+	return data.map(userMapper.toDomain) ?? [];
 };
 
-export const createUser: Create<UserDto, EditableUser> = async (editableUser) => {
-	const newUser: User = {
+/**
+ * Create a new user
+ */
+export const createUser: Create<User, EditableUser> = async (editableUser): Promise<User> => {
+	const payload: InsertUser = {
 		...editableUser,
-		createdAt: new Date(),
-		id: crypto.randomUUID(),
-		updatedAt: new Date(),
 	};
-	mockUsers.push(newUser);
-	return newUser;
+	const { data, error } = await supabase.from("users").insert(payload).select().single();
+	if (error) throw error;
+	return userMapper.toDomain(data);
 };
 
+/**
+ * Delete user by id
+ */
 export const deleteUser: Delete = async (id) => {
-	const index = mockUsers.findIndex((r) => r.id === id);
-	if (index !== -1) {
-		mockUsers.splice(index, 1);
-		return true;
-	}
-	return false;
+	const { error } = await supabase.from("users").delete().eq("id", id);
+	if (error) throw error;
+	return true;
 };
 
-export const updateUser: Update<UserDto, EditableUser> = async (id, data) => {
-	// 1. get the User
-	const User = mockUsers.find((r) => r.id === id);
-	if (!User) return null;
+/**
+ * Update user
+ */
+export const updateUser: Update<User, EditableUser> = async (id, data): Promise<User | null> => {
+	const payload: UpdateUser = { ...userMapper.toDb(data) };
 
-	// 2. update the User
-	const updatedUser: UserDto = {
-		...User,
-		...data,
-	};
-	mockUsers[mockUsers.indexOf(User)] = updatedUser;
-	return updatedUser;
+	const { data: updated, error } = await supabase
+		.from("users")
+		.update(payload)
+		.match({ id })
+		.select()
+		.single();
+	if (error) {
+		if (error.code === "PGRST116") return null;
+		throw error;
+	}
+	return userMapper.toDomain(updated);
 };

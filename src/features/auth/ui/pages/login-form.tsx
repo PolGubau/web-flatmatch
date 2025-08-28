@@ -1,6 +1,6 @@
 import type React from "react";
 import { Button } from "~/shared/components/ui/button";
-import { Input } from "~/shared/components/ui/input";
+import { Input } from "~/shared/components/ui/input/input";
 
 export type LoginCredentials = {
 	email: string;

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../shared/theme/colors.css";
+@plugin "tailwindcss-animate";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
@@ -24,7 +25,9 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	interpolate-size: allow-keywords;
 }
-
+input[type="date"]::-webkit-calendar-picker-indicator {
+  @apply dark:invert dark:brightness-200 text-foreground stroke-foreground fill-foreground;
+}
 @theme {
   --animate-rotate: rotate 1s infinite;
   @keyframes rotate {
