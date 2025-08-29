@@ -10,6 +10,8 @@ export function RoomList({ rooms }: Props) {
 			{rooms?.map((room) => (
 				<RoomFavsListItem key={room.id} room={room} />
 			))}
+
+			{rooms.length === 0 && <li>No favorite rooms found.</li>}
 		</ul>
 	);
 }
