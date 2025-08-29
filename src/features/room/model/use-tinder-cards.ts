@@ -1,71 +1,70 @@
-import { useEffect, useState } from "react";
-import type { Room, RoomWithVerification } from "~/entities/room/room";
-import type { SwipeDirection } from "~/features/room/types/common";
+import { useCallback, useEffect, useState } from "react";
+import type { Room, RoomWithMetadata } from "~/entities/room/room";
+
 import { RoomRepository } from "../infra/room-repository";
+import type { SwipeDirection } from "../types/common";
 import { listRoomsQuery } from "./queries/list-rooms.query";
+
 export const useTinderCards = () => {
-	const [bottomDrawerRoom, setBottomDrawerRoom] = useState<null | RoomWithVerification>(null);
-
 	const { rooms, isLoading } = listRoomsQuery();
-	const [roomsChunk, setRoomsChunk] = useState<RoomWithVerification[]>(rooms);
-
-	useEffect(() => {
-		rooms && setRoomsChunk(rooms);
-	}, [rooms]);
-
+	const [roomsChunk, setRoomsChunk] = useState<RoomWithMetadata[]>([]);
+	const [bottomDrawerRoom, setBottomDrawerRoom] = useState<null | RoomWithMetadata>(null);
 	const [isFetching, setIsFetching] = useState(false);
 
-	function handleCloseDrawer() {
-		setBottomDrawerRoom(null);
-	}
-
-	function getRoom(roomId: Room["id"]): RoomWithVerification | undefined {
-		return rooms.find((r) => r.id === roomId);
-	}
-
-	function removeThisRoom(roomId: Room["id"]) {
-		// 2. Delete the swiped room
-		setRoomsChunk((prev) => prev.filter((r) => r.id !== roomId));
-	}
-
-	function onSwipe(roomId: Room["id"], direction: SwipeDirection) {
-		// 1. handle swipe action
-		if (direction === "left") {
-			removeThisRoom(roomId);
-			alert("Swiped left");
-		} else if (direction === "right") {
-			removeThisRoom(roomId);
-			alert("Swiped right");
-		} else if (direction === "up") {
-			const room = getRoom(roomId);
-			room && setBottomDrawerRoom(room);
-		} else if (direction === "down") {
-			console.log("Swiped down");
+	// Inicializamos roomsChunk solo una vez
+	useEffect(() => {
+		if (rooms?.length && roomsChunk.length === 0) {
+			setRoomsChunk(rooms);
 		}
+	}, [rooms, roomsChunk.length]);
 
-		// Pre-fetch si quedan pocas y no estamos ya fetching
-		setRoomsChunk((prev) => {
-			if (prev.length <= 2 && !isFetching) {
-				prefetchMoreRooms();
-			}
-			return prev;
-		});
-	}
+	const handleCloseDrawer = useCallback(() => {
+		setBottomDrawerRoom(null);
+	}, []);
 
-	async function prefetchMoreRooms() {
+	const getRoom = useCallback(
+		(roomId: Room["id"]) => roomsChunk.find((r) => r.id === roomId),
+		[roomsChunk],
+	);
+
+	const removeRoom = useCallback((roomId: Room["id"]) => {
+		setRoomsChunk((prev) => prev.filter((r) => r.id !== roomId));
+	}, []);
+
+	const prefetchMoreRooms = useCallback(async () => {
+		if (isFetching) return;
 		setIsFetching(true);
 		try {
-			const rooms = await RoomRepository.findAll();
-
-			const newRoomsWithRandomId = rooms.map((r) => ({
-				...r,
-				id: crypto.randomUUID(),
-			}));
-
-			setRoomsChunk((prev) => [...prev, ...newRoomsWithRandomId]);
+			const fetchedRooms = await RoomRepository.findAll();
+			const newRooms = fetchedRooms.map((r) => ({ ...r, id: crypto.randomUUID() }));
+			setRoomsChunk((prev) => [...prev, ...newRooms]);
 		} finally {
 			setIsFetching(false);
 		}
-	}
+	}, [isFetching]);
+
+	const onSwipe = useCallback(
+		(roomId: Room["id"], direction: SwipeDirection) => {
+			switch (direction) {
+				case "left":
+				case "right":
+					removeRoom(roomId);
+					break;
+				case "up": {
+					const room = getRoom(roomId);
+					room && setBottomDrawerRoom(room);
+					break;
+				}
+				case "down":
+					console.log("Swiped down");
+					break;
+			}
+			if (roomsChunk.length <= 2 && !isFetching) {
+				prefetchMoreRooms();
+			}
+		},
+		[getRoom, removeRoom, roomsChunk.length, isFetching, prefetchMoreRooms],
+	);
+
 	return { bottomDrawerRoom, handleCloseDrawer, isLoading, onSwipe, rooms: roomsChunk };
 };

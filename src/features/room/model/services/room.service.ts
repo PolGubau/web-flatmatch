@@ -1,14 +1,22 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
-import type { Room, RoomWithVerification } from "~/entities/room/room";
+import type { Room, RoomWithMetadata } from "~/entities/room/room";
 import { RoomRepository } from "../../infra/room-repository";
 
-export const getRoomService = async (id: string): Promise<RoomWithVerification | null> => {
+export const getRoomService = async (id: string): Promise<RoomWithMetadata | null> => {
 	// 1. Error handling
 	if (!id) throw new Error("Room ID is required");
 	// 2. get the data
 	const roomWithVerification = await RoomRepository.findById(id);
 	// 3. adapt the data
 	const domain = roomWithVerification ?? null;
+
+	return domain;
+};
+export const getFavoriteRoomsService = async (): Promise<RoomWithMetadata[]> => {
+	// 2. get the data
+	const favoriteRooms = await RoomRepository.findFavorites();
+	// 3. adapt the data
+	const domain = favoriteRooms ?? [];
 
 	return domain;
 };
@@ -29,11 +37,11 @@ export const deleteRoomService = async (id: string): Promise<void> => {
 	await RoomRepository.delete(id);
 };
 
-export const listAllRoomsService = async (): Promise<RoomWithVerification[]> => {
+export const listAllRoomsService = async (): Promise<RoomWithMetadata[]> => {
 	const dtoList = await RoomRepository.findAll();
 	return dtoList;
 };
-export const listMultipleRoomsService = async (ids: string[]): Promise<RoomWithVerification[]> => {
+export const listMultipleRoomsService = async (ids: string[]): Promise<RoomWithMetadata[]> => {
 	const dtoList = await RoomRepository.findMany(ids);
 	return dtoList;
 };

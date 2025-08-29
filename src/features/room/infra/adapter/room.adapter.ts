@@ -11,8 +11,9 @@ import type {
 	RoomTimings,
 	RoomWhoIsLiving,
 } from "~/entities/room/editable-room.schema";
-import type { Room, RoomWithVerification } from "~/entities/room/room";
-import type { RoomDB, RoomWithVerificationDB } from "../room-api";
+import type { Room, RoomWithMetadata } from "~/entities/room/room";
+import type { User } from "~/entities/user/user";
+import type { RoomDB, RoomWithMetadataDB } from "../room-api";
 /**
  * Adaptador desde la view de Supabase
  */
@@ -74,7 +75,11 @@ export const roomMapper = {
 		};
 	},
 };
-export const roomBDtoDomainAndVerified = (row: RoomWithVerificationDB): RoomWithVerification => ({
+export const roomBDtoDomainAndMetadata = (
+	row: RoomWithMetadataDB,
+	userId: User["id"],
+): RoomWithMetadata => ({
 	...roomMapper.toDomain(row as unknown as RoomDB),
+	isSaved: !!row.savedIds.find((saved) => saved.room_id === userId),
 	isVerified: !!row.verified_at,
 });

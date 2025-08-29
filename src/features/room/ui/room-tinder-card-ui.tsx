@@ -1,8 +1,8 @@
-import type { RoomWithVerification } from "~/entities/room/room";
+import type { RoomWithMetadata } from "~/entities/room/room";
 import { VerifiedChip } from "~/shared/components/ui/verified/chip";
 import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 
-export function RoomTinderCardUI({ room }: { room: RoomWithVerification }) {
+export function RoomTinderCardUI({ room }: { room: RoomWithMetadata }) {
 	const imagesAmount = (room.images.main ? 1 : 0) + room.images.gallery.length;
 	const imageMode = imagesAmount > 3 ? 3 : imagesAmount > 2 ? 2 : imagesAmount > 1 ? 1 : 0;
 	const { main, gallery } = room.images;

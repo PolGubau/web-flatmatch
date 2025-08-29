@@ -1,12 +1,10 @@
 import type { Room, RoomWithMetadata } from "~/entities/room/room";
-import { useDeleteRoomMutation } from "./mutations/delete-room.mutation";
 import { useUpdateRoomMutation } from "./mutations/update-room.mutation";
-import { getRoomQuery } from "./queries/get-room.query";
+import { getFavRoomsQuery } from "./queries/get-fav-rooms.query";
 
 type UseRoomResponse = {
 	isLoading: boolean;
-	room: RoomWithMetadata | null;
-	deleteRoom: (id: string) => void;
+	rooms: RoomWithMetadata[];
 	updateRoom: (room: Room) => void;
 };
 
@@ -14,9 +12,8 @@ type UseRoomResponse = {
  * Hook orquestador que expone todo lo necesario para gestionar una Room
  * desde la UI (lectura, actualización, borrado...).
  */
-export const useRoom = (id: string): UseRoomResponse => {
-	const { room, isLoading } = getRoomQuery(id);
+export const useFavRooms = (): UseRoomResponse => {
+	const { rooms, isLoading } = getFavRoomsQuery();
 	const { mutate: updateRoom } = useUpdateRoomMutation();
-	const { mutate: deleteRoom } = useDeleteRoomMutation();
-	return { deleteRoom, isLoading, room, updateRoom };
+	return { isLoading, rooms, updateRoom };
 };

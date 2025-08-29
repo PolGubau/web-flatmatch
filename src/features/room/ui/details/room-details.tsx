@@ -8,7 +8,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslation } from "react-i18next";
-import type { RoomWithVerification } from "~/entities/room/room";
+import type { RoomWithMetadata } from "~/entities/room/room";
 import { commoditiesMap, extrasMap } from "~/shared/base/commodities";
 import { MapWithMarker } from "~/shared/components/map";
 import { cn } from "~/shared/utils/utils";
@@ -18,7 +18,7 @@ import { RoomDetailsImage } from "./image";
 import "./room-details.css";
 
 type Props = {
-	room: RoomWithVerification;
+	room: RoomWithMetadata;
 };
 
 export default function RoomDetails({ room }: Props) {
