@@ -60,6 +60,56 @@ export type Database = {
           },
         ]
       }
+      room_user_interactions: {
+        Row: {
+          action: Database["public"]["Enums"]["room-action"]
+          last_action_at: string | null
+          room_id: string
+          user_id: string
+        }
+        Insert: {
+          action: Database["public"]["Enums"]["room-action"]
+          last_action_at?: string | null
+          room_id: string
+          user_id: string
+        }
+        Update: {
+          action?: Database["public"]["Enums"]["room-action"]
+          last_action_at?: string | null
+          room_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_saved_rooms_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_saved_rooms_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms_with_metadata"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_saved_rooms_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms_with_verification"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_saved_rooms_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       room_verifications: {
         Row: {
           date: string
@@ -178,53 +228,6 @@ export type Database = {
           {
             foreignKeyName: "rooms_owner_id_fkey"
             columns: ["owner_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      user_saved_rooms: {
-        Row: {
-          created_at: string | null
-          room_id: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string | null
-          room_id: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string | null
-          room_id?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_saved_rooms_room_id_fkey"
-            columns: ["room_id"]
-            isOneToOne: false
-            referencedRelation: "rooms"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_saved_rooms_room_id_fkey"
-            columns: ["room_id"]
-            isOneToOne: false
-            referencedRelation: "rooms_with_metadata"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_saved_rooms_room_id_fkey"
-            columns: ["room_id"]
-            isOneToOne: false
-            referencedRelation: "rooms_with_verification"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_saved_rooms_user_id_fkey"
-            columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
@@ -420,6 +423,7 @@ export type Database = {
     }
     Enums: {
       Gender: "male" | "prefer_not_to_say" | "female" | "other" | "unknown"
+      "room-action": "like" | "dislike"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -548,6 +552,7 @@ export const Constants = {
   public: {
     Enums: {
       Gender: ["male", "prefer_not_to_say", "female", "other", "unknown"],
+      "room-action": ["like", "dislike"],
     },
   },
 } as const

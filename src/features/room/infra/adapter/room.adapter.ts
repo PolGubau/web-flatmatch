@@ -11,8 +11,7 @@ import type {
 	RoomTimings,
 	RoomWhoIsLiving,
 } from "~/entities/room/editable-room.schema";
-import type { Room, RoomWithMetadata } from "~/entities/room/room";
-import type { User } from "~/entities/user/user";
+import type { Interaction, Room, RoomWithMetadata } from "~/entities/room/room";
 import type { RoomDB, RoomWithMetadataDB } from "../room-api";
 /**
  * Adaptador desde la view de Supabase
@@ -75,11 +74,15 @@ export const roomMapper = {
 		};
 	},
 };
-export const roomBDtoDomainAndMetadata = (
-	row: RoomWithMetadataDB,
-	userId: User["id"],
-): RoomWithMetadata => ({
-	...roomMapper.toDomain(row as unknown as RoomDB),
-	isSaved: !!row.savedIds.find((saved) => saved.room_id === userId),
-	isVerified: !!row.verified_at,
-});
+export const roomBDtoDomainAndMetadata = (row: RoomWithMetadataDB): RoomWithMetadata => {
+	const interaction: Interaction = {
+		action: row.interaction[0].action ?? null,
+		lastActionAt: row.interaction[0].lastActionAt ?? null,
+	};
+
+	return {
+		...roomMapper.toDomain(row as unknown as RoomDB),
+		interaction,
+		isVerified: !!row.verified_at,
+	};
+};

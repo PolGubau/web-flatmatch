@@ -1,5 +1,5 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
-import type { Room, RoomWithMetadata } from "~/entities/room/room";
+import type { Interaction, Room, RoomWithMetadata } from "~/entities/room/room";
 import { supabase } from "~/global/supabase/client";
 import type { Inserts, Tables, Updates, Views } from "~/global/supabase/types-helpers";
 import type { Create, Delete, FindAll, FindById, FindMany, Update } from "~/shared/abstracts/repo";
@@ -7,8 +7,9 @@ import { roomBDtoDomainAndMetadata } from "./adapter/room.adapter";
 
 export type RoomDB = Tables<"rooms">;
 export type RoomWithVerificationDB = Views<"rooms_with_verification">;
+
 export type RoomWithMetadataDB = RoomWithVerificationDB & {
-	savedIds: { room_id: string }[];
+	interaction: Interaction[];
 };
 export type InsertRoom = Inserts<"rooms">;
 export type UpdateRoom = Updates<"rooms">;
@@ -19,17 +20,25 @@ export type UpdateRoom = Updates<"rooms">;
 
 export const getAllRooms: FindAll<RoomWithMetadata> = async () => {
 	const userId = await getUserId();
-	const { data, error } = await supabase.from("rooms_with_verification").select(`
+
+	const { data, error } = await supabase
+		.from("rooms_with_verification")
+		.select(
+			`
 		*,
-		savedIds:user_saved_rooms (
+		interaction:room_user_interactions (
+			action,
+			lastActionAt:last_action_at,
+			user_id,
 			room_id
 		)
-	`);
+	`,
+		)
+		.eq("room_user_interactions.user_id", userId);
 
-	console.log(data);
 	if (error) throw error;
 
-	const roomWithMetadata = data.map((room) => roomBDtoDomainAndMetadata(room, userId));
+	const roomWithMetadata = data.map(roomBDtoDomainAndMetadata);
 
 	return roomWithMetadata;
 };
@@ -42,12 +51,18 @@ export const getOneRoom: FindById<RoomWithMetadata> = async (id) => {
 
 	const { data, error } = await supabase
 		.from("rooms_with_verification")
-		.select(`
-			*,
-			savedIds:user_saved_rooms (
-				room_id
-			)
-		`)
+		.select(
+			`
+		*,
+		interaction:room_user_interactions (
+			action,
+			lastActionAt:last_action_at,
+			user_id,
+			room_id
+		)
+	`,
+		)
+		.eq("room_user_interactions.user_id", userId)
 		.eq("id", id)
 		.single();
 
@@ -55,7 +70,8 @@ export const getOneRoom: FindById<RoomWithMetadata> = async (id) => {
 	if (!data) {
 		return null;
 	}
-	return roomBDtoDomainAndMetadata(data, userId);
+
+	return roomBDtoDomainAndMetadata(data);
 };
 
 /**
@@ -68,14 +84,18 @@ export const getManyRooms: FindMany<RoomWithMetadata> = async (ids) => {
 		.from("rooms_with_verification")
 		.select(`
 		*,
-		savedIds:user_saved_rooms (
+		interaction:room_user_interactions (
+			action,
+			lastActionAt:last_action_at,
+			user_id,
 			room_id
 		)
 	`)
+		.eq("room_user_interactions.user_id", userId)
 		.in("id", ids);
 
 	if (error) throw error;
-	return data.map((room) => roomBDtoDomainAndMetadata(room, userId));
+	return data.map((room) => roomBDtoDomainAndMetadata(room));
 };
 
 /**
@@ -113,10 +133,14 @@ export const createRoom: Create<RoomWithMetadata, EditableRoom> = async (editabl
 		.from("rooms_with_verification")
 		.select(`
 			*,
-			savedIds:user_saved_rooms (
+			interaction:room_user_interactions (
+				action,
+				lastActionAt:last_action_at,
+				user_id,
 				room_id
 			)
 		`)
+		.eq("room_user_interactions.user_id", userId)
 		.eq("id", created.id)
 		.single();
 
@@ -124,7 +148,7 @@ export const createRoom: Create<RoomWithMetadata, EditableRoom> = async (editabl
 		throw new Error("Room created but then verification not found");
 	}
 
-	return roomBDtoDomainAndMetadata(withVerification, userId);
+	return roomBDtoDomainAndMetadata(withVerification);
 };
 
 /**
@@ -171,10 +195,14 @@ export const updateRoom: Update<RoomWithMetadata, EditableRoom> = async (id, dat
 		.from("rooms_with_verification")
 		.select(`
 			*,
-			savedIds:user_saved_rooms (
+			interaction:room_user_interactions (
+				action,
+				lastActionAt:last_action_at,
+				user_id,
 				room_id
 			)
 		`)
+		.eq("room_user_interactions.user_id", userId)
 		.eq("id", updated.id)
 		.single();
 
@@ -182,7 +210,7 @@ export const updateRoom: Update<RoomWithMetadata, EditableRoom> = async (id, dat
 		throw new Error("Room created but then verification not found");
 	}
 
-	return roomBDtoDomainAndMetadata(withVerification, userId);
+	return roomBDtoDomainAndMetadata(withVerification);
 };
 
 /**
@@ -230,19 +258,32 @@ export async function getFavoriteRooms(): Promise<RoomWithMetadata[]> {
 	const userId = await getUserId();
 
 	const { data, error } = await supabase
-		.from("rooms_with_verification")
-		.select(`
-			*,
-			savedIds:user_saved_rooms (
-				room_id
-			)
-		`)
-		.eq("owner_id", userId)
-		.eq("is_favorite", true);
+		.from("room_user_interactions")
+		.select(`*,
+			room:rooms_with_verification (
+      *
+    
+    )
+  `)
+		.eq("user_id", userId)
+		.eq("action", "like");
 
 	if (error) throw error;
 
-	return data.map((room) => roomBDtoDomainAndMetadata(room, userId));
+	return data.map((room) => {
+		const withMetadata: RoomWithMetadataDB = {
+			// ...room,
+			...room.room,
+			interaction: [
+				{
+					action: room.action,
+					lastActionAt: room.last_action_at,
+				},
+			],
+		};
+
+		return roomBDtoDomainAndMetadata(withMetadata);
+	});
 }
 
 export async function addFavoriteRoom(id: Room["id"]): Promise<void> {
@@ -250,8 +291,8 @@ export async function addFavoriteRoom(id: Room["id"]): Promise<void> {
 	const userId = await getUserId();
 
 	const { error } = await supabase
-		.from("user_saved_rooms")
-		.insert({ room_id: id, user_id: userId });
+		.from("room_user_interactions")
+		.insert({ action: "like", room_id: id, user_id: userId });
 
 	if (error) throw error;
 }
@@ -259,7 +300,7 @@ export async function removeFavoriteRoom(id: Room["id"]): Promise<void> {
 	const userId = await getUserId();
 
 	const { error } = await supabase
-		.from("user_saved_rooms")
+		.from("room_user_interactions")
 		.delete()
 		.eq("room_id", id)
 		.eq("user_id", userId);
