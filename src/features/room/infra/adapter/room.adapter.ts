@@ -76,26 +76,38 @@ export const roomMapper = {
 };
 export const roomBDtoDomainAndMetadata = (row: RoomWithMetadataDB): RoomWithMetadata => {
 	const interaction: Interaction = {
-		action: row.interaction[0].action ?? null,
-		lastActionAt: row.interaction[0].lastActionAt ?? null,
+		action: row.interaction_action ?? null,
+		lastActionAt: row.interaction_last_action_at ?? null,
 	};
 
 	const verification: Verification = {
-		notes: row.verification[0].notes ?? null,
-		verificationType: row.verification[0].verificationType ?? null,
-		verifiedAt: row.verification[0].verifiedAt ?? null,
-		verifiedBy: row.verification[0].verifiedBy ?? null,
+		notes: row.verification_notes ?? null,
+		verificationType: row.verification_type ?? null,
+		verifiedAt: row.verified_at ?? null,
+		verifiedBy: row.verified_by ?? null,
+	};
+	const baseRoom: RoomDB = {
+		commodities: row.commodities,
+		contact: row.contact,
+		created_at: row.created_at ?? new Date().toISOString(),
+		description: row.description ?? "",
+		id: row.id ?? "",
+		images: row.images,
+		location: row.location,
+		owner_id: row.owner_id ?? "",
+		preferences: row.preferences,
+		price: row.price,
+		rent_type: row.rent_type ?? "room",
+		rules: row.rules,
+		status: row.status ?? "available",
+		timings: row.timings,
+		title: row.title ?? "ADAPTER DID NOT FOUND TITLE",
+		updated_at: row.updated_at ?? new Date().toISOString(),
+		who_is_living: row.who_is_living,
 	};
 
-	const omitInteraction = ({ interaction, ...rest }: RoomWithMetadataDB): RoomDB => ({
-		...rest,
-		created_at: rest.created_at ?? new Date().toISOString(),
-	});
-
-	const mainRoom: RoomDB = omitInteraction(row);
-
 	return {
-		...roomMapper.toDomain(mainRoom),
+		...roomMapper.toDomain(baseRoom),
 		interaction,
 		verification,
 	};

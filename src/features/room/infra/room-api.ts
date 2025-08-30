@@ -38,18 +38,8 @@ export const getOneRoom: FindById<RoomWithMetadata> = async (id) => {
 	const userId = await getUserId();
 
 	const { data, error } = await supabase
-		.from("rooms_with_verification")
-		.select(
-			`
-		*,
-		interaction:room_user_interactions (
-			action,
-			lastActionAt:last_action_at,
-			user_id,
-			room_id
-		)
-	`,
-		)
+		.from("rooms_with_metadata")
+		.select("*")
 		.eq("room_user_interactions.user_id", userId)
 		.eq("id", id)
 		.single();
@@ -69,16 +59,8 @@ export const getManyRooms: FindMany<RoomWithMetadata> = async (ids) => {
 	const userId = await getUserId();
 
 	const { data, error } = await supabase
-		.from("rooms_with_verification")
-		.select(`
-		*,
-		interaction:room_user_interactions (
-			action,
-			lastActionAt:last_action_at,
-			user_id,
-			room_id
-		)
-	`)
+		.from("rooms_with_metadata")
+		.select("*")
 		.eq("room_user_interactions.user_id", userId)
 		.in("id", ids);
 
@@ -118,16 +100,8 @@ export const createRoom: Create<RoomWithMetadata, EditableRoom> = async (editabl
 
 	// devolver con verificación incluida
 	const { data: withVerification } = await supabase
-		.from("rooms_with_verification")
-		.select(`
-			*,
-			interaction:room_user_interactions (
-				action,
-				lastActionAt:last_action_at,
-				user_id,
-				room_id
-			)
-		`)
+		.from("rooms_with_metadata")
+		.select("*")
 		.eq("room_user_interactions.user_id", userId)
 		.eq("id", created.id)
 		.single();
@@ -182,16 +156,8 @@ export const updateRoom: Update<RoomWithMetadata, EditableRoom> = async (id, dat
 
 	// devolver con verificación incluida
 	const { data: withVerification } = await supabase
-		.from("rooms_with_verification")
-		.select(`
-			*,
-			interaction:room_user_interactions (
-				action,
-				lastActionAt:last_action_at,
-				user_id,
-				room_id
-			)
-		`)
+		.from("rooms_with_metadata")
+		.select("*")
 		.eq("room_user_interactions.user_id", userId)
 		.eq("id", updated.id)
 		.single();
@@ -250,7 +216,7 @@ export async function getFavoriteRooms(): Promise<RoomWithMetadata[]> {
 	const { data, error } = await supabase
 		.from("room_user_interactions")
 		.select(`*,
-			room:rooms_with_verification (
+			room:rooms_with_metadata (
       *
     
     )
@@ -264,12 +230,8 @@ export async function getFavoriteRooms(): Promise<RoomWithMetadata[]> {
 		const withMetadata: RoomWithMetadataDB = {
 			// ...room,
 			...room.room,
-			interaction: [
-				{
-					action: room.action,
-					lastActionAt: room.last_action_at,
-				},
-			],
+			interaction_action: room.action,
+			interaction_last_action_at: room.last_action_at,
 		};
 
 		return roomBDtoDomainAndMetadata(withMetadata);
