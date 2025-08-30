@@ -32,6 +32,7 @@ export function HydrateFallback() {
 	return (
 		<main className="w-screen h-dvh grid place-items-center">
 			<LoadingSection />
+			loading page
 		</main>
 	);
 }

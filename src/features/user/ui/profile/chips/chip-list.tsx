@@ -22,7 +22,7 @@ export function ProfileChipList({ items }: Props) {
 export function ProfileChipListSkeleton() {
 	return (
 		<ChipListLayout>
-			{[1, 2, 3, 4, 5].map((n) => (
+			{[1, 2, 3].map((n) => (
 				<ProfileChipSkeleton key={n} />
 			))}
 		</ChipListLayout>

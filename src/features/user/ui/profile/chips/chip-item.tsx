@@ -7,8 +7,8 @@ export type Item = {
 };
 
 const theme = {
-	base: "p-2 px-3 rounded-2xl bg-foreground/5 w-fit flex items-center gap-2",
-	text: "first-letter:capitalize",
+	base: "p-2 px-3 rounded-2xl bg-foreground/5 w-fit flex items-center gap-2 text-foreground/80",
+	text: "first-letter:capitalize line-clamp-1 truncate text-sm ",
 };
 export function ProfileChip({ icon, label }: Item) {
 	return (

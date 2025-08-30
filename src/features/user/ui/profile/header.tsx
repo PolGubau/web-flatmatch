@@ -1,16 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { TimeAgo } from "~/shared/components/ui/timeAgo";
-import { VerifiedStar } from "~/shared/components/ui/verified/star";
 import { ProfileAvatar } from "./avatar";
-import { YourAvatar } from "./your-avatar";
-
-type ProfileHeaderProps = {
-	name: string;
-	lastname: string;
-	avatarUrl?: string;
-	hereSince: Date;
-	aboutMe?: string;
-};
 export default function ProfileHeader({
 	name,
 	hereSince,
@@ -27,14 +17,14 @@ export default function ProfileHeader({
 					<h1 className="font-semibold line-clamp-1 truncate">
 						{name} {lastname}
 					</h1>
-					<VerifiedStar />
+					{/* <VerifiedStar /> */}
 				</div>
 				<div className="flex flex-col gap-1">
 					<p className="text-foreground/80 max-md:text-sm">
 						{aboutMe ?? "No description provided."}
 					</p>
 					<small className="flex gap-1 text-foreground/60 text-xs items-center line-clamp-1">
-						{t("here_since")}:<TimeAgo realTime={false} timestamp={hereSince} />
+						{t("registered")}:<TimeAgo realTime={false} timestamp={hereSince} />
 					</small>
 				</div>
 			</div>
