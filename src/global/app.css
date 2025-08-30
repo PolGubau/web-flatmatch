@@ -30,6 +30,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 @theme {
   --animate-rotate: rotate 1s infinite;
+  --animate-gradient-move: gradient-move ease 5s ease infinite;
+
   @keyframes rotate {
     0% {
       transform: rotate(0deg);
@@ -38,5 +40,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
       transform: rotate(360deg);
     }
   }
+
+  @keyframes gradient-move{
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
 }
 
+
+
+.loading {
+  @apply bg-foreground/10 rounded-xl text-transparent select-none animate-pulse w-fit;
+}

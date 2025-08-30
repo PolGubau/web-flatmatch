@@ -9,10 +9,16 @@ type ProfileAvatarProps = {
 	size?: ProfileAvatarSize;
 };
 
+const theme = {
+	base: "bg-primary/10 text-foreground/80 place-items-center grid",
+	md: "h-[120px] w-[120px] rounded-2xl",
+	sm: "h-[32px] w-[32px] rounded-full",
+};
+
 export const ProfileAvatar = ({ name, avatarUrl, size = "md" }: ProfileAvatarProps) => {
-	const className = cn("bg-canvas text-foreground/80 place-items-center grid ", {
-		"h-[34px] w-[34px] rounded-full": size === "sm",
-		"h-[120px] w-[120px] rounded-2xl": size === "md",
+	const className = cn(theme.base, {
+		[theme.sm]: size === "sm",
+		[theme.md]: size === "md",
 	});
 	if (!avatarUrl) {
 		return (

@@ -1,13 +1,8 @@
-import { ReIcon } from "@hugeicons/core-free-icons";
 import type React from "react";
-import { useTranslation } from "react-i18next";
 import type { User } from "~/entities/user/user";
 import { useUpdateUser } from "~/features/user/model/use-update-user";
-import { Button } from "~/shared/components/ui/button";
-import { Input } from "~/shared/components/ui/input/input";
-import { Loader } from "~/shared/components/ui/loader";
-import { OccupationField } from "../fields/occupation-field";
 import { SubmitButton } from "~/shared/components/ui/buttons/submit-button";
+import { OccupationField } from "../fields/occupation-field";
 
 type ChangeOccupationFormProps = {
 	occupation?: User["occupation"];
@@ -16,7 +11,6 @@ type ChangeOccupationFormProps = {
 
 export const ChangeOccupationForm = ({ occupation, userId }: ChangeOccupationFormProps) => {
 	const { updateUser, isLoading, isSuccess } = useUpdateUser(userId);
-	const { t } = useTranslation();
 
 	const handleSubmitNewOccupation = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

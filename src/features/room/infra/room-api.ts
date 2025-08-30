@@ -188,7 +188,9 @@ export const updateRoom: Update<RoomWithMetadata, EditableRoom> = async (id, dat
 		.single();
 
 	if (error) throw error;
-	if (!updated) return null;
+	if (!updated) {
+		throw new Error("Error when updating room");
+	}
 
 	// devolver con verificación incluida
 	const { data: withVerification } = await supabase

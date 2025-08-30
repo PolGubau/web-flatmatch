@@ -10,7 +10,7 @@ export default function BaseLayout() {
 
 	return (
 		<div className="bg-foreground/10 text-foreground w-screen h-dvh">
-			{isNavigating && <LoadingSection />}
+			{isNavigating && <LoadingSection label="loading_page" />}
 			<Outlet />
 			<Toaster />
 			<OneTapComponent />

@@ -3,39 +3,45 @@ import type { User } from "~/entities/user/user";
 import { UserRepository } from "../infra/repository";
 
 type UseUpdateUserResponse = {
-	isLoading: boolean;
 	updateUser: (updates: Partial<User>) => void;
+	isLoading: boolean;
 	isSuccess: boolean;
-	isError: boolean;
 };
-type UseUpdateUser = (id: User["id"]) => UseUpdateUserResponse;
+type UpdateContext = {
+	previousUser?: User;
+	previousUsers?: User[];
+};
 
 /**
- * Hook para actualizar un usuario parcialmente.
- * @param id - ID del usuario a actualizar
+ * Hook para actualizar un usuario con actualización optimista
  */
-export const useUpdateUser: UseUpdateUser = (id) => {
+export const useUpdateUser = (id: User["id"]): UseUpdateUserResponse => {
 	const queryClient = useQueryClient();
 
-	const { mutate, isPending, isSuccess, isError } = useMutation({
-		mutationFn: (updates: Partial<User>) => {
-			return UserRepository.update(id, updates);
-		},
+	const {
+		mutate: updateUser,
+		isPending,
+		isSuccess,
+	} = useMutation<User, Error, Partial<User>, UpdateContext>({
+		mutationFn: (updates): Promise<User> => UserRepository.update(id, updates),
+
 		onError: (err, _updates, context) => {
-			console.log(err);
-			// Rollback si hay error
+			console.error(err);
 			if (context?.previousUser) {
 				queryClient.setQueryData(["user", id], context.previousUser);
 			}
+			if (context?.previousUsers) {
+				queryClient.setQueryData(["users"], context.previousUsers);
+			}
 		},
-		onMutate: async (updates: Partial<User>) => {
-			// Cancelar queries en curso
+
+		onMutate: async (updates) => {
 			await queryClient.cancelQueries({ queryKey: ["user", id] });
 
-			// Snapshot del estado anterior
 			const previousUser = queryClient.getQueryData<User>(["user", id]);
+			const previousUsers = queryClient.getQueryData<User[]>(["users"]);
 
-			// Actualización optimista
+			// Update optimista del user individual
 			if (previousUser) {
 				queryClient.setQueryData<User>(["user", id], {
 					...previousUser,
@@ -43,24 +49,27 @@ export const useUpdateUser: UseUpdateUser = (id) => {
 				});
 			}
 
-			return { previousUser };
+			// Update optimista de la lista
+			if (previousUsers) {
+				queryClient.setQueryData<User[]>(["users"], (old) =>
+					old?.map((u) => (u.id === id ? { ...u, ...updates } : u)),
+				);
+			}
+
+			return { previousUser, previousUsers };
 		},
 
 		onSuccess: (updatedUser) => {
-			console.log("User updated successfully");
-			if (updatedUser) {
-				// actualiza el cache del usuario individual
-				queryClient.setQueryData<User>(["user", id], updatedUser);
-				// invalida la lista de usuarios para que se sincronice también
-				queryClient.invalidateQueries({ queryKey: ["users"] });
-			}
+			queryClient.setQueryData<User>(["user", id], updatedUser);
+			queryClient.setQueryData<User[]>(["users"], (old) =>
+				old?.map((u) => (u.id === id ? updatedUser : u)),
+			);
 		},
 	});
 
 	return {
-		isError,
 		isLoading: isPending,
 		isSuccess,
-		updateUser: mutate,
+		updateUser,
 	};
 };

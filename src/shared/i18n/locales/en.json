@@ -46,6 +46,7 @@
 	"roommates": "{{count}} roommates",
 	"save": "Save",
 	"saving": "Saving...",
+	"select_gender": "Select Gender",
 	"select_occupation": "Select Occupation",
 	"shared": "Shared Room",
 	"square_meters": "{{count}} m²",
@@ -59,5 +60,6 @@
 	"wheelchair_accessible": "Wheelchair Accessible",
 	"wifi": "WiFi",
 	"years": "{{count}} years",
+	"your_gender": "Your Gender",
 	"your_occupation": "Your Occupation"
 }

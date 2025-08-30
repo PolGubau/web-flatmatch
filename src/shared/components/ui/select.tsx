@@ -30,11 +30,7 @@ function SelectTrigger({
 }) {
 	return (
 		<SelectPrimitive.Trigger
-			className={cn(
-				inputTheme,
-				"w-fit *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 ",
-				className,
-			)}
+			className={cn(inputTheme, className)}
 			data-size={size}
 			data-slot="select-trigger"
 			{...props}

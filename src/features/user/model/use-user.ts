@@ -5,7 +5,7 @@ import { UserRepository } from "../infra/repository";
 /**
  * Fetch one user by ID
  */
-export const useUser = (id: string) => {
+export const useUser = (id: User["id"]) => {
 	return useQuery<User | null, Error>({
 		enabled: !!id,
 		queryFn: () => UserRepository.findById(id),

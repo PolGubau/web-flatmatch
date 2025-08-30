@@ -5,6 +5,7 @@ import { Link, NavLink, Outlet } from "react-router";
 
 import type { TranslationKey } from "~/shared/i18n/i18n";
 import { UserButton } from "./header/user-button";
+import { MobileNavigation } from "./navigation/mobile";
 
 type FooterMenuItem = {
 	href: string;
@@ -12,7 +13,7 @@ type FooterMenuItem = {
 	label: TranslationKey;
 };
 
-const footerMenuItems: FooterMenuItem[] = [
+export const menuItems: FooterMenuItem[] = [
 	{ href: "/", icon: Home01Icon, label: "home" },
 	{ href: "/favs", icon: FavouriteIcon, label: "favourites" },
 	{ href: "/chat", icon: Message01Icon, label: "chat" },
@@ -30,7 +31,7 @@ const MainLayout = () => {
 				<h1 className="text-primary">Flatmatch</h1>
 
 				<ul className="flex gap-2 items-center max-md:hidden">
-					{footerMenuItems.map((item) => (
+					{menuItems.map((item) => (
 						<NavLink
 							className={({ isActive, isPending }) => `
 						flex items-center justify-center gap-1 hover:bg-foreground/5 transition-colors cursor-pointer px-4 py-1 rounded-full
@@ -64,22 +65,7 @@ const MainLayout = () => {
 				className="inset-0 left-0 w-dvw bg-neutral-500/10 h-fit items-center justify-center flex md:hidden backdrop-blur-md"
 				style={{ zIndex: 11 }}
 			>
-				<ul className="grid grid-cols-4 min-w-sm w-full max-w-md">
-					{footerMenuItems.map((item) => (
-						<NavLink
-							className={({ isActive, isPending }) => `
-              flex flex-col items-center justify-center gap-1 hover:bg-foreground/5 transition-colors cursor-pointer px-2 py-2 pt-3 md:py-4
-              ${isActive ? "text-primary" : "text-neutral-500"} 
-              ${isPending ? "text-primary-900" : "text-neutral-500"} 
-              `}
-							key={item.href}
-							to={item.href}
-						>
-							<HugeiconsIcon icon={item.icon} size={22} />
-							<span className="text-[0.6em]">{t(item.label)}</span>
-						</NavLink>
-					))}
-				</ul>
+				<MobileNavigation />
 			</footer>
 		</div>
 	);

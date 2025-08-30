@@ -1,6 +1,11 @@
 import type { Gender, Occupation, Preferences, User } from "~/entities/user/user";
 import type { UserDB } from "../api";
 
+type AbstractMapper<DB, Domain> = {
+	toDb: (domain: Partial<Domain>) => Partial<DB>;
+	toDomain: (db: DB) => Domain;
+};
+
 /**
  * Convierte fila de DB a DTO
  */
@@ -32,23 +37,27 @@ export const dtoToDomain = (u: UserDB): User => ({
 /**
  * Convierte DTO a payload de insert/update en DB
  */
-export const domainToDb = (dto: Partial<User>): Partial<UserDB> => ({
-	about_me: dto.aboutMe ?? null,
-	auth_provider: dto.authProvider ?? null,
-	avatar_url: dto.avatarUrl ?? null,
-	birth_date: dto.birthDate ?? null, // YYYY-MM-DD
-	email: dto.email,
-	gender: dto.gender,
-	languages_spoken: dto.languagesSpoken ?? null,
-	lastname: dto.lastname,
-	name: dto.name,
-	occupation: dto.occupation,
-	phone: dto.phone ?? null,
-	preferences: dto.preferences ?? null,
-	provider_id: dto.providerId ?? null,
-});
+export const domainToDb = (dto: Partial<User>): Partial<UserDB> => {
+	const payload: Partial<UserDB> = {};
 
-export const userMapper = {
+	if ("aboutMe" in dto) payload.about_me = dto.aboutMe;
+	if ("authProvider" in dto) payload.auth_provider = dto.authProvider;
+	if ("avatarUrl" in dto) payload.avatar_url = dto.avatarUrl;
+	if ("birthDate" in dto) payload.birth_date = dto.birthDate;
+	if ("email" in dto) payload.email = dto.email;
+	if ("gender" in dto) payload.gender = dto.gender;
+	if ("languagesSpoken" in dto) payload.languages_spoken = dto.languagesSpoken;
+	if ("lastname" in dto) payload.lastname = dto.lastname;
+	if ("name" in dto) payload.name = dto.name;
+	if ("occupation" in dto) payload.occupation = dto.occupation;
+	if ("phone" in dto) payload.phone = dto.phone;
+	if ("preferences" in dto) payload.preferences = dto.preferences;
+	if ("providerId" in dto) payload.provider_id = dto.providerId;
+
+	return payload;
+};
+
+export const userMapper: AbstractMapper<UserDB, User> = {
 	toDb: domainToDb,
 	toDomain: dtoToDomain,
 };

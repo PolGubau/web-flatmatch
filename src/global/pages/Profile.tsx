@@ -1,11 +1,11 @@
 import { Calendar03Icon, UserAccountIcon, WorkIcon } from "@hugeicons/core-free-icons";
 import { useTranslation } from "react-i18next";
 import { useUser } from "~/features/user/model/use-user";
-import type { Item } from "~/features/user/ui/profile/chip-item";
-import ProfileChipList from "~/features/user/ui/profile/chip-list";
+import type { Item } from "~/features/user/ui/profile/chips/chip-item";
+import {ProfileChipList} from "~/features/user/ui/profile/chips/chip-list";
 import { CompleteProfile } from "~/features/user/ui/profile/complete-profile/complete-profile";
 import ProfileHeader from "~/features/user/ui/profile/header";
-import { LoadingSection } from "~/shared/components/pages/LoadingSection";
+import { ProfileSkeleton } from "~/features/user/ui/profile/states/profile-skeleton";
 import { TimeAgo } from "~/shared/components/ui/timeAgo";
 import { dateToYearsAgo } from "~/shared/utils/formatters/dates/date-to-years-ago";
 
@@ -19,10 +19,10 @@ export default function ProfilePage({ userId, isYours }: Props) {
 	// get user by id
 	const { t } = useTranslation();
 	if (!user) {
-		return <div>This user is not available</div>;
+		return <ProfileSkeleton />;
 	}
 	if (isLoading) {
-		return <LoadingSection className="min-h-[50vh]" />;
+		return <ProfileSkeleton />;
 	}
 	const chips: Item[] = [
 		{
@@ -40,6 +40,9 @@ export default function ProfilePage({ userId, isYours }: Props) {
 			label: user.occupation ? t(user.occupation) : t("unknown"),
 		},
 	];
+
+	const someInfoMissing = !user.aboutMe || !user.birthDate || !user.occupation || !user.gender;
+
 	return (
 		<div className="gap-4 grid grid-rows-[auto_1fr_auto]">
 			<header className="flex flex-col gap-2">
@@ -53,10 +56,11 @@ export default function ProfilePage({ userId, isYours }: Props) {
 				<ProfileChipList items={chips} />
 			</header>
 			<section>
-				{isYours && (
+				{isYours && someInfoMissing && (
 					<CompleteProfile
 						aboutMe={user.aboutMe}
 						birthDate={user.birthDate}
+						gender={user.gender}
 						occupation={user.occupation}
 						userId={user.id}
 					/>

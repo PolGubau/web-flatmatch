@@ -22,7 +22,7 @@ export const getAllUsers: FindAll<User> = async (): Promise<User[]> => {
 /**
  * Get one user by id
  */
-export const getOneUser: FindById<User> = async (id): Promise<User | null> => {
+export const getOneUser: FindById<User> = async (id) => {
 	const { data, error } = await supabase.from("users").select("*").eq("id", id).maybeSingle();
 
 	if (error) throw error;
@@ -62,8 +62,20 @@ export const deleteUser: Delete = async (id) => {
 /**
  * Update user
  */
-export const updateUser: Update<User, EditableUser> = async (id, data): Promise<User | null> => {
-	const payload: UpdateUser = { ...userMapper.toDb(data) };
+export const updateUser: Update<User, Partial<EditableUser>> = async (id, data) => {
+	// Primero trae el objeto actual
+	const { data: existing, error: fetchError } = await supabase
+		.from("users")
+		.select("*")
+		.eq("id", id)
+		.single();
+
+	if (fetchError) throw fetchError;
+	if (!existing) throw new Error("User not found");
+
+	// Merge: datos existentes + cambios
+	const payload = { ...existing, ...userMapper.toDb(data) };
+	console.log("payload", payload);
 
 	const { data: updated, error } = await supabase
 		.from("users")
@@ -71,9 +83,8 @@ export const updateUser: Update<User, EditableUser> = async (id, data): Promise<
 		.match({ id })
 		.select()
 		.single();
-	if (error) {
-		if (error.code === "PGRST116") return null;
-		throw error;
-	}
+
+	if (error) throw error;
+
 	return userMapper.toDomain(updated);
 };

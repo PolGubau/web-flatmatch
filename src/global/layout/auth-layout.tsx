@@ -8,13 +8,19 @@ export default function AuthLayout() {
 	const [useCredentials, setUseCredentials] = useState(false);
 
 	return (
-		<div className="pt-6 md:pt-20">
-			<section className="flex flex-col gap-2 md:max-w-md mx-auto shadow-lg rounded-2xl bg-canvas overflow-hidden">
-				<header className="grid grid-rows-[auto_1fr_auto] min-h-[30vh] shadow-lg w-full gap-1 pt-2 bg-primary/20 p-2 md:p-4">
+		<div className="md:pt-20 max-md:h-full">
+			<section className="flex flex-col gap-4 h-full md:max-w-md mx-auto md:shadow-lg md:rounded-2xl bg-canvas overflow-hidden">
+				<header
+					className="grid grid-rows-[auto_1fr_auto] min-h-[30vh] md:shadow w-full gap-1 pt-3 p-2 md:p-4
+bg-gradient-to-br from-primary/40 via-primary to-primary/60
+bg-[length:200%_200%] animate-gradient-move"
+				>
 					<GoHomeButton />
 					<div />
 					<div className="">
-						<h1 className="text-center font-bold text-foreground/80 text-4xl pb-2">Flatmatch</h1>
+						<h1 className="md:text-center max-md:px-3 font-regular tracking-wide line-clamp-1 text-canvas/80 text-4xl pb-3 ">
+							Flatmatch
+						</h1>
 					</div>
 				</header>
 

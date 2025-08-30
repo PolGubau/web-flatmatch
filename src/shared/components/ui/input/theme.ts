@@ -7,13 +7,13 @@ export const inputTheme = cn(
 	"disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed ",
 
 	// Focus
-	"focus-visible:ring-2 focus-visible:border-foreground focus-visible:ring-foreground/30",
+	"focus-visible:ring-2 focus-visible:border-foreground/50 focus-visible:ring-foreground/30",
 
 	// Border
 	"border-2 border-foreground/30 ",
 
 	// Base
-	"md:text-sm rounded-xl w-full min-w-0 transition-[color,box-shadow] outline-none whitespace-nowrap bg-transparent text-sm shadow-xs text-foreground",
+	"flex items-center justify-between gap-2 md:text-sm rounded-xl w-full min-w-0 transition-[color,box-shadow] outline-none whitespace-nowrap bg-transparent text-sm shadow-xs text-foreground",
 
 	// Placeholder
 	"placeholder:text-foreground/70 placeholder:text-sm",
