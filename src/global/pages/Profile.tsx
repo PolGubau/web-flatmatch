@@ -5,6 +5,8 @@ import type { Item } from "~/features/user/ui/profile/chip-item";
 import ProfileChipList from "~/features/user/ui/profile/chip-list";
 import { CompleteProfile } from "~/features/user/ui/profile/complete-profile/complete-profile";
 import ProfileHeader from "~/features/user/ui/profile/header";
+import { LoadingSection } from "~/shared/components/pages/LoadingSection";
+import { TimeAgo } from "~/shared/components/ui/timeAgo";
 import { dateToYearsAgo } from "~/shared/utils/formatters/dates/date-to-years-ago";
 
 type Props = {
@@ -15,12 +17,12 @@ type Props = {
 export default function ProfilePage({ userId, isYours }: Props) {
 	const { data: user, isLoading, dataUpdatedAt } = useUser(userId);
 	// get user by id
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	if (!user) {
 		return <div>This user is not available</div>;
 	}
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <LoadingSection className="min-h-[50vh]" />;
 	}
 	const chips: Item[] = [
 		{
@@ -39,27 +41,32 @@ export default function ProfilePage({ userId, isYours }: Props) {
 		},
 	];
 	return (
-		<div className="flex flex-col gap-4">
-			<ProfileHeader
-				aboutMe={user.aboutMe}
-				avatarUrl={user.avatarUrl}
-				lastname={user.lastname}
-				name={user.name}
-			/>
-
-			<ProfileChipList items={chips} />
-
-			{isYours && (
-				<CompleteProfile
+		<div className="gap-4 grid grid-rows-[auto_1fr_auto]">
+			<header className="flex flex-col gap-2">
+				<ProfileHeader
 					aboutMe={user.aboutMe}
-					birthDate={user.birthDate}
-					occupation={user.occupation}
-					userId={user.id}
+					avatarUrl={user.avatarUrl}
+					hereSince={user.createdAt}
+					lastname={user.lastname}
+					name={user.name}
 				/>
-			)}
+				<ProfileChipList items={chips} />
+			</header>
+			<section>
+				{isYours && (
+					<CompleteProfile
+						aboutMe={user.aboutMe}
+						birthDate={user.birthDate}
+						occupation={user.occupation}
+						userId={user.id}
+					/>
+				)}
+			</section>
 
 			<footer>
-				<small>Last updated: {new Date(dataUpdatedAt).toLocaleString(i18n.language)}</small>
+				<small>
+					{t("last_update")}: <TimeAgo timestamp={new Date(dataUpdatedAt)} />
+				</small>
 			</footer>
 		</div>
 	);

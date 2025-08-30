@@ -2,7 +2,9 @@ import { FavouriteIcon, Home01Icon, Message01Icon, UserIcon } from "@hugeicons/c
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, Outlet } from "react-router";
+
 import type { TranslationKey } from "~/shared/i18n/i18n";
+import { UserButton } from "./header/user-button";
 
 type FooterMenuItem = {
 	href: string;
@@ -44,12 +46,15 @@ const MainLayout = () => {
 					))}
 				</ul>
 
-				<Link
-					className="bg-primary hover:brightness-75 transition-all rounded-full px-4 py-2 text-canvas text-sm font-semibold line-clamp-1 truncate"
-					to={"/publish"}
-				>
-					{t("publish_place")}
-				</Link>
+				<div className="flex gap-2 items-center">
+					<Link
+						className="bg-primary hover:brightness-75 transition-all rounded-full px-4 py-2 text-canvas text-sm font-semibold line-clamp-1 truncate"
+						to={"/publish"}
+					>
+						{t("publish_place")}
+					</Link>
+					<UserButton />
+				</div>
 			</header>
 
 			<main className="overflow-visible max-w-7xl mx-auto w-full h-full ">

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { VerifiedStar } from "~/shared/components/ui/verified/star";
 import { ProfileAvatar } from "./avatar";
 
@@ -5,9 +6,19 @@ type ProfileHeaderProps = {
 	name: string;
 	lastname: string;
 	avatarUrl?: string;
+	hereSince: Date;
 	aboutMe?: string;
 };
-export default function ProfileHeader({ name, lastname, avatarUrl, aboutMe }: ProfileHeaderProps) {
+export default function ProfileHeader({
+	name,
+	hereSince,
+	lastname,
+	avatarUrl,
+	aboutMe,
+}: ProfileHeaderProps) {
+	const {t,
+		i18n: { language },
+	} = useTranslation();
 	return (
 		<header className="grid grid-cols-[auto_1fr] gap-6">
 			<ProfileAvatar avatarUrl={avatarUrl} name={name} />
@@ -18,8 +29,14 @@ export default function ProfileHeader({ name, lastname, avatarUrl, aboutMe }: Pr
 					</h1>
 					<VerifiedStar />
 				</div>
-
-				<p className="text-foreground/80 max-md:text-sm">{aboutMe ?? "No description provided."}</p>
+				<div>
+					<p className="text-foreground/80 max-md:text-sm">
+						{aboutMe ?? "No description provided."}
+					</p>
+					<small>
+						{t("here_since")}:{hereSince.toLocaleDateString(language)}
+					</small>
+				</div>
 			</div>
 		</header>
 	);

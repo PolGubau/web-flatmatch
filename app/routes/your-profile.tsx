@@ -15,7 +15,7 @@ export default function Profile() {
 	const userId = session?.user.id;
 
 	return (
-		<div className="overflow-y-auto overflow-x-hidden max-w-4xl mx-auto px-4 md:px-6 ">
+		<div className="overflow-y-auto overflow-x-hidden max-w-4xl mx-auto px-4 md:px-6 h-full grid">
 			<ProfilePage isYours userId={userId} />
 		</div>
 	);

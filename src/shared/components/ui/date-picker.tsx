@@ -3,6 +3,7 @@
 import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "./button";
 import { Calendar } from "./calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
@@ -12,6 +13,7 @@ type Props = React.ComponentProps<typeof Calendar> & {
 	name?: string;
 };
 export function DatePicker({ className, name, placeholder, ...props }: Props) {
+	const { i18n } = useTranslation();
 	const [open, setOpen] = React.useState<boolean>(false);
 	const [date, setDate] = React.useState<string | null>(null);
 
@@ -26,7 +28,7 @@ export function DatePicker({ className, name, placeholder, ...props }: Props) {
 			<Popover onOpenChange={setOpen} open={open}>
 				<PopoverTrigger asChild>
 					<Button className=" justify-between font-normal" id="date" variant="outline">
-						{date ? date : placeholder}
+						{date ? new Date(date).toLocaleDateString(i18n.language) : placeholder}
 						<HugeiconsIcon icon={ArrowDown01Icon} />
 					</Button>
 				</PopoverTrigger>
