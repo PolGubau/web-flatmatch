@@ -5,10 +5,16 @@ export type Interaction = {
 	action: "like" | "dislike" | null;
 	lastActionAt: string | null;
 };
+export type Verification = {
+	verifiedAt: string | null;
+	verifiedBy: string | null;
+	verificationType: string | null;
+	notes: string | null;
+};
 export type Room = z.infer<typeof RoomSchema>;
 export type Commodities = z.infer<typeof CommoditiesSchema>;
 
 export type RoomWithMetadata = Room & {
-	isVerified: boolean;
+	verification: Verification;
 	interaction: Interaction;
 };

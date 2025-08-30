@@ -1,16 +1,13 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
-import type { Interaction, Room, RoomWithMetadata } from "~/entities/room/room";
+import type { Room, RoomWithMetadata } from "~/entities/room/room";
 import { supabase } from "~/global/supabase/client";
 import type { Inserts, Tables, Updates, Views } from "~/global/supabase/types-helpers";
 import type { Create, Delete, FindAll, FindById, FindMany, Update } from "~/shared/abstracts/repo";
 import { roomBDtoDomainAndMetadata } from "./adapter/room.adapter";
 
 export type RoomDB = Tables<"rooms">;
-export type RoomWithVerificationDB = Views<"rooms_with_verification">;
+export type RoomWithMetadataDB = Views<"rooms_with_metadata">;
 
-export type RoomWithMetadataDB = RoomWithVerificationDB & {
-	interaction: Interaction[];
-};
 export type InsertRoom = Inserts<"rooms">;
 export type UpdateRoom = Updates<"rooms">;
 
@@ -22,23 +19,14 @@ export const getAllRooms: FindAll<RoomWithMetadata> = async () => {
 	const userId = await getUserId();
 
 	const { data, error } = await supabase
-		.from("rooms_with_verification")
-		.select(
-			`
-		*,
-		interaction:room_user_interactions (
-			action,
-			lastActionAt:last_action_at,
-			user_id,
-			room_id
-		)
-	`,
-		)
+		.from("rooms_with_metadata")
+		.select("*")
 		.eq("room_user_interactions.user_id", userId);
 
 	if (error) throw error;
 
 	const roomWithMetadata = data.map(roomBDtoDomainAndMetadata);
+	console.log("API DATA:", roomWithMetadata);
 
 	return roomWithMetadata;
 };

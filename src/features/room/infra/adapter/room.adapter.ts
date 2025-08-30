@@ -11,7 +11,7 @@ import type {
 	RoomTimings,
 	RoomWhoIsLiving,
 } from "~/entities/room/editable-room.schema";
-import type { Interaction, Room, RoomWithMetadata } from "~/entities/room/room";
+import type { Interaction, Room, RoomWithMetadata, Verification } from "~/entities/room/room";
 import type { RoomDB, RoomWithMetadataDB } from "../room-api";
 /**
  * Adaptador desde la view de Supabase
@@ -80,9 +80,23 @@ export const roomBDtoDomainAndMetadata = (row: RoomWithMetadataDB): RoomWithMeta
 		lastActionAt: row.interaction[0].lastActionAt ?? null,
 	};
 
+	const verification: Verification = {
+		notes: row.verification[0].notes ?? null,
+		verificationType: row.verification[0].verificationType ?? null,
+		verifiedAt: row.verification[0].verifiedAt ?? null,
+		verifiedBy: row.verification[0].verifiedBy ?? null,
+	};
+
+	const omitInteraction = ({ interaction, ...rest }: RoomWithMetadataDB): RoomDB => ({
+		...rest,
+		created_at: rest.created_at ?? new Date().toISOString(),
+	});
+
+	const mainRoom: RoomDB = omitInteraction(row);
+
 	return {
-		...roomMapper.toDomain(row as unknown as RoomDB),
+		...roomMapper.toDomain(mainRoom),
 		interaction,
-		isVerified: !!row.verified_at,
+		verification,
 	};
 };

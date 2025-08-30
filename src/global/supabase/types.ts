@@ -51,13 +51,6 @@ export type Database = {
             referencedRelation: "rooms_with_metadata"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "room_images_room_id_fkey"
-            columns: ["room_id"]
-            isOneToOne: false
-            referencedRelation: "rooms_with_verification"
-            referencedColumns: ["id"]
-          },
         ]
       }
       room_user_interactions: {
@@ -92,13 +85,6 @@ export type Database = {
             columns: ["room_id"]
             isOneToOne: false
             referencedRelation: "rooms_with_metadata"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_saved_rooms_room_id_fkey"
-            columns: ["room_id"]
-            isOneToOne: false
-            referencedRelation: "rooms_with_verification"
             referencedColumns: ["id"]
           },
           {
@@ -148,13 +134,6 @@ export type Database = {
             columns: ["room_id"]
             isOneToOne: false
             referencedRelation: "rooms_with_metadata"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "room_verifications_room_id_fkey"
-            columns: ["room_id"]
-            isOneToOne: false
-            referencedRelation: "rooms_with_verification"
             referencedColumns: ["id"]
           },
           {
@@ -343,7 +322,9 @@ export type Database = {
           description: string | null
           id: string | null
           images: Json | null
-          is_saved: boolean | null
+          interaction_action: Database["public"]["Enums"]["room-action"] | null
+          interaction_last_action_at: string | null
+          interaction_user_id: string | null
           location: Json | null
           owner_id: string | null
           preferences: Json | null
@@ -354,47 +335,8 @@ export type Database = {
           timings: Json | null
           title: string | null
           updated_at: string | null
-          verification_date: string | null
           verification_id: string | null
-          verification_type: string | null
-          verified_by: string | null
-          who_is_living: Json | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "room_verifications_verified_by_fkey"
-            columns: ["verified_by"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "rooms_owner_id_fkey"
-            columns: ["owner_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      rooms_with_verification: {
-        Row: {
-          commodities: Json | null
-          contact: Json | null
-          created_at: string | null
-          description: string | null
-          id: string | null
-          images: Json | null
-          location: Json | null
-          owner_id: string | null
-          preferences: Json | null
-          price: Json | null
-          rent_type: string | null
-          rules: Json | null
-          status: string | null
-          timings: Json | null
-          title: string | null
-          updated_at: string | null
+          verification_notes: string | null
           verification_type: string | null
           verified_at: string | null
           verified_by: string | null
@@ -411,6 +353,13 @@ export type Database = {
           {
             foreignKeyName: "rooms_owner_id_fkey"
             columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_saved_rooms_user_id_fkey"
+            columns: ["interaction_user_id"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]

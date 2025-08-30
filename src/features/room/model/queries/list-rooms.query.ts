@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import type { Room, RoomWithMetadata } from "~/entities/room/room";
+import type { RoomWithMetadata } from "~/entities/room/room";
 import { listAllRoomsService } from "../services/room.service";
 
 /**

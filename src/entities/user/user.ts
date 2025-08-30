@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Enum-like strings
-export const GenderSchema = z.enum(["male", "female", "other", "prefer_not_to_say", "unknown"]);
+export const GenderSchema = z.enum(["male", "female", "other", "prefer_not_to_say"]);
 export type Gender = z.infer<typeof GenderSchema>;
 
 export const OccupationSchema = z.enum(["student", "employed", "unemployed", "other"]);
@@ -47,7 +47,7 @@ export const UserSchema = z.object({
 
 	createdAt: z.date(),
 	email: z.email(),
-	gender: GenderSchema,
+	gender: GenderSchema.nullable(),
 	id: z.string(),
 	languagesSpoken: z.array(z.string()).optional(),
 	lastname: z.string(),

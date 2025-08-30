@@ -13,6 +13,7 @@ export const useTinderCards = () => {
 
 	// Inicializamos roomsChunk solo una vez
 	useEffect(() => {
+		console.log("rooms loaded", rooms.length);
 		if (rooms?.length && roomsChunk.length === 0) {
 			setRoomsChunk(rooms);
 		}

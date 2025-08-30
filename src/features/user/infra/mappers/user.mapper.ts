@@ -16,7 +16,7 @@ export const dtoToDomain = (u: UserDB): User => ({
 	birthDate: u.birth_date ?? null,
 	createdAt: u.created_at ? new Date(u.created_at) : new Date(),
 	email: u.email,
-	gender: (u.gender as Gender) ?? "unknown",
+	gender: u.gender as Gender | null,
 	id: u.id,
 	languagesSpoken: u.languages_spoken ?? undefined,
 	lastname: u.lastname,

@@ -2,7 +2,7 @@ import { Calendar03Icon, UserAccountIcon, WorkIcon } from "@hugeicons/core-free-
 import { useTranslation } from "react-i18next";
 import { useUser } from "~/features/user/model/use-user";
 import type { Item } from "~/features/user/ui/profile/chips/chip-item";
-import {ProfileChipList} from "~/features/user/ui/profile/chips/chip-list";
+import { ProfileChipList } from "~/features/user/ui/profile/chips/chip-list";
 import { CompleteProfile } from "~/features/user/ui/profile/complete-profile/complete-profile";
 import ProfileHeader from "~/features/user/ui/profile/header";
 import { ProfileSkeleton } from "~/features/user/ui/profile/states/profile-skeleton";
@@ -27,7 +27,7 @@ export default function ProfilePage({ userId, isYours }: Props) {
 	const chips: Item[] = [
 		{
 			icon: UserAccountIcon,
-			label: t(user.gender),
+			label: t(user.gender ?? "unknown"),
 		},
 		{
 			icon: Calendar03Icon,
