@@ -1,6 +1,14 @@
 import { useTranslation } from "react-i18next";
 import { TimeAgo } from "~/shared/components/ui/timeAgo";
 import { ProfileAvatar } from "./avatar";
+
+type ProfileHeaderProps = {
+	name: string;
+	lastname: string;
+	avatarUrl?: string;
+	hereSince: Date;
+	aboutMe?: string;
+};
 export default function ProfileHeader({
 	name,
 	hereSince,
