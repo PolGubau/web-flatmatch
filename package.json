@@ -70,7 +70,7 @@
 	"private": true,
 	"scripts": {
 		"api:start": "npx supabase start",
-		"api:stop": "npx supabase stop",
+		"api:stop": "supabase stop --project-id web",
 		"build": "react-router build",
 		"db:copy-data": "npx supabase db dump --data-only > seed.sql && psql 'postgresql://postgres:postgres@127.0.0.1:54322/postgres' -f seed.sql",
 		"db:pull": "npx supabase db pull",

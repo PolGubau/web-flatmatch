@@ -1,4 +1,4 @@
-import type { AuthError, Session, User, WeakPassword } from "@supabase/supabase-js";
+import type { AuthError, Session, User } from "@supabase/supabase-js";
 import { supabase } from "../../global/supabase/client";
 
 export type SignInResponse =

@@ -8,6 +8,7 @@ export default [
 				route("auth/login", "./routes/auth/login.tsx"),
 				route("auth/register", "./routes/auth/register.tsx"),
 			]),
+			route("welcome", "./routes/welcome.tsx"),
 
 			// Main navigation flow
 			layout("../src/global/layout/main-layout.tsx", [

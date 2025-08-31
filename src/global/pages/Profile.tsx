@@ -1,5 +1,6 @@
 import { Calendar03Icon, UserAccountIcon, WorkIcon } from "@hugeicons/core-free-icons";
 import { useTranslation } from "react-i18next";
+import { Navigate } from "react-router";
 import { useUser } from "~/features/user/model/use-user";
 import type { Item } from "~/features/user/ui/profile/chips/chip-item";
 import { ProfileChipList } from "~/features/user/ui/profile/chips/chip-list";
@@ -20,6 +21,9 @@ export default function ProfilePage({ userId, isYours }: Props) {
 	const { t } = useTranslation();
 	if (!user) {
 		return <ProfileSkeleton />;
+	}
+	if (!user.name || !user.lastname) {
+		return <Navigate replace to="/welcome" />;
 	}
 	if (isLoading) {
 		return <ProfileSkeleton />;

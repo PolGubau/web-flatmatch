@@ -6,9 +6,10 @@ import { BioField } from "../fields/bio-field";
 type AddNewBioProps = {
 	aboutMe?: string;
 	userId: string;
+	onSuccess?: () => void;
 };
 
-export const ChangeBioForm = ({ aboutMe, userId }: AddNewBioProps) => {
+export const ChangeBioForm = ({ aboutMe, userId, onSuccess }: AddNewBioProps) => {
 	const { updateUser, isLoading, isSuccess } = useUpdateUser(userId);
 	const handleSubmitNewBio = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -16,6 +17,7 @@ export const ChangeBioForm = ({ aboutMe, userId }: AddNewBioProps) => {
 		updateUser({ aboutMe: newBio });
 		if (isSuccess) {
 			e.currentTarget.aboutMe.value = "";
+			onSuccess?.();
 		}
 	};
 	return (

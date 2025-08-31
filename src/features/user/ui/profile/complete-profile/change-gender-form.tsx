@@ -7,9 +7,10 @@ import { GenderField } from "../fields/gender-field";
 type ChangeGenderFormProps = {
 	gender: User["gender"] | null;
 	userId: User["id"];
+	onSuccess?: () => void;
 };
 
-export const ChangeGenderForm = ({ gender, userId }: ChangeGenderFormProps) => {
+export const ChangeGenderForm = ({ gender, userId, onSuccess }: ChangeGenderFormProps) => {
 	const { updateUser, isLoading, isSuccess } = useUpdateUser(userId);
 
 	const handleSubmitNewGender = (e: React.FormEvent<HTMLFormElement>) => {
@@ -18,6 +19,7 @@ export const ChangeGenderForm = ({ gender, userId }: ChangeGenderFormProps) => {
 		updateUser({ gender: newGender });
 		if (isSuccess) {
 			e.currentTarget.gender.value = "";
+			onSuccess?.();
 		}
 	};
 	return (

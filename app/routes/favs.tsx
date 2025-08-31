@@ -1,3 +1,4 @@
+import { Navigate } from "react-router";
 import FavsPage from "src/global/pages/Favs";
 import { PleaseSignInPage } from "~/shared/components/pages/PleaseSignInPage";
 import { useSession } from "~/shared/context/session-context";
@@ -12,5 +13,6 @@ export default function Favs() {
 	if (!session) {
 		return <PleaseSignInPage />;
 	}
+
 	return <FavsPage />;
 }
