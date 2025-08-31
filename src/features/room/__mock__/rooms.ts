@@ -53,12 +53,13 @@ export const mockRooms: Room[] = [
 			"Habitación con cama doble, escritorio y balcón en un piso con estudiantes internacionales.",
 		id: "room_1",
 		images: {
+			cover:
+				"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=958&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 			gallery: [
 				"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=958&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 				"https://images.unsplash.com/photo-1615800002234-05c4d488696c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
 				"https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
 			],
-			main: 0,
 		},
 		location: {
 			address: "Carrer de Verdi 45",
@@ -162,10 +163,11 @@ export const mockRooms: Room[] = [
 			"Cómoda habitación con cama individual, escritorio y baño privado en piso moderno y tranquilo.",
 		id: "room_2",
 		images: {
+			cover:
+				"https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
 			gallery: [
 				"https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
 			],
-			main: 0,
 		},
 		location: {
 			address: "Carrer de Mallorca 120",
@@ -269,12 +271,13 @@ export const mockRooms: Room[] = [
 			"Espaciosa habitación doble con salida a terraza privada, ideal para parejas o trabajadores.",
 		id: "room_3",
 		images: {
+			cover:
+				"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHJvb218ZW58MHx8MHx8fDA%3D",
 			gallery: [
 				"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHJvb218ZW58MHx8MHx8fDA%3D",
 				"https://images.unsplash.com/photo-1615800002234-05c4d488696c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
 				"https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
 			],
-			main: 0,
 		},
 		location: {
 			address: "Carrer de Sants 202",
@@ -378,12 +381,13 @@ export const mockRooms: Room[] = [
 			"Ideal para estudiantes con presupuesto ajustado, en zona bien comunicada y tranquila.",
 		id: "room_4",
 		images: {
+			cover:
+				"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHJvb218ZW58MHx8MHx8fDA%3D",
 			gallery: [
 				"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHJvb218ZW58MHx8MHx8fDA%3D",
 				"https://images.unsplash.com/photo-1615800002234-05c4d488696c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
 				"https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNhbGElMjBkZSUyMGVzdGFyfGVufDB8fDB8fHww",
 			],
-			main: 0,
 		},
 		location: {
 			address: "Carrer de Rogent 78",

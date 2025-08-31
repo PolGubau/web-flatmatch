@@ -3,10 +3,13 @@ import type { Room, RoomWithMetadata } from "~/entities/room/room";
 
 import { RoomRepository } from "../infra/room-repository";
 import type { SwipeDirection } from "../types/common";
+import { useUpdateRoomInteraction } from "./mutations/update-room-interaction";
 import { listRoomsQuery } from "./queries/list-rooms.query";
 
 export const useTinderCards = () => {
-	const { rooms, isLoading } = listRoomsQuery();
+	const { rooms, isLoading, refetch } = listRoomsQuery();
+	const { likeRoom } = useUpdateRoomInteraction();
+	console.log(rooms);
 	const [roomsChunk, setRoomsChunk] = useState<RoomWithMetadata[]>([]);
 	const [bottomDrawerRoom, setBottomDrawerRoom] = useState<null | RoomWithMetadata>(null);
 	const [isFetching, setIsFetching] = useState(false);
@@ -48,7 +51,10 @@ export const useTinderCards = () => {
 		(roomId: Room["id"], direction: SwipeDirection) => {
 			switch (direction) {
 				case "left":
+					removeRoom(roomId);
+					break;
 				case "right":
+					likeRoom.mutate(roomId);
 					removeRoom(roomId);
 					break;
 				case "up": {
@@ -64,8 +70,8 @@ export const useTinderCards = () => {
 				prefetchMoreRooms();
 			}
 		},
-		[getRoom, removeRoom, roomsChunk.length, isFetching, prefetchMoreRooms],
+		[getRoom, removeRoom, roomsChunk.length, isFetching, prefetchMoreRooms, likeRoom.mutate],
 	);
 
-	return { bottomDrawerRoom, handleCloseDrawer, isLoading, onSwipe, rooms: roomsChunk };
+	return { bottomDrawerRoom, handleCloseDrawer, isLoading, onSwipe, refetch, rooms: roomsChunk };
 };

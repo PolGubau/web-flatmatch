@@ -4,6 +4,7 @@ import { supabase } from "~/global/supabase/client";
 import type { Inserts, Tables, Updates, Views } from "~/global/supabase/types-helpers";
 import type { Create, Delete, FindAll, FindById, FindMany, Update } from "~/shared/abstracts/repo";
 import { roomBDtoDomainAndMetadata } from "./adapter/room.adapter";
+import type { LikeApi, RemoveLikeApi } from "./room-repository";
 
 export type RoomDB = Tables<"rooms">;
 export type RoomWithMetadataDB = Views<"rooms_with_metadata">;
@@ -16,12 +17,15 @@ export type UpdateRoom = Updates<"rooms">;
  */
 
 export const getAllRooms: FindAll<RoomWithMetadata> = async () => {
-	const userId = await getUserId();
+	// const userId = await getUserId();
 
 	const { data, error } = await supabase
 		.from("rooms_with_metadata")
 		.select("*")
-		.eq("room_user_interactions.user_id", userId);
+		.or("interaction_action.is.null,interaction_action.neq.like")
+
+		.limit(10);
+	// .eq("room_user_interactions.user_id", userId);
 
 	if (error) throw error;
 
@@ -40,7 +44,7 @@ export const getOneRoom: FindById<RoomWithMetadata> = async (id) => {
 	const { data, error } = await supabase
 		.from("rooms_with_metadata")
 		.select("*")
-		.eq("room_user_interactions.user_id", userId)
+		// .eq("room_user_interactions.user_id", userId)
 		.eq("id", id)
 		.single();
 
@@ -238,17 +242,26 @@ export async function getFavoriteRooms(): Promise<RoomWithMetadata[]> {
 	});
 }
 
-export async function addFavoriteRoom(id: Room["id"]): Promise<void> {
-	// 1. favorite rooms is a table so we need to insert a row there
+export const addFavoriteRoom: LikeApi = async (id) => {
 	const userId = await getUserId();
 
-	const { error } = await supabase
+	const { error, data } = await supabase
 		.from("room_user_interactions")
-		.insert({ action: "like", room_id: id, user_id: userId });
+		.upsert(
+			{ action: "like", last_action_at: new Date().toISOString(), room_id: id, user_id: userId },
+			{ ignoreDuplicates: true },
+		)
+		.select()
+		.single();
 
 	if (error) throw error;
-}
-export async function removeFavoriteRoom(id: Room["id"]): Promise<void> {
+	return {
+		action: data.action,
+		lastActionAt: data.last_action_at,
+		roomId: id,
+	};
+};
+export const removeFavoriteRoom: RemoveLikeApi = async (id) => {
 	const userId = await getUserId();
 
 	const { error } = await supabase
@@ -258,4 +271,9 @@ export async function removeFavoriteRoom(id: Room["id"]): Promise<void> {
 		.eq("user_id", userId);
 
 	if (error) throw error;
-}
+
+	return {
+		roomId: id,
+		success: true,
+	};
+};

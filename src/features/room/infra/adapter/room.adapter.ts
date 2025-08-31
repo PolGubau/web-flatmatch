@@ -2,7 +2,7 @@ import type {
 	RentType,
 	RoomCommodities,
 	RoomContact,
-	RoomImages,
+	RoomEditableImages,
 	RoomLocation,
 	RoomPreferences,
 	RoomPrice,
@@ -33,10 +33,10 @@ export const roomMapper = {
 			id: room.id,
 
 			images: {
+				cover: room.images.cover,
 				gallery: room.images.gallery.map(
 					(img) => (typeof img === "string" ? img : ""), // ⚠️ los File se deberían subir antes a Storage
 				),
-				main: room.images.main,
 			},
 			location: room.location,
 			owner_id: room.ownerId,
@@ -59,7 +59,7 @@ export const roomMapper = {
 			description: dto.description ?? "",
 			id: dto.id,
 			//@ts-ignore
-			images: dto.images as unknown as RoomImages,
+			images: dto.images as unknown as RoomEditableImages,
 
 			location: dto.location as RoomLocation,
 			preferences: dto.preferences as RoomPreferences,

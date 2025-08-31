@@ -101,10 +101,10 @@ export const RulesSchema = z.object({
 export type RoomRules = z.infer<typeof RulesSchema>;
 
 export const ImagesSchema = z.object({
+	cover: z.string().nullable(),
 	gallery: z.array(z.union([z.instanceof(File), z.string()])).min(1),
-	main: z.number(),
 });
-export type RoomImages = z.infer<typeof ImagesSchema>;
+export type RoomEditableImages = z.infer<typeof ImagesSchema>;
 
 export const TimingsSchema = z.object({
 	availableFrom: z.string(),

@@ -15,12 +15,11 @@ export default [
 				index("./routes/home.tsx"),
 				route("favs", "./routes/favs.tsx"),
 				route("chat", "./routes/chat.tsx"),
+				route("room/:roomId", "./routes/room-details.tsx"),
 				...prefix("profile", [
 					index("./routes/your-profile.tsx"),
 					route(":userId", "./routes/profile.tsx"),
 				]),
-				// details page
-				...prefix("room", [route(":roomId", "./routes/room-details.tsx")]),
 			]),
 
 			// Publish room form

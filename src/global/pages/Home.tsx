@@ -1,11 +1,15 @@
+import { RefreshIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Sheet } from "react-modal-sheet";
 import { useTinderCards } from "~/features/room/model/use-tinder-cards";
 import RoomDetails from "~/features/room/ui/details/room-details";
 import { RoomTinderCard } from "~/features/room/ui/room-tinder-card";
 import { LoadingSection } from "~/shared/components/pages/LoadingSection";
+import { Button } from "~/shared/components/ui/button";
 
 export default function HomePage() {
-	const { rooms, onSwipe, bottomDrawerRoom, handleCloseDrawer, isLoading } = useTinderCards();
+	const { rooms, onSwipe, bottomDrawerRoom, handleCloseDrawer, isLoading, refetch } =
+		useTinderCards();
 
 	if (isLoading) return <LoadingSection />;
 
@@ -31,8 +35,12 @@ export default function HomePage() {
 				))}
 
 				{rooms.length === 0 && (
-					<div className="text-center text-neutral-500">
+					<div className="text-center form text-foreground/60 max-w-md items-center">
 						No quedan habitaciones. Desliza para ver más.
+						<Button disabled={isLoading} onClick={refetch}>
+							<HugeiconsIcon icon={RefreshIcon} />
+							Recargar
+						</Button>
 					</div>
 				)}
 			</div>

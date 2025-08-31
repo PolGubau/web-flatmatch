@@ -31,7 +31,7 @@ export function MetadataForm() {
 	});
 
 	const images = watch("images.gallery");
-	const mainImage = watch("images.main");
+	const mainImage = watch("images.cover");
 
 	return (
 		<form
@@ -72,10 +72,10 @@ export function MetadataForm() {
 
 				<GalleryForm
 					images={images}
-					mainIndex={mainImage}
+					mainIndex={images.findIndex((img) => img === mainImage)}
 					onChangeImages={setValue}
 					onChangeMain={(main) => {
-						setValue("images.main", main);
+							setValue("images.cover", images[main] as any, { shouldValidate: true });
 						console.log(main);
 					}}
 				/>

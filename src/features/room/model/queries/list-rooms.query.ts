@@ -10,15 +10,16 @@ import { listAllRoomsService } from "../services/room.service";
 type ListRoomResponse = {
 	isLoading: boolean;
 	rooms: RoomWithMetadata[];
+	refetch: () => void;
 };
 
 type ListRoomQuery = () => ListRoomResponse;
 
 export const listRoomsQuery: ListRoomQuery = () => {
-	const { data, isLoading } = useQuery<RoomWithMetadata[]>({
+	const { data, isLoading, refetch } = useQuery<RoomWithMetadata[]>({
 		queryFn: listAllRoomsService,
 		queryKey: ["rooms"],
 	});
 
-	return { isLoading, rooms: data ?? [] };
+	return { isLoading, refetch, rooms: data ?? [] };
 };

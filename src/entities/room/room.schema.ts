@@ -1,13 +1,15 @@
 import { z } from "zod";
 import { EditableRoomSchema } from "./editable-room.schema";
 
+export const ImagesSchema = z.object({
+	cover: z.string(),
+	gallery: z.array(z.url()),
+});
+
 export const RoomSchema = EditableRoomSchema.extend({
 	createdAt: z.string(),
 	id: z.string(),
-	images: z.object({
-		gallery: z.array(z.url()),
-		main: z.number(), // Index of the main image in the gallery
-	}),
+	images: ImagesSchema,
 	ownerId: z.string(),
 	updatedAt: z.string().nullable(),
 });

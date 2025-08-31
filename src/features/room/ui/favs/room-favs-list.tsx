@@ -12,7 +12,7 @@ export function RoomList({ rooms }: Props) {
 				<RoomFavsListItem
 					description={room.description}
 					id={room.id}
-					image={room.images.gallery[room.images.main]}
+					image={room.images.cover}
 					key={room.id}
 					price={room.price.localePrice}
 					title={room.title}

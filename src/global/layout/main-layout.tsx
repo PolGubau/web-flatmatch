@@ -58,7 +58,7 @@ const MainLayout = () => {
 				</div>
 			</header>
 
-			<main className="overflow-visible max-w-7xl mx-auto w-full h-full ">
+			<main className="overflow-y-auto overflow-x-visible max-w-7xl mx-auto w-full h-full ">
 				<Outlet />
 			</main>
 			<footer

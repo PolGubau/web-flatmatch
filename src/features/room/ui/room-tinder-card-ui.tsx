@@ -3,11 +3,12 @@ import { VerifiedChip } from "~/shared/components/ui/verified/chip";
 import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 
 export function RoomTinderCardUI({ room }: { room: RoomWithMetadata }) {
-	const imagesAmount = (room.images.main ? 1 : 0) + room.images.gallery.length;
+	const imagesAmount = (room.images.cover ? 1 : 0) + room.images.gallery.length;
 	const imageMode = imagesAmount > 3 ? 3 : imagesAmount > 2 ? 2 : imagesAmount > 1 ? 1 : 0;
-	const { main, gallery } = room.images;
+	const { cover, gallery } = room.images;
+	const restImages = gallery.filter((path) => path !== cover);
 
-	const sortedImages = [gallery[main], ...gallery.filter((_, i) => i !== main)];
+	const sortedImages = [cover, ...restImages];
 
 	return (
 		// gradient from black to transparent
@@ -15,7 +16,7 @@ export function RoomTinderCardUI({ room }: { room: RoomWithMetadata }) {
 			<div className="bg-gradient-to-tr from-black w-full h-full inset-0 absolute to-transparent rounded-lg" />
 
 			<header className="absolute bottom-0 left-0 p-4 pb-6 flex flex-col gap-2 z-10">
-				{room.isVerified && <VerifiedChip />}
+				{!!room.verification.verifiedAt && <VerifiedChip />}
 
 				<h2 className="text-canvas text-2xl text-pretty line-clamp-2">{room.title} </h2>
 

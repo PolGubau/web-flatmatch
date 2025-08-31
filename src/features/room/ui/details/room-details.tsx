@@ -16,6 +16,8 @@ import CopyRoomLinkButton from "./copy-room-link-button";
 import { ContactButtons } from "./footer/contact-buttons";
 import { RoomDetailsImage } from "./image";
 import "./room-details.css";
+import { Button } from "~/shared/components/ui/button";
+import { useUpdateRoomInteraction } from "../../model/mutations/update-room-interaction";
 
 type Props = {
 	room: RoomWithMetadata;
@@ -23,19 +25,32 @@ type Props = {
 
 export default function RoomDetails({ room }: Props) {
 	const { t } = useTranslation();
-
+	console.log("details:", room);
+	const { likeRoom, removeLikeRoom } = useUpdateRoomInteraction();
 	if (!room) {
-		return null;
+		return <p>Room not found</p>;
 	}
-	const image = room.images.main;
-	const restOfImages = room.images.gallery;
-	const { female, male, other } = room.whoIsLiving.currentTenants;
+	const cover = room?.images?.cover;
+	const allImages = room?.images?.gallery;
+	const { female, male, other } = room.whoIsLiving?.currentTenants ?? {
+		female: 0,
+		male: 0,
+		other: 0,
+	};
 	const peopleAmount = female + male + other;
 
-	const isFavourite = false;
+	const isFavourite = room?.interaction?.action === "like";
+
+	const handleFavouriteClick = () => {
+		if (isFavourite) {
+			removeLikeRoom.mutate(room.id);
+		} else {
+			likeRoom.mutate(room.id);
+		}
+	};
 
 	// Gallery with the main first
-	const sortedImages = [restOfImages[image], ...restOfImages.filter((_, i) => i !== image)];
+	const sortedImages = [cover, ...allImages.filter((path) => path !== cover)];
 	return (
 		<div className="relative overflow-y-auto h-full">
 			<section className="grid md:grid-cols-2 gap-4 mx-auto max-w-4xl">
@@ -48,7 +63,7 @@ export default function RoomDetails({ room }: Props) {
 				</ul>
 
 				<div className="flex flex-col gap-8 px-4">
-					<header className="grid grid-cols-[1fr_auto] gap-2 items-center sticky top-0 bg-background z-10">
+					<header className="grid grid-cols-[1fr_auto] gap-2 items-center sticky top-0 bg-canvas z-10">
 						<div className="flex flex-col gap-1">
 							<p className="text-lg text-foreground/80 flex gap-1 items-center">
 								<span className="font-semibold text-xl">{room.price.localePrice}</span>
@@ -67,15 +82,21 @@ export default function RoomDetails({ room }: Props) {
 						<nav className="flex items-center gap-2">
 							<CopyRoomLinkButton />
 
-							<button type="button">
+							<Button
+								className=""
+								onClick={handleFavouriteClick}
+								size={"icon"}
+								type="button"
+								variant={"ghost"}
+							>
 								<HugeiconsIcon
-									className={cn({
+									className={cn("text-xl", {
 										"fill-red-400": isFavourite,
 									})}
 									icon={FavouriteIcon}
-									size={25}
+									size={30}
 								/>
-							</button>
+							</Button>
 						</nav>
 					</header>
 					<ul className="flex gap-8 items-center">
@@ -104,13 +125,15 @@ export default function RoomDetails({ room }: Props) {
 						<li className="flex flex-col gap-1 items-center">
 							<HugeiconsIcon
 								className={cn({
-									"text-error": !room.isVerified,
-									"text-success": room.isVerified,
+									"text-error": !room.verification.verifiedAt,
+									"text-success": !!room.verification.verifiedAt,
 								})}
-								icon={room.isVerified ? SecurityCheckIcon : CancelCircleIcon}
+								icon={room.verification.verifiedAt ? SecurityCheckIcon : CancelCircleIcon}
 								size={32}
 							/>
-							<span className="text-sm">{t(room.isVerified ? "verified" : "not_verified")}</span>
+							<span className="text-sm">
+								{t(room.verification.verifiedAt ? "verified" : "not_verified")}
+							</span>
 						</li>
 					</ul>
 					{/*  */}

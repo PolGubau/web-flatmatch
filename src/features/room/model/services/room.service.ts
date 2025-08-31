@@ -1,6 +1,11 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
 import type { Room, RoomWithMetadata } from "~/entities/room/room";
-import { RoomRepository } from "../../infra/room-repository";
+import {
+	type LikeApiResponse,
+	type RemoveLikeApi,
+	type RemoveLikeApiResponse,
+	RoomRepository,
+} from "../../infra/room-repository";
 
 export const getRoomService = async (id: string): Promise<RoomWithMetadata | null> => {
 	// 1. Error handling
@@ -45,4 +50,13 @@ export const listAllRoomsService = async (): Promise<RoomWithMetadata[]> => {
 export const listMultipleRoomsService = async (ids: string[]): Promise<RoomWithMetadata[]> => {
 	const dtoList = await RoomRepository.findMany(ids);
 	return dtoList;
+};
+
+export const likeRoomService = async (roomId: string): Promise<LikeApiResponse> => {
+	const response = await RoomRepository.like(roomId);
+	return response;
+};
+export const removeLikeRoomService = async (roomId: string): Promise<RemoveLikeApiResponse> => {
+	const res = await RoomRepository.removeLike(roomId);
+	return res;
 };
