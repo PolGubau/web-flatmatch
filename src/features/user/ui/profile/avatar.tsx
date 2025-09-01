@@ -27,5 +27,5 @@ export const ProfileAvatar = ({ name, avatarUrl, size = "md" }: ProfileAvatarPro
 			</div>
 		);
 	}
-	return <img alt={`Avatar de ${name}`} className={className} src={avatarUrl} />;
+	return <img alt={name.split("")[0]} className={className} src={avatarUrl} />;
 };

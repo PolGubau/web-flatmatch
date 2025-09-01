@@ -11,9 +11,9 @@ export const YourAvatar = ({ size = "sm" }: Props) => {
 	const { session } = useSession();
 	const { avatar_url, name } = session?.user.user_metadata ?? {};
 
-	if (!avatar_url) return <SignInAvatar />;
+	if (!session) return <SignInAvatar />;
 
-	return <ProfileAvatar avatarUrl={avatar_url as string} name={name as string} size={size} />;
+	return <ProfileAvatar avatarUrl={avatar_url ?? undefined} name={name as string} size={size} />;
 };
 
 export const SignInAvatar = () => {

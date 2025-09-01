@@ -2,7 +2,15 @@ import type { EditableRoom } from "./editable-room";
 
 export const emptyEditableRoom: EditableRoom = {
 	commodities: {
-		room: undefined,
+		room: {
+			area: undefined as unknown as number,
+			bedType: "single",
+			hasBalcony: false,
+			hasPrivateBathroom: false,
+			hasWindow: false,
+			hasWorkingDesk: false,
+			isFurnished: false,
+		},
 		whole: {
 			appliances: {
 				hasAirConditioning: false,
@@ -19,12 +27,12 @@ export const emptyEditableRoom: EditableRoom = {
 				hasWifi: false,
 				isWheelchairAccessible: false,
 			},
-			area: 0,
+			area: undefined as unknown as number,
 			areUtilitiesIncluded: false,
-			bathrooms: 0,
+			bathrooms: undefined as unknown as number,
 			bedrooms: {
-				individual: 0,
-				shared: 0,
+				individual: undefined as unknown as number,
+				shared: undefined as unknown as number,
 			},
 			extras: {
 				hasGarden: false,
@@ -43,8 +51,8 @@ export const emptyEditableRoom: EditableRoom = {
 	},
 	description: "",
 	images: {
+		coverIndex: 0,
 		gallery: [],
-		cover: null,
 	},
 	location: {
 		address: "",

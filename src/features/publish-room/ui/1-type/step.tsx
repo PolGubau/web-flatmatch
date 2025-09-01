@@ -1,34 +1,44 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HutIcon, MeetingRoomIcon, SlideshareIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import type { IconSvgElement } from "@hugeicons/react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
+import type { TranslationKey } from "~/shared/i18n/i18n";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 import { RadioBox } from "../shared/radiobox";
 
-const RENT_TYPES = [
+type RentTypeSelector = {
+	id: string;
+	label: TranslationKey;
+	value: string;
+	icon: IconSvgElement;
+	description: string;
+};
+
+const RENT_TYPES: RentTypeSelector[] = [
 	{
 		description: "A private room for one or more guests",
 		icon: MeetingRoomIcon,
 		id: "room",
-		label: "Room",
+		label: "room",
 		value: "room",
 	},
 	{
 		description: "A shared room in a flat with more people",
 		icon: SlideshareIcon,
 		id: "shared",
-		label: "Shared",
+		label: "shared",
 		value: "shared",
 	},
 	{
 		description: "An entire apartment for one or more guests",
 		icon: HutIcon,
 		id: "apartment",
-		label: "Entire space",
+		label: "entire_space",
 		value: "entire",
 	},
 ];
@@ -38,6 +48,7 @@ const Step1Schema = EditableRoomSchema.pick({
 export type Step1SchemaType = z.infer<typeof Step1Schema>;
 export function Step1() {
 	const navigate = useNavigate();
+	const { t } = useTranslation();
 	const { data, setData } = useFormState();
 
 	const {
@@ -63,7 +74,7 @@ export function Step1() {
 			)}
 		>
 			<fieldset>
-				<legend className="text-lg pb-12">What are you renting?</legend>
+				<legend className="text-lg pb-12">{t("what_are_you_renting")}</legend>
 				<ul className="grid grid-rows-3 gap-2 min-h-40 w-full max-w-4xl mx-auto min-w-[300px]">
 					{RENT_TYPES.map(({ id, label, value, icon, description }) => {
 						const field = register("rentType", { required: "Rent type is required" });

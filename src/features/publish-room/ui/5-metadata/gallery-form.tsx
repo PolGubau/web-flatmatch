@@ -4,6 +4,7 @@ import type { UseFormSetValue } from "react-hook-form";
 import type { EditableRoom } from "~/entities/room/editable-room";
 import { cn } from "~/shared/utils/utils";
 import type { Step5SchemaType } from "./step";
+import { useTranslation } from "react-i18next";
 
 type Image = EditableRoom["images"]["gallery"][number];
 type Props = {
@@ -13,13 +14,14 @@ type Props = {
 	mainIndex: number;
 };
 export function GalleryForm({ onChangeImages, onChangeMain, images, mainIndex }: Props) {
+	const { t } = useTranslation();
 	return (
 		<div className="space-y-4">
 			<label className="flex flex-col gap-1">
-				Upload images
+				{t("upload_images")}
 				<div className="flex gap-2 items-center bg-foreground/10 rounded-full py-2 px-4 w-fit">
 					<HugeiconsIcon icon={Camera01Icon} size={20} />
-					Upload images to the gallery
+					{t("upload_images_to_gallery")}
 				</div>
 				<input
 					accept="image/*"

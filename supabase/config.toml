@@ -1,10 +1,11 @@
+[auth]
+site_url = "https://flatmatchweb.vercel.app"
+additional_redirect_urls = [
+  "http://localhost:5173",
+  "https://flatmatchweb.vercel.app"
+]
+
 [auth.external.google]
 enabled = true
 client_id = "env(VITE_GOOGLE_ID)"
 secret = "env(SUPABASE_AUTH_GOOGLE_CLIENT_SECRET)"
-
- 
-
-[auth]
-site_url = "http://localhost:5173"
-additional_redirect_urls = ["http://localhost:5173"]

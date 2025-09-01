@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
@@ -18,6 +19,7 @@ export type Step5SchemaType = z.infer<typeof Step5Schema>;
 export function MetadataForm() {
 	const navigate = useNavigate();
 	const { data, setData } = useFormState();
+	const { t } = useTranslation();
 
 	const {
 		register,
@@ -31,7 +33,7 @@ export function MetadataForm() {
 	});
 
 	const images = watch("images.gallery");
-	const mainImage = watch("images.cover");
+	const coverIndex = watch("images.coverIndex");
 
 	return (
 		<form
@@ -47,13 +49,13 @@ export function MetadataForm() {
 			)}
 		>
 			<fieldset className="flex flex-col gap-6 overflow-y-auto">
-				<legend className="text-lg pb-10">Add Metadata</legend>
+				<legend className="text-lg pb-10">{t("add_metadata")}</legend>
 
 				<Input
 					id="bedrooms-male"
 					label="Title"
 					minLength={5}
-					placeholder="Big and spacious room near train station..."
+					placeholder={t("metadata_title_placeholder")}
 					required
 					{...register("title", {
 						required: true,
@@ -63,7 +65,7 @@ export function MetadataForm() {
 				<Textarea
 					label="Description"
 					minLength={10}
-					placeholder="How many female tenants?"
+					placeholder={t("metadata_description_placeholder")}
 					required
 					{...register("description", {
 						required: true,
@@ -72,10 +74,10 @@ export function MetadataForm() {
 
 				<GalleryForm
 					images={images}
-					mainIndex={images.findIndex((img) => img === mainImage)}
+					mainIndex={coverIndex}
 					onChangeImages={setValue}
 					onChangeMain={(main) => {
-							setValue("images.cover", images[main] as any, { shouldValidate: true });
+						setValue("images.coverIndex", main, { shouldValidate: true });
 						console.log(main);
 					}}
 				/>

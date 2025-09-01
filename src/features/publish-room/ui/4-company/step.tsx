@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
@@ -14,7 +15,7 @@ export type Step3SchemaType = z.infer<typeof Step3Schema>;
 export function CompanyForm() {
 	const navigate = useNavigate();
 	const { data, setData } = useFormState();
-
+	const { t } = useTranslation();
 	const {
 		register,
 		handleSubmit,
@@ -38,10 +39,10 @@ export function CompanyForm() {
 			)}
 		>
 			<fieldset className="flex flex-col gap-6 overflow-y-auto">
-				<legend className="text-lg pb-10">Who is living there?</legend>
+				<legend className="text-lg pb-10">{t("who_is_living")}</legend>
 
 				<section className="flex flex-col gap-4">
-					<h3>Current Tenants</h3>
+					<h3>{t("current_tenants")}</h3>
 					<ul className="grid gap-4 items-center grid-cols-2 md:grid-cols-3">
 						<li>
 							<Input
@@ -50,7 +51,7 @@ export function CompanyForm() {
 								label="Male"
 								max={10}
 								min={0}
-								placeholder="How many male tenants?"
+								placeholder={t("how_many_male_tenants")}
 								type="number"
 								{...register("whoIsLiving.currentTenants.male", {
 									required: true,
@@ -65,7 +66,7 @@ export function CompanyForm() {
 								label="Female"
 								max={20}
 								min={0}
-								placeholder="How many female tenants?"
+								placeholder={t("how_many_female_tenants")}
 								type="number"
 								{...register("whoIsLiving.currentTenants.female", {
 									required: true,
@@ -80,7 +81,7 @@ export function CompanyForm() {
 								label="Other"
 								max={20}
 								min={0}
-								placeholder="How many other tenants?"
+								placeholder={t("how_many_other_tenants")}
 								type="number"
 								{...register("whoIsLiving.currentTenants.other", {
 									required: true,
@@ -92,7 +93,7 @@ export function CompanyForm() {
 				</section>
 
 				<section>
-					<h3>Owner</h3>
+					<h3>{t("owner")}</h3>
 					<div className="flex items-center gap-2">
 						<input
 							className="peer h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
@@ -104,7 +105,7 @@ export function CompanyForm() {
 							className="text-sm font-medium text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 							htmlFor="owner-lives-here"
 						>
-							Does the owner live here?
+							{t("does_owner_live_here")}
 						</label>
 					</div>
 				</section>

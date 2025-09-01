@@ -9,7 +9,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslation } from "react-i18next";
 import type { RoomWithMetadata } from "~/entities/room/room";
-import { commoditiesMap, extrasMap } from "~/shared/base/commodities";
+import { commoditiesMap, extrasMap } from "~/shared/base/maps";
 import { MapWithMarker } from "~/shared/components/map";
 import { cn } from "~/shared/utils/utils";
 import CopyRoomLinkButton from "./copy-room-link-button";

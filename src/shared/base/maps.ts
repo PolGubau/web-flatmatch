@@ -1,10 +1,16 @@
 import {
+	Backpack01Icon,
+	BeachIcon,
 	CarParking02Icon,
 	Coffee02Icon,
 	DishWasherIcon,
 	FastWindIcon,
+	FemaleSymbolIcon,
 	HairDryerIcon,
+	HelpSquareIcon,
+	MaleSymbolIcon,
 	MicrowaveIcon,
+	OfficeChairIcon,
 	OvenIcon,
 	PoolIcon,
 	PulleyIcon,
@@ -19,8 +25,15 @@ import {
 } from "@hugeicons/core-free-icons";
 import type { IconSvgElement } from "@hugeicons/react";
 import type { Room } from "~/entities/room/room";
+import type { Gender, Occupation } from "~/entities/user/user";
 import type { TranslationKey } from "../i18n/i18n";
-export const extrasMap: Record<string, { label: TranslationKey; icon: IconSvgElement }> = {
+
+type MapItem = {
+	label: TranslationKey;
+	icon?: IconSvgElement;
+};
+
+export const extrasMap: Record<keyof Room["commodities"]["whole"]["extras"], MapItem> = {
 	hasGarden: {
 		icon: Tree04Icon,
 		label: "garden",
@@ -39,10 +52,7 @@ export const extrasMap: Record<string, { label: TranslationKey; icon: IconSvgEle
 	},
 };
 
-export const commoditiesMap: Record<
-	keyof Room["commodities"]["whole"]["appliances"],
-	{ label: TranslationKey; icon: IconSvgElement }
-> = {
+export const commoditiesMap: Record<keyof Room["commodities"]["whole"]["appliances"], MapItem> = {
 	hasAirConditioning: {
 		icon: FastWindIcon,
 		label: "air_conditioning",
@@ -95,5 +105,39 @@ export const commoditiesMap: Record<
 	isWheelchairAccessible: {
 		icon: WheelchairIcon,
 		label: "wheelchair_accessible",
+	},
+};
+
+export const occupationMap: Record<string, MapItem> = {
+	employed: {
+		icon: OfficeChairIcon,
+		label: "employed",
+	},
+	other: {
+		icon: HelpSquareIcon,
+		label: "other",
+	},
+	student: {
+		icon: Backpack01Icon,
+		label: "student",
+	},
+	unemployed: {
+		icon: BeachIcon,
+		label: "unemployed",
+	},
+};
+
+export const genderMap: Record<string, MapItem> = {
+	female: {
+		icon: FemaleSymbolIcon,
+		label: "female",
+	},
+	male: {
+		icon: MaleSymbolIcon,
+		label: "male",
+	},
+	other: {
+		icon: BeachIcon,
+		label: "other",
 	},
 };
