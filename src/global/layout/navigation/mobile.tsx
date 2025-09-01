@@ -11,8 +11,8 @@ export const MobileNavigation = () => {
 			{menuItems.map((item) => (
 				<NavLink
 					className={({ isActive, isPending }) => `
-        flex flex-col items-center justify-center gap-1 hover:bg-foreground/5 transition-colors cursor-pointer px-2 py-2 pt-3 md:py-4
-        ${isActive ? "text-primary" : "text-neutral-500"} 
+        flex flex-col items-center justify-center gap-1 hover:bg-foreground/5 transition-colors cursor-pointer px-2 py-2 pt-3 md:py-4 
+        ${isActive ? "text-primary " : "text-neutral-500"} 
         ${isPending ? "text-primary-900" : "text-neutral-500"} 
         `}
 					key={item.href}
