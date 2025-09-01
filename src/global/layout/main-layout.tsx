@@ -1,8 +1,8 @@
 import { FavouriteIcon, Home01Icon, Message01Icon, UserIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, Outlet } from "react-router";
-
 import type { TranslationKey } from "~/shared/i18n/i18n";
 import { UserButton } from "./header/user-button";
 import { MobileNavigation } from "./navigation/mobile";
@@ -20,7 +20,7 @@ export const menuItems: FooterMenuItem[] = [
 	{ href: "/profile", icon: UserIcon, label: "profile" },
 ];
 
-const MainLayout = () => {
+const MainLayout = ({ children }: PropsWithChildren) => {
 	const { t } = useTranslation();
 	return (
 		<div className="grid grid-rows-[auto_1fr_auto] md:grid-rows-[auto_1fr] relative flex-col h-dvh gap-4 overflow-hidden bg-canvas text-foreground">
@@ -59,7 +59,7 @@ const MainLayout = () => {
 			</header>
 
 			<main className="overflow-y-auto overflow-x-visible max-w-7xl mx-auto w-full h-full ">
-				<Outlet />
+				{children ?? <Outlet />}
 			</main>
 			<footer
 				className="inset-0 left-0 w-dvw bg-neutral-500/10 h-fit items-center justify-center flex md:hidden backdrop-blur-md"

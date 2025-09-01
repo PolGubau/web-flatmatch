@@ -24,11 +24,11 @@ bg-[length:200%_200%] animate-gradient-move"
 					</div>
 				</header>
 
-				<section className="md:p-4 overflow-y-auto p-2 flex flex-col gap-8">
+				<section className="overflow-y-auto p-4 flex flex-col gap-8">
 					<SignInGoogleButton />
 					<article>
 						{!useCredentials ? (
-							<Button onClick={() => setUseCredentials(true)} variant="outline">
+							<Button className="w-full" onClick={() => setUseCredentials(true)} variant="outline">
 								Or use email and password
 							</Button>
 						) : (

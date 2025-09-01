@@ -1,10 +1,10 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
-import type { Room, RoomWithMetadata } from "~/entities/room/room";
+import type { RoomWithMetadata } from "~/entities/room/room";
 import { supabase } from "~/global/supabase/client";
 import type { Inserts, Tables, Updates, Views } from "~/global/supabase/types-helpers";
 import type { Create, Delete, FindAll, FindById, FindMany, Update } from "~/shared/abstracts/repo";
 import { roomBDtoDomainAndMetadata } from "./adapter/room.adapter";
-import type { LikeApi, RemoveLikeApi } from "./room-repository";
+import type { InteractApi, RemoveInteractionApi } from "./room-repository";
 
 export type RoomDB = Tables<"rooms">;
 export type RoomWithMetadataDB = Views<"rooms_with_metadata">;
@@ -242,13 +242,13 @@ export async function getFavoriteRooms(): Promise<RoomWithMetadata[]> {
 	});
 }
 
-export const addFavoriteRoom: LikeApi = async (id) => {
+export const interactRoom: InteractApi = async (id, action) => {
 	const userId = await getUserId();
 
 	const { error, data } = await supabase
 		.from("room_user_interactions")
 		.upsert(
-			{ action: "like", last_action_at: new Date().toISOString(), room_id: id, user_id: userId },
+			{ action, last_action_at: new Date().toISOString(), room_id: id, user_id: userId },
 			{ ignoreDuplicates: true },
 		)
 		.select()
@@ -261,7 +261,7 @@ export const addFavoriteRoom: LikeApi = async (id) => {
 		roomId: id,
 	};
 };
-export const removeFavoriteRoom: RemoveLikeApi = async (id) => {
+export const removeInteraction: RemoveInteractionApi = async (id) => {
 	const userId = await getUserId();
 
 	const { error } = await supabase

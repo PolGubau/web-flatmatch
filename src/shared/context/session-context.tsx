@@ -1,5 +1,6 @@
 import type { Session } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { supabase } from "~/global/supabase/client";
 import { LoadingSection } from "../components/pages/LoadingSection";
 import { TranslationKeys } from "../i18n/i18n";
@@ -12,10 +13,19 @@ const SessionContext = createContext<{
 
 export const useSession = () => {
 	const context = useContext(SessionContext);
+	const navigate = useNavigate();
+
 	if (!context) {
 		throw new Error("useSession must be used within a SessionProvider");
 	}
-	return context;
+	const session = context.session;
+	const check = () => {
+		if (!session) {
+			navigate("/auth/login");
+		}
+	};
+
+	return { check, session };
 };
 
 type Props = { children: React.ReactNode };

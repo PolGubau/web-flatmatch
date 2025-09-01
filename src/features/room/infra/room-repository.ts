@@ -1,33 +1,34 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
-import type { Interaction, RoomWithMetadata } from "~/entities/room/room";
+import type { Interaction, Room, RoomWithMetadata } from "~/entities/room/room";
 import type { AbstractRepository } from "~/shared/abstracts/repo";
+import type { RoomAction } from "../types/common";
 import {
-	addFavoriteRoom,
 	createRoom,
 	deleteRoom,
 	getAllRooms,
 	getFavoriteRooms,
 	getManyRooms,
 	getOneRoom,
-	removeFavoriteRoom,
+	interactRoom,
+	removeInteraction,
 	updateRoom,
 } from "./room-api";
 
-export type LikeApiResponse = Interaction & {
+export type InteractApiResponse = Interaction & {
 	roomId: string;
 };
-export type LikeApi = (id: string) => Promise<LikeApiResponse>;
+export type InteractApi = (id: string, action: RoomAction) => Promise<InteractApiResponse>;
 
-export type RemoveLikeApiResponse = {
+export type RemoveInteractionApiResponse = {
 	roomId: string;
 	success: boolean;
 };
-export type RemoveLikeApi = (id: string) => Promise<RemoveLikeApiResponse>;
+export type RemoveInteractionApi = (id: Room["id"]) => Promise<RemoveInteractionApiResponse>;
 
 type RoomRepository = AbstractRepository<RoomWithMetadata, EditableRoom> & {
 	findFavorites: () => Promise<RoomWithMetadata[]>;
-	like: LikeApi;
-	removeLike: RemoveLikeApi;
+	interact: InteractApi;
+	removeInteraction: RemoveInteractionApi;
 };
 export const RoomRepository: RoomRepository = {
 	create: (data) => createRoom(data),
@@ -36,7 +37,7 @@ export const RoomRepository: RoomRepository = {
 	findById: (id) => getOneRoom(id),
 	findFavorites: () => getFavoriteRooms(),
 	findMany: (ids) => getManyRooms(ids),
-	like: (id) => addFavoriteRoom(id),
-	removeLike: (id) => removeFavoriteRoom(id),
+	interact: (id, action) => interactRoom(id, action),
+	removeInteraction: (id) => removeInteraction(id),
 	update: (id, data) => updateRoom(id, data),
 };

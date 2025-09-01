@@ -23,7 +23,7 @@ export default function HomePage() {
 				>
 					<Sheet.Container>
 						<Sheet.Header />
-						<Sheet.Content className="">
+						<Sheet.Content className="bg-canvas">
 							{bottomDrawerRoom && <RoomDetails room={bottomDrawerRoom} />}
 						</Sheet.Content>
 					</Sheet.Container>

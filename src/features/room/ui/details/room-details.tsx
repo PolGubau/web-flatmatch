@@ -17,6 +17,7 @@ import { ContactButtons } from "./footer/contact-buttons";
 import { RoomDetailsImage } from "./image";
 import "./room-details.css";
 import { Button } from "~/shared/components/ui/button";
+import { useSession } from "~/shared/context/session-context";
 import { useUpdateRoomInteraction } from "../../model/mutations/update-room-interaction";
 
 type Props = {
@@ -25,7 +26,7 @@ type Props = {
 
 export default function RoomDetails({ room }: Props) {
 	const { t } = useTranslation();
-	console.log("details:", room);
+	const { check } = useSession();
 	const { likeRoom, removeLikeRoom } = useUpdateRoomInteraction();
 	if (!room) {
 		return <p>Room not found</p>;
@@ -42,10 +43,11 @@ export default function RoomDetails({ room }: Props) {
 	const isFavourite = room?.interaction?.action === "like";
 
 	const handleFavouriteClick = () => {
+		check();
 		if (isFavourite) {
 			removeLikeRoom.mutate(room.id);
 		} else {
-			likeRoom.mutate(room.id);
+			likeRoom.mutate({ action: "like", roomId: room.id });
 		}
 	};
 

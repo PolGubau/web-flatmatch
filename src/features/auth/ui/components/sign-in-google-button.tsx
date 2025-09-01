@@ -20,16 +20,12 @@ export function SignInGoogleButton() {
 		}
 	};
 	return (
-		<Button
-			className="font-bold text-foreground h-14"
-			onClick={handleSignInWithGoogle}
-			variant={"outline"}
-		>
+		<Button className="text-foreground h-14" onClick={handleSignInWithGoogle} variant={"outline"}>
 			<svg
-				height="800px"
+				height="20px"
 				preserveAspectRatio="xMidYMid"
 				viewBox="-3 0 262 262"
-				width="800px"
+				width="20px"
 				xmlns="http://www.w3.org/2000/svg"
 			>
 				<title>Google Sign-In</title>

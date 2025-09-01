@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
 	isRouteErrorResponse,
@@ -7,14 +8,13 @@ import {
 	Scripts,
 	ScrollRestoration,
 } from "react-router";
-
-import type { Route } from "./+types/root";
-import "./app.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import "~/shared/i18n/i18n";
+import MainLayout from "~/global/layout/main-layout";
 import { AuthContextProvider } from "~/global/supabase/auth-context";
 import { LoadingSection } from "~/shared/components/pages/LoadingSection";
 import { Toaster } from "~/shared/components/ui/sonner";
+import "~/shared/i18n/i18n";
+import type { Route } from "./+types/root";
+import "./app.css";
 
 export const links: Route.LinksFunction = () => [
 	{ href: "https://fonts.googleapis.com", rel: "preconnect" },
@@ -30,10 +30,9 @@ export const links: Route.LinksFunction = () => [
 ];
 export function HydrateFallback() {
 	return (
-		<main className="w-screen h-dvh grid place-items-center">
-			<LoadingSection />
-			loading page
-		</main>
+		<MainLayout>
+			<LoadingSection label="loading_page" />
+		</MainLayout>
 	);
 }
 

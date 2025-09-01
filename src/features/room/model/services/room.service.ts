@@ -1,11 +1,11 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
 import type { Room, RoomWithMetadata } from "~/entities/room/room";
 import {
-	type LikeApiResponse,
-	type RemoveLikeApi,
-	type RemoveLikeApiResponse,
-	RoomRepository,
+	type InteractApiResponse,
+	type RemoveInteractionApiResponse,
+	RoomRepository
 } from "../../infra/room-repository";
+import type { RoomAction } from "../../types/common";
 
 export const getRoomService = async (id: string): Promise<RoomWithMetadata | null> => {
 	// 1. Error handling
@@ -27,7 +27,7 @@ export const getFavoriteRoomsService = async (): Promise<RoomWithMetadata[]> => 
 };
 
 export const updateRoomService = async (
-	roomId: string,
+	roomId: Room["id"],
 	room: Partial<EditableRoom>,
 ): Promise<Room | null> => {
 	const roomWithVerification = await RoomRepository.update(roomId, room);
@@ -37,7 +37,7 @@ export const updateRoomService = async (
 	return domain;
 };
 
-export const deleteRoomService = async (id: string): Promise<void> => {
+export const deleteRoomService = async (id: Room["id"]): Promise<void> => {
 	if (!id) throw new Error("Room ID is required");
 	await RoomRepository.delete(id);
 };
@@ -47,16 +47,21 @@ export const listAllRoomsService = async (): Promise<RoomWithMetadata[]> => {
 	console.log("all rooms:", dtoList);
 	return dtoList;
 };
-export const listMultipleRoomsService = async (ids: string[]): Promise<RoomWithMetadata[]> => {
+export const listMultipleRoomsService = async (ids: Room["id"][]): Promise<RoomWithMetadata[]> => {
 	const dtoList = await RoomRepository.findMany(ids);
 	return dtoList;
 };
 
-export const likeRoomService = async (roomId: string): Promise<LikeApiResponse> => {
-	const response = await RoomRepository.like(roomId);
+export const interactWithRoomService = async (
+	roomId: Room["id"],
+	action: RoomAction,
+): Promise<InteractApiResponse> => {
+	const response = await RoomRepository.interact(roomId, action);
 	return response;
 };
-export const removeLikeRoomService = async (roomId: string): Promise<RemoveLikeApiResponse> => {
-	const res = await RoomRepository.removeLike(roomId);
+export const removeInteractionRoomService = async (
+	roomId: Room["id"],
+): Promise<RemoveInteractionApiResponse> => {
+	const res = await RoomRepository.removeInteraction(roomId);
 	return res;
 };
