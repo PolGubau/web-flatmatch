@@ -154,7 +154,7 @@ export function CommoditiesForm() {
 										}
 									>
 										<div className="flex gap-2">
-											<HugeiconsIcon icon={data.icon} size={20} />
+											{data.icon && <HugeiconsIcon icon={data.icon} size={20} />}{" "}
 											<span className="text-sm line-clamp-1">{t(data.label)}</span>
 										</div>
 										<input className="hidden" type="checkbox" {...field} defaultChecked={value} />
@@ -170,7 +170,7 @@ export function CommoditiesForm() {
 					<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
 						{Object.entries(data.commodities.whole.extras).map(([key, value]) => {
 							const field = register(`commodities.whole.extras.${key}` as any);
-							const data = extrasMap[key];
+							const data = extrasMap[key as keyof typeof extrasMap];
 							return (
 								<li className="flex group cursor-pointer" key={key}>
 									<label
@@ -179,7 +179,7 @@ export function CommoditiesForm() {
 										}
 									>
 										<div className="flex gap-2">
-											<HugeiconsIcon icon={data.icon} size={20} />
+											{data.icon && <HugeiconsIcon icon={data.icon} size={20} />}
 											<span className="text-sm">{t(data.label)}</span>
 										</div>
 										<input className="hidden" type="checkbox" {...field} defaultChecked={value} />

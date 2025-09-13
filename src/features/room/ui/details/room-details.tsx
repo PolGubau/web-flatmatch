@@ -161,7 +161,7 @@ export default function RoomDetails({ room }: Props) {
 										})}
 										key={key}
 									>
-										<HugeiconsIcon icon={match.icon} size={25} />
+										{match.icon && <HugeiconsIcon icon={match.icon} size={25} />}
 										<span className="text-sm line-clamp-1 truncate">{t(match.label)}</span>
 									</li>
 								);
@@ -186,7 +186,7 @@ export default function RoomDetails({ room }: Props) {
 										})}
 										key={key}
 									>
-										<HugeiconsIcon icon={match.icon} size={25} />
+										{match.icon && <HugeiconsIcon icon={match.icon} size={25} />}
 										<span className="text-sm line-clamp-1 truncate">{t(match.label)}</span>
 									</li>
 								);

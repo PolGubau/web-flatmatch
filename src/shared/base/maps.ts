@@ -25,7 +25,6 @@ import {
 } from "@hugeicons/core-free-icons";
 import type { IconSvgElement } from "@hugeicons/react";
 import type { Room } from "~/entities/room/room";
-import type { Gender, Occupation } from "~/entities/user/user";
 import type { TranslationKey } from "../i18n/i18n";
 
 type MapItem = {
@@ -139,5 +138,33 @@ export const genderMap: Record<string, MapItem> = {
 	other: {
 		icon: BeachIcon,
 		label: "other",
+	},
+};
+
+type BoolRulesKey = keyof Omit<Room["rules"], "quietHours">;
+export const boolRulesMap: Record<BoolRulesKey, MapItem> = {
+	childrenAllowed: {
+		icon: BeachIcon,
+		label: "children_allowed",
+	},
+	coupleAllowed: {
+		icon: TemperatureIcon,
+		label: "couple_allowed",
+	},
+	guestsAllowed: {
+		icon: HelpSquareIcon,
+		label: "guests_allowed",
+	},
+	partiesAllowed: {
+		icon: FastWindIcon,
+		label: "parties_allowed",
+	},
+	petsAllowed: {
+		icon: Shirt01Icon,
+		label: "pets_allowed",
+	},
+	smokingAllowed: {
+		icon: Coffee02Icon,
+		label: "smoking_allowed",
 	},
 };

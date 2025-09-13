@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Room } from "~/entities/room/room";
+import { roomToEditableRoom } from "../../infra/adapter/room.adapter";
 import { updateRoomService } from "../services/room.service";
 
 /**
@@ -9,7 +10,7 @@ export const useUpdateRoomMutation = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (room: Room) => updateRoomService(room.id, room),
+		mutationFn: (room: Room) => updateRoomService(room.id, roomToEditableRoom(room)),
 		onSuccess: (updatedRoom) => {
 			if (!updatedRoom) return;
 			// Actualiza el cache de la room actualizada

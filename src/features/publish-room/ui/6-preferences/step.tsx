@@ -5,7 +5,8 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
-import { extrasMap, genderMap, occupationMap } from "~/shared/base/maps";
+import { genderMap, occupationMap } from "~/shared/base/maps";
+import { Input } from "~/shared/components/ui/input/input";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 
@@ -32,7 +33,7 @@ export function PreferencesForm() {
 			onSubmit={handleSubmit(
 				(values) => {
 					setData(values);
-					// navigate("/publish/location", { replace: true });
+					navigate("/publish/rules", { replace: true });
 				},
 				(errors) => {
 					console.error(errors);
@@ -41,18 +42,32 @@ export function PreferencesForm() {
 		>
 			<fieldset className="flex flex-col gap-6 overflow-y-auto">
 				<legend className="text-lg pb-10">{t("who_are_you_searching_for")}</legend>
-				{/* 
-				<Input
-					id="bedrooms-male"
-					label="Title"
-					minLength={5}
-					placeholder={t("metadata_title_placeholder")}
-					required
-					{...register("title", {
-						required: true,
-					})}
-				/> */}
-				{JSON.stringify(data.preferences)}
+
+				<div>
+					<h3>{t("age_preference")}</h3>
+
+					<ul className="grid grid-cols-2 gap-4 max-w-sm">
+						<li>
+							<label htmlFor="min-age">{t("min_age")}</label>
+							<Input
+								defaultValue={data.preferences.age.min}
+								id="min-age"
+								type="number"
+								{...register("preferences.age.min")}
+							/>
+						</li>
+						<li>
+							<label htmlFor="max-age">{t("max_age")}</label>
+							<Input
+								defaultValue={data.preferences.age.max}
+								id="max-age"
+								type="number"
+								{...register("preferences.age.max")}
+							/>
+						</li>
+					</ul>
+				</div>
+
 				<div className="flex flex-col gap-1">
 					<h3>{t("occupation_of_tenant")}</h3>
 					<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
@@ -81,6 +96,7 @@ export function PreferencesForm() {
 					<h3>{t("gender_of_tenant")}</h3>
 					<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
 						{Object.entries(data.preferences.gender).map(([key, value]) => {
+							// biome-ignore lint/suspicious/noExplicitAny: Can be needed
 							const field = register(`preferences.gender.${key}` as any);
 							const data = genderMap[key];
 							return (

@@ -89,13 +89,6 @@ export const RulesSchema = z.object({
 	guestsAllowed: z.boolean(),
 	partiesAllowed: z.boolean(),
 	petsAllowed: z.boolean(),
-	quietHours: z.union([
-		z.literal(false),
-		z.object({
-			from: z.string(),
-			to: z.string(),
-		}),
-	]),
 	smokingAllowed: z.boolean(),
 });
 export type RoomRules = z.infer<typeof RulesSchema>;

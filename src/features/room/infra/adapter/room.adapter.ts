@@ -1,3 +1,4 @@
+import type { EditableRoom } from "~/entities/room/editable-room";
 import type {
 	RentType,
 	RoomCommodities,
@@ -110,5 +111,19 @@ export const roomBDtoDomainAndMetadata = (row: RoomWithMetadataDB): RoomWithMeta
 		...roomMapper.toDomain(baseRoom),
 		interaction,
 		verification,
+	};
+};
+
+export const roomToEditableRoom = (room: Room): EditableRoom => {
+	const { images, ...editableRoom } = room;
+
+	const coverIndex = images.gallery.findIndex((img) => img === images.cover);
+	const editableImages: EditableRoom["images"] = {
+		coverIndex,
+		gallery: images.gallery,
+	};
+	return {
+		...editableRoom,
+		images: editableImages,
 	};
 };
