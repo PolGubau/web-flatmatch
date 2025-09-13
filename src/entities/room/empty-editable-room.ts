@@ -99,7 +99,6 @@ export const emptyEditableRoom: EditableRoom = {
 		guestsAllowed: true,
 		partiesAllowed: true,
 		petsAllowed: true,
-		quietHours: false,
 		smokingAllowed: true,
 	},
 	status: "available",
