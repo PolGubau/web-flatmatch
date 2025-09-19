@@ -69,8 +69,9 @@
 	"name": "flatmatch-web",
 	"private": true,
 	"scripts": {
+		"api:pull:edge": "npx supabase functions serve",
 		"api:start": "npx supabase start",
-		"api:stop": "supabase stop --project-id web",
+		"api:stop": "npx supabase stop --project-id web",
 		"build": "react-router build",
 		"db:copy-data": "npx supabase db dump --data-only > seed.sql && psql 'postgresql://postgres:postgres@127.0.0.1:54322/postgres' -f seed.sql",
 		"db:pull": "npx supabase db pull",
@@ -78,6 +79,7 @@
 		"dev": "react-router dev --mode dev",
 		"dev-as-prod": "react-router dev --mode prod",
 		"gen:types": "npx supabase gen types typescript --project-id \"eazucuralkbhkzrztanc\" --schema public > src/global/supabase/types.ts",
+		"go": "pnpm api:start && pnpm dev",
 		"lint": "pnpm exec biome lint --write --unsafe ./src ./app",
 		"start": "react-router-serve ./build/server/index.js",
 		"typecheck": "react-router typegen && tsc"

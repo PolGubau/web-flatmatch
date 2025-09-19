@@ -1,9 +1,12 @@
 import { Command as CommandPrimitive } from "cmdk";
+import { t } from "i18next";
 import { Check } from "lucide-react";
 import { type HTMLAttributes, useMemo, useState } from "react";
+import type { TranslationKey } from "~/shared/i18n/i18n";
 import { cn } from "~/shared/utils/utils";
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "./command";
 import { Input } from "./input/input";
+import { inputTheme } from "./input/theme";
 import { Popover, PopoverAnchor, PopoverContent } from "./popover";
 import { Skeleton } from "./skeleton";
 
@@ -15,7 +18,7 @@ type Props<T extends string> = HTMLAttributes<HTMLInputElement> & {
 	items: { value: T; label: string }[];
 	isLoading?: boolean;
 	emptyMessage?: string;
-	placeholder?: string;
+	placeholder: TranslationKey;
 };
 
 export function AutoComplete<T extends string>({
@@ -26,7 +29,7 @@ export function AutoComplete<T extends string>({
 	items,
 	isLoading,
 	emptyMessage = "No items.",
-	placeholder = "Search...",
+	placeholder = "search",
 	...rest
 }: Props<T>) {
 	const [open, setOpen] = useState(false);
@@ -64,15 +67,14 @@ export function AutoComplete<T extends string>({
 				<Command shouldFilter={false}>
 					<PopoverAnchor asChild>
 						<CommandPrimitive.Input
-							asChild
+							className={cn(inputTheme, "h-12")}
 							onFocus={() => setOpen(true)}
 							onKeyDown={(e) => setOpen(e.key !== "Escape")}
 							onMouseDown={() => setOpen((open) => !!searchValue || !open)}
 							onValueChange={onSearchValueChange}
+							placeholder={t(placeholder)}
 							value={searchValue}
-						>
-							<Input placeholder={placeholder} {...rest} />
-						</CommandPrimitive.Input>
+						/>
 					</PopoverAnchor>
 					{!open && <CommandList aria-hidden="true" className="hidden" />}
 					<PopoverContent
@@ -85,12 +87,15 @@ export function AutoComplete<T extends string>({
 						onOpenAutoFocus={(e) => e.preventDefault()}
 					>
 						<CommandList
-							className="w-[90vw] p-0 max-w-4xl rounded-lg border border-foreground/30 bg-canvas"
+							className="w-[90vw] p-0 max-w-2xl rounded-lg border border-foreground/30 bg-canvas"
 							style={{ zIndex: 9999 }}
 						>
 							{isLoading && (
 								<CommandPrimitive.Loading>
-									<div className="p-1">
+									<div className="p-1 flex flex-col gap-1">
+										<Skeleton className="h-6 w-full" />
+										<Skeleton className="h-6 w-full" />
+										<Skeleton className="h-6 w-full" />
 										<Skeleton className="h-6 w-full" />
 									</div>
 								</CommandPrimitive.Loading>

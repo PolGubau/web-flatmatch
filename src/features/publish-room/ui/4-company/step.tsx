@@ -48,7 +48,7 @@ export function CompanyForm() {
 							<Input
 								id="bedrooms-male"
 								// icon={BedIcon}
-								label="Male"
+								label="male"
 								max={10}
 								min={0}
 								placeholder={t("how_many_male_tenants")}
@@ -63,7 +63,7 @@ export function CompanyForm() {
 							<Input
 								// icon={BedBunkIcon}
 								id="bedrooms-female"
-								label="Female"
+								label="female"
 								max={20}
 								min={0}
 								placeholder={t("how_many_female_tenants")}
@@ -76,9 +76,8 @@ export function CompanyForm() {
 						</li>
 						<li>
 							<Input
-								// icon={BedBunkIcon}
 								id="bedrooms-other"
-								label="Other"
+								label="other"
 								max={20}
 								min={0}
 								placeholder={t("how_many_other_tenants")}

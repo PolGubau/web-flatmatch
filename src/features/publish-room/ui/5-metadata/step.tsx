@@ -53,7 +53,7 @@ export function MetadataForm() {
 
 				<Input
 					id="bedrooms-male"
-					label="Title"
+					label="title"
 					minLength={5}
 					placeholder={t("metadata_title_placeholder")}
 					required
@@ -63,7 +63,7 @@ export function MetadataForm() {
 				/>
 
 				<Textarea
-					label="Description"
+					label="description"
 					minLength={10}
 					placeholder={t("metadata_description_placeholder")}
 					required

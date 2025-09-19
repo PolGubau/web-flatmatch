@@ -61,85 +61,65 @@ export function CommoditiesForm() {
 		>
 			<fieldset className="grid gap-6 overflow-y-auto">
 				<legend className="text-lg pb-10">{t("select_commodities")}</legend>
-				<header className="grid grid-cols-2 gap-4 items-center">
-					<div>
-						<label className="flex gap-2" htmlFor="area">
-							<span className="text-sm">
-								{t("area")} ({t("in_m2")})
-							</span>
-						</label>
-						<Input
-							icon={SquareArrowExpand01Icon}
-							id="area"
-							max={999}
-							min={0}
-							placeholder={t("enter_area_in_m2")}
-							required
-							{...register("commodities.whole.area", {
-								required: true,
-								valueAsNumber: true,
-							})}
-						/>
-					</div>
-					<div>
-						<label className="flex gap-2" htmlFor="bathrooms">
-							<span className="text-sm">{t("bathrooms")}</span>
-						</label>
-						<Input
-							icon={Sink01Icon}
-							id="bathrooms"
-							max={10}
-							min={0}
-							placeholder={t("enter_number_bathrooms")}
-							required
-							type="number"
-							{...register("commodities.whole.bathrooms", {
-								required: true,
-								valueAsNumber: true,
-							})}
-						/>
-					</div>
+				<header className="grid gap-4 items-center grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
+					<Input
+						icon={SquareArrowExpand01Icon}
+						id="area"
+						label={"enter_area_in_m2"}
+						max={999}
+						min={1}
+						placeholder={t("enter_area_in_m2")}
+						required
+						{...register("commodities.whole.area", {
+							required: true,
+							valueAsNumber: true,
+						})}
+					/>
+
+					<Input
+						icon={Sink01Icon}
+						id="bathrooms"
+						label={"bathrooms"}
+						max={10}
+						min={0}
+						placeholder={t("enter_number_bathrooms")}
+						required
+						type="number"
+						{...register("commodities.whole.bathrooms", {
+							required: true,
+							valueAsNumber: true,
+						})}
+					/>
+
+					<Input
+						icon={BedIcon}
+						id="bedrooms-ind"
+						label={"bedrooms"}
+						max={10}
+						min={0}
+						placeholder={t("enter_amount_private_bedrooms")}
+						required
+						{...register("commodities.whole.bedrooms.individual", {
+							required: true,
+							valueAsNumber: true,
+						})}
+					/>
+
+					<Input
+						icon={BedBunkIcon}
+						id="bedrooms-shared"
+						label={"shared"}
+						max={999}
+						min={0}
+						placeholder={t("enter_amount_shared_bedrooms")}
+						required
+						type="number"
+						{...register("commodities.whole.bedrooms.shared", {
+							required: true,
+							valueAsNumber: true,
+						})}
+					/>
 				</header>
-				<div>
-					<span>{t("bedrooms")}</span>
-					<ul className="grid grid-cols-2 gap-4 items-center">
-						<li>
-							<label className="flex gap-2" htmlFor="bedrooms-ind">
-								<span className="text-sm">{t("private")}</span>
-							</label>
-							<Input
-								icon={BedIcon}
-								id="bedrooms-ind"
-								max={10}
-								min={0}
-								placeholder={t("enter_amount_private_bedrooms")}
-								required
-								{...register("commodities.whole.bedrooms.individual", {
-									required: true,
-									valueAsNumber: true,
-								})}
-							/>
-						</li>
-						<li>
-							<label className="flex gap-2" htmlFor="bedrooms-shared">
-								<span className="text-sm">{t("shared")}</span>
-							</label>
-							<Input
-								icon={BedBunkIcon}
-								id="bedrooms-shared"
-								max={999}
-								min={0}
-								placeholder={t("enter_amount_shared_bedrooms")}
-								required
-								type="number"
-								{...register("commodities.whole.bedrooms.shared", {
-									required: true,
-									valueAsNumber: true,
-								})}
-							/>
-						</li>
-					</ul>
-				</div>
 				<div className="flex flex-col gap-1">
 					<h3>{t("apartment_appliances")}</h3>
 					<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
@@ -200,23 +180,22 @@ export function CommoditiesForm() {
 					<div className="flex flex-col gap-8">
 						<h3>{t("room_appliances")}</h3>
 
-						<Input
-							className="w-fit"
-							icon={SquareArrowExpand01Icon}
-							id="area"
-							label={`${t("area")} (${t("in_m2")})`}
-							max={999}
-							min={0}
-							placeholder={t("enter_area_in_m2")}
-							{...register("commodities.room.area", {
-								required: true,
-								valueAsNumber: true,
-							})}
-						/>
-						<div className="flex gap-2 items-center">
-							<label htmlFor="bedType">{t("bed_type")}</label>
-							<Select {...register("commodities.room.bedType")}>
-								<SelectTrigger className="w-[180px]">
+						<header className="grid gap-4 items-center grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
+							<Input
+								icon={SquareArrowExpand01Icon}
+								id="area"
+								label={"enter_area_in_m2"}
+								max={999}
+								min={1}
+								placeholder={t("enter_area_in_m2")}
+								{...register("commodities.room.area", {
+									required: true,
+									valueAsNumber: true,
+								})}
+							/>
+
+							<Select {...register("commodities.room.bedType")} label={t("bed_type")}>
+								<SelectTrigger>
 									<SelectValue placeholder={t("bed_type")} />
 								</SelectTrigger>
 								<SelectContent>
@@ -227,8 +206,7 @@ export function CommoditiesForm() {
 									<SelectItem value="none">{t("none")}</SelectItem>
 								</SelectContent>
 							</Select>
-						</div>
-
+						</header>
 						<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
 							<li className="flex group cursor-pointer">
 								<label

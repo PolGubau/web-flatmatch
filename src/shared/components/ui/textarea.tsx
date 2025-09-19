@@ -1,12 +1,13 @@
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+import { t } from "i18next";
 import type * as React from "react";
-
+import type { TranslationKey } from "~/shared/i18n/i18n";
 import { cn } from "~/shared/utils/utils";
 import { inputTheme } from "./input/theme";
 
 type TextareaProps = React.ComponentProps<"textarea"> & {
 	icon?: IconSvgElement;
-	label?: string;
+	label?: TranslationKey;
 };
 
 function Textarea({ className, icon, label, ...props }: TextareaProps) {
@@ -14,7 +15,7 @@ function Textarea({ className, icon, label, ...props }: TextareaProps) {
 		<div className="flex flex-col gap-1">
 			{label && (
 				<label className="flex gap-2" htmlFor={props.id}>
-					<span className="text-sm">{label}</span>
+					<span className="text-sm">{t(label)}</span>
 				</label>
 			)}
 

@@ -1,10 +1,10 @@
 import { Camera01Icon, DeleteIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { UseFormSetValue } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import type { EditableRoom } from "~/entities/room/editable-room";
 import { cn } from "~/shared/utils/utils";
 import type { Step5SchemaType } from "./step";
-import { useTranslation } from "react-i18next";
 
 type Image = EditableRoom["images"]["gallery"][number];
 type Props = {

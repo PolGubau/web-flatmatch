@@ -8,8 +8,22 @@ import type { Breakpoints } from "~/shared/types/common";
 import { cn } from "~/shared/utils/utils";
 import { inputTheme } from "./input/theme";
 
-function Select({ ...props }: React.ComponentProps<typeof SelectPrimitive.Root>) {
-	return <SelectPrimitive.Root data-slot="select" {...props} />;
+type SelectProps = React.ComponentProps<typeof SelectPrimitive.Root> & {
+	id?: string;
+	label?: string;
+};
+
+function Select({ label, ...props }: SelectProps) {
+	return (
+		<div className="flex flex-col gap-1">
+			{label && (
+				<label className="flex gap-2" htmlFor={props.id}>
+					<span className="text-sm">{label}</span>
+				</label>
+			)}
+			<SelectPrimitive.Root data-slot="select" {...props} />
+		</div>
+	);
 }
 
 function SelectGroup({ ...props }: React.ComponentProps<typeof SelectPrimitive.Group>) {
