@@ -60,7 +60,7 @@ export function CommoditiesForm() {
 			)}
 		>
 			<fieldset className="grid gap-6 overflow-y-auto">
-				<legend className="text-lg pb-10">{t("select_commodities")}</legend>
+				<legend className="text-lg pb-6">{t("select_commodities")}</legend>
 				<header className="grid gap-4 items-center grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
 					<Input
 						icon={SquareArrowExpand01Icon}
@@ -122,7 +122,7 @@ export function CommoditiesForm() {
 				</header>
 				<div className="flex flex-col gap-1">
 					<h3>{t("apartment_appliances")}</h3>
-					<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
+					<ul className="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4">
 						{Object.entries(data.commodities.whole.appliances).map(([key, value]) => {
 							const field = register(`commodities.whole.appliances.${key}` as any);
 							const data = commoditiesMap[key as keyof typeof commoditiesMap];
@@ -147,7 +147,7 @@ export function CommoditiesForm() {
 
 				<div className="flex flex-col gap-1">
 					<h3>{t("extra_spaces")}</h3>
-					<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
+					<ul className="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4">
 						{Object.entries(data.commodities.whole.extras).map(([key, value]) => {
 							const field = register(`commodities.whole.extras.${key}` as any);
 							const data = extrasMap[key as keyof typeof extrasMap];
@@ -180,7 +180,7 @@ export function CommoditiesForm() {
 					<div className="flex flex-col gap-8">
 						<h3>{t("room_appliances")}</h3>
 
-						<header className="grid gap-4 items-center grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
+						<header className="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4">
 							<Input
 								icon={SquareArrowExpand01Icon}
 								id="area"
@@ -194,20 +194,20 @@ export function CommoditiesForm() {
 								})}
 							/>
 
-							<Select {...register("commodities.room.bedType")} label={t("bed_type")}>
-								<SelectTrigger>
-									<SelectValue placeholder={t("bed_type")} />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectItem value="single">{t("single")}</SelectItem>
-									<SelectItem value="double">{t("double")}</SelectItem>
-									<SelectItem value="bunk">{t("bunk")}</SelectItem>
-									<SelectItem value="sofa">{t("sofa")}</SelectItem>
-									<SelectItem value="none">{t("none")}</SelectItem>
-								</SelectContent>
-							</Select>
+							<Select
+								{...register("commodities.room.bedType")}
+								label={t("bed_type")}
+								options={[
+									{ label: "single", value: "single" },
+									{ label: "double", value: "double" },
+									{ label: "bunk", value: "bunk" },
+									{ label: "sofa", value: "sofa" },
+									{ label: "none", value: "none" },
+								]}
+								placeholder={"select_bed_type"}
+							/>
 						</header>
-						<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
+						<ul className="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4">
 							<li className="flex group cursor-pointer">
 								<label
 									className={

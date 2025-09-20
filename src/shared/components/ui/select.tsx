@@ -3,17 +3,21 @@
 import { ArrowDown01Icon, ArrowUp01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as SelectPrimitive from "@radix-ui/react-select";
+import { t } from "i18next";
 import type * as React from "react";
+import type { TranslationKey } from "~/shared/i18n/i18n";
 import type { Breakpoints } from "~/shared/types/common";
 import { cn } from "~/shared/utils/utils";
 import { inputTheme } from "./input/theme";
 
-type SelectProps = React.ComponentProps<typeof SelectPrimitive.Root> & {
+export type SelectProps = Omit<React.ComponentProps<typeof SelectPrimitive.Root>, "children"> & {
 	id?: string;
 	label?: string;
+	placeholder?: TranslationKey;
+	options: { value: string; label: TranslationKey }[];
 };
 
-function Select({ label, ...props }: SelectProps) {
+function Select({ label, placeholder = "select_option", options, ...props }: SelectProps) {
 	return (
 		<div className="flex flex-col gap-1">
 			{label && (
@@ -21,7 +25,18 @@ function Select({ label, ...props }: SelectProps) {
 					<span className="text-sm">{label}</span>
 				</label>
 			)}
-			<SelectPrimitive.Root data-slot="select" {...props} />
+			<SelectPrimitive.Root data-slot="select" {...props}>
+				<SelectTrigger className="">
+					<SelectValue placeholder={t(placeholder)} />
+				</SelectTrigger>
+				<SelectContent>
+					{options.map((option) => (
+						<SelectItem key={option.value} value={option.value}>
+							{t(option.label)}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</SelectPrimitive.Root>
 		</div>
 	);
 }

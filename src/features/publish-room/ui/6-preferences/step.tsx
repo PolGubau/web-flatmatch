@@ -43,8 +43,8 @@ export function PreferencesForm() {
 			<fieldset className="flex flex-col gap-6 overflow-y-auto">
 				<legend className="text-lg pb-10">{t("who_are_you_searching_for")}</legend>
 
-				<div>
-					<h3>{t("age_preference")}</h3>
+				<section className="flex flex-col gap-4">
+					<h3 className="">{t("age_preference")}</h3>
 
 					<ul className="grid grid-cols-2 gap-4 max-w-sm">
 						<li>
@@ -66,7 +66,7 @@ export function PreferencesForm() {
 							/>
 						</li>
 					</ul>
-				</div>
+				</section>
 
 				<div className="flex flex-col gap-1">
 					<h3>{t("occupation_of_tenant")}</h3>

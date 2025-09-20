@@ -77,7 +77,7 @@ export function CompanyForm() {
 						<li>
 							<Input
 								id="bedrooms-other"
-								label="other"
+								label="non_binary"
 								max={20}
 								min={0}
 								placeholder={t("how_many_other_tenants")}

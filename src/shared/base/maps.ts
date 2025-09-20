@@ -14,12 +14,14 @@ import {
 	OvenIcon,
 	PoolIcon,
 	PulleyIcon,
+	QuestionIcon,
 	RefrigeratorIcon,
 	Shirt01Icon,
 	TemperatureIcon,
 	TerraceIcon,
 	Tree04Icon,
 	Tv01Icon,
+	User02Icon,
 	WheelchairIcon,
 	Wifi02Icon,
 } from "@hugeicons/core-free-icons";
@@ -136,8 +138,8 @@ export const genderMap: Record<string, MapItem> = {
 		label: "male",
 	},
 	other: {
-		icon: BeachIcon,
-		label: "other",
+		icon: User02Icon,
+		label: "non_binary",
 	},
 };
 

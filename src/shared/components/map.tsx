@@ -26,7 +26,7 @@ function Recenter({ lat, lon, zoom }: { lat: number; lon: number; zoom: number }
  */
 export function MapWithMarker({ lat, lon, zoom = 15, interactive = true }: MapProps) {
 	return (
-		<div className="w-full h-64 rounded-lg overflow-hidden">
+		<div className="w-full h-full min-h-64 rounded-lg overflow-hidden">
 			<MapContainer
 				center={[lat, lon]}
 				className="w-full h-full min-h-64"

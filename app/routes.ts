@@ -33,6 +33,7 @@ export default [
 						route("metadata", "./routes/publish-form/step-5.tsx"),
 						route("preferences", "./routes/publish-form/step-6.tsx"),
 						route("rules", "./routes/publish-form/step-7.tsx"),
+						route("timings", "./routes/publish-form/step-8.tsx"),
 					]),
 				]),
 			]),

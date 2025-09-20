@@ -51,8 +51,8 @@ export function LocationForm() {
 			<fieldset className="flex flex-col gap-6">
 				<legend className="text-lg pb-10">{t("where_is_your_room_located")}</legend>
 
-				<div className="md:grid-cols-2 grid gap-4 ">
-					<div>
+				<section className="md:grid-cols-2 grid gap-6 h-full">
+					<article className="flex flex-col gap-8">
 						<StreetAutocomplete
 							field={field}
 							onSelect={(v) => {
@@ -63,12 +63,33 @@ export function LocationForm() {
 								setValue("location.city", v.city);
 								setValue("location.country", v.country);
 							}}
+							value={location.address}
 						/>
-
-						{JSON.stringify(location, null, 2)}
-					</div>
+						<ul className="flex flex-col gap-2 text-sm text-foreground/80">
+							<li className="grid grid-cols-2 gap-2">
+								<span className="capitalize text-foreground/60">{t("city")}</span>
+								<span>{location.city}</span>
+							</li>
+							<li className="grid grid-cols-2 gap-2">
+								<span className="capitalize text-foreground/60">{t("country")}</span>
+								<span>{location.country}</span>
+							</li>
+							<li className="grid grid-cols-2 gap-2">
+								<span className="capitalize text-foreground/60">{t("postal_code")}</span>
+								<span>{location.postalCode}</span>
+							</li>
+							<li className="grid grid-cols-2 gap-2">
+								<span className="capitalize text-foreground/60">{t("latitude")}</span>
+								<span>{location.lat}</span>
+							</li>
+							<li className="grid grid-cols-2 gap-2">
+								<span className="capitalize text-foreground/60">{t("longitude")}</span>
+								<span>{location.lng}</span>
+							</li>
+						</ul>
+					</article>
 					{lat && lng ? <MapWithMarker lat={lat} lon={lng} /> : null}
-				</div>
+				</section>
 			</fieldset>
 
 			<footer className="flex flex-col gap-1">

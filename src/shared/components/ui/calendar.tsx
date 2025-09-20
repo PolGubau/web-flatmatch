@@ -1,10 +1,6 @@
 "use client";
 
-import {
-	ArrowDown01Icon,
-	ArrowLeft01Icon,
-	ArrowRight01Icon
-} from "@hugeicons/core-free-icons";
+import { ArrowDown01Icon, ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
 import { type DayButton, DayPicker, getDefaultClassNames } from "react-day-picker";
@@ -195,4 +191,3 @@ function CalendarDayButton({
 }
 
 export { Calendar, CalendarDayButton };
-

@@ -42,7 +42,8 @@ export function RulesForm() {
 				<legend className="text-lg pb-10">{t("which_are_rules_of_property")}</legend>
 
 				<div className="flex flex-col gap-1">
-					<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
+					<h3>{t("which_of_these_are_possible")}</h3>
+					<ul className="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-4">
 						{Object.entries(data.rules).map(([key, value]) => {
 							// biome-ignore lint/suspicious/noExplicitAny: use them as map
 							const field = register(`rules.${key}` as any);

@@ -1,4 +1,4 @@
-import { RulesForm } from "~/features/publish-room/ui/7-rules/step";
+import { TimingsForm } from "~/features/publish-room/ui/8-timings/step";
 
 export function meta() {
 	return [
@@ -7,5 +7,5 @@ export function meta() {
 	];
 }
 export default function Step8Route() {
-	return <RulesForm />;
+	return <TimingsForm />;
 }
