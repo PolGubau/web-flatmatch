@@ -11,7 +11,10 @@ import { Calendar } from "./calendar";
 import { Label } from "./label";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
-export type DatePickerProps = Omit<React.ComponentProps<typeof Calendar>, "selected"> & {
+export type DatePickerProps = Omit<
+	React.ComponentProps<typeof Calendar>,
+	"selected"
+> & {
 	placeholder?: TranslationKey;
 	name?: string;
 	required?: boolean;
@@ -44,8 +47,14 @@ export function DatePicker({
 			/>
 			<Popover onOpenChange={setOpen} open={open}>
 				<PopoverTrigger asChild>
-					<Button className=" justify-between font-normal h-12" id="date" variant="outline">
-						{date ? new Date(date).toLocaleDateString(i18n.language) : t(placeholder)}
+					<Button
+						className=" justify-between font-normal h-12"
+						id="date"
+						variant="outline"
+					>
+						{date
+							? new Date(date).toLocaleDateString(i18n.language)
+							: t(placeholder)}
 						<HugeiconsIcon icon={ArrowDown01Icon} />
 					</Button>
 				</PopoverTrigger>

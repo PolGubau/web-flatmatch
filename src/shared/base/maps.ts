@@ -14,7 +14,6 @@ import {
 	OvenIcon,
 	PoolIcon,
 	PulleyIcon,
-	QuestionIcon,
 	RefrigeratorIcon,
 	Shirt01Icon,
 	TemperatureIcon,
@@ -34,7 +33,10 @@ type MapItem = {
 	icon?: IconSvgElement;
 };
 
-export const extrasMap: Record<keyof Room["commodities"]["whole"]["extras"], MapItem> = {
+export const extrasMap: Record<
+	keyof Room["commodities"]["whole"]["extras"],
+	MapItem
+> = {
 	hasGarden: {
 		icon: Tree04Icon,
 		label: "garden",
@@ -53,7 +55,10 @@ export const extrasMap: Record<keyof Room["commodities"]["whole"]["extras"], Map
 	},
 };
 
-export const commoditiesMap: Record<keyof Room["commodities"]["whole"]["appliances"], MapItem> = {
+export const commoditiesMap: Record<
+	keyof Room["commodities"]["whole"]["appliances"],
+	MapItem
+> = {
 	hasAirConditioning: {
 		icon: FastWindIcon,
 		label: "air_conditioning",

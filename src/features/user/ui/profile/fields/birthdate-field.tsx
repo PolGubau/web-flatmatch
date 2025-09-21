@@ -2,7 +2,10 @@ import type React from "react";
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import type { Calendar } from "~/shared/components/ui/calendar";
-import { DatePicker, type DatePickerProps } from "~/shared/components/ui/date-picker";
+import {
+	DatePicker,
+	type DatePickerProps,
+} from "~/shared/components/ui/date-picker";
 import { Label } from "~/shared/components/ui/label";
 
 type Props = React.ComponentProps<typeof Calendar> & {

@@ -1,9 +1,17 @@
 "use client";
 
-import { ArrowDown01Icon, ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import {
+	ArrowDown01Icon,
+	ArrowLeft01Icon,
+	ArrowRight01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
-import { type DayButton, DayPicker, getDefaultClassNames } from "react-day-picker";
+import {
+	type DayButton,
+	DayPicker,
+	getDefaultClassNames,
+} from "react-day-picker";
 import { useTranslation } from "react-i18next";
 import { cn } from "~/shared/utils/utils";
 import { Button, buttonVariants } from "./button";
@@ -53,8 +61,14 @@ function Calendar({
 					"relative w-full h-full p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-lg [&:last-child[data-selected=true]_button]:rounded-r-lg group/day aspect-square select-none",
 					defaultClassNames.day,
 				),
-				disabled: cn("text-foreground/50 opacity-50", defaultClassNames.disabled),
-				dropdown: cn("absolute bg-canvas inset-0 opacity-0", defaultClassNames.dropdown),
+				disabled: cn(
+					"text-foreground/50 opacity-50",
+					defaultClassNames.disabled,
+				),
+				dropdown: cn(
+					"absolute bg-canvas inset-0 opacity-0",
+					defaultClassNames.dropdown,
+				),
 				dropdown_root: cn(
 					"relative has-focus:border-foreground/70 border border-input shadow-xs has-focus:ring-foreground/50 has-focus:ring-2 rounded-lg",
 					defaultClassNames.dropdown_root,
@@ -69,7 +83,10 @@ function Calendar({
 					"flex items-center justify-center h-(--cell-size) w-full px-(--cell-size)",
 					defaultClassNames.month_caption,
 				),
-				months: cn("flex gap-4 flex-col md:flex-row relative", defaultClassNames.months),
+				months: cn(
+					"flex gap-4 flex-col md:flex-row relative",
+					defaultClassNames.months,
+				),
 				nav: cn(
 					"flex items-center gap-1 w-full absolute top-0 inset-x-0 justify-between",
 					defaultClassNames.nav,
@@ -80,7 +97,10 @@ function Calendar({
 				),
 				range_end: cn("rounded-r-lg bg-primary", defaultClassNames.range_end),
 				range_middle: cn("rounded-none", defaultClassNames.range_middle),
-				range_start: cn("rounded-l-lg bg-primary", defaultClassNames.range_start),
+				range_start: cn(
+					"rounded-l-lg bg-primary",
+					defaultClassNames.range_start,
+				),
 				root: cn("w-fit", defaultClassNames.root),
 				table: "w-full border-collapse",
 				today: cn(
@@ -92,7 +112,10 @@ function Calendar({
 					"text-[0.8rem] select-none text-foreground/60",
 					defaultClassNames.week_number,
 				),
-				week_number_header: cn("select-none w-(--cell-size)", defaultClassNames.week_number_header),
+				week_number_header: cn(
+					"select-none w-(--cell-size)",
+					defaultClassNames.week_number_header,
+				),
 				weekday: cn(
 					"text-foreground/60 rounded-lg flex-1 font-normal text-[0.8rem] select-none",
 					defaultClassNames.weekday,
@@ -123,12 +146,23 @@ function Calendar({
 					}
 
 					return (
-						<HugeiconsIcon className={cn("size-4", className)} {...props} icon={ArrowDown01Icon} />
+						<HugeiconsIcon
+							className={cn("size-4", className)}
+							{...props}
+							icon={ArrowDown01Icon}
+						/>
 					);
 				},
 				DayButton: CalendarDayButton,
 				Root: ({ className, rootRef, ...props }) => {
-					return <div className={cn(className)} data-slot="calendar" ref={rootRef} {...props} />;
+					return (
+						<div
+							className={cn(className)}
+							data-slot="calendar"
+							ref={rootRef}
+							{...props}
+						/>
+					);
 				},
 				WeekNumber: ({ children, ...props }) => {
 					return (
@@ -142,7 +176,8 @@ function Calendar({
 				...components,
 			}}
 			formatters={{
-				formatMonthDropdown: (date) => date.toLocaleString(i18n.language, { month: "short" }),
+				formatMonthDropdown: (date) =>
+					date.toLocaleString(i18n.language, { month: "short" }),
 				...formatters,
 			}}
 			showOutsideDays={showOutsideDays}

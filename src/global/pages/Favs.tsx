@@ -1,5 +1,8 @@
 import { useFavRooms } from "~/features/room/model/use-fav-rooms";
-import { RoomList, RoomListSkeleton } from "~/features/room/ui/favs/room-favs-list";
+import {
+	RoomList,
+	RoomListSkeleton,
+} from "~/features/room/ui/favs/room-favs-list";
 
 export default function FavsPage() {
 	const { rooms, isLoading } = useFavRooms();

@@ -1,5 +1,3 @@
- 
-
 @import "tailwindcss";
 @import "../src/shared/theme/colors.css";
 @import "../src/shared/theme/animations.css";
@@ -14,88 +12,84 @@
 	src: url(/Bricolage.ttf) format("truetype");
 }
 
- 
-
 @theme {
-  --font-sans: "Bricolage", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	--font-sans:
+		"Bricolage", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 html,
 body {
-  @apply bg-canvas text-foreground;	
-  -webkit-font-smoothing: antialiased;
+	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	@apply bg-canvas text-foreground;
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+	@media (prefers-color-scheme: dark) {
+		color-scheme: dark;
+	}
 }
 
-
-
 :root {
-  --vh: 1vh;
+	--vh: 1vh;
 }
 
 /* Support the new `dvh` unit so that dynamically shrinking iOS Safari UI works */
 @supports (height: 1dvh) {
-  :root {
-    --vh: 1dvh;
-  }
+	:root {
+		--vh: 1dvh;
+	}
 }
 
 /* However when the app is installed as PWA use the `vh` unit to avoid weird layout issues */
 @media all and (display-mode: standalone) {
-  :root {
-    --vh: 1vh;
-  }
+	:root {
+		--vh: 1vh;
+	}
 }
 #modal-root {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  height: 100%;
-  min-height: calc(100 * var(--vh));
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-height: calc(100 * var(--vh));
+	overflow: hidden;
 }
 
 select,
 ::picker(select) {
-  /* appearance: base-select; */
-  @apply placeholder:text-foreground/70 border-foreground/30 flex rounded-xl min-w-0 border-2 px-2 py-1 transition-all outline-none focus-visible:border-foreground;
+	/* appearance: base-select; */
+	@apply placeholder:text-foreground/70 border-foreground/30 flex rounded-xl min-w-0 border-2 px-2 py-1 transition-all outline-none focus-visible:border-foreground;
 }
 select::picker-icon {
-  color: #999999;
-  transition: 0.4s rotate;
+	color: #999999;
+	transition: 0.4s rotate;
 }
 select:open::picker-icon {
-  rotate: 180deg;
+	rotate: 180deg;
 }
 
 ::picker(select) {
-  border: none;
-  @apply bg-transparent text-foreground flex flex-col;
+	border: none;
+	@apply bg-transparent text-foreground flex flex-col;
 }
 
 option {
-  border: 1px solid #dddddd;
-  @apply bg-canvas p-2 gap-4;
-  transition: 0.4s;
+	border: 1px solid #dddddd;
+	transition: 0.4s;
+	@apply bg-canvas p-2 gap-4;
 }
 option:first-of-type {
-  border-radius: 8px 8px 0 0;
+	border-radius: 8px 8px 0 0;
 }
 
 option:last-of-type {
-  border-radius: 0 0 8px 8px;
+	border-radius: 0 0 8px 8px;
 }
 
 option:not(option:last-of-type) {
-  border-bottom: none;
+	border-bottom: none;
 }
- 
 
 option:hover,
 option:focus {
-  @apply brightness-90 outline outline-foreground/50;
+	@apply brightness-90 outline outline-foreground/50;
 }

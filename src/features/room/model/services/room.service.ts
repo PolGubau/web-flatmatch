@@ -3,11 +3,13 @@ import type { Room, RoomWithMetadata } from "~/entities/room/room";
 import {
 	type InteractApiResponse,
 	type RemoveInteractionApiResponse,
-	RoomRepository
+	RoomRepository,
 } from "../../infra/room-repository";
 import type { RoomAction } from "../../types/common";
 
-export const getRoomService = async (id: string): Promise<RoomWithMetadata | null> => {
+export const getRoomService = async (
+	id: string,
+): Promise<RoomWithMetadata | null> => {
 	// 1. Error handling
 	if (!id) throw new Error("Room ID is required");
 	// 2. get the data
@@ -17,7 +19,9 @@ export const getRoomService = async (id: string): Promise<RoomWithMetadata | nul
 
 	return domain;
 };
-export const getFavoriteRoomsService = async (): Promise<RoomWithMetadata[]> => {
+export const getFavoriteRoomsService = async (): Promise<
+	RoomWithMetadata[]
+> => {
 	// 2. get the data
 	const favoriteRooms = await RoomRepository.findFavorites();
 	// 3. adapt the data
@@ -47,7 +51,9 @@ export const listAllRoomsService = async (): Promise<RoomWithMetadata[]> => {
 	console.log("all rooms:", dtoList);
 	return dtoList;
 };
-export const listMultipleRoomsService = async (ids: Room["id"][]): Promise<RoomWithMetadata[]> => {
+export const listMultipleRoomsService = async (
+	ids: Room["id"][],
+): Promise<RoomWithMetadata[]> => {
 	const dtoList = await RoomRepository.findMany(ids);
 	return dtoList;
 };

@@ -1,14 +1,14 @@
 ul.room-details-gallery {
-  /* padding-left: 20px; */
-  width: 100%;
-  max-height: 400px;
-  display: flex;  
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  gap: 1vw;
-  -webkit-overflow-scrolling: touch;
+	/* padding-left: 20px; */
+	width: 100%;
+	max-height: 400px;
+	display: flex;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	gap: 1vw;
+	-webkit-overflow-scrolling: touch;
 
-  /* Chrome, Safari */
+	/* Chrome, Safari */
 	&::-webkit-scrollbar {
 		width: 0;
 		height: 0;
@@ -17,18 +17,10 @@ ul.room-details-gallery {
 	/* Firefox */
 	scrollbar-width: none;
 
-
-  li {
-    list-style-type: none;
-    scroll-snap-align: center;
-    object-fit: cover;
-    flex: 0 0 100%;
-  }
-   
+	li {
+		flex: 0 0 100%;
+		list-style-type: none;
+		scroll-snap-align: center;
+		object-fit: cover;
+	}
 }
-
-
-
-
- 
- 

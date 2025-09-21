@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Link, Navigate, redirect, useNavigate } from "react-router";
-import RegisterForm, { type RegisterCredentials } from "~/features/auth/ui/pages/register-form ";
+import { Link, Navigate, useNavigate } from "react-router";
+import RegisterForm, {
+	type RegisterCredentials,
+} from "~/features/auth/ui/pages/register-form ";
 import { useAuth } from "~/global/supabase/auth-context";
-import { Button } from "~/shared/components/ui/button";
-import { Input } from "~/shared/components/ui/input/input";
-import { toast } from "~/shared/components/ui/sonner";
 
 export function meta() {
 	return [

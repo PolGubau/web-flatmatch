@@ -16,10 +16,14 @@ bg-[length:200%_200%] animate-gradient-move"
 						<h1 className="md:text-center max-md:px-3 font-regular tracking-wide line-clamp-1 text-canvas/80 text-4xl pb-3 ">
 							{name ? `Hi ${name}` : "Welcome"}
 						</h1>
-						<h2 className="md:text-center text-canvas/80">Let's know each other a bit better</h2>
+						<h2 className="md:text-center text-canvas/80">
+							Let's know each other a bit better
+						</h2>
 					</div>
 				</header>
-				<section className="md:p-4 overflow-y-auto p-2 flex flex-col gap-8">{children}</section>
+				<section className="md:p-4 overflow-y-auto p-2 flex flex-col gap-8">
+					{children}
+				</section>
 			</section>
 		</div>
 	);

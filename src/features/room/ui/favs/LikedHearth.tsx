@@ -2,7 +2,9 @@ import { FavouriteIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 export const LikedHearth = () => {
-	return <HugeiconsIcon className="fill-red-400" icon={FavouriteIcon} size={22} />;
+	return (
+		<HugeiconsIcon className="fill-red-400" icon={FavouriteIcon} size={22} />
+	);
 };
 
 export const AbsoluteLikedHeart = () => {

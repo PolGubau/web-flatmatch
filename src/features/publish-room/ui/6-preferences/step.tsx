@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useForm } from "react-hook-form";
+import { type FieldPath, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type z from "zod";
@@ -41,7 +41,9 @@ export function PreferencesForm() {
 			)}
 		>
 			<fieldset className="flex flex-col gap-6 overflow-y-auto">
-				<legend className="text-lg pb-10">{t("who_are_you_searching_for")}</legend>
+				<legend className="text-lg pb-10">
+					{t("who_are_you_searching_for")}
+				</legend>
 
 				<section className="flex flex-col gap-4">
 					<h3 className="">{t("age_preference")}</h3>
@@ -71,25 +73,36 @@ export function PreferencesForm() {
 				<div className="flex flex-col gap-1">
 					<h3>{t("occupation_of_tenant")}</h3>
 					<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
-						{Object.entries(data.preferences.currentOccupation).map(([key, value]) => {
-							const field = register(`preferences.currentOccupation.${key}` as any);
-							const data = occupationMap[key];
-							return (
-								<li className="flex group cursor-pointer" key={key}>
-									<label
-										className={
-											"has-checked:bg-primary/20 has-checked:hover:bg-primary/10 bg-secondary/5 hover:bg-foreground/10 transition-all p-4 w-full h-full rounded-xl gap-4"
-										}
-									>
-										<div className="flex gap-2">
-											{data.icon && <HugeiconsIcon icon={data.icon} size={20} />}{" "}
-											<span className="text-sm">{t(data.label)}</span>
-										</div>
-										<input className="hidden" type="checkbox" {...field} defaultChecked={value} />
-									</label>
-								</li>
-							);
-						})}
+						{Object.entries(data.preferences.currentOccupation).map(
+							([key, value]) => {
+								const field = register(
+									`preferences.currentOccupation.${key}` as FieldPath<Step6SchemaType>,
+								);
+								const data = occupationMap[key];
+								return (
+									<li className="flex group cursor-pointer" key={key}>
+										<label
+											className={
+												"has-checked:bg-primary/20 has-checked:hover:bg-primary/10 bg-secondary/5 hover:bg-foreground/10 transition-all p-4 w-full h-full rounded-xl gap-4"
+											}
+										>
+											<div className="flex gap-2">
+												{data.icon && (
+													<HugeiconsIcon icon={data.icon} size={20} />
+												)}{" "}
+												<span className="text-sm">{t(data.label)}</span>
+											</div>
+											<input
+												className="hidden"
+												type="checkbox"
+												{...field}
+												defaultChecked={value}
+											/>
+										</label>
+									</li>
+								);
+							},
+						)}
 					</ul>
 				</div>
 				<div className="flex flex-col gap-1">
@@ -107,10 +120,17 @@ export function PreferencesForm() {
 										}
 									>
 										<div className="flex gap-2">
-											{data.icon && <HugeiconsIcon icon={data.icon} size={20} />}{" "}
+											{data.icon && (
+												<HugeiconsIcon icon={data.icon} size={20} />
+											)}{" "}
 											<span className="text-sm">{t(data.label)}</span>
 										</div>
-										<input className="hidden" type="checkbox" {...field} defaultChecked={value} />
+										<input
+											className="hidden"
+											type="checkbox"
+											{...field}
+											defaultChecked={value}
+										/>
 									</label>
 								</li>
 							);
@@ -121,7 +141,9 @@ export function PreferencesForm() {
 
 			<footer className="flex flex-col gap-1">
 				{errors.preferences && (
-					<p className="text-error text-sm p-4 rounded-xl bg-error/10">{JSON.stringify(errors)}</p>
+					<p className="text-error text-sm p-4 rounded-xl bg-error/10">
+						{JSON.stringify(errors)}
+					</p>
 				)}
 				<FormFooterButtons backHref={"/publish/metadata"} />
 			</footer>

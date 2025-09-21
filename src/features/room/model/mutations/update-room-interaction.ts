@@ -1,7 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Room } from "~/entities/room/room";
 import type { RoomAction } from "../../types/common";
-import { interactWithRoomService, removeInteractionRoomService } from "../services/room.service";
+import {
+	interactWithRoomService,
+	removeInteractionRoomService,
+} from "../services/room.service";
 
 type Props = {
 	onSuccessLike?: () => void;
@@ -17,8 +20,13 @@ export const useUpdateRoomInteraction = (props?: Props) => {
 	const queryClient = useQueryClient();
 
 	const likeRoom = useMutation({
-		mutationFn: ({ roomId, action }: { roomId: Room["id"]; action: RoomAction }) =>
-			interactWithRoomService(roomId, action),
+		mutationFn: ({
+			roomId,
+			action,
+		}: {
+			roomId: Room["id"];
+			action: RoomAction;
+		}) => interactWithRoomService(roomId, action),
 		onError: () => {
 			props?.onFailedLike?.();
 		},

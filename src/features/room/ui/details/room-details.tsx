@@ -68,8 +68,13 @@ export default function RoomDetails({ room }: Props) {
 					<header className="grid grid-cols-[1fr_auto] gap-2 items-center sticky top-0 bg-canvas z-10">
 						<div className="flex flex-col gap-1">
 							<p className="text-lg text-foreground/80 flex gap-1 items-center">
-								<span className="font-semibold text-xl">{room.price.localePrice}</span>
-								<span className="text-sm"> / {room.price.paymentFrequency}</span>
+								<span className="font-semibold text-xl">
+									{room.price.localePrice}
+								</span>
+								<span className="text-sm">
+									{" "}
+									/ {room.price.paymentFrequency}
+								</span>
 							</p>
 
 							<ul className="flex items-center gap-4">
@@ -77,7 +82,9 @@ export default function RoomDetails({ room }: Props) {
 									<span className="text-xs">{t(room.rentType)}</span>
 								</li>
 								<li>
-									<span className="text-xs">{t("roommates", { count: peopleAmount })}</span>
+									<span className="text-xs">
+										{t("roommates", { count: peopleAmount })}
+									</span>
 								</li>
 							</ul>
 						</div>
@@ -130,7 +137,11 @@ export default function RoomDetails({ room }: Props) {
 									"text-error": !room.verification.verifiedAt,
 									"text-success": !!room.verification.verifiedAt,
 								})}
-								icon={room.verification.verifiedAt ? SecurityCheckIcon : CancelCircleIcon}
+								icon={
+									room.verification.verifiedAt
+										? SecurityCheckIcon
+										: CancelCircleIcon
+								}
 								size={32}
 							/>
 							<span className="text-sm">
@@ -149,7 +160,8 @@ export default function RoomDetails({ room }: Props) {
 									room.commodities.whole.appliances[
 										key as keyof typeof room.commodities.whole.appliances
 									];
-								const match = commoditiesMap[key as keyof typeof commoditiesMap];
+								const match =
+									commoditiesMap[key as keyof typeof commoditiesMap];
 								if (!match) {
 									return;
 								}
@@ -161,8 +173,12 @@ export default function RoomDetails({ room }: Props) {
 										})}
 										key={key}
 									>
-										{match.icon && <HugeiconsIcon icon={match.icon} size={25} />}
-										<span className="text-sm line-clamp-1 truncate">{t(match.label)}</span>
+										{match.icon && (
+											<HugeiconsIcon icon={match.icon} size={25} />
+										)}
+										<span className="text-sm line-clamp-1 truncate">
+											{t(match.label)}
+										</span>
 									</li>
 								);
 							})}
@@ -173,7 +189,9 @@ export default function RoomDetails({ room }: Props) {
 						<ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 items-center">
 							{Object.keys(room.commodities.whole.extras).map((key) => {
 								const value =
-									room.commodities.whole.extras[key as keyof typeof room.commodities.whole.extras];
+									room.commodities.whole.extras[
+										key as keyof typeof room.commodities.whole.extras
+									];
 								const match = extrasMap[key as keyof typeof extrasMap];
 								if (!match) {
 									return;
@@ -186,8 +204,12 @@ export default function RoomDetails({ room }: Props) {
 										})}
 										key={key}
 									>
-										{match.icon && <HugeiconsIcon icon={match.icon} size={25} />}
-										<span className="text-sm line-clamp-1 truncate">{t(match.label)}</span>
+										{match.icon && (
+											<HugeiconsIcon icon={match.icon} size={25} />
+										)}
+										<span className="text-sm line-clamp-1 truncate">
+											{t(match.label)}
+										</span>
 									</li>
 								);
 							})}
@@ -200,7 +222,11 @@ export default function RoomDetails({ room }: Props) {
 							<li className="pr-2">{room.location.city}</li>
 							<li className="pr-2">{room.location.country}</li>
 						</ul>
-						<MapWithMarker interactive={false} lat={room.location.lat} lon={room.location.lng} />
+						<MapWithMarker
+							interactive={false}
+							lat={room.location.lat}
+							lon={room.location.lng}
+						/>
 					</article>
 				</div>
 			</section>

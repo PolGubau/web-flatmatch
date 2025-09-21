@@ -9,7 +9,11 @@ type AddNewBioProps = {
 	onSuccess?: () => void;
 };
 
-export const ChangeBioForm = ({ aboutMe, userId, onSuccess }: AddNewBioProps) => {
+export const ChangeBioForm = ({
+	aboutMe,
+	userId,
+	onSuccess,
+}: AddNewBioProps) => {
 	const { updateUser, isLoading, isSuccess } = useUpdateUser(userId);
 	const handleSubmitNewBio = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

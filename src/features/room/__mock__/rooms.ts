@@ -72,7 +72,12 @@ export const mockRooms: Room[] = [
 		ownerId: "acdada83-28f4-47f6-b0e8-418792bf1706",
 		preferences: {
 			age: { max: 35, min: 20 },
-			currentOccupation: { employed: true, other: false, student: true, unemployed: false },
+			currentOccupation: {
+				employed: true,
+				other: false,
+				student: true,
+				unemployed: false,
+			},
 			gender: { female: true, male: true, other: true },
 		},
 		price: {
@@ -179,7 +184,12 @@ export const mockRooms: Room[] = [
 		ownerId: "acdada83-28f4-47f6-b0e8-418792bf1706",
 		preferences: {
 			age: { max: 30, min: 22 },
-			currentOccupation: { employed: true, other: false, student: true, unemployed: false },
+			currentOccupation: {
+				employed: true,
+				other: false,
+				student: true,
+				unemployed: false,
+			},
 			gender: { female: true, male: true, other: false },
 		},
 		price: {
@@ -288,7 +298,12 @@ export const mockRooms: Room[] = [
 		ownerId: "acdada83-28f4-47f6-b0e8-418792bf1706",
 		preferences: {
 			age: { max: 40, min: 25 },
-			currentOccupation: { employed: true, other: false, student: false, unemployed: false },
+			currentOccupation: {
+				employed: true,
+				other: false,
+				student: false,
+				unemployed: false,
+			},
 			gender: { female: true, male: true, other: true },
 		},
 		price: {
@@ -397,7 +412,12 @@ export const mockRooms: Room[] = [
 		ownerId: "acdada83-28f4-47f6-b0e8-418792bf1706",
 		preferences: {
 			age: { max: 28, min: 18 },
-			currentOccupation: { employed: false, other: false, student: true, unemployed: false },
+			currentOccupation: {
+				employed: false,
+				other: false,
+				student: true,
+				unemployed: false,
+			},
 			gender: { female: true, male: false, other: false },
 		},
 		price: {

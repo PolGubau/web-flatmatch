@@ -1,4 +1,8 @@
-import { LookTopIcon, UserAdd01Icon, UserUnlock01Icon } from "@hugeicons/core-free-icons";
+import {
+	LookTopIcon,
+	UserAdd01Icon,
+	UserUnlock01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "react-router";
 
@@ -24,7 +28,9 @@ export const PleaseSignInPage = () => {
 
 					<div className="flex flex-col gap-1">
 						<h2 className="text-xl">Sign In</h2>
-						<small>Use your account to access your profile, publish rooms and more!</small>
+						<small>
+							Use your account to access your profile, publish rooms and more!
+						</small>
 					</div>
 				</Link>
 

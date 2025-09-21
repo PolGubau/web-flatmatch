@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, Navigate, useNavigate, useSearchParams } from "react-router";
-import LoginForm, { type LoginCredentials } from "~/features/auth/ui/pages/login-form";
+import LoginForm, {
+	type LoginCredentials,
+} from "~/features/auth/ui/pages/login-form";
 import { useAuth } from "~/global/supabase/auth-context";
 
 export function meta() {

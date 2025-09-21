@@ -15,7 +15,7 @@ export const Step8Schema = EditableRoomSchema.pick({
 });
 export type Step8SchemaType = z.infer<typeof Step8Schema>;
 export function TimingsForm() {
-	const navigate = useNavigate();
+	const _navigate = useNavigate();
 	const { data, setData } = useFormState();
 
 	const {
@@ -64,7 +64,9 @@ export function TimingsForm() {
 						<Input
 							label="maximum_stay"
 							type="number"
-							{...register("timings.maximumStay.value", { valueAsNumber: true })}
+							{...register("timings.maximumStay.value", {
+								valueAsNumber: true,
+							})}
 						/>
 						<Select
 							label="unit"
@@ -80,7 +82,9 @@ export function TimingsForm() {
 						<Input
 							label="minimum_stay"
 							type="number"
-							{...register("timings.minimumStay.value", { valueAsNumber: true })}
+							{...register("timings.minimumStay.value", {
+								valueAsNumber: true,
+							})}
 						/>
 						<Select
 							label="unit"
@@ -97,7 +101,9 @@ export function TimingsForm() {
 
 			<footer className="flex flex-col gap-1">
 				{errors.timings && (
-					<p className="text-error text-sm p-4 rounded-xl bg-error/10">{JSON.stringify(errors)}</p>
+					<p className="text-error text-sm p-4 rounded-xl bg-error/10">
+						{JSON.stringify(errors)}
+					</p>
 				)}
 				<FormFooterButtons backHref={"/publish/company"} />
 			</footer>

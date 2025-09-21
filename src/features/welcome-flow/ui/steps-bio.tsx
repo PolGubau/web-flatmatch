@@ -1,18 +1,10 @@
 import { SubmitButton } from "~/shared/components/ui/buttons/submit-button";
-import { Input } from "~/shared/components/ui/input/input";
 
 type StepsNameProps = {
 	onSubmit: (data: { firstName: string; lastName: string }) => void;
 	isLoading: boolean;
-	defaultFirstName?: string;
-	defaultLastName?: string;
 };
-export const StepsName = ({
-	onSubmit,
-	defaultFirstName,
-	defaultLastName,
-	isLoading,
-}: StepsNameProps) => {
+export const StepsName = ({ onSubmit, isLoading }: StepsNameProps) => {
 	return (
 		<form
 			className="form"
@@ -24,7 +16,6 @@ export const StepsName = ({
 				onSubmit({ firstName, lastName });
 			}}
 		>
-			
 			<SubmitButton isLoading={isLoading} />
 		</form>
 	);

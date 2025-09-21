@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { AutoComplete } from "~/shared/components/ui/autocomplete";
@@ -21,7 +21,11 @@ type StreetAutocompleteProps = {
 	field: UseFormRegisterReturn<string>;
 };
 
-export function StreetAutocomplete({ value = "", onSelect, field }: StreetAutocompleteProps) {
+export function StreetAutocomplete({
+	value = "",
+	onSelect,
+	field,
+}: StreetAutocompleteProps) {
 	const { t } = useTranslation();
 	const [query, setQuery] = useState(value);
 	const [selectedValue, setSelectedValue] = useState<string>("");
@@ -35,7 +39,10 @@ export function StreetAutocomplete({ value = "", onSelect, field }: StreetAutoco
 		staleTime: 1000 * 60,
 	});
 
-	const items = useMemo(() => data?.map((d) => ({ label: d.name, value: d.name })) ?? [], [data]);
+	const items = useMemo(
+		() => data?.map((d) => ({ label: d.name, value: d.name })) ?? [],
+		[data],
+	);
 
 	const handleSelectedPlace = (name: string) => {
 		const selectedStreet = data?.find((d) => d.name === name);
@@ -53,7 +60,9 @@ export function StreetAutocomplete({ value = "", onSelect, field }: StreetAutoco
 			<AutoComplete
 				{...field}
 				emptyMessage={
-					query.length < 3 ? "Escribe al menos 3 caracteres" : "No se encontraron resultados"
+					query.length < 3
+						? "Escribe al menos 3 caracteres"
+						: "No se encontraron resultados"
 				}
 				id="location.address"
 				isLoading={isLoading}

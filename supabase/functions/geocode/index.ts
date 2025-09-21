@@ -1,33 +1,33 @@
 import { serve } from "https://deno.land/std/http/server.ts";
 
+const allowedOrigins = Deno.env.get("ALLOWED_ORIGINS")?.split(",") ?? [];
+
+function getCorsHeaders(origin: string | null): HeadersInit {
+	const allowedOrigin = allowedOrigins.includes(origin ?? "") ? origin : (allowedOrigins[0] ?? "*");
+	return {
+		"Access-Control-Allow-Headers": "authorization, apikey, x-client-info, content-type",
+		"Access-Control-Allow-Methods": "GET,OPTIONS",
+		"Access-Control-Allow-Origin": allowedOrigin ?? "",
+		Vary: "Origin",
+	};
+}
+
 serve(async (req) => {
-	// Responder preflight OPTIONS
+	const corsHeaders: HeadersInit = getCorsHeaders(req.headers.get("origin"));
+
 	if (req.method === "OPTIONS") {
-		return new Response(null, {
-			headers: {
-				"Access-Control-Allow-Headers": "*",
-				"Access-Control-Allow-Methods": "GET,OPTIONS",
-				"Access-Control-Allow-Origin": "*",
-				Vary: "Origin",
-			},
-		});
+		return new Response(null, { headers: corsHeaders });
 	}
 
 	const url = new URL(req.url);
 	const q = url.searchParams.get("q");
 
-	// Validación mínima
 	if (!q || q.length < 3) {
 		return new Response(JSON.stringify([]), {
-			headers: {
-				"Access-Control-Allow-Origin": "*",
-				"Content-Type": "application/json",
-				Vary: "Origin",
-			},
+			headers: { ...corsHeaders, "Content-Type": "application/json" },
 		});
 	}
 
-	// Llamada a Nominatim
 	const res = await fetch(
 		`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${encodeURIComponent(q)}`,
 		{ headers: { "User-Agent": "Flatmatch/1.0 (flatmatchapp@gmail.com)" } },
@@ -35,16 +35,11 @@ serve(async (req) => {
 
 	if (!res.ok) {
 		return new Response(JSON.stringify({ error: "Nominatim error" }), {
-			headers: {
-				"Access-Control-Allow-Origin": "*",
-				"Content-Type": "application/json",
-				Vary: "Origin",
-			},
+			headers: { ...corsHeaders, "Content-Type": "application/json" },
 			status: res.status,
 		});
 	}
 
-	// Mapear resultados
 	const data = await res.json();
 	const mapped = data.map((item: any) => ({
 		city: item.address.city || item.address.county || "",
@@ -55,12 +50,14 @@ serve(async (req) => {
 		postcode: item.address.postcode || "",
 	}));
 
-	// Respuesta final con CORS
+	console.info(`Geocode "${q}" -> ${mapped.length} results`);
+
 	return new Response(JSON.stringify(mapped), {
 		headers: {
-			"Access-Control-Allow-Origin": "*",
+			...corsHeaders,
 			"Content-Type": "application/json",
-			Vary: "Origin",
+			"X-Count": String(mapped.length),
+			"X-Request": JSON.stringify({ q }),
 		},
 	});
 });

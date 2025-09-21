@@ -3,7 +3,10 @@ import { PleaseSignInPage } from "~/shared/components/pages/PleaseSignInPage";
 import { useSession } from "~/shared/context/session-context";
 
 export function meta() {
-	return [{ title: "Your Profile | Flatmatch" }, { content: "Your Profile", name: "description" }];
+	return [
+		{ title: "Your Profile | Flatmatch" },
+		{ content: "Your Profile", name: "description" },
+	];
 }
 
 export default function Profile() {

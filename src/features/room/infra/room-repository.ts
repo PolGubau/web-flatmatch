@@ -17,13 +17,18 @@ import {
 export type InteractApiResponse = Interaction & {
 	roomId: string;
 };
-export type InteractApi = (id: string, action: RoomAction) => Promise<InteractApiResponse>;
+export type InteractApi = (
+	id: string,
+	action: RoomAction,
+) => Promise<InteractApiResponse>;
 
 export type RemoveInteractionApiResponse = {
 	roomId: string;
 	success: boolean;
 };
-export type RemoveInteractionApi = (id: Room["id"]) => Promise<RemoveInteractionApiResponse>;
+export type RemoveInteractionApi = (
+	id: Room["id"],
+) => Promise<RemoveInteractionApiResponse>;
 
 type RoomRepository = AbstractRepository<RoomWithMetadata, EditableRoom> & {
 	findFavorites: () => Promise<RoomWithMetadata[]>;

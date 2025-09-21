@@ -20,9 +20,10 @@ export function RoomFavsListItemSkeleton() {
 						</p>
 					</h2>
 					<p className="text-sm line-clamp-2 bg-foreground/10 rounded-xl animate-pulse text-transparent">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ex amet quos
-						nulla voluptatum eaque nam unde, dolorum necessitatibus? Ratione, repellendus esse?
-						Eligendi beatae laudantium quae explicabo ratione accusamus tempore.
+						Lorem ipsum dolor sit amet consectetur adipisicing elit.
+						Reprehenderit ex amet quos nulla voluptatum eaque nam unde, dolorum
+						necessitatibus? Ratione, repellendus esse? Eligendi beatae
+						laudantium quae explicabo ratione accusamus tempore.
 					</p>
 					<p className="text-sm text-transparent bg-foreground/10 rounded-xl w-fit animate-pulse pointer-events-none">
 						lorem ips

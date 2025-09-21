@@ -7,7 +7,10 @@ export type Delete = (id: Id) => Promise<boolean>;
 
 //
 
-export type Update<T, EditableT = T> = (id: Id, data: Partial<EditableT>) => Promise<T>;
+export type Update<T, EditableT = T> = (
+	id: Id,
+	data: Partial<EditableT>,
+) => Promise<T>;
 
 export type AbstractRepository<T, EditableT = T> = {
 	findById: FindById<T>;

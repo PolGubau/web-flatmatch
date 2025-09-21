@@ -21,13 +21,15 @@ export default function LoginForm({ onSubmit, error, loading }: Props) {
 	};
 	return (
 		<form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-			{error && <p className="text-sm text-error bg-error/10 p-2 rounded">{error}</p>}
+			{error && (
+				<p className="text-sm text-error bg-error/10 p-2 rounded">{error}</p>
+			)}
 
 			<div className="flex flex-col gap-3">
 				<Input
 					autoComplete="email"
 					autoFocus
-					label="Email"
+					label="email"
 					name="email"
 					placeholder="you@example.com"
 					required
@@ -35,7 +37,7 @@ export default function LoginForm({ onSubmit, error, loading }: Props) {
 				/>
 				<Input
 					autoComplete="current-password"
-					label="Password"
+					label="password"
 					name="password"
 					placeholder="••••••••"
 					required

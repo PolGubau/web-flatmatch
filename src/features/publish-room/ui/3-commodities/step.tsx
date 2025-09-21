@@ -11,20 +11,14 @@ import {
 	WindowsNewIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useForm } from "react-hook-form";
+import { type FieldPath, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { commoditiesMap, extrasMap } from "~/shared/base/maps";
 import { Input } from "~/shared/components/ui/input/input";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "~/shared/components/ui/select";
+import { Select } from "~/shared/components/ui/select";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 
@@ -123,55 +117,82 @@ export function CommoditiesForm() {
 				<div className="flex flex-col gap-1">
 					<h3>{t("apartment_appliances")}</h3>
 					<ul className="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4">
-						{Object.entries(data.commodities.whole.appliances).map(([key, value]) => {
-							const field = register(`commodities.whole.appliances.${key}` as any);
-							const data = commoditiesMap[key as keyof typeof commoditiesMap];
-							return (
-								<li className="flex group cursor-pointer" key={key}>
-									<label
-										className={
-											"has-checked:bg-primary/20 has-checked:hover:bg-primary/10 bg-secondary/5 hover:bg-foreground/10 transition-all p-4 w-full h-full rounded-xl gap-4"
-										}
-									>
-										<div className="flex gap-2">
-											{data.icon && <HugeiconsIcon icon={data.icon} size={20} />}{" "}
-											<span className="text-sm line-clamp-1">{t(data.label)}</span>
-										</div>
-										<input className="hidden" type="checkbox" {...field} defaultChecked={value} />
-									</label>
-								</li>
-							);
-						})}
+						{Object.entries(data.commodities.whole.appliances).map(
+							([key, value]) => {
+								const field = register(
+									`commodities.whole.appliances.${key}` as FieldPath<Step3SchemaType>,
+								);
+								const data = commoditiesMap[key as keyof typeof commoditiesMap];
+								return (
+									<li className="flex group cursor-pointer" key={key}>
+										<label
+											className={
+												"has-checked:bg-primary/20 has-checked:hover:bg-primary/10 bg-secondary/5 hover:bg-foreground/10 transition-all p-4 w-full h-full rounded-xl gap-4"
+											}
+										>
+											<div className="flex gap-2">
+												{data.icon && (
+													<HugeiconsIcon icon={data.icon} size={20} />
+												)}{" "}
+												<span className="text-sm line-clamp-1">
+													{t(data.label)}
+												</span>
+											</div>
+											<input
+												className="hidden"
+												type="checkbox"
+												{...field}
+												defaultChecked={value}
+											/>
+										</label>
+									</li>
+								);
+							},
+						)}
 					</ul>
 				</div>
 
 				<div className="flex flex-col gap-1">
 					<h3>{t("extra_spaces")}</h3>
 					<ul className="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4">
-						{Object.entries(data.commodities.whole.extras).map(([key, value]) => {
-							const field = register(`commodities.whole.extras.${key}` as any);
-							const data = extrasMap[key as keyof typeof extrasMap];
-							return (
-								<li className="flex group cursor-pointer" key={key}>
-									<label
-										className={
-											"has-checked:bg-primary/20 has-checked:hover:bg-primary/10 bg-secondary/5 hover:bg-foreground/10 transition-all p-4 w-full h-full rounded-xl gap-4"
-										}
-									>
-										<div className="flex gap-2">
-											{data.icon && <HugeiconsIcon icon={data.icon} size={20} />}
-											<span className="text-sm">{t(data.label)}</span>
-										</div>
-										<input className="hidden" type="checkbox" {...field} defaultChecked={value} />
-									</label>
-								</li>
-							);
-						})}
+						{Object.entries(data.commodities.whole.extras).map(
+							([key, value]) => {
+								const field = register(
+									`commodities.whole.extras.${key}` as FieldPath<Step3SchemaType>,
+								);
+								const data = extrasMap[key as keyof typeof extrasMap];
+								return (
+									<li className="flex group cursor-pointer" key={key}>
+										<label
+											className={
+												"has-checked:bg-primary/20 has-checked:hover:bg-primary/10 bg-secondary/5 hover:bg-foreground/10 transition-all p-4 w-full h-full rounded-xl gap-4"
+											}
+										>
+											<div className="flex gap-2">
+												{data.icon && (
+													<HugeiconsIcon icon={data.icon} size={20} />
+												)}
+												<span className="text-sm">{t(data.label)}</span>
+											</div>
+											<input
+												className="hidden"
+												type="checkbox"
+												{...field}
+												defaultChecked={value}
+											/>
+										</label>
+									</li>
+								);
+							},
+						)}
 					</ul>
 				</div>
 				<div>
 					<label className="flex gap-2 items-center p-2 has-checked:bg-primary/20 bg-foreground/5 rounded-xl px-4 w-fit">
-						<input type="checkbox" {...register("commodities.whole.areUtilitiesIncluded")} />
+						<input
+							type="checkbox"
+							{...register("commodities.whole.areUtilitiesIncluded")}
+						/>
 						<span className="">{t("are_utilities_included")}?</span>
 					</label>
 				</div>
@@ -216,7 +237,9 @@ export function CommoditiesForm() {
 								>
 									<div className="flex gap-2">
 										<HugeiconsIcon icon={PatioIcon} size={20} />
-										<span className="text-sm line-clamp-1">{t("has_balcony")}</span>
+										<span className="text-sm line-clamp-1">
+											{t("has_balcony")}
+										</span>
 									</div>
 									<input
 										className="hidden"
@@ -234,7 +257,9 @@ export function CommoditiesForm() {
 								>
 									<div className="flex gap-2">
 										<HugeiconsIcon icon={WindowsNewIcon} size={20} />
-										<span className="text-sm line-clamp-1">{t("has_window")}</span>
+										<span className="text-sm line-clamp-1">
+											{t("has_window")}
+										</span>
 									</div>
 									<input
 										className="hidden"
@@ -252,7 +277,9 @@ export function CommoditiesForm() {
 								>
 									<div className="flex gap-2">
 										<HugeiconsIcon icon={DeskIcon} size={20} />
-										<span className="text-sm line-clamp-1">{t("has_working_desk")}</span>
+										<span className="text-sm line-clamp-1">
+											{t("has_working_desk")}
+										</span>
 									</div>
 									<input
 										className="hidden"
@@ -270,7 +297,9 @@ export function CommoditiesForm() {
 								>
 									<div className="flex gap-2">
 										<HugeiconsIcon icon={Wardrobe01Icon} size={20} />
-										<span className="text-sm line-clamp-1">{t("is_furnished")}</span>
+										<span className="text-sm line-clamp-1">
+											{t("is_furnished")}
+										</span>
 									</div>
 									<input
 										className="hidden"
@@ -288,7 +317,9 @@ export function CommoditiesForm() {
 								>
 									<div className="flex gap-2">
 										<HugeiconsIcon icon={Bathtub01Icon} size={20} />
-										<span className="text-sm line-clamp-1">{t("has_private_bathroom")}</span>
+										<span className="text-sm line-clamp-1">
+											{t("has_private_bathroom")}
+										</span>
 									</div>
 									<input
 										className="hidden"

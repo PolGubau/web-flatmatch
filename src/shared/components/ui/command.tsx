@@ -10,10 +10,16 @@ import {
 } from "~/shared/components/ui/dialog";
 import { cn } from "~/shared/utils/utils";
 
-function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
+function Command({
+	className,
+	...props
+}: React.ComponentProps<typeof CommandPrimitive>) {
 	return (
 		<CommandPrimitive
-			className={cn("flex h-full w-full flex-col overflow-hidden rounded-lg", className)}
+			className={cn(
+				"flex h-full w-full flex-col overflow-hidden rounded-lg",
+				className,
+			)}
 			data-slot="command"
 			{...props}
 		/>
@@ -56,7 +62,10 @@ function CommandInput({
 	...props
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
 	return (
-		<div className="flex h-9 items-center gap-2 border-b px-3" data-slot="command-input-wrapper">
+		<div
+			className="flex h-9 items-center gap-2 border-b px-3"
+			data-slot="command-input-wrapper"
+		>
 			<SearchIcon className="size-4 shrink-0 opacity-50" />
 			<CommandPrimitive.Input
 				className={cn(
@@ -70,7 +79,10 @@ function CommandInput({
 	);
 }
 
-function CommandList({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.List>) {
+function CommandList({
+	className,
+	...props
+}: React.ComponentProps<typeof CommandPrimitive.List>) {
 	return (
 		<CommandPrimitive.List
 			className={cn(
@@ -83,7 +95,9 @@ function CommandList({ className, ...props }: React.ComponentProps<typeof Comman
 	);
 }
 
-function CommandEmpty({ ...props }: React.ComponentProps<typeof CommandPrimitive.Empty>) {
+function CommandEmpty({
+	...props
+}: React.ComponentProps<typeof CommandPrimitive.Empty>) {
 	return (
 		<CommandPrimitive.Empty
 			className="py-6 text-center text-sm"
@@ -122,7 +136,10 @@ function CommandSeparator({
 	);
 }
 
-function CommandItem({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Item>) {
+function CommandItem({
+	className,
+	...props
+}: React.ComponentProps<typeof CommandPrimitive.Item>) {
 	return (
 		<CommandPrimitive.Item
 			className={cn(
@@ -135,10 +152,16 @@ function CommandItem({ className, ...props }: React.ComponentProps<typeof Comman
 	);
 }
 
-function CommandShortcut({ className, ...props }: React.ComponentProps<"span">) {
+function CommandShortcut({
+	className,
+	...props
+}: React.ComponentProps<"span">) {
 	return (
 		<span
-			className={cn("text-muted-foreground ml-auto text-xs tracking-widest", className)}
+			className={cn(
+				"text-muted-foreground ml-auto text-xs tracking-widest",
+				className,
+			)}
 			data-slot="command-shortcut"
 			{...props}
 		/>

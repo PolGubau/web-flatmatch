@@ -28,7 +28,11 @@ bg-[length:200%_200%] animate-gradient-move"
 					<SignInGoogleButton />
 					<article>
 						{!useCredentials ? (
-							<Button className="w-full" onClick={() => setUseCredentials(true)} variant="outline">
+							<Button
+								className="w-full"
+								onClick={() => setUseCredentials(true)}
+								variant="outline"
+							>
 								Or use email and password
 							</Button>
 						) : (
