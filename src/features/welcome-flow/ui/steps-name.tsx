@@ -26,14 +26,14 @@ export const StepsName = ({
 		>
 			<Input
 				defaultValue={defaultFirstName}
-				label="First Name"
+				label="first_name"
 				name="firstName"
 				placeholder="John"
 				readOnly={isLoading}
 			/>
 			<Input
 				defaultValue={defaultLastName}
-				label="Last Name"
+				label="last_name"
 				name="lastName"
 				placeholder="Doe"
 				readOnly={isLoading}
