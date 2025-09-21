@@ -5,40 +5,37 @@ on:
     branches:
       - master
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
-  quality:
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      # 1️⃣ Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      # Node.js con cache de pnpm
+      # 2️⃣ Setup Node + cache pnpm
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: "pnpm"
 
-      # Instala pnpm explícitamente
+      # 3️⃣ Setup pnpm
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
 
-      # Instala dependencias usando pnpm
+      # 4️⃣ Instala dependencias con pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # Setup Biome
+      # 5️⃣ Setup Biome
       - name: Setup Biome
         uses: biomejs/setup-biome@v2
         with:
           version: latest
 
-      # Run Biome con reporter de GitHub
+      # 6️⃣ Ejecuta Biome solo check (ci) con reporter GitHub
       - name: Run Biome
         run: pnpm exec biome ci --reporter=github ./src ./app
