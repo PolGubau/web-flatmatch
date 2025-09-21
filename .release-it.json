@@ -1,20 +1,19 @@
 {
 	"$schema": "https://unpkg.com/release-it/schema/release-it.json",
 	"git": {
+		"changelog": "npx auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/main/templates/changelog-compact.hbs",
 		"commitMessage": "chore(release): v${version} [skip ci]",
-		"requireBranch": "master",
-		"requireCleanWorkingDir": true,
-		"addUntrackedFiles": true
+		"requireBranch": "master"
 	},
 	"github": {
 		"release": true
-	},  "plugins": {
-    "release-it-pnpm": {}
-  },
+	},
 	"hooks": {
-		"before:init": ["git pull", "pnpm lint-fix", "pnpm test"],
-		"before:bump": "npx auto-changelog -p",
-		"after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
+		"after:bump": "npx auto-changelog -p",
+		"after:release": "echo Successfully released ${name} v${version} to ${repo.repository}.",
+		"before:init": ["git pull", "pnpm lint-fix", "pnpm test"]
+	},
+	"plugins": {
+		"release-it-pnpm": {}
 	}
-	
 }
