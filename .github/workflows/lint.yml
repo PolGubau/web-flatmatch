@@ -8,26 +8,25 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+
     steps:
-      # 1️⃣ Checkout
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node + cache pnpm
-      - name: Setup Node.js
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 20
+          cache: 'pnpm'
 
-      # 3️⃣ Setup pnpm
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      # 4️⃣ Instala dependencias con pnpm
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       # 5️⃣ Setup Biome
       - name: Setup Biome
