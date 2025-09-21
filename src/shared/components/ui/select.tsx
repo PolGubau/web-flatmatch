@@ -19,7 +19,7 @@ export type SelectProps = Omit<
 	"children"
 > & {
 	id?: string;
-	label?: string;
+	label?: TranslationKey;
 	placeholder?: TranslationKey;
 	options: { value: string; label: TranslationKey }[];
 };
@@ -34,7 +34,7 @@ function Select({
 		<div className="flex flex-col gap-1">
 			{label && (
 				<label className="flex gap-2" htmlFor={props.id}>
-					<span className="text-sm">{label}</span>
+					<span className="text-sm">{t(label)}</span>
 				</label>
 			)}
 			<SelectPrimitive.Root data-slot="select" {...props}>

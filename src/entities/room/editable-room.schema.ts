@@ -3,7 +3,8 @@ import { z } from "zod";
 export const RentTypeSchema = z.enum(["room", "shared", "entire"]);
 export type RentType = z.infer<typeof RentTypeSchema>;
 export const PaymentFrequencySchema = z.enum(["monthly", "weekly", "daily"]);
-export const StayUnitSchema = z.enum(["day", "week", "month", "year"]);
+export const stayUnits = ["day", "week", "month", "year"] as const;
+export const StayUnitSchema = z.enum(stayUnits);
 export const BedTypeSchema = z.enum([
 	"single",
 	"double",
@@ -110,17 +111,18 @@ export type RoomEditableImages = z.infer<typeof EditableImagesSchema>;
 export const TimingsSchema = z.object({
 	availableFrom: z.string(),
 	availableUntil: z.string().optional(),
-	maximumStay: z.union([
-		z.object({
+	maximumStay: z
+		.object({
 			unit: StayUnitSchema,
 			value: z.number(),
-		}),
-		z.undefined(),
-	]),
-	minimumStay: z.object({
-		unit: StayUnitSchema,
-		value: z.number(),
-	}),
+		})
+		.optional(),
+	minimumStay: z
+		.object({
+			unit: StayUnitSchema,
+			value: z.number(),
+		})
+		.optional(),
 });
 export type RoomTimings = z.infer<typeof TimingsSchema>;
 

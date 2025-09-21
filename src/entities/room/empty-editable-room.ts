@@ -56,7 +56,7 @@ export const emptyEditableRoom: EditableRoom = {
 	},
 	location: {
 		address: "",
-		city: "bcn",
+		city: "",
 		country: "",
 		lat: 0,
 		lng: 0,

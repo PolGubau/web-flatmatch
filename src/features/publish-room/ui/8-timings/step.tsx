@@ -1,9 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { InformationCircleIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { t } from "i18next";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import type z from "zod";
-import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
+import {
+	EditableRoomSchema,
+	stayUnits,
+} from "~/entities/room/editable-room.schema";
 import { DatePicker } from "~/shared/components/ui/date-picker";
 import { Input } from "~/shared/components/ui/input/input";
 import { Select } from "~/shared/components/ui/select";
@@ -21,11 +26,15 @@ export function TimingsForm() {
 	const {
 		register,
 		handleSubmit,
+		watch,
 		formState: { errors },
 	} = useForm<Step8SchemaType>({
 		defaultValues: { ...data },
 		resolver: zodResolver(Step8Schema),
 	});
+
+	const minStay = watch("timings.minimumStay");
+	const maxStay = watch("timings.maximumStay");
 
 	return (
 		<form
@@ -57,29 +66,12 @@ export function TimingsForm() {
 					/>
 				</section>
 
-				<section>
+				<section className="">
 					<h3>{t("timings_periods_description")}</h3>
 
-					<div className="grid md:grid-cols-2 gap-4 max-w-lg mt-4">
+					<div className="grid md:grid-cols-3 gap-4 mt-4 items-end">
 						<Input
-							label="maximum_stay"
-							type="number"
-							{...register("timings.maximumStay.value", {
-								valueAsNumber: true,
-							})}
-						/>
-						<Select
-							label="unit"
-							options={[
-								{ label: "days", value: "days" },
-								{ label: "weeks", value: "weeks" },
-								{ label: "months", value: "months" },
-							]}
-							{...register("timings.maximumStay.unit")}
-						/>
-					</div>
-					<div>
-						<Input
+							defaultValue={data.timings.minimumStay?.value}
 							label="minimum_stay"
 							type="number"
 							{...register("timings.minimumStay.value", {
@@ -87,14 +79,51 @@ export function TimingsForm() {
 							})}
 						/>
 						<Select
+							defaultValue={data.timings.minimumStay?.unit}
 							label="unit"
-							options={[
-								{ label: "days", value: "days" },
-								{ label: "weeks", value: "weeks" },
-								{ label: "months", value: "months" },
-							]}
+							options={stayUnits.map((unit) => ({
+								label: unit,
+								value: unit,
+							}))}
 							{...register("timings.minimumStay.unit")}
 						/>
+						{minStay?.value && (
+							<p className="flex items-center gap-2 p-2 h-12 px-4 bg-info/10 rounded-xl">
+								<HugeiconsIcon icon={InformationCircleIcon} size={20} />
+								{t("tenant_must_stay_more_x_y", {
+									count: minStay.value,
+									unit: minStay.unit,
+								})}
+							</p>
+						)}
+					</div>
+					<div className="grid md:grid-cols-3 gap-4 mt-4 items-end">
+						<Input
+							defaultValue={data.timings.maximumStay?.value}
+							label="maximum_stay"
+							type="number"
+							{...register("timings.maximumStay.value", {
+								valueAsNumber: true,
+							})}
+						/>
+						<Select
+							defaultValue={data.timings.maximumStay?.unit ?? "month"}
+							label="unit"
+							options={stayUnits.map((unit) => ({
+								label: unit,
+								value: unit,
+							}))}
+							{...register("timings.maximumStay.unit")}
+						/>
+						{maxStay?.value && maxStay?.unit && (
+							<p className="flex items-center gap-2 p-2 h-12 px-4 bg-info/10 rounded-xl">
+								<HugeiconsIcon icon={InformationCircleIcon} size={20} />
+								{t("tenant_must_stay_less_x_y", {
+									count: maxStay.value,
+									unit: maxStay.unit,
+								})}
+							</p>
+						)}
 					</div>
 				</section>
 			</fieldset>
