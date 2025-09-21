@@ -70,6 +70,7 @@
 	"private": true,
 	"scripts": {
 		"api:pull:edge": "npx supabase functions serve",
+		"api:push:edge": "npx supabase functions deploy geocode --no-verify-jwt",
 		"api:start": "npx supabase start",
 		"api:stop": "npx supabase stop --project-id web",
 		"build": "react-router build",
