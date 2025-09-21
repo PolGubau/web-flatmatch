@@ -10,7 +10,12 @@
     "release-it-pnpm": {}
   },
 	"hooks": {
-		"after:bump": "npx auto-changelog -p",
+		"after:bump": [
+			"npx auto-changelog -p",
+			"git add CHANGELOG.md",
+			"git commit -m \"docs(changelog): update for v${version} [skip ci]\" || echo 'No changes to commit'",
+			"git push"
+		],
 		"before:init": ["git pull", "pnpm lint-fix", "pnpm test"],
     "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
 
