@@ -1,12 +1,6 @@
 ul.room-details-gallery {
-	/* padding-left: 20px; */
-	width: 100%;
-	max-height: 400px;
-	display: flex;
-	overflow-x: auto;
-	scroll-snap-type: x mandatory;
-	gap: 1vw;
-	-webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+ 	-webkit-overflow-scrolling: touch;
 
 	/* Chrome, Safari */
 	&::-webkit-scrollbar {
@@ -18,7 +12,7 @@ ul.room-details-gallery {
 	scrollbar-width: none;
 
 	li {
-		flex: 0 0 100%;
+		flex: 0 0 80%;
 		list-style-type: none;
 		scroll-snap-align: center;
 		object-fit: cover;

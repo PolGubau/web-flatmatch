@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { useFavRooms } from "~/features/room/model/use-fav-rooms";
 import {
 	RoomList,
@@ -9,7 +10,7 @@ export default function FavsPage() {
 
 	return (
 		<section className="overflow-y-auto overflow-x-hidden max-w-4xl mx-auto px-4 md:px-6 flex flex-col gap-4">
-			<h1 className="text-xl font-semibold">Favorites</h1>
+			<h1 className="text-xl font-semibold">{t("favorites")}</h1>
 			{isLoading ? <RoomListSkeleton /> : <RoomList rooms={rooms} />}
 		</section>
 	);

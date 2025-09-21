@@ -3,6 +3,7 @@
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 
 import "leaflet/dist/leaflet.css";
+import { divIcon } from "leaflet";
 import { useEffect } from "react";
 
 type MapProps = {
@@ -38,6 +39,14 @@ export function MapWithMarker({
 	zoom = 15,
 	interactive = true,
 }: MapProps) {
+	// const customDivIcon = divIcon({
+	// 	className:
+	// 		"bg-red-500 text-white rounded-full flex items-center justify-center",
+	// 	html: "<div style='width:24px;height:24px;border-radius:50%;background:#09f'></div>",
+	// 	iconAnchor: [12, 24],
+	// 	iconSize: [24, 24],
+	// });
+
 	return (
 		<div className="w-full h-full min-h-64 rounded-lg overflow-hidden">
 			<MapContainer
@@ -52,13 +61,15 @@ export function MapWithMarker({
 				zoomControl={interactive}
 			>
 				<TileLayer
-					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://stadiamaps.com/">Stadia Maps</a>'
+					url="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png"
+					// url="https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.png"
+					// url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
 				/>
 				<Marker position={[lat, lon]}>
 					<Popup>
 						<span>
-							Marker at {lat}, {lon}
+							📍 {lat}, {lon}
 						</span>
 					</Popup>
 				</Marker>

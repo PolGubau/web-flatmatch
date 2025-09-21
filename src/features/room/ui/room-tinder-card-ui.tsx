@@ -1,22 +1,41 @@
+import { useState } from "react";
 import type { RoomWithMetadata } from "~/entities/room/room";
 import { VerifiedChip } from "~/shared/components/ui/verified/chip";
 import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 
 export function RoomTinderCardUI({ room }: { room: RoomWithMetadata }) {
-	const imagesAmount = (room.images.cover ? 1 : 0) + room.images.gallery.length;
-	const imageMode =
-		imagesAmount > 3 ? 3 : imagesAmount > 2 ? 2 : imagesAmount > 1 ? 1 : 0;
 	const { cover, gallery } = room.images;
 	const restImages = gallery.filter((path) => path !== cover);
 
 	const sortedImages = [cover, ...restImages];
+	const [currentImageIdx, setCurrentImageIndex] = useState(0);
+	const goNextImage = () => {
+		setCurrentImageIndex((idx) => (idx + 1) % sortedImages.length);
+	};
+	const goPrevImage = () => {
+		setCurrentImageIndex((idx) =>
+			idx === 0 ? sortedImages.length - 1 : idx - 1,
+		);
+	};
 
 	return (
 		// gradient from black to transparent
-		<article className="relative group w-full h-full bg-primary/10 pointer-events-none">
-			<div className="bg-gradient-to-tr from-black w-full h-full inset-0 absolute to-transparent rounded-lg" />
+		<article className="relative group w-full h-full bg-primary/10">
+			<div className="bg-gradient-to-tr from-black w-full h-full inset-0 absolute to-transparent rounded-lg z-10 pointer-events-none" />
 
-			<header className="absolute bottom-0 left-0 p-4 pb-6 flex flex-col gap-2 z-10">
+			{/* current image index indicator */}
+			<nav className="absolute top-4 left-1/2 -translate-x-1/2 z-20 flex gap-2 pointer-events-none">
+				{sortedImages.map((url, idx) => (
+					<span
+						className={`h-1 w-6 rounded-full ${
+							idx === currentImageIdx ? "bg-canvas" : "bg-canvas/20"
+						}`}
+						key={url}
+					/>
+				))}
+			</nav>
+
+			<header className="absolute bottom-0 left-0 p-4 pb-6 flex flex-col gap-2 z-20 pointer-events-none">
 				{!!room.verification.verifiedAt && <VerifiedChip />}
 
 				<h2 className="text-canvas text-2xl text-pretty line-clamp-2">
@@ -34,28 +53,25 @@ export function RoomTinderCardUI({ room }: { room: RoomWithMetadata }) {
 				</p>
 			</header>
 
-			<div
-				className={`grid h-full ${imageMode === 1 ? "grid-rows-[2fr_1fr]" : ""}`}
-			>
+			<div className={`grid h-full relative`}>
+				{/* invisible lateral buttons to change image */}
+
+				<button
+					className="absolute z-20 top-0 left-0 h-full w-1/2 opacity-0"
+					onClick={goPrevImage}
+					type="button"
+				/>
+				<button
+					className="absolute z-20 top-0 right-0 h-full w-1/2 opacity-0"
+					onClick={goNextImage}
+					type="button"
+				/>
+
 				<img
 					alt={room.title}
-					className="object-cover h-full object-bottom w-full"
-					src={sortedImages[0]}
+					className="object-cover h-full object-bottom w-full pointer-events-none"
+					src={sortedImages[currentImageIdx]}
 				/>
-				{(imageMode === 2 || imageMode === 3) && (
-					<div
-						className={`grid ${imageMode === 2 ? "grid-cols-1" : "grid-cols-2"}`}
-					>
-						{sortedImages.slice(0, 2).map((image) => (
-							<img
-								alt={room.title}
-								className="object-cover h-full object-bottom w-full"
-								key={image}
-								src={image}
-							/>
-						))}
-					</div>
-				)}
 			</div>
 		</article>
 	);

@@ -31,7 +31,7 @@ export const links: Route.LinksFunction = () => [
 export function HydrateFallback() {
 	return (
 		<MainLayout>
-			<LoadingSection label="loading_page" />
+			<LoadingSection label="loading" />
 		</MainLayout>
 	);
 }

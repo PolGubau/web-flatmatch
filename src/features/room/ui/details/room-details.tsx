@@ -19,6 +19,7 @@ import "./room-details.css";
 import { Button } from "~/shared/components/ui/button";
 import { useSession } from "~/shared/context/session-context";
 import { useUpdateRoomInteraction } from "../../model/mutations/update-room-interaction";
+import { RoomDistanceFromYou } from "./room-distance-from-you";
 
 type Props = {
 	room: RoomWithMetadata;
@@ -54,9 +55,9 @@ export default function RoomDetails({ room }: Props) {
 	// Gallery with the main first
 	const sortedImages = [cover, ...allImages.filter((path) => path !== cover)];
 	return (
-		<div className="relative overflow-y-auto h-full">
-			<section className="grid md:grid-cols-2 gap-4 mx-auto max-w-4xl">
-				<ul className="room-details-gallery md:sticky md:top-0">
+		<div className="relative overflow-y-auto  h-full">
+			<section className="grid gap-4 mx-auto max-w-7xl">
+				<ul className="room-details-gallery max-h-[50vh] gap-2 w-full flex overflow-x-auto rounded-xl">
 					{sortedImages.map((src) => (
 						<li key={src}>
 							<RoomDetailsImage alt={room.title} src={src} />
@@ -64,55 +65,62 @@ export default function RoomDetails({ room }: Props) {
 					))}
 				</ul>
 
-				<div className="flex flex-col gap-8 px-4">
-					<header className="grid grid-cols-[1fr_auto] gap-2 items-center sticky top-0 bg-canvas z-10">
-						<div className="flex flex-col gap-1">
-							<p className="text-lg text-foreground/80 flex gap-1 items-center">
-								<span className="font-semibold text-xl">
-									{room.price.localePrice}
-								</span>
-								<span className="text-sm">
-									{" "}
-									/ {room.price.paymentFrequency}
-								</span>
-							</p>
-
-							<ul className="flex items-center gap-4">
-								<li>
-									<span className="text-xs">{t(room.rentType)}</span>
-								</li>
-								<li>
-									<span className="text-xs">
-										{t("roommates", { count: peopleAmount })}
+				<div className="flex flex-col gap-8 px-4 relative">
+					<header className=" gap-2 sticky top-0 bg-canvas z-10 flex flex-col">
+						<div className="grid grid-cols-[1fr_auto] items-center gap-2">
+							<div className="flex flex-col gap-1">
+								<p className="text-lg text-foreground/80 flex gap-1 items-center">
+									<span className="font-semibold text-2xl">
+										{room.price.localePrice}
 									</span>
-								</li>
-							</ul>
-						</div>
-						<nav className="flex items-center gap-2">
-							<CopyRoomLinkButton />
+									<span className="text-sm">
+										{" "}
+										/ {room.price.paymentFrequency}
+									</span>
+								</p>
 
-							<Button
-								className=""
-								onClick={handleFavouriteClick}
-								size={"icon"}
-								type="button"
-								variant={"ghost"}
-							>
-								<HugeiconsIcon
-									className={cn("text-xl", {
-										"fill-red-400": isFavourite,
-									})}
-									icon={FavouriteIcon}
-									size={30}
-								/>
-							</Button>
-						</nav>
+								<ul className="flex items-center gap-4">
+									<li>
+										<span className="text-xs">{t(room.rentType)}</span>
+									</li>
+									<li>
+										<span className="text-xs">
+											{t("roommates", { count: peopleAmount })}
+										</span>
+									</li>
+								</ul>
+							</div>
+							<nav className="flex items-center gap-2">
+								<CopyRoomLinkButton />
+
+								<Button
+									className=""
+									onClick={handleFavouriteClick}
+									size={"icon"}
+									type="button"
+									variant={"ghost"}
+								>
+									<HugeiconsIcon
+										className={cn("text-xl", {
+											"fill-red-400": isFavourite,
+										})}
+										icon={FavouriteIcon}
+										size={30}
+									/>
+								</Button>
+							</nav>
+						</div>
+
+						<ContactButtons
+							email={room.contact.agent?.email ?? room.contact.owner?.email}
+							phone={room.contact.agent?.phone ?? room.contact.owner?.phone}
+						/>
 					</header>
 					<ul className="flex gap-8 items-center">
 						<li className="flex flex-col gap-1 items-center">
-							<HugeiconsIcon icon={BedDoubleIcon} size={32} />
+							<HugeiconsIcon icon={BedDoubleIcon} size={28} />
 							<span className="text-sm">
-								{t("bedrooms", {
+								{t("x_bedrooms", {
 									count:
 										room.commodities.whole?.bedrooms.individual +
 										room.commodities.whole?.bedrooms.shared,
@@ -120,15 +128,15 @@ export default function RoomDetails({ room }: Props) {
 							</span>
 						</li>
 						<li className="flex flex-col gap-1 items-center">
-							<HugeiconsIcon icon={ArrowAllDirectionIcon} size={32} />
+							<HugeiconsIcon icon={ArrowAllDirectionIcon} size={28} />
 							<span className="text-sm">
 								{t("square_meters", { count: room.commodities.whole?.area })}
 							</span>
 						</li>
 						<li className="flex flex-col gap-1 items-center">
-							<HugeiconsIcon icon={Sink01Icon} size={32} />
+							<HugeiconsIcon icon={Sink01Icon} size={28} />
 							<span className="text-sm">
-								{t("bathrooms", { count: room.commodities.whole?.bathrooms })}
+								{t("x_bathrooms", { count: room.commodities.whole?.bathrooms })}
 							</span>
 						</li>
 						<li className="flex flex-col gap-1 items-center">
@@ -142,7 +150,7 @@ export default function RoomDetails({ room }: Props) {
 										? SecurityCheckIcon
 										: CancelCircleIcon
 								}
-								size={32}
+								size={28}
 							/>
 							<span className="text-sm">
 								{t(room.verification.verifiedAt ? "verified" : "not_verified")}
@@ -150,9 +158,13 @@ export default function RoomDetails({ room }: Props) {
 						</li>
 					</ul>
 					{/*  */}
-					<h1 className="text-pretty text-2xl max-md:max-w-md">{room.title}</h1>
-					<p className="text-foreground/80">{room.description}</p>
-					<article className="p-4 border-t border-foreground/10 flex flex-col gap-2">
+					<div className="flex flex-col gap-1">
+						<h1 className="text-pretty text-2xl max-md:max-w-md">
+							{room.title}
+						</h1>
+						<p className="text-foreground/80">{room.description}</p>
+					</div>
+					<article className="py-4 border-t border-foreground/10 flex flex-col gap-2">
 						<h3>{t("commodities")}</h3>
 						<ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2 items-center">
 							{Object.keys(room.commodities.whole.appliances).map((key) => {
@@ -184,7 +196,7 @@ export default function RoomDetails({ room }: Props) {
 							})}
 						</ul>
 					</article>
-					<article className="p-4 border-t border-foreground/10 flex flex-col gap-2">
+					<article className="py-4 border-t border-foreground/10 flex flex-col gap-2">
 						<h3>{t("extra_spaces")}</h3>
 						<ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 items-center">
 							{Object.keys(room.commodities.whole.extras).map((key) => {
@@ -215,12 +227,18 @@ export default function RoomDetails({ room }: Props) {
 							})}
 						</ul>
 					</article>
-					<article className="p-4 border-t border-foreground/10 flex flex-col gap-2">
+					<article className="py-4 border-t border-foreground/10 flex flex-col gap-2">
 						<h3>{t("location")}</h3>
 						<ul className="flex flex-wrap gap-2 divide-x divide-foreground/20 text-sm">
 							<li className="pr-2">{room.location.address}</li>
 							<li className="pr-2">{room.location.city}</li>
 							<li className="pr-2">{room.location.country}</li>
+							<li className="pr-2">
+								<RoomDistanceFromYou
+									lat={room.location.lat}
+									lng={room.location.lng}
+								/>
+							</li>
 						</ul>
 						<MapWithMarker
 							interactive={false}
@@ -230,15 +248,6 @@ export default function RoomDetails({ room }: Props) {
 					</article>
 				</div>
 			</section>
-			<footer
-				className="sticky bottom-0 bg-canvas p-4 mx-auto md:max-w-4xl"
-				style={{ zIndex: 1001 }}
-			>
-				<ContactButtons
-					email={room.contact.agent?.email ?? room.contact.owner?.email}
-					phone={room.contact.agent?.phone ?? room.contact.owner?.phone}
-				/>
-			</footer>
 		</div>
 	);
 }

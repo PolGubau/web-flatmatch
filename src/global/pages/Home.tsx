@@ -1,11 +1,14 @@
 import { RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { t } from "i18next";
 import { Sheet } from "react-modal-sheet";
 import { useTinderCards } from "~/features/room/model/use-tinder-cards";
+import { ContactButtons } from "~/features/room/ui/details/footer/contact-buttons";
 import RoomDetails from "~/features/room/ui/details/room-details";
 import { RoomTinderCard } from "~/features/room/ui/room-tinder-card";
-import { LoadingSection } from "~/shared/components/pages/LoadingSection";
+import { LoadingCardsSection } from "~/shared/components/pages/LoadingCardsSection";
 import { Button } from "~/shared/components/ui/button";
+import { Drawer } from "~/shared/components/ui/drawer";
 
 export default function HomePage() {
 	const {
@@ -17,24 +20,18 @@ export default function HomePage() {
 		refetch,
 	} = useTinderCards();
 
-	if (isLoading) return <LoadingSection />;
+	if (isLoading) return <LoadingCardsSection />;
 
 	return (
 		<div className="grid grid-rows-1 grid-cols-1 gap-4 p-4 h-[80vh]">
 			<div className="grid place-items-center pt-10">
-				<Sheet
+				<Drawer
+					className="max-w-7xl mx-auto"
 					isOpen={!!bottomDrawerRoom}
-					modalEffectRootId="modal-root"
 					onClose={handleCloseDrawer}
 				>
-					<Sheet.Container>
-						<Sheet.Header />
-						<Sheet.Content className="bg-canvas">
-							{bottomDrawerRoom && <RoomDetails room={bottomDrawerRoom} />}
-						</Sheet.Content>
-					</Sheet.Container>
-					<Sheet.Backdrop />
-				</Sheet>
+					{bottomDrawerRoom && <RoomDetails room={bottomDrawerRoom} />}
+				</Drawer>
 
 				{[...rooms].map((room, index) => (
 					<RoomTinderCard
@@ -47,10 +44,10 @@ export default function HomePage() {
 
 				{rooms.length === 0 && (
 					<div className="text-center form text-foreground/60 max-w-md items-center">
-						No quedan habitaciones. Desliza para ver más.
+						{t("there_are_no_more_rooms")}
 						<Button disabled={isLoading} onClick={refetch}>
 							<HugeiconsIcon icon={RefreshIcon} />
-							Recargar
+							{t("reload")}
 						</Button>
 					</div>
 				)}

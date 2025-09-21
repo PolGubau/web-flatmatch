@@ -9,22 +9,22 @@ type Props = {
 };
 export function ContactButtons({ phone, email }: Props) {
 	return (
-		<nav className="gap-4 grid grid-cols-2">
+		<nav className="flex gap-2 items-center">
 			{phone && (
-				<Button asChild type="button">
-					<Link to={`tel:${phone}`}>
-						<HugeiconsIcon icon={TelephoneIcon} size={30} />
+				<Link to={`tel:${phone}`}>
+					<Button size={"sm"} variant={"outline"}>
+						<HugeiconsIcon icon={TelephoneIcon} size={18} />
 						Call
-					</Link>
-				</Button>
+					</Button>
+				</Link>
 			)}
 			{email && (
-				<Button asChild type="button">
-					<Link to={`mailto:${email}`}>
-						<HugeiconsIcon icon={Mail01Icon} size={30} />
+				<Link to={`mailto:${email}`}>
+					<Button size={"sm"} variant={"ghost"}>
+						<HugeiconsIcon icon={Mail01Icon} size={18} />
 						Contact
-					</Link>
-				</Button>
+					</Button>
+				</Link>
 			)}
 		</nav>
 	);

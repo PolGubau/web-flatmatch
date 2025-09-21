@@ -16,9 +16,14 @@
 		"strict": true,
 		"strictNullChecks": true,
 		"target": "ES2022",
-		"types": ["node", "vite/client"],
+		"types": ["node", "vite/client", "vitest/globals"],
 		"verbatimModuleSyntax": true
 	},
 	"exclude": ["node_modules", "dist", "build", "oxlintrc.json"],
-	"include": ["**/*", "**/.server/**/*", "**/.client/**/*", ".react-router/types/**/*"]
+	"include": [
+		"**/*",
+		"**/.server/**/*",
+		"**/.client/**/*",
+		".react-router/types/**/*"
+	]
 }
