@@ -12,7 +12,14 @@ type InputProps = Omit<React.ComponentProps<"input">, "size"> & {
 	size?: Breakpoints;
 };
 
-function Input({ className, type, icon, label, size = "md", ...props }: InputProps) {
+function Input({
+	className,
+	type,
+	icon,
+	label,
+	size = "md",
+	...props
+}: InputProps) {
 	return (
 		<div className="flex flex-col gap-1">
 			{label && (

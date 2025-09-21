@@ -39,7 +39,9 @@ export function RulesForm() {
 			)}
 		>
 			<fieldset className="flex flex-col gap-6 overflow-y-auto">
-				<legend className="text-lg pb-10">{t("which_are_rules_of_property")}</legend>
+				<legend className="text-lg pb-10">
+					{t("which_are_rules_of_property")}
+				</legend>
 
 				<div className="flex flex-col gap-1">
 					<h3>{t("which_of_these_are_possible")}</h3>
@@ -56,10 +58,19 @@ export function RulesForm() {
 										}
 									>
 										<div className="flex gap-2">
-											{data.icon && <HugeiconsIcon icon={data.icon} size={20} />}{" "}
-											<span className="text-sm line-clamp-1">{t(data.label)}</span>
+											{data.icon && (
+												<HugeiconsIcon icon={data.icon} size={20} />
+											)}{" "}
+											<span className="text-sm line-clamp-1">
+												{t(data.label)}
+											</span>
 										</div>
-										<input className="hidden" type="checkbox" {...field} defaultChecked={value} />
+										<input
+											className="hidden"
+											type="checkbox"
+											{...field}
+											defaultChecked={value}
+										/>
 									</label>
 								</li>
 							);
@@ -70,7 +81,9 @@ export function RulesForm() {
 
 			<footer className="flex flex-col gap-1">
 				{errors.rules && (
-					<p className="text-error text-sm p-4 rounded-xl bg-error/10">{JSON.stringify(errors)}</p>
+					<p className="text-error text-sm p-4 rounded-xl bg-error/10">
+						{JSON.stringify(errors)}
+					</p>
 				)}
 				<FormFooterButtons backHref={"/publish/company"} />
 			</footer>

@@ -5,7 +5,11 @@ type Props = {
 export function RoomDetailsImage({ src, alt }: Props) {
 	return (
 		<div>
-			<img alt={alt} className="h-full w-full aspect-video object-cover" src={src} />
+			<img
+				alt={alt}
+				className="h-full w-full aspect-video object-cover"
+				src={src}
+			/>
 		</div>
 	);
 }

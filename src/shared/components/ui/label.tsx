@@ -20,7 +20,13 @@ function Label({ className, required, ...props }: Props) {
 				data-slot="label"
 				{...props}
 			/>
-			{required && <HugeiconsIcon className="fill-error text-error" icon={StarIcon} size={10} />}
+			{required && (
+				<HugeiconsIcon
+					className="fill-error text-error"
+					icon={StarIcon}
+					size={10}
+				/>
+			)}
 		</span>
 	);
 }

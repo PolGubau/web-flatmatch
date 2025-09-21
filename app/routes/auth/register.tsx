@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router";
-import RegisterForm, { type RegisterCredentials } from "~/features/auth/ui/pages/register-form ";
+import RegisterForm, {
+	type RegisterCredentials,
+} from "~/features/auth/ui/pages/register-form ";
 import { useAuth } from "~/global/supabase/auth-context";
 
 export function meta() {

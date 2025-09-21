@@ -81,7 +81,9 @@
 		"dev-as-prod": "react-router dev --mode prod",
 		"gen:types": "npx supabase gen types typescript --project-id \"eazucuralkbhkzrztanc\" --schema public > src/global/supabase/types.ts",
 		"go": "pnpm api:start && pnpm dev",
-		"lint": "pnpm exec biome lint --write --unsafe ./src ./app",
+		"lint": "pnpm exec biome check ./src ./app",
+		"lint-fix": "pnpm exec biome check --write --unsafe ./src ./app",
+		"lint:ci": "pnpm exec biome ci ./src ./app",
 		"start": "react-router-serve ./build/server/index.js",
 		"typecheck": "react-router typegen && tsc"
 	},

@@ -1,4 +1,4 @@
-import { ArrowUpRight03Icon, } from "@hugeicons/core-free-icons";
+import { ArrowUpRight03Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "react-router";
 import type { Room } from "~/entities/room/room";
@@ -9,7 +9,13 @@ type Props = Pick<Room, "id" | "title" | "description"> & {
 	price: string;
 };
 
-export function RoomFavsListItem({ id, title, description, image, price }: Props) {
+export function RoomFavsListItem({
+	id,
+	title,
+	description,
+	image,
+	price,
+}: Props) {
 	return (
 		<li className="group animate-in fade-in">
 			<Link
@@ -17,7 +23,11 @@ export function RoomFavsListItem({ id, title, description, image, price }: Props
 				to={`/room/${id}`}
 			>
 				<div className="relative group">
-					<img alt={`Room ${id}`} className=" w-24 h-full object-cover" src={image} />
+					<img
+						alt={`Room ${id}`}
+						className=" w-24 h-full object-cover"
+						src={image}
+					/>
 
 					<AbsoluteLikedHeart />
 				</div>

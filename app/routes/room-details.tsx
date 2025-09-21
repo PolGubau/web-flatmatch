@@ -17,5 +17,9 @@ export async function clientLoader({ params }: Route.ClientLoaderArgs) {
 export default function RoomDetailsPage({ params }: Route.ComponentProps) {
 	const { room } = useRoom(params.roomId);
 
-	return <div className="relative">{!room ? <LoadingSection /> : <RoomDetails room={room} />}</div>;
+	return (
+		<div className="relative">
+			{!room ? <LoadingSection /> : <RoomDetails room={room} />}
+		</div>
+	);
 }

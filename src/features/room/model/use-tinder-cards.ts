@@ -12,7 +12,8 @@ export const useTinderCards = () => {
 	const { likeRoom } = useUpdateRoomInteraction();
 	console.log(rooms);
 	const [roomsChunk, setRoomsChunk] = useState<RoomWithMetadata[]>([]);
-	const [bottomDrawerRoom, setBottomDrawerRoom] = useState<null | RoomWithMetadata>(null);
+	const [bottomDrawerRoom, setBottomDrawerRoom] =
+		useState<null | RoomWithMetadata>(null);
 	const [isFetching, setIsFetching] = useState(false);
 
 	// Inicializamos roomsChunk solo una vez
@@ -41,7 +42,10 @@ export const useTinderCards = () => {
 		setIsFetching(true);
 		try {
 			const fetchedRooms = await RoomRepository.findAll();
-			const newRooms = fetchedRooms.map((r) => ({ ...r, id: crypto.randomUUID() }));
+			const newRooms = fetchedRooms.map((r) => ({
+				...r,
+				id: crypto.randomUUID(),
+			}));
 			setRoomsChunk((prev) => [...prev, ...newRooms]);
 		} finally {
 			setIsFetching(false);
@@ -74,8 +78,23 @@ export const useTinderCards = () => {
 				prefetchMoreRooms();
 			}
 		},
-		[getRoom, removeRoom, roomsChunk.length, isFetching, prefetchMoreRooms, likeRoom.mutate, check],
+		[
+			getRoom,
+			removeRoom,
+			roomsChunk.length,
+			isFetching,
+			prefetchMoreRooms,
+			likeRoom.mutate,
+			check,
+		],
 	);
 
-	return { bottomDrawerRoom, handleCloseDrawer, isLoading, onSwipe, refetch, rooms: roomsChunk };
+	return {
+		bottomDrawerRoom,
+		handleCloseDrawer,
+		isLoading,
+		onSwipe,
+		refetch,
+		rooms: roomsChunk,
+	};
 };

@@ -10,7 +10,11 @@ type ChangeGenderFormProps = {
 	onSuccess?: () => void;
 };
 
-export const ChangeGenderForm = ({ gender, userId, onSuccess }: ChangeGenderFormProps) => {
+export const ChangeGenderForm = ({
+	gender,
+	userId,
+	onSuccess,
+}: ChangeGenderFormProps) => {
 	const { updateUser, isLoading, isSuccess } = useUpdateUser(userId);
 
 	const handleSubmitNewGender = (e: React.FormEvent<HTMLFormElement>) => {

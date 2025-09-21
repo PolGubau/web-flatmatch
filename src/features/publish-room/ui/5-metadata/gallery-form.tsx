@@ -13,7 +13,12 @@ type Props = {
 	images: Image[];
 	mainIndex: number;
 };
-export function GalleryForm({ onChangeImages, onChangeMain, images, mainIndex }: Props) {
+export function GalleryForm({
+	onChangeImages,
+	onChangeMain,
+	images,
+	mainIndex,
+}: Props) {
 	const { t } = useTranslation();
 	return (
 		<div className="space-y-4">
@@ -30,7 +35,9 @@ export function GalleryForm({ onChangeImages, onChangeMain, images, mainIndex }:
 					onChange={(e) => {
 						const files = e.target.files;
 						if (!files) return;
-						onChangeImages("images.gallery", Array.from(files), { shouldValidate: true });
+						onChangeImages("images.gallery", Array.from(files), {
+							shouldValidate: true,
+						});
 					}}
 					required
 					type="file"
@@ -43,11 +50,15 @@ export function GalleryForm({ onChangeImages, onChangeMain, images, mainIndex }:
 					const handleDelete = () => {
 						const filteredImages = images.filter((_, index) => index !== i);
 
-						onChangeImages("images.gallery", filteredImages, { shouldValidate: true });
+						onChangeImages("images.gallery", filteredImages, {
+							shouldValidate: true,
+						});
 					};
 
 					const getSrc = (image: Image) => {
-						return typeof image === "string" ? image : URL.createObjectURL(image);
+						return typeof image === "string"
+							? image
+							: URL.createObjectURL(image);
 					};
 
 					const imageSrc = getSrc(image);
@@ -56,9 +67,12 @@ export function GalleryForm({ onChangeImages, onChangeMain, images, mainIndex }:
 					return (
 						<li className="relative group" key={key}>
 							<button
-								className={cn("w-full rounded hover:brightness-75 cursor-pointer overflow-hidden", {
-									"outline-4 outline-primary": isMain,
-								})}
+								className={cn(
+									"w-full rounded hover:brightness-75 cursor-pointer overflow-hidden",
+									{
+										"outline-4 outline-primary": isMain,
+									},
+								)}
 								onClick={() => {
 									onChangeMain(i);
 								}}

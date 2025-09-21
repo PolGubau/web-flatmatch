@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router";
-import { SignInAvatar, YourAvatar } from "~/features/user/ui/profile/your-avatar";
+import {
+	SignInAvatar,
+	YourAvatar,
+} from "~/features/user/ui/profile/your-avatar";
 import { useAuth } from "~/global/supabase/auth-context";
 import {
 	DropdownMenu,
@@ -32,7 +35,9 @@ export const UserButton = () => {
 			<DropdownMenuContent>
 				<DropdownMenuLabel>My Account</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem onSelect={() => navigate("/profile")}>See my profile</DropdownMenuItem>
+				<DropdownMenuItem onSelect={() => navigate("/profile")}>
+					See my profile
+				</DropdownMenuItem>
 				<DropdownMenuItem onSelect={() => signOut()} variant="error">
 					Signout
 				</DropdownMenuItem>

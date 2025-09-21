@@ -13,7 +13,13 @@ export const YourAvatar = ({ size = "sm" }: Props) => {
 
 	if (!session) return <SignInAvatar />;
 
-	return <ProfileAvatar avatarUrl={avatar_url ?? undefined} name={name as string} size={size} />;
+	return (
+		<ProfileAvatar
+			avatarUrl={avatar_url ?? undefined}
+			name={name as string}
+			size={size}
+		/>
+	);
 };
 
 export const SignInAvatar = () => {

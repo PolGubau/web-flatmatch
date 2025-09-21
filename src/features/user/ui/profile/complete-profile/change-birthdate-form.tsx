@@ -9,7 +9,10 @@ type ChangeBirthdateFormProps = {
 	userId: User["id"];
 };
 
-export const ChangeBirthdateForm = ({ birthDate, userId }: ChangeBirthdateFormProps) => {
+export const ChangeBirthdateForm = ({
+	birthDate,
+	userId,
+}: ChangeBirthdateFormProps) => {
 	const { updateUser, isLoading, isSuccess } = useUpdateUser(userId);
 
 	const handleSubmitNewBirthdate = (e: React.FormEvent<HTMLFormElement>) => {

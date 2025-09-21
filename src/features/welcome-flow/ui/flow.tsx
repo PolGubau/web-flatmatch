@@ -20,7 +20,13 @@ export const WelcomeFlow = ({ userId }: Props) => {
 	/** Avanza al siguiente paso */
 	const [currentStep, setCurrentStep] = useState(0);
 
-	const handleSubmitName = ({ firstName, lastName }: { firstName: string; lastName: string }) => {
+	const handleSubmitName = ({
+		firstName,
+		lastName,
+	}: {
+		firstName: string;
+		lastName: string;
+	}) => {
 		updateUser({ lastname: lastName, name: firstName });
 		next();
 	};
@@ -48,7 +54,11 @@ export const WelcomeFlow = ({ userId }: Props) => {
 				!data?.aboutMe
 					? {
 							form: (
-								<ChangeBioForm aboutMe={data?.aboutMe ?? ""} onSuccess={next} userId={userId} />
+								<ChangeBioForm
+									aboutMe={data?.aboutMe ?? ""}
+									onSuccess={next}
+									userId={userId}
+								/>
 							),
 							id: "bio",
 						}
@@ -56,7 +66,11 @@ export const WelcomeFlow = ({ userId }: Props) => {
 				!data?.gender
 					? {
 							form: (
-								<ChangeGenderForm gender={data?.gender ?? null} onSuccess={next} userId={userId} />
+								<ChangeGenderForm
+									gender={data?.gender ?? null}
+									onSuccess={next}
+									userId={userId}
+								/>
 							),
 							id: "gender",
 						}
@@ -86,7 +100,11 @@ export const WelcomeFlow = ({ userId }: Props) => {
 
 	return (
 		<div className="animate-fade-in">
-			<progress className="w-full rounded-xl px-4" max={totalSteps} value={currentStep + 1} />
+			<progress
+				className="w-full rounded-xl px-4"
+				max={totalSteps}
+				value={currentStep + 1}
+			/>
 			{activeStep.form}
 		</div>
 	);

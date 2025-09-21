@@ -4,7 +4,13 @@ import { Check } from "lucide-react";
 import { type HTMLAttributes, useMemo, useState } from "react";
 import type { TranslationKey } from "~/shared/i18n/i18n";
 import { cn } from "~/shared/utils/utils";
-import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "./command";
+import {
+	Command,
+	CommandEmpty,
+	CommandGroup,
+	CommandItem,
+	CommandList,
+} from "./command";
 import { inputTheme } from "./input/theme";
 import { Popover, PopoverAnchor, PopoverContent } from "./popover";
 import { Skeleton } from "./skeleton";
@@ -80,7 +86,10 @@ export function AutoComplete<T extends string>({
 					<PopoverContent
 						asChild
 						onInteractOutside={(e) => {
-							if (e.target instanceof Element && e.target.hasAttribute("cmdk-input")) {
+							if (
+								e.target instanceof Element &&
+								e.target.hasAttribute("cmdk-input")
+							) {
 								e.preventDefault();
 							}
 						}}
@@ -112,7 +121,9 @@ export function AutoComplete<T extends string>({
 											<Check
 												className={cn(
 													"mr-2 h-4 w-4",
-													selectedValue === option.value ? "opacity-100" : "opacity-0",
+													selectedValue === option.value
+														? "opacity-100"
+														: "opacity-0",
 												)}
 											/>
 											{option.label}
@@ -120,7 +131,9 @@ export function AutoComplete<T extends string>({
 									))}
 								</CommandGroup>
 							) : null}
-							{!isLoading ? <CommandEmpty>{emptyMessage ?? "No items."}</CommandEmpty> : null}
+							{!isLoading ? (
+								<CommandEmpty>{emptyMessage ?? "No items."}</CommandEmpty>
+							) : null}
 						</CommandList>
 					</PopoverContent>
 				</Command>

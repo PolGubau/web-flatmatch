@@ -1,8 +1,20 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
 import type { RoomWithMetadata } from "~/entities/room/room";
 import { supabase } from "~/global/supabase/client";
-import type { Inserts, Tables, Updates, Views } from "~/global/supabase/types-helpers";
-import type { Create, Delete, FindAll, FindById, FindMany, Update } from "~/shared/abstracts/repo";
+import type {
+	Inserts,
+	Tables,
+	Updates,
+	Views,
+} from "~/global/supabase/types-helpers";
+import type {
+	Create,
+	Delete,
+	FindAll,
+	FindById,
+	FindMany,
+	Update,
+} from "~/shared/abstracts/repo";
 import { roomBDtoDomainAndMetadata } from "./adapter/room.adapter";
 import type { InteractApi, RemoveInteractionApi } from "./room-repository";
 
@@ -75,7 +87,9 @@ export const getManyRooms: FindMany<RoomWithMetadata> = async (ids) => {
 /**
  * Crea una nueva room (sin verificación, solo en `rooms`)
  */
-export const createRoom: Create<RoomWithMetadata, EditableRoom> = async (editableRoom) => {
+export const createRoom: Create<RoomWithMetadata, EditableRoom> = async (
+	editableRoom,
+) => {
 	// 1. obtener user loggeado
 
 	const userId = await getUserId();
@@ -98,7 +112,11 @@ export const createRoom: Create<RoomWithMetadata, EditableRoom> = async (editabl
 		title: editableRoom.title,
 	};
 
-	const { data: created, error } = await supabase.from("rooms").insert(payload).select().single();
+	const { data: created, error } = await supabase
+		.from("rooms")
+		.insert(payload)
+		.select()
+		.single();
 
 	if (error) throw error;
 
@@ -129,7 +147,10 @@ export const deleteRoom: Delete = async (id) => {
 /**
  * Actualiza una room
  */
-export const updateRoom: Update<RoomWithMetadata, EditableRoom> = async (id, data) => {
+export const updateRoom: Update<RoomWithMetadata, EditableRoom> = async (
+	id,
+	data,
+) => {
 	// 1. obtener user loggeado
 	const userId = await getUserId();
 	const newGallery = data.images?.gallery
@@ -181,11 +202,15 @@ async function uploadImages(userId: string, images: File[]): Promise<string[]> {
 
 	for (const img of images) {
 		const fileName = `${userId}/${Date.now()}-${img.name}`;
-		const { error } = await supabase.storage.from("room-images").upload(fileName, img);
+		const { error } = await supabase.storage
+			.from("room-images")
+			.upload(fileName, img);
 
 		if (error) throw error;
 
-		const { data: publicUrl } = supabase.storage.from("room-images").getPublicUrl(fileName);
+		const { data: publicUrl } = supabase.storage
+			.from("room-images")
+			.getPublicUrl(fileName);
 
 		urls.push(publicUrl.publicUrl);
 	}
@@ -193,9 +218,16 @@ async function uploadImages(userId: string, images: File[]): Promise<string[]> {
 	return urls;
 }
 
-async function uploadNewImages(userId: string, images: (string | File)[]): Promise<string[]> {
-	const existingUrls = images.filter((img) => typeof img === "string") as string[];
-	const imagesToUpload = images.filter((img) => typeof img !== "string") as File[];
+async function uploadNewImages(
+	userId: string,
+	images: (string | File)[],
+): Promise<string[]> {
+	const existingUrls = images.filter(
+		(img) => typeof img === "string",
+	) as string[];
+	const imagesToUpload = images.filter(
+		(img) => typeof img !== "string",
+	) as File[];
 
 	const newUrls = await uploadImages(userId, imagesToUpload);
 
@@ -248,7 +280,12 @@ export const interactRoom: InteractApi = async (id, action) => {
 	const { error, data } = await supabase
 		.from("room_user_interactions")
 		.upsert(
-			{ action, last_action_at: new Date().toISOString(), room_id: id, user_id: userId },
+			{
+				action,
+				last_action_at: new Date().toISOString(),
+				room_id: id,
+				user_id: userId,
+			},
 			{ ignoreDuplicates: true },
 		)
 		.select()

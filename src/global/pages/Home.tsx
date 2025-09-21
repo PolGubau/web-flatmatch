@@ -8,8 +8,14 @@ import { LoadingSection } from "~/shared/components/pages/LoadingSection";
 import { Button } from "~/shared/components/ui/button";
 
 export default function HomePage() {
-	const { rooms, onSwipe, bottomDrawerRoom, handleCloseDrawer, isLoading, refetch } =
-		useTinderCards();
+	const {
+		rooms,
+		onSwipe,
+		bottomDrawerRoom,
+		handleCloseDrawer,
+		isLoading,
+		refetch,
+	} = useTinderCards();
 
 	if (isLoading) return <LoadingSection />;
 
@@ -31,7 +37,12 @@ export default function HomePage() {
 				</Sheet>
 
 				{[...rooms].map((room, index) => (
-					<RoomTinderCard index={index} key={room.id} onSwipe={onSwipe} room={room} />
+					<RoomTinderCard
+						index={index}
+						key={room.id}
+						onSwipe={onSwipe}
+						room={room}
+					/>
 				))}
 
 				{rooms.length === 0 && (

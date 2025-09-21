@@ -35,7 +35,11 @@ export const RadioBox = <T extends string>({
 					{...field}
 					value={value}
 				/>
-				{description && <p className="text-foreground/80 text-sm text-pretty">{description}</p>}
+				{description && (
+					<p className="text-foreground/80 text-sm text-pretty">
+						{description}
+					</p>
+				)}
 			</label>
 		</li>
 	);

@@ -9,7 +9,10 @@ type ChangeOccupationFormProps = {
 	userId: User["id"];
 };
 
-export const ChangeOccupationForm = ({ occupation, userId }: ChangeOccupationFormProps) => {
+export const ChangeOccupationForm = ({
+	occupation,
+	userId,
+}: ChangeOccupationFormProps) => {
 	const { updateUser, isLoading, isSuccess } = useUpdateUser(userId);
 
 	const handleSubmitNewOccupation = (e: React.FormEvent<HTMLFormElement>) => {

@@ -4,10 +4,18 @@ export const RentTypeSchema = z.enum(["room", "shared", "entire"]);
 export type RentType = z.infer<typeof RentTypeSchema>;
 export const PaymentFrequencySchema = z.enum(["monthly", "weekly", "daily"]);
 export const StayUnitSchema = z.enum(["day", "week", "month", "year"]);
-export const BedTypeSchema = z.enum(["single", "double", "bunk", "sofa", "none"]);
+export const BedTypeSchema = z.enum([
+	"single",
+	"double",
+	"bunk",
+	"sofa",
+	"none",
+]);
 export const RoomStatusSchema = z.enum(["available", "booked", "unlisted"]);
 export type RoomStatus = z.infer<typeof RoomStatusSchema>;
-export const ZipCodeSchema = z.string().regex(/^\d{5}$/, "Selecciona una calle correcta");
+export const ZipCodeSchema = z
+	.string()
+	.regex(/^\d{5}$/, "Selecciona una calle correcta");
 
 // Sub-schemas
 export const LocationSchema = z.object({

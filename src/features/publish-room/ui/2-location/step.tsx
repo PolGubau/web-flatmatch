@@ -30,7 +30,9 @@ export function LocationForm() {
 		resolver: zodResolver(Step2Schema),
 	});
 	const { t } = useTranslation();
-	const field = register("location.address", { required: t("address_is_required") });
+	const field = register("location.address", {
+		required: t("address_is_required"),
+	});
 	const lat = watch("location.lat");
 	const location = watch("location");
 	const lng = watch("location.lng");
@@ -43,7 +45,9 @@ export function LocationForm() {
 			})}
 		>
 			<fieldset className="flex flex-col gap-6">
-				<legend className="text-lg pb-10">{t("where_is_your_room_located")}</legend>
+				<legend className="text-lg pb-10">
+					{t("where_is_your_room_located")}
+				</legend>
 
 				<section className="md:grid-cols-2 grid gap-6 h-full">
 					<article className="flex flex-col gap-8">
@@ -61,23 +65,33 @@ export function LocationForm() {
 						/>
 						<ul className="flex flex-col gap-2 text-sm text-foreground/80">
 							<li className="grid grid-cols-2 gap-2">
-								<span className="capitalize text-foreground/60">{t("city")}</span>
+								<span className="capitalize text-foreground/60">
+									{t("city")}
+								</span>
 								<span>{location.city}</span>
 							</li>
 							<li className="grid grid-cols-2 gap-2">
-								<span className="capitalize text-foreground/60">{t("country")}</span>
+								<span className="capitalize text-foreground/60">
+									{t("country")}
+								</span>
 								<span>{location.country}</span>
 							</li>
 							<li className="grid grid-cols-2 gap-2">
-								<span className="capitalize text-foreground/60">{t("postal_code")}</span>
+								<span className="capitalize text-foreground/60">
+									{t("postal_code")}
+								</span>
 								<span>{location.postalCode}</span>
 							</li>
 							<li className="grid grid-cols-2 gap-2">
-								<span className="capitalize text-foreground/60">{t("latitude")}</span>
+								<span className="capitalize text-foreground/60">
+									{t("latitude")}
+								</span>
 								<span>{location.lat}</span>
 							</li>
 							<li className="grid grid-cols-2 gap-2">
-								<span className="capitalize text-foreground/60">{t("longitude")}</span>
+								<span className="capitalize text-foreground/60">
+									{t("longitude")}
+								</span>
 								<span>{location.lng}</span>
 							</li>
 						</ul>

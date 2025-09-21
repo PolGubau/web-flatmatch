@@ -12,7 +12,13 @@ type Props = {
 	gender: User["gender"] | null;
 };
 
-export function CompleteProfile({ aboutMe, userId, occupation, birthDate, gender }: Props) {
+export function CompleteProfile({
+	aboutMe,
+	userId,
+	occupation,
+	birthDate,
+	gender,
+}: Props) {
 	return (
 		<section className="flex flex-col gap-4">
 			<h2 className="text-lg font-semibold">Complete Your profile</h2>
@@ -24,7 +30,10 @@ export function CompleteProfile({ aboutMe, userId, occupation, birthDate, gender
 				)}
 				{!occupation && (
 					<li className="bg-foreground/5 rounded-xl p-2">
-						<ChangeOccupationForm occupation={occupation ?? "employed"} userId={userId} />
+						<ChangeOccupationForm
+							occupation={occupation ?? "employed"}
+							userId={userId}
+						/>
 					</li>
 				)}
 				{!birthDate && (

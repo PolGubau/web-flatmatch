@@ -1,4 +1,9 @@
-import { FavouriteIcon, Home01Icon, Message01Icon, UserIcon } from "@hugeicons/core-free-icons";
+import {
+	FavouriteIcon,
+	Home01Icon,
+	Message01Icon,
+	UserIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";

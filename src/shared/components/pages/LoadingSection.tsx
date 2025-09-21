@@ -7,10 +7,19 @@ import { Loader } from "../ui/loader";
 type Props = HTMLAttributes<HTMLDivElement> & {
 	label?: TranslationKey;
 };
-export const LoadingSection: React.FC<Props> = ({ label = "loading", ...props }) => {
+export const LoadingSection: React.FC<Props> = ({
+	label = "loading",
+	...props
+}) => {
 	const { t } = useTranslation();
 	return (
-		<div {...props} className={cn("w-full h-full grid place-items-center p-4", props.className)}>
+		<div
+			{...props}
+			className={cn(
+				"w-full h-full grid place-items-center p-4",
+				props.className,
+			)}
+		>
 			<div className="flex flex-col gap-2 items-center">
 				<Loader /> {t(label)}
 			</div>

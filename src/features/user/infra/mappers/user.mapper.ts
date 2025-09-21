@@ -1,4 +1,9 @@
-import type { Gender, Occupation, Preferences, User } from "~/entities/user/user";
+import type {
+	Gender,
+	Occupation,
+	Preferences,
+	User,
+} from "~/entities/user/user";
 import type { UserDB } from "../api";
 
 type AbstractMapper<DB, Domain> = {
@@ -27,7 +32,12 @@ export const dtoToDomain = (u: UserDB): User => ({
 		age: { max: 99, min: 18 },
 		gender: { female: true, male: true, other: true },
 		maxBudget: 0,
-		occupation: { employed: true, other: true, student: true, unemployed: true },
+		occupation: {
+			employed: true,
+			other: true,
+			student: true,
+			unemployed: true,
+		},
 		rentType: ["shared", "room", "entire"],
 	},
 	providerId: u.provider_id ?? undefined,

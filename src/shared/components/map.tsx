@@ -14,7 +14,15 @@ type MapProps = {
 /**
  * Hook que mueve el mapa cuando cambian las coords
  */
-function Recenter({ lat, lon, zoom }: { lat: number; lon: number; zoom: number }) {
+function Recenter({
+	lat,
+	lon,
+	zoom,
+}: {
+	lat: number;
+	lon: number;
+	zoom: number;
+}) {
 	const map = useMap();
 	useEffect(() => {
 		map.setView([lat, lon], zoom, { animate: true });
@@ -24,7 +32,12 @@ function Recenter({ lat, lon, zoom }: { lat: number; lon: number; zoom: number }
 /**
  * Mapa centrado en coordenadas con un pin
  */
-export function MapWithMarker({ lat, lon, zoom = 15, interactive = true }: MapProps) {
+export function MapWithMarker({
+	lat,
+	lon,
+	zoom = 15,
+	interactive = true,
+}: MapProps) {
 	return (
 		<div className="w-full h-full min-h-64 rounded-lg overflow-hidden">
 			<MapContainer

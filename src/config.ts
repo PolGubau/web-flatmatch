@@ -1,4 +1,8 @@
-const mustHaveEnv = ["VITE_SUPABASE_ANON_KEY", "VITE_SUPABASE_URL", "VITE_GOOGLE_ID"];
+const mustHaveEnv = [
+	"VITE_SUPABASE_ANON_KEY",
+	"VITE_SUPABASE_URL",
+	"VITE_GOOGLE_ID",
+];
 
 for (const key of mustHaveEnv) {
 	if (!import.meta.env[key]) {

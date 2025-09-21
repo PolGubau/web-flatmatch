@@ -15,7 +15,11 @@ const theme = {
 	sm: "h-[32px] w-[32px] rounded-full",
 };
 
-export const ProfileAvatar = ({ name, avatarUrl, size = "md" }: ProfileAvatarProps) => {
+export const ProfileAvatar = ({
+	name,
+	avatarUrl,
+	size = "md",
+}: ProfileAvatarProps) => {
 	const className = cn(theme.base, {
 		[theme.sm]: size === "sm",
 		[theme.md]: size === "md",

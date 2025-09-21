@@ -1,4 +1,8 @@
-import { Calendar03Icon, UserAccountIcon, WorkIcon } from "@hugeicons/core-free-icons";
+import {
+	Calendar03Icon,
+	UserAccountIcon,
+	WorkIcon,
+} from "@hugeicons/core-free-icons";
 import { useTranslation } from "react-i18next";
 import { Navigate } from "react-router";
 import { useUser } from "~/features/user/model/use-user";
@@ -45,7 +49,8 @@ export default function ProfilePage({ userId, isYours }: Props) {
 		},
 	];
 
-	const someInfoMissing = !user.aboutMe || !user.birthDate || !user.occupation || !user.gender;
+	const someInfoMissing =
+		!user.aboutMe || !user.birthDate || !user.occupation || !user.gender;
 
 	return (
 		<div className="gap-4 grid grid-rows-[auto_1fr_auto]">

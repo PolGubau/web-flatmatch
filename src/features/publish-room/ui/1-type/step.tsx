@@ -1,5 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { HutIcon, MeetingRoomIcon, SlideshareIcon } from "@hugeicons/core-free-icons";
+import {
+	HutIcon,
+	MeetingRoomIcon,
+	SlideshareIcon,
+} from "@hugeicons/core-free-icons";
 import type { IconSvgElement } from "@hugeicons/react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -77,7 +81,9 @@ export function Step1() {
 				<legend className="text-lg pb-12">{t("what_are_you_renting")}</legend>
 				<ul className="grid grid-rows-3 gap-2 min-h-40 w-full max-w-4xl mx-auto min-w-[300px]">
 					{RENT_TYPES.map(({ id, label, value, icon, description }) => {
-						const field = register("rentType", { required: "Rent type is required" });
+						const field = register("rentType", {
+							required: "Rent type is required",
+						});
 						return (
 							<RadioBox<"rentType">
 								description={description}
@@ -93,7 +99,9 @@ export function Step1() {
 			</fieldset>
 			<footer className="flex flex-col gap-1">
 				{errors.rentType && (
-					<p className="text-error text-sm p-4 rounded-xl bg-error/10">{errors.rentType.message}</p>
+					<p className="text-error text-sm p-4 rounded-xl bg-error/10">
+						{errors.rentType.message}
+					</p>
 				)}
 				<FormFooterButtons />
 			</footer>

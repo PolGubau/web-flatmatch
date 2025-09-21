@@ -1,6 +1,10 @@
 import type { Session } from "@supabase/supabase-js";
 import { createContext, type PropsWithChildren, useContext } from "react";
-import { type SignInParams, type SignInResponse, signInUser } from "~/shared/auth/sign-in";
+import {
+	type SignInParams,
+	type SignInResponse,
+	signInUser,
+} from "~/shared/auth/sign-in";
 import { type SignOutResponse, signOutSession } from "~/shared/auth/sign-out";
 import { useSession } from "~/shared/context/session-context";
 import { type SignUpResponse, signUpNewUser } from "../../shared/auth/sign-up";
@@ -14,9 +18,12 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType>({
 	session: null,
-	signIn: () => Promise.resolve({ error: new Error("Not implemented"), success: false }),
-	signOut: () => Promise.resolve({ error: new Error("Not implemented"), success: false }),
-	signUp: () => Promise.resolve({ error: new Error("Not implemented"), success: false }),
+	signIn: () =>
+		Promise.resolve({ error: new Error("Not implemented"), success: false }),
+	signOut: () =>
+		Promise.resolve({ error: new Error("Not implemented"), success: false }),
+	signUp: () =>
+		Promise.resolve({ error: new Error("Not implemented"), success: false }),
 });
 
 type AuthContextProviderProps = PropsWithChildren;

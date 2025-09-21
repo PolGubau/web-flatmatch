@@ -1,6 +1,10 @@
 "use client";
 
-import { ArrowDown01Icon, ArrowUp01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
+import {
+	ArrowDown01Icon,
+	ArrowUp01Icon,
+	Tick02Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { t } from "i18next";
@@ -10,14 +14,22 @@ import type { Breakpoints } from "~/shared/types/common";
 import { cn } from "~/shared/utils/utils";
 import { inputTheme } from "./input/theme";
 
-export type SelectProps = Omit<React.ComponentProps<typeof SelectPrimitive.Root>, "children"> & {
+export type SelectProps = Omit<
+	React.ComponentProps<typeof SelectPrimitive.Root>,
+	"children"
+> & {
 	id?: string;
 	label?: string;
 	placeholder?: TranslationKey;
 	options: { value: string; label: TranslationKey }[];
 };
 
-function Select({ label, placeholder = "select_option", options, ...props }: SelectProps) {
+function Select({
+	label,
+	placeholder = "select_option",
+	options,
+	...props
+}: SelectProps) {
 	return (
 		<div className="flex flex-col gap-1">
 			{label && (
@@ -41,11 +53,15 @@ function Select({ label, placeholder = "select_option", options, ...props }: Sel
 	);
 }
 
-function SelectGroup({ ...props }: React.ComponentProps<typeof SelectPrimitive.Group>) {
+function SelectGroup({
+	...props
+}: React.ComponentProps<typeof SelectPrimitive.Group>) {
 	return <SelectPrimitive.Group data-slot="select-group" {...props} />;
 }
 
-function SelectValue({ ...props }: React.ComponentProps<typeof SelectPrimitive.Value>) {
+function SelectValue({
+	...props
+}: React.ComponentProps<typeof SelectPrimitive.Value>) {
 	return <SelectPrimitive.Value data-slot="select-value" {...props} />;
 }
 
@@ -112,7 +128,10 @@ function SelectContent({
 	);
 }
 
-function SelectLabel({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Label>) {
+function SelectLabel({
+	className,
+	...props
+}: React.ComponentProps<typeof SelectPrimitive.Label>) {
 	return (
 		<SelectPrimitive.Label
 			className={cn("text-foreground px-2 py-1.5 text-xs", className)}
@@ -153,7 +172,10 @@ function SelectSeparator({
 }: React.ComponentProps<typeof SelectPrimitive.Separator>) {
 	return (
 		<SelectPrimitive.Separator
-			className={cn("bg-foreground/70 pointer-events-none -mx-1 my-1 h-px", className)}
+			className={cn(
+				"bg-foreground/70 pointer-events-none -mx-1 my-1 h-px",
+				className,
+			)}
 			data-slot="select-separator"
 			{...props}
 		/>
@@ -166,7 +188,10 @@ function SelectScrollUpButton({
 }: React.ComponentProps<typeof SelectPrimitive.ScrollUpButton>) {
 	return (
 		<SelectPrimitive.ScrollUpButton
-			className={cn("flex cursor-default items-center justify-center py-1", className)}
+			className={cn(
+				"flex cursor-default items-center justify-center py-1",
+				className,
+			)}
 			data-slot="select-scroll-up-button"
 			{...props}
 		>
@@ -181,7 +206,10 @@ function SelectScrollDownButton({
 }: React.ComponentProps<typeof SelectPrimitive.ScrollDownButton>) {
 	return (
 		<SelectPrimitive.ScrollDownButton
-			className={cn("flex cursor-default items-center justify-center py-1", className)}
+			className={cn(
+				"flex cursor-default items-center justify-center py-1",
+				className,
+			)}
 			data-slot="select-scroll-down-button"
 			{...props}
 		>

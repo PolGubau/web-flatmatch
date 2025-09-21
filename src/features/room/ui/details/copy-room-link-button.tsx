@@ -1,4 +1,7 @@
-import { CheckmarkCircle01FreeIcons, ShareIcon } from "@hugeicons/core-free-icons";
+import {
+	CheckmarkCircle01FreeIcons,
+	ShareIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { toast } from "~/shared/components/ui/sonner";
 import { setValueForSecs } from "~/shared/hooks/set-value-for-secs";

@@ -10,7 +10,8 @@ export const useUpdateRoomMutation = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (room: Room) => updateRoomService(room.id, roomToEditableRoom(room)),
+		mutationFn: (room: Room) =>
+			updateRoomService(room.id, roomToEditableRoom(room)),
 		onSuccess: (updatedRoom) => {
 			if (!updatedRoom) return;
 			// Actualiza el cache de la room actualizada
