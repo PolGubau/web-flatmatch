@@ -16,24 +16,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Node.js con cache de pnpm
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: "pnpm"
 
+      # Instala pnpm explícitamente
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
 
+      # Instala dependencias usando pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Setup Biome
       - name: Setup Biome
         uses: biomejs/setup-biome@v2
         with:
           version: latest
 
+      # Run Biome con reporter de GitHub
       - name: Run Biome
         run: pnpm exec biome ci --reporter=github ./src ./app
