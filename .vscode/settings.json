@@ -1,3 +1,8 @@
 {
-	"cSpell.words": ["eazucuralkbhkzrztanc", "favourites", "fedcm"]
+	"cSpell.words": ["eazucuralkbhkzrztanc", "favourites", "fedcm"],
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+		  {
+		    "text": "format:{type}: ({scope}) {emoji}{subject};type in [feat(✨),fix(🐛),docs(📝),style(💄),refactor(♻️),perf(⚡️),test(🧪),ci(💚),chore(🤖),revert(⏪️),release(🔖)];scope=project/module,lowercase,optional;emoji=match type;subject=imperative,lowercase,no '.',no pascal/sentence/start/upper-case,max 72 chars;header max 72 chars;body/footer optional"
+		  }
+		],
 }
