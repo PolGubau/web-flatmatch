@@ -14,7 +14,6 @@ import {
 	OvenIcon,
 	PoolIcon,
 	PulleyIcon,
-	QuestionIcon,
 	RefrigeratorIcon,
 	Shirt01Icon,
 	TemperatureIcon,

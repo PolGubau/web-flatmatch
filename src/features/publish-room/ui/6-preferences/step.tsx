@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useForm } from "react-hook-form";
+import { type FieldPath, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type z from "zod";
@@ -72,7 +72,9 @@ export function PreferencesForm() {
 					<h3>{t("occupation_of_tenant")}</h3>
 					<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
 						{Object.entries(data.preferences.currentOccupation).map(([key, value]) => {
-							const field = register(`preferences.currentOccupation.${key}` as any);
+							const field = register(
+								`preferences.currentOccupation.${key}` as FieldPath<Step6SchemaType>,
+							);
 							const data = occupationMap[key];
 							return (
 								<li className="flex group cursor-pointer" key={key}>

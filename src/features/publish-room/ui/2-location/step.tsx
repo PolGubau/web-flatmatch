@@ -1,19 +1,13 @@
 // ui/Step1.tsx
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { IconSvgElement } from "@hugeicons/react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { MapWithMarker } from "~/shared/components/map";
-import { AutoComplete } from "~/shared/components/ui/autocomplete";
-import type { TranslationKey } from "~/shared/i18n/i18n";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
-import bcn from "./assets/bcn.svg";
-import rome from "./assets/rome.svg";
 import { StreetAutocomplete } from "./street-autocomplete";
 
 const Step2Schema = EditableRoomSchema.pick({

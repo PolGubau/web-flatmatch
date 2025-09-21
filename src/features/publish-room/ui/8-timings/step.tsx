@@ -15,7 +15,7 @@ export const Step8Schema = EditableRoomSchema.pick({
 });
 export type Step8SchemaType = z.infer<typeof Step8Schema>;
 export function TimingsForm() {
-	const navigate = useNavigate();
+	const _navigate = useNavigate();
 	const { data, setData } = useFormState();
 
 	const {

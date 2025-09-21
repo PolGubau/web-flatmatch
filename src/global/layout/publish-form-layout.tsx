@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router";
+import { Outlet } from "react-router";
 import { GoHomeButton } from "~/shared/components/go-home-button";
 
 // const steps = [

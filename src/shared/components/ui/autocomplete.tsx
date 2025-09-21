@@ -5,7 +5,6 @@ import { type HTMLAttributes, useMemo, useState } from "react";
 import type { TranslationKey } from "~/shared/i18n/i18n";
 import { cn } from "~/shared/utils/utils";
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "./command";
-import { Input } from "./input/input";
 import { inputTheme } from "./input/theme";
 import { Popover, PopoverAnchor, PopoverContent } from "./popover";
 import { Skeleton } from "./skeleton";
@@ -67,6 +66,7 @@ export function AutoComplete<T extends string>({
 				<Command shouldFilter={false}>
 					<PopoverAnchor asChild>
 						<CommandPrimitive.Input
+							{...rest}
 							className={cn(inputTheme, "h-12")}
 							onFocus={() => setOpen(true)}
 							onKeyDown={(e) => setOpen(e.key !== "Escape")}

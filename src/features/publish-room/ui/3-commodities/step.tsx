@@ -11,20 +11,14 @@ import {
 	WindowsNewIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useForm } from "react-hook-form";
+import { type FieldPath, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { commoditiesMap, extrasMap } from "~/shared/base/maps";
 import { Input } from "~/shared/components/ui/input/input";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "~/shared/components/ui/select";
+import { Select } from "~/shared/components/ui/select";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 
@@ -124,7 +118,9 @@ export function CommoditiesForm() {
 					<h3>{t("apartment_appliances")}</h3>
 					<ul className="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4">
 						{Object.entries(data.commodities.whole.appliances).map(([key, value]) => {
-							const field = register(`commodities.whole.appliances.${key}` as any);
+							const field = register(
+								`commodities.whole.appliances.${key}` as FieldPath<Step3SchemaType>,
+							);
 							const data = commoditiesMap[key as keyof typeof commoditiesMap];
 							return (
 								<li className="flex group cursor-pointer" key={key}>
@@ -149,7 +145,9 @@ export function CommoditiesForm() {
 					<h3>{t("extra_spaces")}</h3>
 					<ul className="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4">
 						{Object.entries(data.commodities.whole.extras).map(([key, value]) => {
-							const field = register(`commodities.whole.extras.${key}` as any);
+							const field = register(
+								`commodities.whole.extras.${key}` as FieldPath<Step3SchemaType>,
+							);
 							const data = extrasMap[key as keyof typeof extrasMap];
 							return (
 								<li className="flex group cursor-pointer" key={key}>

@@ -39,7 +39,7 @@ export const getAllRooms: FindAll<RoomWithMetadata> = async () => {
  * Devuelve una room por id con verificación
  */
 export const getOneRoom: FindById<RoomWithMetadata> = async (id) => {
-	const userId = await getUserId();
+	const _userId = await getUserId();
 
 	const { data, error } = await supabase
 		.from("rooms_with_metadata")

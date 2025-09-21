@@ -1,4 +1,4 @@
-import { ArrowUpRight03Icon, FavouriteIcon } from "@hugeicons/core-free-icons";
+import { ArrowUpRight03Icon, } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "react-router";
 import type { Room } from "~/entities/room/room";

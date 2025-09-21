@@ -44,6 +44,9 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
+			"correctness": {
+				"noUnknownPseudoElement": "off"
+			},
 			"recommended": true
 		}
 	},
