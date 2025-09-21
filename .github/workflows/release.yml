@@ -12,27 +12,30 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          fetch-depth: 0
+          version: 10
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
  
       - name: Git config
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
- 
-      - name: Set node
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          registry-url: "https://registry.npmjs.org"
- 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          run_install: |
-            - args: [--frozen-lockfile]
  
       - name: Release
         run: npx release-it --verbose
