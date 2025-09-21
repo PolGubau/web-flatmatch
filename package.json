@@ -74,6 +74,7 @@
 		"zod": "^4.0.14"
 	},
 	"name": "flatmatch-web",
+	"version": "0.0.0",
 	"private": true,
 	"scripts": {
 		"api:pull:edge": "npx supabase functions serve",
