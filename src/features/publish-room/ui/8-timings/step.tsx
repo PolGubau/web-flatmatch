@@ -20,7 +20,7 @@ export const Step8Schema = EditableRoomSchema.pick({
 });
 export type Step8SchemaType = z.infer<typeof Step8Schema>;
 export function TimingsForm() {
-	const _navigate = useNavigate();
+	const navigate = useNavigate();
 	const { data, setData } = useFormState();
 
 	const {
@@ -42,7 +42,7 @@ export function TimingsForm() {
 			onSubmit={handleSubmit(
 				(values) => {
 					setData(values);
-					// navigate("/publish/location", { replace: true });
+					navigate("/publish/preview", { replace: true });
 				},
 				(errors) => {
 					console.error(errors);

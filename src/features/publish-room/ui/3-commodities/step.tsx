@@ -217,7 +217,7 @@ export function CommoditiesForm() {
 
 							<Select
 								{...register("commodities.room.bedType")}
-								label={t("bed_type")}
+								label={"bed_type"}
 								options={[
 									{ label: "single", value: "single" },
 									{ label: "double", value: "double" },
