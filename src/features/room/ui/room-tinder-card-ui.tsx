@@ -3,8 +3,10 @@ import type { RoomWithMetadata } from "~/entities/room/room";
 import { VerifiedChip } from "~/shared/components/ui/verified/chip";
 import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 
-export function RoomTinderCardUI({ room }: { room: RoomWithMetadata }) {
-	const { cover, gallery } = room.images;
+
+type RoomTinderUIProps = Pick<RoomWithMetadata, "title" | "description" | "images" | "price" | "verification">;
+export function RoomTinderCardUI({ title, description, images, price, verification }: RoomTinderUIProps) {
+	const { cover, gallery } = images;
 	const restImages = gallery.filter((path) => path !== cover);
 
 	const sortedImages = [cover, ...restImages];
@@ -36,20 +38,20 @@ export function RoomTinderCardUI({ room }: { room: RoomWithMetadata }) {
 			</nav>
 
 			<header className="absolute bottom-0 left-0 p-4 pb-6 flex flex-col gap-2 z-20 pointer-events-none">
-				{!!room.verification.verifiedAt && <VerifiedChip />}
+				{!!verification.verifiedAt && <VerifiedChip />}
 
 				<h2 className="text-canvas text-2xl text-pretty line-clamp-2">
-					{room.title}{" "}
+					{title} 
 				</h2>
 
-				{room.price.amount && (
+				{price.amount && (
 					<p className="text-canvas/60 text-sm">
-						{currencyFormat(room.price.amount, room.price.currency)}
+						{currencyFormat(price.amount, price.currency)}
 					</p>
 				)}
 
 				<p className="text-sm text-canvas/70 line-clamp-2">
-					{room.description}
+					{description}
 				</p>
 			</header>
 
@@ -68,7 +70,7 @@ export function RoomTinderCardUI({ room }: { room: RoomWithMetadata }) {
 				/>
 
 				<img
-					alt={room.title}
+					alt={title}
 					className="object-cover h-full object-bottom w-full pointer-events-none"
 					src={sortedImages[currentImageIdx]}
 				/>

@@ -119,8 +119,8 @@ export const TimingsSchema = z.object({
 		.optional(),
 	minimumStay: z
 		.object({
-			unit: StayUnitSchema,
-			value: z.number(),
+			unit: StayUnitSchema.optional(),
+			value: z.number().optional(),
 		})
 		.optional(),
 });

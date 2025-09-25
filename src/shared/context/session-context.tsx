@@ -49,7 +49,9 @@ export const SessionProvider = ({ children }: Props) => {
 	return (
 		<SessionContext.Provider value={{ session }}>
 			{isLoading ? (
-				<LoadingSection label={TranslationKeys.loading_user} />
+				<div className="flex h-screen w-full items-center justify-center">
+					<LoadingSection label={TranslationKeys.loading_user} />
+				</div>
 			) : (
 				children
 			)}

@@ -20,6 +20,7 @@ import { Button } from "~/shared/components/ui/button";
 import { useSession } from "~/shared/context/session-context";
 import { useUpdateRoomInteraction } from "../../model/mutations/update-room-interaction";
 import { RoomDistanceFromYou } from "./room-distance-from-you";
+import { getRoomPath } from "~/shared/utils/path/get-room-path";
 
 type Props = {
 	room: RoomWithMetadata;
@@ -74,7 +75,6 @@ export default function RoomDetails({ room }: Props) {
 										{room.price.localePrice}
 									</span>
 									<span className="text-sm">
-										{" "}
 										/ {room.price.paymentFrequency}
 									</span>
 								</p>
@@ -94,7 +94,6 @@ export default function RoomDetails({ room }: Props) {
 								<CopyRoomLinkButton />
 
 								<Button
-									className=""
 									onClick={handleFavouriteClick}
 									size={"icon"}
 									type="button"
@@ -113,6 +112,10 @@ export default function RoomDetails({ room }: Props) {
 
 						<ContactButtons
 							email={room.contact.agent?.email ?? room.contact.owner?.email}
+							infoMessage={t("contact_message", {
+								name: room.title,
+								url: getRoomPath(room.id)
+							})}
 							phone={room.contact.agent?.phone ?? room.contact.owner?.phone}
 						/>
 					</header>

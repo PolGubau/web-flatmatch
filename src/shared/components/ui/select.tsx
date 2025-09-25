@@ -13,6 +13,8 @@ import type { TranslationKey } from "~/shared/i18n/i18n";
 import type { Breakpoints } from "~/shared/types/common";
 import { cn } from "~/shared/utils/utils";
 import { inputTheme } from "./input/theme";
+import { Controller, type Control, type FieldValues } from "react-hook-form";
+export type Option = { value: string; label: TranslationKey }
 
 export type SelectProps = Omit<
 	React.ComponentProps<typeof SelectPrimitive.Root>,
@@ -21,7 +23,8 @@ export type SelectProps = Omit<
 	id?: string;
 	label?: TranslationKey;
 	placeholder?: TranslationKey;
-	options: { value: string; label: TranslationKey }[];
+	onChange?: (value: string) => void;
+	options: Option[];
 };
 
 function Select({
@@ -37,7 +40,7 @@ function Select({
 					<span className="text-sm">{t(label)}</span>
 				</label>
 			)}
-			<SelectPrimitive.Root data-slot="select" {...props}>
+			<SelectPrimitive.Root data-slot="select" {...props}  onValueChange={props.onChange}>
 				<SelectTrigger className="">
 					<SelectValue placeholder={t(placeholder)} />
 				</SelectTrigger>
@@ -52,6 +55,50 @@ function Select({
 		</div>
 	);
 }
+
+
+
+interface RHFSelectProps<TFormValues extends FieldValues> {
+	control: Control<TFormValues>
+	name: keyof TFormValues | string // permite paths anidados con string
+	options: Option[]
+	label?: TranslationKey
+	placeholder?: TranslationKey
+	defaultValue?: string
+	onChange?: (value: string) => void
+}
+
+export function RHFSelect<TFormValues extends FieldValues>({
+	control,
+	name,
+	options,
+	label,
+	placeholder,
+	defaultValue = "",
+	onChange: customOnChange,
+}: RHFSelectProps<TFormValues>) {
+	return (
+		<Controller
+			control={control as any}
+			name={name as any}  
+			defaultValue={defaultValue}
+			render={({ field }) => (
+				<Select
+					label={label}
+					options={options}
+					value={field.value}
+					onChange={(value) => {
+						field.onChange(value)     // actualiza RHF
+						customOnChange?.(value)   // callback opcional extra
+					}}
+					placeholder={placeholder}
+				/>
+			)}
+		/>
+	)
+}
+
+
 
 function SelectGroup({
 	...props

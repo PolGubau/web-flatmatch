@@ -18,7 +18,7 @@ import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { commoditiesMap, extrasMap } from "~/shared/base/maps";
 import { Input } from "~/shared/components/ui/input/input";
-import { Select } from "~/shared/components/ui/select";
+import { RHFSelect, Select } from "~/shared/components/ui/select";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 
@@ -31,7 +31,7 @@ export function CommoditiesForm() {
 	const { data, setData } = useFormState();
 
 	const {
-		register,
+		register,control,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<Step3SchemaType>({
@@ -215,9 +215,10 @@ export function CommoditiesForm() {
 								})}
 							/>
 
-							<Select
-								{...register("commodities.room.bedType")}
-								label={"bed_type"}
+							<RHFSelect
+								name="commodities.room.bedType"
+								control={control}
+ 								label={"bed_type"}
 								options={[
 									{ label: "single", value: "single" },
 									{ label: "double", value: "double" },

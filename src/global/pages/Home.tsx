@@ -1,9 +1,7 @@
 import { RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { t } from "i18next";
-import { Sheet } from "react-modal-sheet";
 import { useTinderCards } from "~/features/room/model/use-tinder-cards";
-import { ContactButtons } from "~/features/room/ui/details/footer/contact-buttons";
 import RoomDetails from "~/features/room/ui/details/room-details";
 import { RoomTinderCard } from "~/features/room/ui/room-tinder-card";
 import { LoadingCardsSection } from "~/shared/components/pages/LoadingCardsSection";
@@ -23,7 +21,7 @@ export default function HomePage() {
 	if (isLoading) return <LoadingCardsSection />;
 
 	return (
-		<div className="grid grid-rows-1 grid-cols-1 gap-4 p-4 h-[80vh]">
+		<div className="grid grid-rows-1 grid-cols-1 gap-4 p-4 h-[80vh] mx-auto">
 			<div className="grid place-items-center pt-10">
 				<Drawer
 					className="max-w-7xl mx-auto"

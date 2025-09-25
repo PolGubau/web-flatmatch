@@ -63,7 +63,7 @@ const MainLayout = ({ children }: PropsWithChildren) => {
 				</div>
 			</header>
 
-			<main className="overflow-y-auto overflow-x-visible max-w-7xl mx-auto w-full h-full ">
+			<main className="overflow-y-auto overflow-x-visible mx-auto w-full h-full">
 				{children ?? <Outlet />}
 			</main>
 			<footer

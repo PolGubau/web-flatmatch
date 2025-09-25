@@ -1,4 +1,8 @@
-import { Mail01Icon, TelephoneIcon } from "@hugeicons/core-free-icons";
+import {
+	Mail01Icon,
+	TelephoneIcon,
+	WhatsappIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "react-router";
 import { Button } from "~/shared/components/ui/button";
@@ -6,8 +10,10 @@ import { Button } from "~/shared/components/ui/button";
 type Props = {
 	phone?: string;
 	email?: string;
+	infoMessage?: string;
 };
-export function ContactButtons({ phone, email }: Props) {
+export function ContactButtons({ phone, email, infoMessage = "" }: Props) {
+	const encodedMessage = encodeURIComponent(infoMessage);
 	return (
 		<nav className="flex gap-2 items-center">
 			{phone && (
@@ -18,8 +24,19 @@ export function ContactButtons({ phone, email }: Props) {
 					</Button>
 				</Link>
 			)}
+			{phone && (
+				<Link
+					target="_blank"
+					to={`https://wa.me/${phone}?text=${encodedMessage}`}
+				>
+					<Button size={"sm"} variant={"ghost"}>
+						<HugeiconsIcon icon={WhatsappIcon} size={18} />
+						WhatsApp
+					</Button>
+				</Link>
+			)}
 			{email && (
-				<Link to={`mailto:${email}`}>
+				<Link to={`mailto:${email}?body=${encodedMessage}`}>
 					<Button size={"sm"} variant={"ghost"}>
 						<HugeiconsIcon icon={Mail01Icon} size={18} />
 						Contact

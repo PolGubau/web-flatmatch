@@ -69,7 +69,7 @@ export const RoomTinderCard = ({
 					backgroundColor: colorOverlay,
 				}}
 			/>
-			<RoomTinderCardUI room={room} />
+			<RoomTinderCardUI title={room.title} description={room.description} images={room.images} price={room.price} verification={room.verification} />
 		</motion.div>
 	);
 };
