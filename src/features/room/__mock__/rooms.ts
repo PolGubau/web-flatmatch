@@ -77,7 +77,12 @@ export const mockRooms: Room[] = [
 				student: true,
 				unemployed: false,
 			},
-			gender: { female: true, male: true, other: true },
+			gender: {
+				female: true,
+				male: true,
+				non_binary: true,
+				prefer_not_to_say: true,
+			},
 		},
 		price: {
 			additionalCosts: {
@@ -188,7 +193,12 @@ export const mockRooms: Room[] = [
 				student: true,
 				unemployed: false,
 			},
-			gender: { female: true, male: true, other: false },
+			gender: {
+				female: true,
+				male: true,
+				non_binary: true,
+				prefer_not_to_say: true,
+			},
 		},
 		price: {
 			additionalCosts: {
@@ -301,7 +311,12 @@ export const mockRooms: Room[] = [
 				student: false,
 				unemployed: false,
 			},
-			gender: { female: true, male: true, other: true },
+			gender: {
+				female: true,
+				male: true,
+				non_binary: true,
+				prefer_not_to_say: true,
+			},
 		},
 		price: {
 			additionalCosts: {
@@ -414,7 +429,12 @@ export const mockRooms: Room[] = [
 				student: true,
 				unemployed: false,
 			},
-			gender: { female: true, male: false, other: false },
+			gender: {
+				female: true,
+				male: true,
+				non_binary: false,
+				prefer_not_to_say: false,
+			},
 		},
 		price: {
 			additionalCosts: {

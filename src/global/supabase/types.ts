@@ -371,7 +371,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      Gender: "male" | "prefer_not_to_say" | "female" | "other" | "unknown"
+      Gender: "male" | "female" | "non_binary" | "prefer_not_to_say"
       RentType: "shared-room" | "private-room" | "entire-flat"
       "room-action": "like" | "dislike"
     }
@@ -501,7 +501,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      Gender: ["male", "prefer_not_to_say", "female", "other", "unknown"],
+      Gender: ["male", "female", "non_binary", "prefer_not_to_say"],
       RentType: ["shared-room", "private-room", "entire-flat"],
       "room-action": ["like", "dislike"],
     },

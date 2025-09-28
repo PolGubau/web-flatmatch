@@ -7,6 +7,7 @@ import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { genderMap, occupationMap } from "~/shared/base/maps";
 import { Input } from "~/shared/components/ui/input/input";
+import type { Gender } from "~/shared/types/common";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 
@@ -72,7 +73,7 @@ export function PreferencesForm() {
 
 				<div className="flex flex-col gap-1">
 					<h3>{t("occupation_of_tenant")}</h3>
-					<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
+					<ul className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4">
 						{Object.entries(data.preferences.currentOccupation).map(
 							([key, value]) => {
 								const field = register(
@@ -87,10 +88,12 @@ export function PreferencesForm() {
 											}
 										>
 											<div className="flex gap-2">
-												{data.icon && (
-													<HugeiconsIcon icon={data.icon} size={20} />
+												{data?.icon && (
+													<HugeiconsIcon icon={data?.icon} size={20} />
 												)}{" "}
-												<span className="text-sm">{t(data.label)}</span>
+												<span className="text-sm">
+													{t(data?.label ?? "unknown")}
+												</span>
 											</div>
 											<input
 												className="hidden"
@@ -107,11 +110,12 @@ export function PreferencesForm() {
 				</div>
 				<div className="flex flex-col gap-1">
 					<h3>{t("gender_of_tenant")}</h3>
-					<ul className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4">
+					<ul className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4">
 						{Object.entries(data.preferences.gender).map(([key, value]) => {
+							const gender: Gender = key as Gender;
 							// biome-ignore lint/suspicious/noExplicitAny: Can be needed
 							const field = register(`preferences.gender.${key}` as any);
-							const data = genderMap[key];
+							const data = genderMap[gender];
 							return (
 								<li className="flex group cursor-pointer" key={key}>
 									<label
@@ -120,10 +124,12 @@ export function PreferencesForm() {
 										}
 									>
 										<div className="flex gap-2">
-											{data.icon && (
-												<HugeiconsIcon icon={data.icon} size={20} />
+											{data?.icon && (
+												<HugeiconsIcon icon={data?.icon} size={20} />
 											)}
-											<span className="text-sm">{t(data.label)}</span>
+											<span className="text-sm">
+												{t(data?.label ?? "unknown")}
+											</span>
 										</div>
 										<input
 											className="hidden"

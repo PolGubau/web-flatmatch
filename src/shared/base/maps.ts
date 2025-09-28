@@ -27,6 +27,7 @@ import {
 import type { IconSvgElement } from "@hugeicons/react";
 import type { Room } from "~/entities/room/room";
 import type { TranslationKey } from "../i18n/i18n";
+import type { Gender } from "../types/common";
 
 type MapItem = {
 	label: TranslationKey;
@@ -119,7 +120,6 @@ export const occupationMap: Record<string, MapItem> = {
 		icon: OfficeChairIcon,
 		label: "employed",
 	},
-
 	student: {
 		icon: Backpack01Icon,
 		label: "student",
@@ -130,7 +130,7 @@ export const occupationMap: Record<string, MapItem> = {
 	},
 };
 
-export const genderMap: Record<string, MapItem> = {
+export const genderMap: Record<Gender, MapItem> = {
 	female: {
 		icon: FemaleSymbolIcon,
 		label: "female",
@@ -139,9 +139,13 @@ export const genderMap: Record<string, MapItem> = {
 		icon: MaleSymbolIcon,
 		label: "male",
 	},
-	other: {
+	non_binary: {
 		icon: User02Icon,
 		label: "non_binary",
+	},
+	prefer_not_to_say: {
+		icon: User02Icon,
+		label: "prefer_not_to_say",
 	},
 };
 

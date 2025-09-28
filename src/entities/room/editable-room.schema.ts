@@ -168,6 +168,7 @@ export const PreferencesSchema = z.object({
 		female: z.boolean(),
 		male: z.boolean(),
 		non_binary: z.boolean(),
+		prefer_not_to_say: z.boolean(),
 	}),
 });
 export type RoomPreferences = z.infer<typeof PreferencesSchema>;

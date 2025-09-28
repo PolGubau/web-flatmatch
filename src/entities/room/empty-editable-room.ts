@@ -65,18 +65,18 @@ export const emptyEditableRoom: EditableRoom = {
 	preferences: {
 		age: {
 			max: 100,
-			min: 0,
+			min: 18,
 		},
 		currentOccupation: {
 			employed: true,
-			other: true,
 			student: true,
 			unemployed: true,
 		},
 		gender: {
 			female: true,
 			male: true,
-			other: true,
+			non_binary: true,
+			prefer_not_to_say: true,
 		},
 	},
 	price: {
