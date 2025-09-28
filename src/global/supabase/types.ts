@@ -157,7 +157,7 @@ export type Database = {
           owner_id: string
           preferences: Json
           price: Json
-          rent_type: string
+          rent_type: Database["public"]["Enums"]["RentType"]
           rules: Json
           status: string
           timings: Json
@@ -176,7 +176,7 @@ export type Database = {
           owner_id?: string
           preferences: Json
           price: Json
-          rent_type?: string
+          rent_type?: Database["public"]["Enums"]["RentType"]
           rules?: Json
           status?: string
           timings?: Json
@@ -195,7 +195,7 @@ export type Database = {
           owner_id?: string
           preferences?: Json
           price?: Json
-          rent_type?: string
+          rent_type?: Database["public"]["Enums"]["RentType"]
           rules?: Json
           status?: string
           timings?: Json
@@ -329,7 +329,7 @@ export type Database = {
           owner_id: string | null
           preferences: Json | null
           price: Json | null
-          rent_type: string | null
+          rent_type: Database["public"]["Enums"]["RentType"] | null
           rules: Json | null
           status: string | null
           timings: Json | null
@@ -372,6 +372,7 @@ export type Database = {
     }
     Enums: {
       Gender: "male" | "prefer_not_to_say" | "female" | "other" | "unknown"
+      RentType: "shared-room" | "private-room" | "entire-flat"
       "room-action": "like" | "dislike"
     }
     CompositeTypes: {
@@ -501,6 +502,7 @@ export const Constants = {
   public: {
     Enums: {
       Gender: ["male", "prefer_not_to_say", "female", "other", "unknown"],
+      RentType: ["shared-room", "private-room", "entire-flat"],
       "room-action": ["like", "dislike"],
     },
   },
