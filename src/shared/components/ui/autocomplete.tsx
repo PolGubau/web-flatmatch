@@ -1,6 +1,7 @@
+import { TickIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Command as CommandPrimitive } from "cmdk";
 import { t } from "i18next";
-import { Check } from "lucide-react";
 import { type HTMLAttributes, useMemo, useState } from "react";
 import type { TranslationKey } from "~/shared/i18n/i18n";
 import { cn } from "~/shared/utils/utils";
@@ -118,13 +119,15 @@ export function AutoComplete<T extends string>({
 											onSelect={onSelectItem}
 											value={option.value}
 										>
-											<Check
+											<HugeiconsIcon
 												className={cn(
 													"mr-2 h-4 w-4",
 													selectedValue === option.value
 														? "opacity-100"
 														: "opacity-0",
 												)}
+												icon={TickIcon}
+												size={16}
 											/>
 											{option.label}
 										</CommandItem>

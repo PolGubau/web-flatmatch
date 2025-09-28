@@ -38,7 +38,7 @@ export function CompanyForm() {
 				},
 			)}
 		>
-			<fieldset className="flex flex-col gap-6 overflow-y-auto">
+			<fieldset className="flex flex-col gap-6 p-1 overflow-y-auto">
 				<legend className="text-lg pb-10">{t("who_is_living")}</legend>
 
 				<section className="flex flex-col gap-4">

@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { EuroIcon } from "@hugeicons/core-free-icons";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
@@ -13,6 +14,7 @@ import { GalleryForm } from "./gallery-form";
 export const Step5Schema = EditableRoomSchema.pick({
 	description: true,
 	images: true,
+	price: true,
 	title: true,
 });
 export type Step5SchemaType = z.infer<typeof Step5Schema>;
@@ -48,7 +50,7 @@ export function MetadataForm() {
 				},
 			)}
 		>
-			<fieldset className="flex flex-col gap-6 overflow-y-auto">
+			<fieldset className="flex flex-col gap-6 p-1 overflow-y-auto">
 				<legend className="text-lg pb-10">{t("add_metadata")}</legend>
 
 				<Input
@@ -71,6 +73,26 @@ export function MetadataForm() {
 						required: true,
 					})}
 				/>
+
+				<section>
+					<h2>{t("price")}</h2>
+					<div>
+						<Input
+							icon={EuroIcon}
+							label="price_monthly"
+							minLength={1}
+							placeholder={t("add_price")}
+							required
+							type="number"
+							{...register("price.amount", {
+								min: 1,
+								required: true,
+								valueAsNumber: true,
+							})}
+						/>
+						<p></p>
+					</div>
+				</section>
 
 				<GalleryForm
 					images={images}

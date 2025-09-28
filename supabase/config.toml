@@ -9,3 +9,12 @@ additional_redirect_urls = [
 enabled = true
 client_id = "env(VITE_GOOGLE_ID)"
 secret = "env(SUPABASE_AUTH_GOOGLE_CLIENT_SECRET)"
+
+[db]
+port = 15432
+
+[studio]
+port = 15433
+
+[api]
+port = 15434

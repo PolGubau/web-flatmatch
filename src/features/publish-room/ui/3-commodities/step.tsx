@@ -31,7 +31,8 @@ export function CommoditiesForm() {
 	const { data, setData } = useFormState();
 
 	const {
-		register,control,
+		register,
+		control,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<Step3SchemaType>({
@@ -53,7 +54,7 @@ export function CommoditiesForm() {
 				},
 			)}
 		>
-			<fieldset className="grid gap-6 overflow-y-auto">
+			<fieldset className="flex flex-col gap-6 p-1 overflow-y-auto">
 				<legend className="text-lg pb-6">{t("select_commodities")}</legend>
 				<header className="grid gap-4 items-center grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
 					<Input
@@ -216,9 +217,9 @@ export function CommoditiesForm() {
 							/>
 
 							<RHFSelect
-								name="commodities.room.bedType"
 								control={control}
- 								label={"bed_type"}
+								label={"bed_type"}
+								name="commodities.room.bedType"
 								options={[
 									{ label: "single", value: "single" },
 									{ label: "double", value: "double" },

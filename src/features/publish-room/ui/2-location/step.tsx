@@ -44,7 +44,7 @@ export function LocationForm() {
 				navigate("/publish/commodities", { replace: true });
 			})}
 		>
-			<fieldset className="flex flex-col gap-6">
+			<fieldset className="flex flex-col gap-6 p-1 overflow-y-auto">
 				<legend className="text-lg pb-10">
 					{t("where_is_your_room_located")}
 				</legend>

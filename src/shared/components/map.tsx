@@ -61,10 +61,8 @@ export function MapWithMarker({
 				zoomControl={interactive}
 			>
 				<TileLayer
-					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://stadiamaps.com/">Stadia Maps</a>'
-					url="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png"
-					// url="https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.png"
-					// url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'
+					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
 				<Marker position={[lat, lon]}>
 					<Popup>

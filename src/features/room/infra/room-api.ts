@@ -90,8 +90,6 @@ export const getManyRooms: FindMany<RoomWithMetadata> = async (ids) => {
 export const createRoom: Create<RoomWithMetadata, EditableRoom> = async (
 	editableRoom,
 ) => {
-	// 1. obtener user loggeado
-
 	const userId = await getUserId();
 
 	const allImages = editableRoom.images.gallery;

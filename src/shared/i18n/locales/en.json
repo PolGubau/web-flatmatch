@@ -1,5 +1,6 @@
 {
 	"add_metadata": "Add Metadata",
+	"add_price": "Add Price",
 	"address": "Address",
 	"address_is_required": "Address is required",
 	"age_preference": "Age Preference",
@@ -86,6 +87,7 @@
 	"minimum_stay": "Minimum Stay",
 	"month": "month",
 	"months": "months",
+	"no_maximum": "No maximum",
 	"non_binary": "Non-binary",
 	"none": "None",
 	"not_verified": "Not Verified",
@@ -100,9 +102,12 @@
 	"pool": "Pool",
 	"postal_code": "Postal Code",
 	"prefer_not_to_say": "Prefer not to say",
+	"price": "Price",
+	"price_monthly": "Price (monthly)",
 	"private": "Private",
 	"profile": "Profile",
 	"publish_place": "Publish Place",
+	"publish_room": "Publish my room",
 	"refrigerator": "Refrigerator",
 	"registered": "Registered",
 	"reload": "Reload",
@@ -163,5 +168,6 @@
 	"year": "year",
 	"years": "years",
 	"your_gender": "Your Gender",
-	"your_occupation": "Your Occupation"
+	"your_occupation": "Your Occupation",
+	"your_room_ready": "Your room is ready 🎉"
 }

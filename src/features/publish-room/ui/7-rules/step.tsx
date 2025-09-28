@@ -85,7 +85,7 @@ export function RulesForm() {
 						{JSON.stringify(errors)}
 					</p>
 				)}
-				<FormFooterButtons backHref={"/publish/company"} />
+				<FormFooterButtons backHref={"/publish/preferences"} />
 			</footer>
 		</form>
 	);

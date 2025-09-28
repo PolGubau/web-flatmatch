@@ -77,7 +77,7 @@ export function Step1() {
 				},
 			)}
 		>
-			<fieldset>
+			<fieldset className="flex flex-col gap-6 p-1 overflow-y-auto">
 				<legend className="text-lg pb-12">{t("what_are_you_renting")}</legend>
 				<ul className="grid grid-rows-3 gap-2 min-h-40 w-full max-w-4xl mx-auto min-w-[300px]">
 					{RENT_TYPES.map(({ id, label, value, icon, description }) => {

@@ -24,7 +24,8 @@ export function TimingsForm() {
 	const { data, setData } = useFormState();
 
 	const {
-		register,control,
+		register,
+		control,
 		handleSubmit,
 		watch,
 		formState: { errors },
@@ -79,69 +80,66 @@ export function TimingsForm() {
 							})}
 						/>
 						<RHFSelect
-  control={control}
-  name="timings.minimumStay.unit"
-  label="unit"
-  placeholder="select_option"
-  options={stayUnits.map((u) => ({ label: u, value: u }))}
-  defaultValue={data.timings.minimumStay?.unit}
-/>
-					
+							control={control}
+							defaultValue={data.timings.minimumStay?.unit}
+							label="unit"
+							name="timings.minimumStay.unit"
+							options={stayUnits.map((u) => ({ label: u, value: u }))}
+							placeholder="select_option"
+						/>
 					</div>
 					<div className="grid md:grid-cols-2 gap-4 mt-4 items-end">
 						<Input
 							defaultValue={data.timings.maximumStay?.value}
 							label="maximum_stay"
+							placeholder={t("no_maximum")}
 							type="number"
 							{...register("timings.maximumStay.value", {
 								valueAsNumber: true,
 							})}
 						/>
 						<RHFSelect
-							name="timings.maximumStay.unit"
 							control={control}
 							defaultValue={data.timings.maximumStay?.unit ?? "month"}
 							label="unit"
- 							options={stayUnits.map((unit) => ({
+							name="timings.maximumStay.unit"
+							options={stayUnits.map((unit) => ({
 								label: unit,
 								value: unit,
 							}))}
 						/>
-
-  					
 					</div>
 				</section>
 
 				<div className="flex flex-col mt-4 gap-2">
-
 					{minStay?.value && (
 						<p className="flex items-center gap-2 p-2 h-12 px-4 bg-info/10 rounded-xl w-fit">
-								<HugeiconsIcon icon={InformationCircleIcon} size={20} />
-								{t("tenant_must_stay_more_x_y", {
-									count: minStay.value,
-									unit: minStay.unit,
-								})}
-							</p>
-				)}
-					{maxStay?.value && maxStay?.unit && (
-							<p className="flex items-center gap-2 p-2 h-12 px-4 bg-info/10 rounded-xl w-fit">
 							<HugeiconsIcon icon={InformationCircleIcon} size={20} />
-								{t("tenant_must_stay_less_x_y", {
-									count: maxStay.value,
-									unit: maxStay.unit,
-								})}
-							</p>
-						)}
-								</div>
+							{t("tenant_must_stay_more_x_y", {
+								count: minStay.value,
+								unit: minStay.unit,
+							})}
+						</p>
+					)}
+					{maxStay?.value && maxStay?.unit && (
+						<p className="flex items-center gap-2 p-2 h-12 px-4 bg-info/10 rounded-xl w-fit">
+							<HugeiconsIcon icon={InformationCircleIcon} size={20} />
+							{t("tenant_must_stay_less_x_y", {
+								count: maxStay.value,
+								unit: maxStay.unit,
+							})}
+						</p>
+					)}
+				</div>
 			</fieldset>
 
 			<footer className="flex flex-col gap-1">
 				{errors.timings && (
 					<pre className="text-error text-sm p-4 rounded-xl bg-error/10 overflow-auto max-h-40">
-						{JSON.stringify(errors, null, 2)}
+						{JSON.stringify(errors?.timings?.message, null, 2)}
 					</pre>
 				)}
-				<FormFooterButtons backHref={"/publish/company"} />
+				<FormFooterButtons backHref={"/publish/rules"} />
 			</footer>
 		</form>
 	);
