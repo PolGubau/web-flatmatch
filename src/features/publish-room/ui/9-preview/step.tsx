@@ -9,7 +9,12 @@ import { usePublishRoom } from "../../model/publish-room";
 import { useFormState } from "../../model/useFormState";
 
 const getUrlFromFile = (file: File) => {
-	return URL.createObjectURL(file);
+	try {
+		return URL.createObjectURL(file);
+	} catch (error) {
+		console.error("Error creating URL from file:", error);
+		return "";
+	}
 };
 
 const getCover = (galley: (string | File)[], coverIndex: number) => {

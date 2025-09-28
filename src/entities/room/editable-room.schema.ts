@@ -1,7 +1,10 @@
 import { z } from "zod";
 
-export const RentTypeSchema = z.enum(["room", "shared", "entire"]);
-export type RentType = z.infer<typeof RentTypeSchema>;
+export const RentTypeSchema = z.enum([
+	"private-room",
+	"shared-room",
+	"entire-flat",
+]);
 export const PaymentFrequencySchema = z.enum(["monthly", "weekly", "daily"]);
 export const stayUnits = ["day", "week", "month", "year"] as const;
 export const StayUnitSchema = z.enum(stayUnits);
@@ -158,14 +161,13 @@ export const PreferencesSchema = z.object({
 	}),
 	currentOccupation: z.object({
 		employed: z.boolean(),
-		other: z.boolean(),
 		student: z.boolean(),
 		unemployed: z.boolean(),
 	}),
 	gender: z.object({
 		female: z.boolean(),
 		male: z.boolean(),
-		other: z.boolean(),
+		non_binary: z.boolean(),
 	}),
 });
 export type RoomPreferences = z.infer<typeof PreferencesSchema>;

@@ -119,10 +119,7 @@ export const occupationMap: Record<string, MapItem> = {
 		icon: OfficeChairIcon,
 		label: "employed",
 	},
-	other: {
-		icon: HelpSquareIcon,
-		label: "other",
-	},
+
 	student: {
 		icon: Backpack01Icon,
 		label: "student",

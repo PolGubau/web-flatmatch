@@ -74,7 +74,6 @@ export const mockRooms: Room[] = [
 			age: { max: 35, min: 20 },
 			currentOccupation: {
 				employed: true,
-				other: false,
 				student: true,
 				unemployed: false,
 			},
@@ -93,7 +92,7 @@ export const mockRooms: Room[] = [
 			localePrice: "480 €",
 			paymentFrequency: "monthly",
 		},
-		rentType: "shared",
+		rentType: "private-room",
 		rules: {
 			childrenAllowed: false,
 			coupleAllowed: false,
@@ -186,7 +185,6 @@ export const mockRooms: Room[] = [
 			age: { max: 30, min: 22 },
 			currentOccupation: {
 				employed: true,
-				other: false,
 				student: true,
 				unemployed: false,
 			},
@@ -205,7 +203,7 @@ export const mockRooms: Room[] = [
 			localePrice: "600 €",
 			paymentFrequency: "monthly",
 		},
-		rentType: "shared",
+		rentType: "private-room",
 		rules: {
 			childrenAllowed: false,
 			coupleAllowed: false,
@@ -300,7 +298,6 @@ export const mockRooms: Room[] = [
 			age: { max: 40, min: 25 },
 			currentOccupation: {
 				employed: true,
-				other: false,
 				student: false,
 				unemployed: false,
 			},
@@ -319,7 +316,7 @@ export const mockRooms: Room[] = [
 			localePrice: "700 €",
 			paymentFrequency: "monthly",
 		},
-		rentType: "shared",
+		rentType: "private-room",
 		rules: {
 			childrenAllowed: false,
 			coupleAllowed: true,
@@ -414,7 +411,6 @@ export const mockRooms: Room[] = [
 			age: { max: 28, min: 18 },
 			currentOccupation: {
 				employed: false,
-				other: false,
 				student: true,
 				unemployed: false,
 			},
@@ -433,7 +429,7 @@ export const mockRooms: Room[] = [
 			localePrice: "350 €",
 			paymentFrequency: "monthly",
 		},
-		rentType: "shared",
+		rentType: "private-room",
 		rules: {
 			childrenAllowed: false,
 			coupleAllowed: false,

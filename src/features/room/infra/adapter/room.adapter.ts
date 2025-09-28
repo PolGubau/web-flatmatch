@@ -1,6 +1,5 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
 import type {
-	RentType,
 	RoomCommodities,
 	RoomContact,
 	RoomEditableImages,
@@ -19,6 +18,7 @@ import type {
 	Verification,
 } from "~/entities/room/room";
 import type { RoomDB, RoomWithMetadataDB } from "../room-api";
+import type { RentType } from "~/shared/types/common";
 /**
  * Adaptador desde la view de Supabase
  */
@@ -105,7 +105,7 @@ export const roomBDtoDomainAndMetadata = (
 		owner_id: row.owner_id ?? "",
 		preferences: row.preferences,
 		price: row.price,
-		rent_type: row.rent_type ?? "room",
+		rent_type: row.rent_type ?? "private-room",
 		rules: row.rules,
 		status: row.status ?? "available",
 		timings: row.timings,

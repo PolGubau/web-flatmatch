@@ -11,14 +11,14 @@ import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import type { TranslationKey } from "~/shared/i18n/i18n";
+import type { RentType } from "~/shared/types/common";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 import { RadioBox } from "../shared/radiobox";
 
 type RentTypeSelector = {
-	id: string;
 	label: TranslationKey;
-	value: string;
+	value: RentType;
 	icon: IconSvgElement;
 	description: string;
 };
@@ -27,23 +27,20 @@ const RENT_TYPES: RentTypeSelector[] = [
 	{
 		description: "A private room for one or more guests",
 		icon: MeetingRoomIcon,
-		id: "room",
-		label: "room",
-		value: "room",
+		label: "private_room",
+		value: "private-room",
 	},
 	{
 		description: "A shared room in a flat with more people",
 		icon: SlideshareIcon,
-		id: "shared",
-		label: "shared",
-		value: "shared",
+		label: "shared_room",
+		value: "shared-room",
 	},
 	{
 		description: "An entire apartment for one or more guests",
 		icon: HutIcon,
-		id: "apartment",
-		label: "entire_space",
-		value: "entire",
+		label: "entire_flat",
+		value: "entire-flat",
 	},
 ];
 const Step1Schema = EditableRoomSchema.pick({
@@ -80,7 +77,7 @@ export function Step1() {
 			<fieldset className="flex flex-col gap-6 p-1 overflow-y-auto">
 				<legend className="text-lg pb-12">{t("what_are_you_renting")}</legend>
 				<ul className="grid grid-rows-3 gap-2 min-h-40 w-full max-w-4xl mx-auto min-w-[300px]">
-					{RENT_TYPES.map(({ id, label, value, icon, description }) => {
+					{RENT_TYPES.map(({ label, value, icon, description }) => {
 						const field = register("rentType", {
 							required: "Rent type is required",
 						});
@@ -89,7 +86,7 @@ export function Step1() {
 								description={description}
 								field={field}
 								icon={icon}
-								key={id}
+								key={value}
 								label={label}
 								value={value}
 							/>

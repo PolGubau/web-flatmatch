@@ -18,9 +18,11 @@ import { RoomDetailsImage } from "./image";
 import "./room-details.css";
 import { Button } from "~/shared/components/ui/button";
 import { useSession } from "~/shared/context/session-context";
+import type { TranslationKey } from "~/shared/i18n/i18n";
+import type { RentType } from "~/shared/types/common";
+import { getRoomPath } from "~/shared/utils/path/get-room-path";
 import { useUpdateRoomInteraction } from "../../model/mutations/update-room-interaction";
 import { RoomDistanceFromYou } from "./room-distance-from-you";
-import { getRoomPath } from "~/shared/utils/path/get-room-path";
 
 type Props = {
 	room: RoomWithMetadata;
@@ -52,6 +54,18 @@ export default function RoomDetails({ room }: Props) {
 			likeRoom.mutate({ action: "like", roomId: room.id });
 		}
 	};
+	const getRentTypeLabel = (rentType: RentType): TranslationKey => {
+		switch (rentType) {
+			case "private-room":
+				return "private_room";
+			case "shared-room":
+				return "shared_room";
+			case "entire-flat":
+				return "entire_flat";
+			default:
+				return "private_room";
+		}
+	};
 
 	// Gallery with the main first
 	const sortedImages = [cover, ...allImages.filter((path) => path !== cover)];
@@ -81,7 +95,9 @@ export default function RoomDetails({ room }: Props) {
 
 								<ul className="flex items-center gap-4">
 									<li>
-										<span className="text-xs">{t(room.rentType)}</span>
+										<span className="text-xs">
+											{getRentTypeLabel(room.rentType)}
+										</span>
 									</li>
 									<li>
 										<span className="text-xs">
@@ -114,7 +130,7 @@ export default function RoomDetails({ room }: Props) {
 							email={room.contact.agent?.email ?? room.contact.owner?.email}
 							infoMessage={t("contact_message", {
 								name: room.title,
-								url: getRoomPath(room.id)
+								url: getRoomPath(room.id),
 							})}
 							phone={room.contact.agent?.phone ?? room.contact.owner?.phone}
 						/>

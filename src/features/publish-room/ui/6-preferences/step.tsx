@@ -50,21 +50,21 @@ export function PreferencesForm() {
 
 					<ul className="grid grid-cols-2 gap-4 max-w-sm">
 						<li>
-							<label htmlFor="min-age">{t("min_age")}</label>
 							<Input
 								defaultValue={data.preferences.age.min}
 								id="min-age"
+								label="min_age"
 								type="number"
-								{...register("preferences.age.min")}
+								{...register("preferences.age.min", { valueAsNumber: true })}
 							/>
 						</li>
 						<li>
-							<label htmlFor="max-age">{t("max_age")}</label>
 							<Input
 								defaultValue={data.preferences.age.max}
 								id="max-age"
+								label="max_age"
 								type="number"
-								{...register("preferences.age.max")}
+								{...register("preferences.age.max", { valueAsNumber: true })}
 							/>
 						</li>
 					</ul>
@@ -122,7 +122,7 @@ export function PreferencesForm() {
 										<div className="flex gap-2">
 											{data.icon && (
 												<HugeiconsIcon icon={data.icon} size={20} />
-											)}{" "}
+											)}
 											<span className="text-sm">{t(data.label)}</span>
 										</div>
 										<input
@@ -142,7 +142,9 @@ export function PreferencesForm() {
 			<footer className="flex flex-col gap-1">
 				{errors.preferences && (
 					<p className="text-error text-sm p-4 rounded-xl bg-error/10">
-						{JSON.stringify(errors)}
+						{JSON.stringify(errors.preferences.age?.max?.message, null, 2)}
+						{JSON.stringify(errors.preferences.age?.min?.message, null, 2)}
+						{JSON.stringify(errors.preferences.gender?.message, null, 2)}
 					</p>
 				)}
 				<FormFooterButtons backHref={"/publish/metadata"} />

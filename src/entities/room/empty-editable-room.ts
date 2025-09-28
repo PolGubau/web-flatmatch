@@ -92,7 +92,7 @@ export const emptyEditableRoom: EditableRoom = {
 		localePrice: "",
 		paymentFrequency: "monthly",
 	},
-	rentType: "room",
+	rentType: "private-room",
 	rules: {
 		childrenAllowed: true,
 		coupleAllowed: true,

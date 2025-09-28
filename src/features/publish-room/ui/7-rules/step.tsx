@@ -82,7 +82,7 @@ export function RulesForm() {
 			<footer className="flex flex-col gap-1">
 				{errors.rules && (
 					<p className="text-error text-sm p-4 rounded-xl bg-error/10">
-						{JSON.stringify(errors)}
+						{JSON.stringify(errors.rules.message, null, 2)}
 					</p>
 				)}
 				<FormFooterButtons backHref={"/publish/preferences"} />
