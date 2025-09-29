@@ -107,13 +107,20 @@ export const createRoom: Create<Room, EditableRoom> = async (editableRoom) => {
 	};
 
 	const payload: InsertRoom = {
+		commodities: editableRoom.commodities,
+		contact: editableRoom.contact,
 		description: editableRoom.description,
 		images: images,
 		location: editableRoom.location,
 		owner_id: userId,
 		preferences: editableRoom.preferences,
 		price: editableRoom.price,
+		rent_type: editableRoom.rentType,
+		rules: editableRoom.rules,
+		timings: editableRoom.timings,
 		title: editableRoom.title,
+		updated_at: new Date().toISOString(),
+		who_is_living: editableRoom.whoIsLiving,
 	};
 	const { data: created, error } = await supabase
 		.from("rooms")

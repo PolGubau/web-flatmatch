@@ -35,6 +35,7 @@ export default function RoomDetails({ room }: Props) {
 	if (!room) {
 		return <p>Room not found</p>;
 	}
+	console.log(room);
 	const cover = room?.images?.cover;
 	const allImages = room?.images?.gallery;
 	const { female, male, other } = room.whoIsLiving?.currentTenants ?? {
@@ -186,9 +187,9 @@ export default function RoomDetails({ room }: Props) {
 					<article className="py-4 border-t border-foreground/10 flex flex-col gap-2">
 						<h3>{t("commodities")}</h3>
 						<ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2 items-center">
-							{Object.keys(room.commodities.whole.appliances).map((key) => {
+							{Object.keys(room?.commodities?.whole?.appliances).map((key) => {
 								const value =
-									room.commodities.whole.appliances[
+									room.commodities?.whole?.appliances[
 										key as keyof typeof room.commodities.whole.appliances
 									];
 								const match =
