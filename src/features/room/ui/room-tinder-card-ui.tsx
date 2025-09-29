@@ -14,7 +14,6 @@ export function RoomTinderCardUI({
 	price,
 	verification,
 }: RoomTinderUIProps) {
-	console.log(images);
 	const { cover, gallery } = images;
 	const restImages = gallery?.filter((path) => path !== cover) || [];
 

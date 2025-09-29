@@ -3,6 +3,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 
 import { initReactI18next } from "react-i18next";
 import en from "./locales/en.json" with { type: "json" };
+import es from "./locales/es.json" with { type: "json" };
 
 export type TranslationKey = keyof typeof resources.en.ns1;
 
@@ -18,7 +19,7 @@ export const resources = {
 		ns1: en,
 	},
 	es: {
-		ns1: en,
+		ns1: es,
 	},
 } as const;
 
