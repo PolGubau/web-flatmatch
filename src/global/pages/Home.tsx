@@ -1,4 +1,9 @@
-import { RefreshIcon } from "@hugeicons/core-free-icons";
+import {
+	ArrowLeft01Icon,
+	ArrowRight01Icon,
+	ArrowUp01Icon,
+	RefreshIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { t } from "i18next";
 import { useTinderCards } from "~/features/room/model/use-tinder-cards";
@@ -21,35 +26,67 @@ export default function HomePage() {
 	if (isLoading) return <LoadingCardsSection />;
 
 	return (
-		<div className="grid grid-rows-1 grid-cols-1 gap-4 p-4 h-[80vh] mx-auto">
-			<div className="grid place-items-center pt-10">
-				<Drawer
-					className="max-w-7xl mx-auto"
-					isOpen={!!bottomDrawerRoom}
-					onClose={handleCloseDrawer}
-				>
-					{bottomDrawerRoom && <RoomDetails room={bottomDrawerRoom} />}
-				</Drawer>
+		<div className="grid grid-rows-1 grid-cols-1 h-[80vh] mx-auto place-items-center">
+			{rooms.length > 0 && (
+				<div className="grid grid-rows-[1fr_auto] place-items-center h-fit gap-8">
+					<Drawer
+						className="max-w-7xl mx-auto"
+						isOpen={!!bottomDrawerRoom}
+						onClose={handleCloseDrawer}
+					>
+						{bottomDrawerRoom && <RoomDetails room={bottomDrawerRoom} />}
+					</Drawer>
 
-				{[...rooms].map((room, index) => (
-					<RoomTinderCard
-						index={index}
-						key={room.id}
-						onSwipe={onSwipe}
-						room={room}
-					/>
-				))}
+					{[...rooms].map((room, index) => (
+						<RoomTinderCard
+							index={index}
+							key={room.id}
+							onSwipe={onSwipe}
+							room={room}
+						/>
+					))}
 
-				{rooms.length === 0 && (
-					<div className="text-center form text-foreground/60 max-w-md items-center">
-						{t("there_are_no_more_rooms")}
-						<Button disabled={isLoading} onClick={refetch}>
-							<HugeiconsIcon icon={RefreshIcon} />
-							{t("reload")}
+					<nav className="flex gap-4 justify-between mx-auto w-[80vw] max-w-[500px]">
+						<Button
+							className="bg-error/10 size-14"
+							disabled={isLoading}
+							onClick={() => onSwipe(rooms[0].id, "left")}
+							size={"icon"}
+							variant={"ghost"}
+						>
+							<HugeiconsIcon icon={ArrowLeft01Icon} size={25} />
 						</Button>
-					</div>
-				)}
-			</div>
+						<Button
+							className="h-14"
+							disabled={isLoading}
+							onClick={() => onSwipe(rooms[0].id, "up")}
+							variant={"ghost"}
+						>
+							<HugeiconsIcon icon={ArrowUp01Icon} />
+							<span className="max-sm:hidden">{t("see_details")}</span>
+						</Button>
+						<Button
+							className="bg-success/10 size-14"
+							disabled={isLoading}
+							onClick={() => onSwipe(rooms[0].id, "right")}
+							size={"icon"}
+							variant={"ghost"}
+						>
+							<HugeiconsIcon icon={ArrowRight01Icon} />
+						</Button>
+					</nav>
+				</div>
+			)}
+
+			{rooms.length === 0 && (
+				<div className="text-center form text-foreground/60 max-w-md items-center">
+					{t("there_are_no_more_rooms")}
+					<Button disabled={isLoading} onClick={refetch}>
+						<HugeiconsIcon icon={RefreshIcon} />
+						{t("reload")}
+					</Button>
+				</div>
+			)}
 		</div>
 	);
 }
