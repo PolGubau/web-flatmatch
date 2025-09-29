@@ -30,7 +30,11 @@ export type RemoveInteractionApi = (
 	id: Room["id"],
 ) => Promise<RemoveInteractionApiResponse>;
 
-type RoomRepository = AbstractRepository<RoomWithMetadata, EditableRoom> & {
+type RoomRepository = Omit<
+	AbstractRepository<RoomWithMetadata, EditableRoom>,
+	"create"
+> & {
+	create: (data: EditableRoom) => Promise<Room>;
 	findFavorites: () => Promise<RoomWithMetadata[]>;
 	interact: InteractApi;
 	removeInteraction: RemoveInteractionApi;

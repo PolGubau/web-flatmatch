@@ -1,5 +1,5 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
-import type { RoomWithMetadata } from "~/entities/room/room";
+import type { Room, RoomWithMetadata } from "~/entities/room/room";
 import { supabase } from "~/global/supabase/client";
 import type {
 	Inserts,
@@ -15,7 +15,7 @@ import type {
 	FindMany,
 	Update,
 } from "~/shared/abstracts/repo";
-import { roomBDtoDomainAndMetadata } from "./adapter/room.adapter";
+import { roomBDtoDomainAndMetadata, roomMapper } from "./adapter/room.adapter";
 import type { InteractApi, RemoveInteractionApi } from "./room-repository";
 
 export type RoomDB = Tables<"rooms">;
@@ -51,7 +51,7 @@ export const getAllRooms: FindAll<RoomWithMetadata> = async () => {
  * Devuelve una room por id con verificación
  */
 export const getOneRoom: FindById<RoomWithMetadata> = async (id) => {
-	const _userId = await getUserId();
+	// const _userId = await getUserId();
 
 	const { data, error } = await supabase
 		.from("rooms_with_metadata")
@@ -87,9 +87,7 @@ export const getManyRooms: FindMany<RoomWithMetadata> = async (ids) => {
 /**
  * Crea una nueva room (sin verificación, solo en `rooms`)
  */
-export const createRoom: Create<RoomWithMetadata, EditableRoom> = async (
-	editableRoom,
-) => {
+export const createRoom: Create<Room, EditableRoom> = async (editableRoom) => {
 	const userId = await getUserId();
 
 	const allImages = editableRoom.images.gallery;
@@ -100,37 +98,32 @@ export const createRoom: Create<RoomWithMetadata, EditableRoom> = async (
 
 	const allUrls = [...existingUrls, ...newUrls];
 
+	const images: Room["images"] = {
+		cover:
+			editableRoom.images.coverIndex !== undefined
+				? allUrls[editableRoom.images.coverIndex]
+				: "",
+		gallery: allUrls,
+	};
+
 	const payload: InsertRoom = {
 		description: editableRoom.description,
-		images: allUrls,
+		images: images,
 		location: editableRoom.location,
 		owner_id: userId,
 		preferences: editableRoom.preferences,
 		price: editableRoom.price,
 		title: editableRoom.title,
 	};
-
 	const { data: created, error } = await supabase
 		.from("rooms")
 		.insert(payload)
-		.select()
+		.select("*")
 		.single();
 
 	if (error) throw error;
 
-	// devolver con verificación incluida
-	const { data: withVerification } = await supabase
-		.from("rooms_with_metadata")
-		.select("*")
-		.eq("room_user_interactions.user_id", userId)
-		.eq("id", created.id)
-		.single();
-
-	if (!withVerification) {
-		throw new Error("Room created but then verification not found");
-	}
-
-	return roomBDtoDomainAndMetadata(withVerification);
+	return roomMapper.toDomain(created);
 };
 
 /**

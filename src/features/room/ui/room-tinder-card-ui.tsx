@@ -3,11 +3,20 @@ import type { RoomWithMetadata } from "~/entities/room/room";
 import { VerifiedChip } from "~/shared/components/ui/verified/chip";
 import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 
-
-type RoomTinderUIProps = Pick<RoomWithMetadata, "title" | "description" | "images" | "price" | "verification">;
-export function RoomTinderCardUI({ title, description, images, price, verification }: RoomTinderUIProps) {
+type RoomTinderUIProps = Pick<
+	RoomWithMetadata,
+	"title" | "description" | "images" | "price" | "verification"
+>;
+export function RoomTinderCardUI({
+	title,
+	description,
+	images,
+	price,
+	verification,
+}: RoomTinderUIProps) {
+	console.log(images);
 	const { cover, gallery } = images;
-	const restImages = gallery.filter((path) => path !== cover);
+	const restImages = gallery?.filter((path) => path !== cover) || [];
 
 	const sortedImages = [cover, ...restImages];
 	const [currentImageIdx, setCurrentImageIndex] = useState(0);
@@ -41,7 +50,7 @@ export function RoomTinderCardUI({ title, description, images, price, verificati
 				{!!verification.verifiedAt && <VerifiedChip />}
 
 				<h2 className="text-canvas text-2xl text-pretty line-clamp-2">
-					{title} 
+					{title}
 				</h2>
 
 				{price.amount && (
@@ -50,9 +59,7 @@ export function RoomTinderCardUI({ title, description, images, price, verificati
 					</p>
 				)}
 
-				<p className="text-sm text-canvas/70 line-clamp-2">
-					{description}
-				</p>
+				<p className="text-sm text-canvas/70 line-clamp-2">{description}</p>
 			</header>
 
 			<div className={`grid h-full relative`}>
