@@ -89,7 +89,6 @@ export const emptyEditableRoom: EditableRoom = {
 		currency: "EUR",
 		isIncluded: false,
 		isNegotiable: false,
-		localePrice: "",
 		paymentFrequency: "monthly",
 	},
 	rentType: "private-room",

@@ -15,6 +15,7 @@ import type {
 	FindMany,
 	Update,
 } from "~/shared/abstracts/repo";
+import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 import { roomBDtoDomainAndMetadata, roomMapper } from "./adapter/room.adapter";
 import type { InteractApi, RemoveInteractionApi } from "./room-repository";
 

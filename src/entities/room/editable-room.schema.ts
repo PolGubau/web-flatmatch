@@ -42,7 +42,6 @@ export const PriceSchema = z.object({
 	currency: z.string(),
 	isIncluded: z.boolean(),
 	isNegotiable: z.boolean(),
-	localePrice: z.string(),
 	paymentFrequency: PaymentFrequencySchema,
 });
 export type RoomPrice = z.infer<typeof PriceSchema>;

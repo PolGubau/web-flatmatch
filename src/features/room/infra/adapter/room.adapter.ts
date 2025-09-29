@@ -17,8 +17,8 @@ import type {
 	RoomWithMetadata,
 	Verification,
 } from "~/entities/room/room";
-import type { RoomDB, RoomWithMetadataDB } from "../room-api";
 import type { RentType } from "~/shared/types/common";
+import type { RoomDB, RoomWithMetadataDB } from "../room-api";
 /**
  * Adaptador desde la view de Supabase
  */

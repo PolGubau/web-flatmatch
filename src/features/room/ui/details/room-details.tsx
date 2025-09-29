@@ -16,10 +16,12 @@ import CopyRoomLinkButton from "./copy-room-link-button";
 import { ContactButtons } from "./footer/contact-buttons";
 import { RoomDetailsImage } from "./image";
 import "./room-details.css";
+import i18n from "i18next";
 import { Button } from "~/shared/components/ui/button";
 import { useSession } from "~/shared/context/session-context";
 import type { TranslationKey } from "~/shared/i18n/i18n";
 import type { RentType } from "~/shared/types/common";
+import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 import { getRoomPath } from "~/shared/utils/path/get-room-path";
 import { useUpdateRoomInteraction } from "../../model/mutations/update-room-interaction";
 import { RoomDistanceFromYou } from "./room-distance-from-you";
@@ -35,7 +37,6 @@ export default function RoomDetails({ room }: Props) {
 	if (!room) {
 		return <p>Room not found</p>;
 	}
-	console.log(room);
 	const cover = room?.images?.cover;
 	const allImages = room?.images?.gallery;
 	const { female, male, other } = room.whoIsLiving?.currentTenants ?? {
@@ -44,7 +45,11 @@ export default function RoomDetails({ room }: Props) {
 		other: 0,
 	};
 	const peopleAmount = female + male + other;
-
+	const formattedPrice = currencyFormat(
+		room.price.amount,
+		room.price.currency,
+		i18n.language,
+	);
 	const isFavourite = room?.interaction?.action === "like";
 
 	const handleFavouriteClick = () => {
@@ -87,7 +92,7 @@ export default function RoomDetails({ room }: Props) {
 							<div className="flex flex-col gap-1">
 								<p className="text-lg text-foreground/80 flex gap-1 items-center">
 									<span className="font-semibold text-2xl">
-										{room.price.localePrice}
+										{formattedPrice}
 									</span>
 									<span className="text-sm">
 										/ {room.price.paymentFrequency}
@@ -97,7 +102,7 @@ export default function RoomDetails({ room }: Props) {
 								<ul className="flex items-center gap-4">
 									<li>
 										<span className="text-xs">
-											{getRentTypeLabel(room.rentType)}
+											{t(getRentTypeLabel(room.rentType))}
 										</span>
 									</li>
 									<li>
