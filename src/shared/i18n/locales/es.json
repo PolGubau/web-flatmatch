@@ -108,6 +108,7 @@
 	"private": "Privado",
 	"private_room": "Habitación privada",
 	"profile": "Perfil",
+	"publish_first_property": "Publica tu primera propiedad",
 	"publish_place": "Publicar lugar",
 	"publish_room": "Publicar mi habitación",
 	"refrigerator": "Frigorífico",
@@ -167,7 +168,9 @@
 	"x_years_other": "{{count}} años",
 	"year": "año",
 	"years": "años",
+	"you_have_no_rooms_yet": "Aún no tienes habitaciones",
 	"your_gender": "Tu género",
 	"your_occupation": "Tu ocupación",
+	"your_properties": "Tus propiedades",
 	"your_room_ready": "Tu habitación está lista 🎉"
 }

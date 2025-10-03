@@ -38,6 +38,7 @@ type RoomRepository = Omit<
 	findFavorites: () => Promise<RoomWithMetadata[]>;
 	interact: InteractApi;
 	removeInteraction: RemoveInteractionApi;
+	findYours: () => Promise<RoomWithMetadata[]>;
 };
 export const RoomRepository: RoomRepository = {
 	create: (data) => createRoom(data),
@@ -46,6 +47,7 @@ export const RoomRepository: RoomRepository = {
 	findById: (id) => getOneRoom(id),
 	findFavorites: () => getFavoriteRooms(),
 	findMany: (ids) => getManyRooms(ids),
+	findYours: () => getAllRooms(),
 	interact: (id, action) => interactRoom(id, action),
 	removeInteraction: (id) => removeInteraction(id),
 	update: (id, data) => updateRoom(id, data),

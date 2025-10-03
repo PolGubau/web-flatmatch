@@ -108,6 +108,7 @@
 	"private": "Private",
 	"private_room": "Private Room",
 	"profile": "Profile",
+	"publish_first_property": "Publish your first property",
 	"publish_place": "Publish Place",
 	"publish_room": "Publish my room",
 	"refrigerator": "Refrigerator",
@@ -170,7 +171,9 @@
 	"x_years_other": "{{count}} years",
 	"year": "year",
 	"years": "years",
+	"you_have_no_rooms_yet": "You have no rooms yet",
 	"your_gender": "Your Gender",
 	"your_occupation": "Your Occupation",
+	"your_properties": "Your Properties",
 	"your_room_ready": "Your room is ready 🎉"
 }

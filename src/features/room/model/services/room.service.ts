@@ -57,6 +57,10 @@ export const listMultipleRoomsService = async (
 	const dtoList = await RoomRepository.findMany(ids);
 	return dtoList;
 };
+export const listYourRoomsService = async (): Promise<RoomWithMetadata[]> => {
+	const dtoList = await RoomRepository.findYours();
+	return dtoList;
+};
 
 export const interactWithRoomService = async (
 	roomId: Room["id"],

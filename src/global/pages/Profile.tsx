@@ -5,13 +5,13 @@ import {
 } from "@hugeicons/core-free-icons";
 import { useTranslation } from "react-i18next";
 import { Navigate } from "react-router";
+import { YourRooms } from "~/features/room/ui/your-rooms/your-rooms";
 import { useUser } from "~/features/user/model/use-user";
 import type { Item } from "~/features/user/ui/profile/chips/chip-item";
 import { ProfileChipList } from "~/features/user/ui/profile/chips/chip-list";
 import { CompleteProfile } from "~/features/user/ui/profile/complete-profile/complete-profile";
 import ProfileHeader from "~/features/user/ui/profile/header";
 import { ProfileSkeleton } from "~/features/user/ui/profile/states/profile-skeleton";
-import { TimeAgo } from "~/shared/components/ui/timeAgo";
 import { dateToYearsAgo } from "~/shared/utils/formatters/dates/date-to-years-ago";
 
 type Props = {
@@ -53,7 +53,7 @@ export default function ProfilePage({ userId, isYours }: Props) {
 		!user.aboutMe || !user.birthDate || !user.occupation || !user.gender;
 
 	return (
-		<div className="gap-4 grid grid-rows-[auto_1fr_auto]">
+		<div className="gap-4 grid grid-rows-[auto_1fr]">
 			<header className="flex flex-col gap-2">
 				<ProfileHeader
 					aboutMe={user.aboutMe}
@@ -74,13 +74,8 @@ export default function ProfilePage({ userId, isYours }: Props) {
 						userId={user.id}
 					/>
 				)}
+				<YourRooms />
 			</section>
-
-			<footer>
-				<small>
-					{t("last_update")}: <TimeAgo timestamp={new Date(dataUpdatedAt)} />
-				</small>
-			</footer>
 		</div>
 	);
 }

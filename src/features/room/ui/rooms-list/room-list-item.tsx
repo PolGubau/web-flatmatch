@@ -2,14 +2,14 @@ import { ArrowUpRight03Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "react-router";
 import type { Room } from "~/entities/room/room";
-import { AbsoluteLikedHeart } from "./LikedHearth";
+import { AbsoluteLikedHeart } from "../favs/LikedHearth";
 
 type Props = Pick<Room, "id" | "title" | "description"> & {
 	image: string;
 	price: string;
 };
 
-export function RoomFavsListItem({
+export function RoomListItem({
 	id,
 	title,
 	description,
