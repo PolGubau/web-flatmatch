@@ -1,11 +1,11 @@
 import i18n from "i18next";
-import type { Room } from "~/entities/room/room";
+import type { RoomWithMetadata } from "~/entities/room/room";
 import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 import { RoomFavsListItemSkeleton } from "../favs/favs-item-skeleton";
 import { RoomListItem } from "./room-list-item";
 
 type Props = {
-	rooms: Room[];
+	rooms: RoomWithMetadata[];
 };
 export function RoomList({ rooms }: Props) {
 	return (
@@ -21,6 +21,7 @@ export function RoomList({ rooms }: Props) {
 						description={room.description}
 						id={room.id}
 						image={room.images.cover}
+						isFavorite={room.interaction.action === "like"}
 						key={room.id}
 						price={formattedPrice}
 						title={room.title}

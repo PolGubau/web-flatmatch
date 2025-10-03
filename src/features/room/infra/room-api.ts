@@ -15,7 +15,6 @@ import type {
 	FindMany,
 	Update,
 } from "~/shared/abstracts/repo";
-import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 import { roomBDtoDomainAndMetadata, roomMapper } from "./adapter/room.adapter";
 import type { InteractApi, RemoveInteractionApi } from "./room-repository";
 
@@ -29,22 +28,35 @@ export type UpdateRoom = Updates<"rooms">;
  * Devuelve todas las rooms con su verificación
  */
 
-export const getAllRooms: FindAll<RoomWithMetadata> = async () => {
-	// const userId = await getUserId();
+export const getFeed: FindAll<RoomWithMetadata> = async () => {
+	const userId = await getUserId();
 
 	const { data, error } = await supabase
 		.from("rooms_with_metadata")
 		.select("*")
-		.or("interaction_action.is.null,interaction_action.neq.like")
+		// .or("interaction_action.is.null,interaction_action.neq.like")
+		.neq("owner_id", userId)
+		.eq("status", "available")
 
 		.limit(10);
-	// .eq("room_user_interactions.user_id", userId);
 
 	if (error) throw error;
 
 	const roomWithMetadata = data.map(roomBDtoDomainAndMetadata);
-	console.log("API DATA:", roomWithMetadata);
+	return roomWithMetadata;
+};
+export const getYourRooms: FindAll<RoomWithMetadata> = async () => {
+	const userId = await getUserId();
 
+	const { data, error } = await supabase
+		.from("rooms_with_metadata")
+		.select("*")
+		.eq("owner_id", userId)
+		.limit(10);
+
+	if (error) throw error;
+
+	const roomWithMetadata = data.map(roomBDtoDomainAndMetadata);
 	return roomWithMetadata;
 };
 

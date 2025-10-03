@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import type { Room } from "~/entities/room/room";
-import { listMultipleRoomsService, listYourRoomsService } from "../services/room.service";
+import type { RoomWithMetadata } from "~/entities/room/room";
+import { listYourRoomsService } from "../services/room.service";
 
 /**
  * Hook para obtener una Room usando React Query.
@@ -8,17 +8,17 @@ import { listMultipleRoomsService, listYourRoomsService } from "../services/room
  */
 
 type YourRoomResponse = {
-  isLoading: boolean;
-  rooms: Room[];
+	isLoading: boolean;
+	rooms: RoomWithMetadata[];
 };
 
 type YourRoomQuery = () => YourRoomResponse;
 
 export const listYourRoomsQuery: YourRoomQuery = () => {
-  const { data, isLoading } = useQuery<Room[]>({
-    queryFn: () => listYourRoomsService(),
-    queryKey: ["your-rooms"],
-  });
+	const { data, isLoading } = useQuery<RoomWithMetadata[]>({
+		queryFn: () => listYourRoomsService(),
+		queryKey: ["your-rooms"],
+	});
 
-  return { isLoading, rooms: data ?? [] };
+	return { isLoading, rooms: data ?? [] };
 };

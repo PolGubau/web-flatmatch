@@ -1,6 +1,5 @@
 import { ArrowUpRight03Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { AbsoluteLikedHeart } from "./LikedHearth";
 
 export function RoomFavsListItemSkeleton() {
 	return (
@@ -8,7 +7,6 @@ export function RoomFavsListItemSkeleton() {
 			<div className="bg-foreground/5 transition-opacity rounded-xl gap-4 grid grid-cols-[auto_1fr_auto] overflow-hidden">
 				<div className="relative">
 					<div className=" w-24 h-full object-cover bg-foreground/30" />
-					<AbsoluteLikedHeart />
 				</div>
 				<div className="flex flex-col p-2 gap-1 justify-between">
 					<h2 className="line-clamp-2 flex flex-col gap-1 h-12 ">

@@ -7,6 +7,7 @@ import { AbsoluteLikedHeart } from "../favs/LikedHearth";
 type Props = Pick<Room, "id" | "title" | "description"> & {
 	image: string;
 	price: string;
+	isFavorite?: boolean;
 };
 
 export function RoomListItem({
@@ -15,6 +16,7 @@ export function RoomListItem({
 	description,
 	image,
 	price,
+	isFavorite,
 }: Props) {
 	return (
 		<li className="group animate-in fade-in">
@@ -29,7 +31,7 @@ export function RoomListItem({
 						src={image}
 					/>
 
-					<AbsoluteLikedHeart />
+					{isFavorite && <AbsoluteLikedHeart />}
 				</div>
 				<div className="flex flex-col p-2 gap-1 justify-between">
 					<h2 className="h-12 line-clamp-2">{title}</h2>

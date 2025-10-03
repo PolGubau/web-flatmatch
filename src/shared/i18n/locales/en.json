@@ -1,6 +1,7 @@
 {
 	"add_metadata": "Add Metadata",
 	"add_price": "Add Price",
+	"add_some_favorites_swiping_right_on_home": "Add some favorites swiping right on home",
 	"address": "Address",
 	"address_is_required": "Address is required",
 	"age_preference": "Age Preference",
@@ -88,6 +89,7 @@
 	"minimum_stay": "Minimum Stay",
 	"month": "month",
 	"months": "months",
+	"no_favorites_yet": "You have no favorites yet",
 	"no_maximum": "No maximum",
 	"non_binary": "Non-binary",
 	"none": "None",

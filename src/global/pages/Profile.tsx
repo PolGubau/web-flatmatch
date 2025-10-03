@@ -20,7 +20,7 @@ type Props = {
 };
 
 export default function ProfilePage({ userId, isYours }: Props) {
-	const { data: user, isLoading, dataUpdatedAt } = useUser(userId);
+	const { data: user, isLoading } = useUser(userId);
 	// get user by id
 	const { t } = useTranslation();
 	if (!user) {
@@ -53,7 +53,7 @@ export default function ProfilePage({ userId, isYours }: Props) {
 		!user.aboutMe || !user.birthDate || !user.occupation || !user.gender;
 
 	return (
-		<div className="gap-4 grid grid-rows-[auto_1fr]">
+		<div className="gap-10 grid grid-rows-[auto_1fr]">
 			<header className="flex flex-col gap-2">
 				<ProfileHeader
 					aboutMe={user.aboutMe}
