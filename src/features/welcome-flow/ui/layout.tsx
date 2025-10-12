@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import type { PropsWithChildren } from "react";
 import { useSession } from "~/shared/context/session-context";
 
@@ -17,7 +18,7 @@ bg-[length:200%_200%] animate-gradient-move"
 							{name ? `Hi ${name}` : "Welcome"}
 						</h1>
 						<h2 className="md:text-center text-canvas/80">
-							Let's know each other a bit better
+							{t("lets_know_each_other")}
 						</h2>
 					</div>
 				</header>

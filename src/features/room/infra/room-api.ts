@@ -41,6 +41,8 @@ export const getFeed: FindAll<RoomWithMetadata> = async () => {
 		.limit(10);
 
 	if (error) throw error;
+	console.log("feed rooms:", data);
+	if (!data) return [];
 
 	const roomWithMetadata = data.map(roomBDtoDomainAndMetadata);
 	return roomWithMetadata;

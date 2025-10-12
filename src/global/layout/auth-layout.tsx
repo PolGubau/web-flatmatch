@@ -3,6 +3,7 @@ import { Outlet } from "react-router";
 import { SignInGoogleButton } from "~/features/auth/ui/components/sign-in-google-button";
 import { GoHomeButton } from "~/shared/components/go-home-button";
 import { Button } from "~/shared/components/ui/button";
+import { constants } from "../constants";
 
 export default function AuthLayout() {
 	const [useCredentials, setUseCredentials] = useState(false);
@@ -19,7 +20,7 @@ bg-[length:200%_200%] animate-gradient-move"
 					<div />
 					<div className="">
 						<h1 className="md:text-center max-md:px-3 font-regular tracking-wide line-clamp-1 text-canvas/80 text-4xl pb-3 ">
-							Flatmatch
+							{constants.name}
 						</h1>
 					</div>
 				</header>

@@ -25,9 +25,11 @@ export default function HomePage() {
 
 	if (isLoading) return <LoadingCardsSection />;
 
+	const thereAreRooms = rooms.length > 0 && !isLoading;
+
 	return (
 		<div className="grid grid-rows-1 grid-cols-1 h-[80vh] mx-auto place-items-center">
-			{rooms.length > 0 && (
+			{thereAreRooms && (
 				<div className="grid grid-rows-[1fr_auto] place-items-center h-fit gap-8">
 					<Drawer
 						className="max-w-7xl mx-auto"
@@ -78,11 +80,16 @@ export default function HomePage() {
 				</div>
 			)}
 
-			{rooms.length === 0 && (
+			{!thereAreRooms && (
 				<div className="text-center form text-foreground/60 max-w-md items-center">
 					{t("there_are_no_more_rooms")}
-					<Button disabled={isLoading} onClick={refetch}>
-						<HugeiconsIcon icon={RefreshIcon} />
+					<Button className="group" disabled={isLoading} onClick={refetch}>
+						<HugeiconsIcon
+							className="group-focus:rotate-180 transition-all"
+							icon={RefreshIcon}
+							size={16}
+							strokeWidth={3}
+						/>
 						{t("reload")}
 					</Button>
 				</div>

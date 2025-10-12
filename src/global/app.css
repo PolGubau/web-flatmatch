@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@plugin "tailwindcss-motion";
+
 @import "../shared/theme/colors.css";
 @plugin "tailwindcss-animate";
 

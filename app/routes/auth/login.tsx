@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { useState } from "react";
 import { Link, Navigate, useNavigate, useSearchParams } from "react-router";
 import LoginForm, {
@@ -45,11 +46,11 @@ export default function LoginPage() {
 	return (
 		<div className="flex flex-col gap-4">
 			<header className="flex flex-col gap-1">
-				<h1 className="text-2xl font-bold">Welcome back!</h1>
+				<h1 className="text-2xl font-bold">{t("welcome_back")}</h1>
 				<p className="text-sm text-muted-foreground">
-					Don't have an account?{" "}
+					{t("dont_have_an_account_yet")}{" "}
 					<Link className="text-primary underline" to="/auth/register">
-						Sign up
+						{t("sign_up")}
 					</Link>
 				</p>
 			</header>

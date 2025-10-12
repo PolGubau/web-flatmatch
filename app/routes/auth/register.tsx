@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router";
 import RegisterForm, {
@@ -39,11 +40,11 @@ export default function Register() {
 	return (
 		<div className="flex flex-col gap-4">
 			<header className="flex flex-col gap-1">
-				<h1 className="text-2xl font-bold">Nice to meet you!</h1>
+				<h1 className="text-2xl font-bold">{t("nice_to_meet_you")}</h1>
 				<p className="text-sm text-muted-foreground">
-					Already have an account?{" "}
+					{t("already_have_an_account")}{" "}
 					<Link className="text-primary underline" to="/auth/login">
-						Sign in
+						{t("sign_in")}
 					</Link>
 				</p>
 			</header>

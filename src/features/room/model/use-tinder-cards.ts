@@ -10,7 +10,6 @@ export const useTinderCards = () => {
 	const { check } = useSession();
 	const { rooms, isLoading, refetch } = listRoomsQuery();
 	const { likeRoom } = useUpdateRoomInteraction();
-	console.log(rooms);
 	const [roomsChunk, setRoomsChunk] = useState<RoomWithMetadata[]>([]);
 	const [bottomDrawerRoom, setBottomDrawerRoom] =
 		useState<null | RoomWithMetadata>(null);
@@ -18,8 +17,8 @@ export const useTinderCards = () => {
 
 	// Inicializamos roomsChunk solo una vez
 	useEffect(() => {
-		console.log("rooms loaded", rooms.length);
 		if (rooms?.length && roomsChunk.length === 0) {
+			console.debug("rooms loaded", rooms.length);
 			setRoomsChunk(rooms);
 		}
 	}, [rooms, roomsChunk.length]);

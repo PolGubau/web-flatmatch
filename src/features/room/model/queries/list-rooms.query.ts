@@ -17,8 +17,10 @@ type ListRoomQuery = () => ListRoomResponse;
 
 export const listRoomsQuery: ListRoomQuery = () => {
 	const { data, isLoading, refetch } = useQuery<RoomWithMetadata[]>({
+		initialData: [],
 		queryFn: listAllRoomsService,
 		queryKey: ["rooms"],
+		staleTime: 1000 * 60 * 5, // 5 minutes
 	});
 
 	return { isLoading, refetch, rooms: data ?? [] };

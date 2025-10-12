@@ -19,7 +19,7 @@ export const DevPopover = () => {
 			</Drawer>
 
 			<Button
-				className="bg-foreground text-canvas rounded-full fixed bottom-2 left-2 grid place-items-center text-xs"
+				className="bg-foreground text-canvas rounded-full fixed max-md:bottom-16 bottom-2 left-2 grid place-items-center text-xs"
 				onClick={() => setIsOpen(true)}
 				size={"icon"}
 				style={{ zIndex: 10 }}
