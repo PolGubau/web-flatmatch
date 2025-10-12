@@ -1,10 +1,12 @@
 "use client";
 
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
-
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { divIcon } from "leaflet";
 import { useEffect } from "react";
+
+import iconUrl from "leaflet/dist/images/marker-icon.png";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
 
 type MapProps = {
 	lat: number;
@@ -12,6 +14,15 @@ type MapProps = {
 	interactive?: boolean;
 	zoom?: number;
 };
+
+// Fix global default icon
+const DefaultIcon = L.icon({
+	iconUrl,
+	shadowUrl: iconShadow,
+	iconAnchor: [12, 41],
+});
+L.Marker.prototype.options.icon = DefaultIcon;
+
 /**
  * Hook que mueve el mapa cuando cambian las coords
  */
@@ -30,6 +41,7 @@ function Recenter({
 	}, [lat, lon, zoom, map]);
 	return null;
 }
+
 /**
  * Mapa centrado en coordenadas con un pin
  */
@@ -39,14 +51,6 @@ export function MapWithMarker({
 	zoom = 15,
 	interactive = true,
 }: MapProps) {
-	// const customDivIcon = divIcon({
-	// 	className:
-	// 		"bg-red-500 text-white rounded-full flex items-center justify-center",
-	// 	html: "<div style='width:24px;height:24px;border-radius:50%;background:#09f'></div>",
-	// 	iconAnchor: [12, 24],
-	// 	iconSize: [24, 24],
-	// });
-
 	return (
 		<div className="w-full h-full min-h-64 rounded-lg overflow-hidden">
 			<MapContainer

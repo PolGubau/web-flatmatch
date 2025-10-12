@@ -21,7 +21,7 @@ export function RoomListItem({
 	return (
 		<li className="group animate-in fade-in">
 			<Link
-				className="group-hover:bg-foreground/10 bg-foreground/5 transition-opacity rounded-xl gap-4 grid grid-cols-[auto_1fr_auto] overflow-hidden"
+				className="group-hover:bg-foreground/10 min-h-36 bg-foreground/5 transition-opacity rounded-xl gap-4 grid grid-cols-[auto_1fr_auto] overflow-hidden"
 				to={`/room/${id}`}
 			>
 				<div className="relative group">
@@ -33,10 +33,13 @@ export function RoomListItem({
 
 					{isFavorite && <AbsoluteLikedHeart />}
 				</div>
-				<div className="flex flex-col p-2 gap-1 justify-between">
-					<h2 className="h-12 line-clamp-2">{title}</h2>
-					<p className="text-sm text-neutral-500 line-clamp-2">{description}</p>
-					<p className="text-sm text-neutral-500">{price}</p>
+				<div className="flex-col p-2 gap-1 grid grid-rows-[auto_auto_1fr]">
+					<h2 className="max-md:line-clamp-2 line-clamp-1 ">{title}</h2>
+					<p className="text-sm text-foreground/80">{price}</p>
+
+					<p className="text-sm text-foreground/70 max-md:line-clamp-3 line-clamp-2 whitespace-pre-wrap break-words">
+						{description}
+					</p>
 				</div>
 
 				<footer className="flex ">

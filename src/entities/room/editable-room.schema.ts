@@ -62,7 +62,6 @@ export const CommoditiesWholeSchema = z.object({
 		hasWifi: z.boolean(),
 		isWheelchairAccessible: z.boolean(),
 	}),
-	area: z.number(),
 	areUtilitiesIncluded: z.boolean(),
 	bathrooms: z.number(),
 	bedrooms: z.object({
@@ -78,7 +77,6 @@ export const CommoditiesWholeSchema = z.object({
 });
 export type RoomCommoditiesWhole = z.infer<typeof CommoditiesWholeSchema>;
 export const CommoditiesRoomSchema = z.object({
-	area: z.number(),
 	bedType: BedTypeSchema,
 	hasBalcony: z.boolean(),
 	hasPrivateBathroom: z.boolean(),

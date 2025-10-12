@@ -4,7 +4,6 @@ export const mockRooms: Room[] = [
 	{
 		commodities: {
 			room: {
-				area: 12,
 				bedType: "double",
 				hasBalcony: true,
 				hasPrivateBathroom: false,
@@ -12,7 +11,6 @@ export const mockRooms: Room[] = [
 				hasWorkingDesk: true,
 				isFurnished: true,
 			},
-
 			whole: {
 				appliances: {
 					hasAirConditioning: false,
@@ -29,7 +27,6 @@ export const mockRooms: Room[] = [
 					hasWifi: true,
 					isWheelchairAccessible: false,
 				},
-				area: 90,
 				areUtilitiesIncluded: false,
 				bathrooms: 1,
 				bedrooms: { individual: 2, shared: 1 },
@@ -121,7 +118,6 @@ export const mockRooms: Room[] = [
 	{
 		commodities: {
 			room: {
-				area: 10,
 				bedType: "single",
 				hasBalcony: false,
 				hasPrivateBathroom: true,
@@ -146,7 +142,6 @@ export const mockRooms: Room[] = [
 					hasWifi: true,
 					isWheelchairAccessible: true,
 				},
-				area: 100,
 				areUtilitiesIncluded: true,
 				bathrooms: 2,
 				bedrooms: { individual: 3, shared: 0 },
@@ -236,7 +231,6 @@ export const mockRooms: Room[] = [
 	{
 		commodities: {
 			room: {
-				area: 18,
 				bedType: "double",
 				hasBalcony: false,
 				hasPrivateBathroom: false,
@@ -261,7 +255,6 @@ export const mockRooms: Room[] = [
 					hasWifi: true,
 					isWheelchairAccessible: false,
 				},
-				area: 70,
 				areUtilitiesIncluded: false,
 				bathrooms: 1,
 				bedrooms: { individual: 3, shared: 0 },
@@ -353,7 +346,6 @@ export const mockRooms: Room[] = [
 	{
 		commodities: {
 			room: {
-				area: 8,
 				bedType: "single",
 				hasBalcony: false,
 				hasPrivateBathroom: false,
@@ -378,7 +370,6 @@ export const mockRooms: Room[] = [
 					hasWifi: true,
 					isWheelchairAccessible: false,
 				},
-				area: 70,
 				areUtilitiesIncluded: false,
 				bathrooms: 1,
 				bedrooms: { individual: 2, shared: 0 },

@@ -76,9 +76,9 @@ export default function RoomDetails({ room }: Props) {
 	// Gallery with the main first
 	const sortedImages = [cover, ...allImages.filter((path) => path !== cover)];
 	return (
-		<div className="relative overflow-y-auto  h-full">
+		<div className="relative overflow-y-auto h-full">
 			<section className="grid gap-4 mx-auto max-w-7xl">
-				<ul className="room-details-gallery max-h-[50vh] gap-2 w-full flex overflow-x-auto rounded-xl">
+				<ul className="room-details-gallery max-h-[50vh] gap-2 w-full flex overflow-x-auto rounded-2xl px-2">
 					{sortedImages.map((src) => (
 						<li key={src}>
 							<RoomDetailsImage alt={room.title} src={src} />
@@ -153,12 +153,6 @@ export default function RoomDetails({ room }: Props) {
 							</span>
 						</li>
 						<li className="flex flex-col gap-1 items-center">
-							<HugeiconsIcon icon={ArrowAllDirectionIcon} size={28} />
-							<span className="text-sm">
-								{t("square_meters", { count: room.commodities.whole?.area })}
-							</span>
-						</li>
-						<li className="flex flex-col gap-1 items-center">
 							<HugeiconsIcon icon={Sink01Icon} size={28} />
 							<span className="text-sm">
 								{t("x_bathrooms", { count: room.commodities.whole?.bathrooms })}
@@ -184,10 +178,12 @@ export default function RoomDetails({ room }: Props) {
 					</ul>
 					{/*  */}
 					<div className="flex flex-col gap-1">
-						<h1 className="text-pretty text-2xl max-md:max-w-md">
+						<h1 className="text-pretty text-2xl max-md:max-w-md first-letter:capitalize font-semibold">
 							{room.title}
 						</h1>
-						<p className="text-foreground/80">{room.description}</p>
+						<p className="text-foreground/80 whitespace-pre-wrap break-words">
+							{room.description}
+						</p>
 					</div>
 					<article className="py-4 border-t border-foreground/10 flex flex-col gap-2">
 						<h3>{t("commodities")}</h3>

@@ -18,7 +18,7 @@ import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { commoditiesMap, extrasMap } from "~/shared/base/maps";
 import { Input } from "~/shared/components/ui/input/input";
-import { RHFSelect, Select } from "~/shared/components/ui/select";
+import { RHFSelect } from "~/shared/components/ui/select";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 
@@ -57,20 +57,6 @@ export function CommoditiesForm() {
 			<fieldset className="flex flex-col gap-6 p-1 overflow-y-auto">
 				<legend className="text-lg pb-6">{t("select_commodities")}</legend>
 				<header className="grid gap-4 items-center grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
-					<Input
-						icon={SquareArrowExpand01Icon}
-						id="area"
-						label={"enter_area_in_m2"}
-						max={999}
-						min={1}
-						placeholder={t("enter_area_in_m2")}
-						required
-						{...register("commodities.whole.area", {
-							required: true,
-							valueAsNumber: true,
-						})}
-					/>
-
 					<Input
 						icon={Sink01Icon}
 						id="bathrooms"
@@ -194,7 +180,7 @@ export function CommoditiesForm() {
 							type="checkbox"
 							{...register("commodities.whole.areUtilitiesIncluded")}
 						/>
-						<span className="">{t("are_utilities_included")}?</span>
+						<span className="">{t("are_utilities_included")}</span>
 					</label>
 				</div>
 
@@ -203,19 +189,6 @@ export function CommoditiesForm() {
 						<h3>{t("room_appliances")}</h3>
 
 						<header className="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4">
-							<Input
-								icon={SquareArrowExpand01Icon}
-								id="area"
-								label={"enter_area_in_m2"}
-								max={999}
-								min={1}
-								placeholder={t("enter_area_in_m2")}
-								{...register("commodities.room.area", {
-									required: true,
-									valueAsNumber: true,
-								})}
-							/>
-
 							<RHFSelect
 								control={control}
 								label={"bed_type"}
@@ -339,7 +312,7 @@ export function CommoditiesForm() {
 			<footer className="flex flex-col gap-1">
 				{errors.commodities && (
 					<pre className="text-error text-sm p-4 rounded-xl bg-error/10">
-						{JSON.stringify(errors.commodities.room?.area?.message, null, 2)}
+						{JSON.stringify(errors.commodities.room?.message, null, 2)}
 					</pre>
 				)}
 				<FormFooterButtons backHref={"/publish/location"} />
