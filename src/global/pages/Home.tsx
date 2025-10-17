@@ -30,13 +30,10 @@ export default function HomePage() {
 	const thereAreRooms = rooms.length > 0 && !isLoading;
 
 	return (
-		<section className="grid grid-rows-[auto_1fr] gap-10 h-full">
-			<nav className="flex gap-4 items-center justify-center p-1">
-				<FiltersModal />
-			</nav>
-			<div className="grid grid-rows-1 grid-cols-1 max-h-[900px] mx-auto place-items-center">
+		<section className="grid grid-rows-[1fr_auto] gap-4 h-full py-4 md:py-8">
+			<div className="grid grid-rows-1 grid-cols-1 mx-auto place-items-center">
 				{thereAreRooms && (
-					<div className="grid grid-rows-[1fr_auto] place-items-center gap-8 h-full">
+					<div className="grid grid-rows-[1fr_auto] gap-6 h-full items-center">
 						<Drawer
 							className="max-w-7xl mx-auto"
 							isOpen={!!bottomDrawerRoom}
@@ -45,14 +42,16 @@ export default function HomePage() {
 							{bottomDrawerRoom && <RoomDetails room={bottomDrawerRoom} />}
 						</Drawer>
 
-						{[...rooms].map((room, index) => (
-							<RoomTinderCard
-								index={index}
-								key={room.id}
-								onSwipe={onSwipe}
-								room={room}
-							/>
-						))}
+						<div className="relative h-full w-full grid place-items-center max-h-[900px]">
+							{[...rooms].map((room, index) => (
+								<RoomTinderCard
+									index={index}
+									key={room.id}
+									onSwipe={onSwipe}
+									room={room}
+								/>
+							))}
+						</div>
 
 						<nav className="flex gap-4 justify-between mx-auto w-[80vw] max-w-[500px]">
 							<Button
@@ -100,7 +99,10 @@ export default function HomePage() {
 						</Button>
 					</div>
 				)}
-			</div>
+			</div>{" "}
+			<nav className="flex gap-4 items-center justify-center p-1">
+				<FiltersModal />
+			</nav>
 		</section>
 	);
 }
