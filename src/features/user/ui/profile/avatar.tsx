@@ -27,7 +27,7 @@ export const ProfileAvatar = ({
 	if (!avatarUrl) {
 		return (
 			<div className={className}>
-				<HugeiconsIcon icon={UserIcon} size={size === "md" ? 90 : 40} />
+				<HugeiconsIcon icon={UserIcon} size={size === "md" ? 90 : 20} />
 			</div>
 		);
 	}

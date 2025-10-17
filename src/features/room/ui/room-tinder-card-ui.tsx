@@ -1,11 +1,12 @@
 import { useState } from "react";
 import type { RoomWithMetadata } from "~/entities/room/room";
+import { ProfileAvatar } from "~/features/user/ui/profile/avatar";
 import { VerifiedChip } from "~/shared/components/ui/verified/chip";
 import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 
 type RoomTinderUIProps = Pick<
 	RoomWithMetadata,
-	"title" | "description" | "images" | "price" | "verification"
+	"title" | "description" | "images" | "price" | "verification" | "owner"
 >;
 export function RoomTinderCardUI({
 	title,
@@ -13,6 +14,7 @@ export function RoomTinderCardUI({
 	images,
 	price,
 	verification,
+	owner,
 }: RoomTinderUIProps) {
 	const { cover, gallery } = images;
 	const restImages = gallery?.filter((path) => path !== cover) || [];
@@ -46,9 +48,20 @@ export function RoomTinderCardUI({
 			</nav>
 
 			<header className="absolute bottom-0 left-0 p-4 pb-6 flex flex-col gap-2 z-20 pointer-events-none">
+				<div className="flex gap-2 mb-2 items-center">
+					<ProfileAvatar
+						avatarUrl={owner?.avatar ?? undefined}
+						name={owner?.name}
+						size="sm"
+					/>
+					<span className="text-canvas/70 text-sm self-center">
+						{owner?.name ?? "Unknown"}
+					</span>
+				</div>
+
 				{!!verification.verifiedAt && <VerifiedChip />}
 
-				<h2 className="text-canvas text-2xl text-pretty line-clamp-2">
+				<h2 className="text-canvas text-xl text-pretty line-clamp-2">
 					{title}
 				</h2>
 
@@ -58,7 +71,9 @@ export function RoomTinderCardUI({
 					</p>
 				)}
 
-				<p className="text-sm text-canvas/70 line-clamp-2">{description}</p>
+				<p className="text-sm text-canvas/70 line-clamp-4  whitespace-pre-wrap break-words">
+					{description}
+				</p>
 			</header>
 
 			<div className={`grid h-full relative`}>

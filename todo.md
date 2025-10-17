@@ -18,3 +18,9 @@
   e. Fecha de entrada 
   f. Con quien te mudas (solo, en pareja) (???)
 
+
+
+
+
+Future features
+- Check rooms

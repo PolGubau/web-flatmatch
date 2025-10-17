@@ -11,10 +11,17 @@ export type Verification = {
 	verificationType: string | null;
 	notes: string | null;
 };
+
+export type Owner = {
+	id: string;
+	name: string;
+	avatar: string | null;
+};
 export type Room = z.infer<typeof RoomSchema>;
 export type Commodities = z.infer<typeof CommoditiesSchema>;
 
 export type RoomWithMetadata = Room & {
 	verification: Verification;
 	interaction: Interaction;
+	owner: Owner;
 };

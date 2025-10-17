@@ -1,12 +1,7 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
 import type { Room, RoomWithMetadata } from "~/entities/room/room";
 import { supabase } from "~/global/supabase/client";
-import type {
-	Inserts,
-	Tables,
-	Updates,
-	Views,
-} from "~/global/supabase/types-helpers";
+import type { Inserts, Tables, Updates } from "~/global/supabase/types-helpers";
 import type {
 	Create,
 	Delete,
@@ -15,11 +10,11 @@ import type {
 	FindMany,
 	Update,
 } from "~/shared/abstracts/repo";
+import type { RoomWithMetadataDB } from "../types/dtos";
 import { roomBDtoDomainAndMetadata, roomMapper } from "./adapter/room.adapter";
 import type { InteractApi, RemoveInteractionApi } from "./room-repository";
 
 export type RoomDB = Tables<"rooms">;
-export type RoomWithMetadataDB = Views<"rooms_with_metadata">;
 
 export type InsertRoom = Inserts<"rooms">;
 export type UpdateRoom = Updates<"rooms">;
@@ -32,8 +27,9 @@ export const getFeed: FindAll<RoomWithMetadata> = async () => {
 	const userId = await getUserId();
 
 	const { data, error } = await supabase
-		.from("rooms_with_metadata")
-		.select("*")
+		.rpc("rooms_with_metadata", {
+			p_user_id: userId,
+		})
 		// .or("interaction_action.is.null,interaction_action.neq.like")
 		.neq("owner_id", userId)
 		.eq("status", "available")
@@ -277,10 +273,14 @@ export async function getFavoriteRooms(): Promise<RoomWithMetadata[]> {
 
 	return data.map((room) => {
 		const withMetadata: RoomWithMetadataDB = {
-			// ...room,
 			...room.room,
-			interaction_action: room.action,
-			interaction_last_action_at: room.last_action_at,
+			interaction: {
+				action: room.action,
+				last_action_at: room.last_action_at,
+			},
+			owner: null as any,
+			type: null as any,
+			verified: null as any,
 		};
 
 		return roomBDtoDomainAndMetadata(withMetadata);

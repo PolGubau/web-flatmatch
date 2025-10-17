@@ -16,7 +16,7 @@ export const RoomTinderCard = ({
 	const isFront = index === 0;
 
 	const x = useMotionValue(0);
-	const opacity = useTransform(x, [-150, 0, 150], [0.5, 1, 0.5]);
+	const opacity = useTransform(x, [-150, 0, 150], [0.8, 1, 0.8]);
 	const rotateRaw = useTransform(x, [-150, 150], [-10, 10]);
 	const size = useTransform(x, [-150, 0, 150], [0.9, 1, 0.9]);
 
@@ -38,15 +38,16 @@ export const RoomTinderCard = ({
 	) => {
 		if (Math.abs(info.offset.x) > 150) {
 			onSwipe(room.id, info.offset.x > 0 ? "right" : "left");
-		}
-		if (Math.abs(info.offset.y) > 150) {
+		} else if (Math.abs(info.offset.y) > 150) {
 			onSwipe(room.id, info.offset.y > 0 ? "down" : "up");
+		} else {
+			x.set(0);
 		}
 	};
 
 	return (
 		<motion.div
-			className="h-[60vh] bg-neutral-500 overflow-hidden w-[80vw] max-w-[500px] rounded-3xl hover:cursor-grab active:cursor-grabbing origin-bottom shadow shadow-neutral-500/10 relative"
+			className="h-full bg-neutral-500 backdrop-blur-md overflow-hidden w-[80vw] max-w-[500px] rounded-3xl hover:cursor-grab active:cursor-grabbing origin-bottom shadow shadow-neutral-500/10 relative"
 			drag
 			dragConstraints={{ bottom: 0, left: 0, right: 0, top: 0 }}
 			dragElastic={1}
@@ -69,7 +70,14 @@ export const RoomTinderCard = ({
 					backgroundColor: colorOverlay,
 				}}
 			/>
-			<RoomTinderCardUI title={room.title} description={room.description} images={room.images} price={room.price} verification={room.verification} />
+			<RoomTinderCardUI
+				description={room.description}
+				images={room.images}
+				owner={room.owner}
+				price={room.price}
+				title={room.title}
+				verification={room.verification}
+			/>
 		</motion.div>
 	);
 };

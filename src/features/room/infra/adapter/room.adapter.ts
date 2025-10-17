@@ -13,12 +13,14 @@ import type {
 } from "~/entities/room/editable-room.schema";
 import type {
 	Interaction,
+	Owner,
 	Room,
 	RoomWithMetadata,
 	Verification,
 } from "~/entities/room/room";
 import type { RentType } from "~/shared/types/common";
-import type { RoomDB, RoomWithMetadataDB } from "../room-api";
+import type { RoomWithMetadataDB } from "../../types/dtos";
+import type { RoomDB } from "../room-api";
 /**
  * Adaptador desde la view de Supabase
  */
@@ -83,17 +85,28 @@ export const roomMapper = {
 export const roomBDtoDomainAndMetadata = (
 	row: RoomWithMetadataDB,
 ): RoomWithMetadata => {
+	const interactionDto = row.interaction as any;
+	const verificationDto = row.verified as any;
+	const ownerDto = row.owner as Owner;
+
+	//
 	const interaction: Interaction = {
-		action: row.interaction_action ?? null,
-		lastActionAt: row.interaction_last_action_at ?? null,
+		action: interactionDto.action ?? null,
+		lastActionAt: interactionDto.last_action_at ?? null,
 	};
 
 	const verification: Verification = {
-		notes: row.verification_notes ?? null,
-		verificationType: row.verification_type ?? null,
-		verifiedAt: row.verified_at ?? null,
-		verifiedBy: row.verified_by ?? null,
+		notes: verificationDto.notes ?? null,
+		verificationType: verificationDto.verification_type ?? null,
+		verifiedAt: verificationDto.verified_at ?? null,
+		verifiedBy: verificationDto.verified_by ?? null,
 	};
+	const owner = {
+		avatar: ownerDto.avatar,
+		id: ownerDto.id,
+		name: ownerDto.name,
+	};
+
 	const baseRoom: RoomDB = {
 		commodities: row.commodities,
 		contact: row.contact,
@@ -117,6 +130,7 @@ export const roomBDtoDomainAndMetadata = (
 	return {
 		...roomMapper.toDomain(baseRoom),
 		interaction,
+		owner,
 		verification,
 	};
 };

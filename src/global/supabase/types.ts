@@ -368,7 +368,56 @@ export type Database = {
       }
     }
     Functions: {
-      [_ in never]: never
+      rooms_with_metadata: {
+        Args: { p_user_id: string }
+        Returns: {
+          commodities: Json
+          contact: Json
+          created_at: string
+          description: string
+          id: string
+          images: Json
+          interaction: Json
+          location: Json
+          owner: Json
+          owner_id: string
+          preferences: Json
+          price: Json
+          rules: Json
+          status: string
+          timings: Json
+          title: string
+          type: string
+          updated_at: string
+          verified: Json
+          who_is_living: Json
+        }[]
+      }
+      rooms_with_metadata_for_user: {
+        Args: { p_user_id: string }
+        Returns: {
+          commodities: string[]
+          contact: string
+          created_at: string
+          description: string
+          id: string
+          images: string[]
+          interaction: Json
+          location: string
+          owner: Json
+          owner_id: string
+          preferences: Json
+          price: number
+          rules: string[]
+          status: string
+          timings: string[]
+          title: string
+          type: string
+          updated_at: string
+          verified: Json
+          who_is_living: string[]
+        }[]
+      }
     }
     Enums: {
       Gender: "male" | "female" | "non_binary" | "prefer_not_to_say"
