@@ -7,6 +7,7 @@ type ProfileAvatarProps = {
 	name: string;
 	avatarUrl?: string;
 	size?: ProfileAvatarSize;
+	className?: string;
 };
 
 const theme = {
@@ -19,15 +20,24 @@ export const ProfileAvatar = ({
 	name,
 	avatarUrl,
 	size = "md",
+	className: customClassName,
 }: ProfileAvatarProps) => {
-	const className = cn(theme.base, {
-		[theme.sm]: size === "sm",
-		[theme.md]: size === "md",
-	});
+	const className = cn(
+		theme.base,
+		{
+			[theme.sm]: size === "sm",
+			[theme.md]: size === "md",
+		},
+		customClassName,
+	);
 	if (!avatarUrl) {
 		return (
 			<div className={className}>
-				<HugeiconsIcon icon={UserIcon} size={size === "md" ? 90 : 20} />
+				<HugeiconsIcon
+					icon={UserIcon}
+					size={size === "md" ? 90 : 20}
+					stroke="currentColor"
+				/>
 			</div>
 		);
 	}

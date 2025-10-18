@@ -48,13 +48,14 @@ export function RoomTinderCardUI({
 			</nav>
 
 			<header className="absolute bottom-0 left-0 p-4 pb-6 flex flex-col gap-2 z-20 pointer-events-none">
-				<div className="flex gap-2 mb-2 items-center">
+				<div className="flex gap-2 mb-2 items-center rounded-full pr-3 bg-secondary/30 w-max text-canvas">
 					<ProfileAvatar
 						avatarUrl={owner?.avatar ?? undefined}
+						className="text-canvas bg-secondary/70"
 						name={owner?.name}
 						size="sm"
 					/>
-					<span className="text-canvas/70 text-sm self-center">
+					<span className="text-canvas/70 text-sm self-center line-clamp-1">
 						{owner?.name ?? "Unknown"}
 					</span>
 				</div>
