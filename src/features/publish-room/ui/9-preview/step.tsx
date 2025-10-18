@@ -4,7 +4,10 @@ import { t } from "i18next";
 import type { EditableRoom } from "~/entities/room/editable-room";
 import type { Room } from "~/entities/room/room";
 import { RoomTinderCardUI } from "~/features/room/ui/room-tinder-card-ui";
+import { useUser } from "~/features/user/model/use-user";
 import { Button } from "~/shared/components/ui/button";
+import { useSession } from "~/shared/context/session-context";
+import { useGetSession } from "~/shared/hooks/use-get-session";
 import { usePublishRoom } from "../../model/publish-room";
 import { useFormState } from "../../model/useFormState";
 
@@ -37,6 +40,9 @@ const editableToImages = (images: EditableRoom["images"]): Room["images"] => {
 export const RoomPreview = () => {
 	const { data } = useFormState();
 	const { create, isPending } = usePublishRoom();
+	const { session } = useSession();
+
+	const { data: user } = useUser(session?.user.id || "");
 
 	return (
 		<div className="grid md:grid-cols-2 gap-10 items-start">
@@ -55,6 +61,11 @@ export const RoomPreview = () => {
 				<RoomTinderCardUI
 					description={data.description}
 					images={editableToImages(data.images)}
+					owner={{
+						avatar: user?.avatarUrl || "",
+						id: user?.id || "",
+						name: user ? `${user.name} ${user.lastname}` : "Loading...",
+					}}
 					price={data.price}
 					title={data.title}
 					verification={{
