@@ -21,6 +21,7 @@ export const useSession = () => {
 	const session = context.session;
 	const check = () => {
 		if (!session) {
+			console.warn("No session found, redirecting to login");
 			navigate("/auth/login");
 		}
 	};

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
 import type { EditableRoom } from "~/entities/room/editable-room";
 import type {
 	RoomCommodities,
@@ -112,7 +113,7 @@ export const roomBDtoDomainAndMetadata = (
 		contact: row.contact,
 		created_at: row.created_at ?? new Date().toISOString(),
 		description: row.description ?? "",
-		id: row.id ?? "",
+		id: row.id ?? "ADAPTER DID NOT FIND ID",
 		images: row.images,
 		location: row.location,
 		owner_id: row.owner_id ?? "",

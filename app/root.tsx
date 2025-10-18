@@ -55,16 +55,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 	);
 }
 
-export default function App() {
-	const queryClient = new QueryClient({
-		defaultOptions: {
-			queries: {
-				retry: 1,
-				staleTime: 1000 * 60 * 5,
-			},
+// ✅ Mover QueryClient fuera del componente para evitar recrearlo en cada render
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			retry: 1,
+			staleTime: 1000 * 60 * 5,
 		},
-	});
+	},
+});
 
+export default function App() {
 	return (
 		<AuthContextProvider>
 			<QueryClientProvider client={queryClient}>

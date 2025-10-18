@@ -1,5 +1,5 @@
 import type { Room } from "~/entities/room/room";
-import { listRoomsQuery } from "./queries/list-rooms.query";
+import { useListRoomsQuery } from "./queries/list-rooms.query";
 
 type UseRoomsResponse = {
 	rooms: Room[];
@@ -7,6 +7,6 @@ type UseRoomsResponse = {
 };
 
 export const useRooms = (): UseRoomsResponse => {
-	const { rooms, isLoading } = listRoomsQuery();
+	const { rooms, isLoading } = useListRoomsQuery();
 	return { isLoading, rooms };
 };

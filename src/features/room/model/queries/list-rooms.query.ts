@@ -1,27 +1,46 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import type { RoomWithMetadata } from "~/entities/room/room";
-import { listAllRoomsService } from "../services/room.service";
+import { RoomRepository } from "../../infra/room-repository";
 
 /**
- * Hook para obtener una Room usando React Query.
- * Internamente delega en el servicio de aplicación.
+ * Hook para obtener rooms con paginación infinita.
  */
+export const useListRoomsQuery = () => {
+	const {
+		data,
+		isLoading,
+		refetch,
+		fetchNextPage,
+		hasNextPage = false,
+		isFetchingNextPage,
+	} = useInfiniteQuery<RoomWithMetadata[], Error>({
+		getNextPageParam: (lastPage, allPages) => {
+			console.log("lastPage:", lastPage);
+			console.log("allPages:", allPages);
+			if (lastPage.length === 0) return undefined;
+			return allPages.length; // la siguiente página es el número de páginas ya cargadas
+		},
 
-type ListRoomResponse = {
-	isLoading: boolean;
-	rooms: RoomWithMetadata[];
-	refetch: () => void;
-};
+		initialPageParam: 0,
 
-type ListRoomQuery = () => ListRoomResponse;
-
-export const listRoomsQuery: ListRoomQuery = () => {
-	const { data, isLoading, refetch } = useQuery<RoomWithMetadata[]>({
-		initialData: [],
-		queryFn: listAllRoomsService,
+		queryFn: async ({ pageParam = 0 }) => {
+			const rooms = await RoomRepository.findAll({ page: pageParam });
+			console.log("Fetched rooms for page", pageParam, rooms);
+			return rooms;
+		},
 		queryKey: ["rooms"],
-		staleTime: 1000 * 60 * 5, // 5 minutes
+		refetchOnWindowFocus: false,
+		staleTime: 1000 * 60 * 5, // cache 5min
 	});
 
-	return { isLoading, refetch, rooms: data ?? [] };
+	const rooms = useMemo(() => data?.pages.flat() ?? [], [data]);
+	return {
+		fetchNextPage,
+		hasNextPage,
+		isFetchingNextPage,
+		isLoading,
+		refetch,
+		rooms,
+	};
 };

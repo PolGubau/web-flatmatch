@@ -1,91 +1,49 @@
-import { useCallback, useEffect, useState } from "react";
-import type { Room, RoomWithMetadata } from "~/entities/room/room";
-import { useSession } from "~/shared/context/session-context";
-import { RoomRepository } from "../infra/room-repository";
+import { type InfiniteData, useQueryClient } from "@tanstack/react-query";
+import { useCallback, useState } from "react";
+import type { RoomWithMetadata } from "~/entities/room/room";
 import type { SwipeDirection } from "../types/common";
-import { useUpdateRoomInteraction } from "./mutations/update-room-interaction";
-import { listRoomsQuery } from "./queries/list-rooms.query";
+import { useSwipeActions } from "./hooks/useSwipeActions";
+import { useListRoomsQuery } from "./queries/list-rooms.query";
 
+/**
+ * Hook principal para gestionar la lógica de swipe, drawer y paginación.
+ */
 export const useTinderCards = () => {
-	const { check } = useSession();
-	const { rooms, isLoading, refetch } = listRoomsQuery();
-	const { likeRoom } = useUpdateRoomInteraction();
-	const [roomsChunk, setRoomsChunk] = useState<RoomWithMetadata[]>([]);
+	const {
+		rooms,
+		isLoading,
+		isFetchingNextPage,
+		fetchNextPage,
+		refetch,
+		hasNextPage,
+	} = useListRoomsQuery();
+
 	const [bottomDrawerRoom, setBottomDrawerRoom] =
-		useState<null | RoomWithMetadata>(null);
-	const [isFetching, setIsFetching] = useState(false);
+		useState<RoomWithMetadata | null>(null);
 
-	// Inicializamos roomsChunk solo una vez
-	useEffect(() => {
-		if (rooms?.length && roomsChunk.length === 0) {
-			console.debug("rooms loaded", rooms.length);
-			setRoomsChunk(rooms);
-		}
-	}, [rooms, roomsChunk.length]);
+	const handleCloseDrawer = useCallback(() => setBottomDrawerRoom(null), []);
 
-	const handleCloseDrawer = useCallback(() => {
-		setBottomDrawerRoom(null);
-	}, []);
-
-	const getRoom = useCallback(
-		(roomId: Room["id"]) => roomsChunk.find((r) => r.id === roomId),
-		[roomsChunk],
+	const handleOpenDetails = useCallback(
+		(roomId: string) => {
+			const room = rooms.find((r) => r.id === roomId);
+			if (room) setBottomDrawerRoom(room);
+		},
+		[rooms],
 	);
 
-	const removeRoom = useCallback((roomId: Room["id"]) => {
-		setRoomsChunk((prev) => prev.filter((r) => r.id !== roomId));
-	}, []);
-
-	const prefetchMoreRooms = useCallback(async () => {
-		if (isFetching) return;
-		setIsFetching(true);
-		try {
-			const fetchedRooms = await RoomRepository.findAll();
-			const newRooms = fetchedRooms.map((r) => ({
-				...r,
-				id: crypto.randomUUID(),
-			}));
-			setRoomsChunk((prev) => [...prev, ...newRooms]);
-		} finally {
-			setIsFetching(false);
-		}
-	}, [isFetching]);
+	const { handleSwipe } = useSwipeActions({ onOpenDetails: handleOpenDetails });
 
 	const onSwipe = useCallback(
-		(roomId: Room["id"], direction: SwipeDirection) => {
-			switch (direction) {
-				case "left":
-					check();
-					removeRoom(roomId);
-					// likeRoom.mutate({ roomId, action: "dislike" });
-					break;
-				case "right":
-					check();
-					likeRoom.mutate({ action: "like", roomId });
-					removeRoom(roomId);
-					break;
-				case "up": {
-					const room = getRoom(roomId);
-					room && setBottomDrawerRoom(room);
-					break;
-				}
-				case "down":
-					console.log("Swiped down");
-					break;
-			}
-			if (roomsChunk.length <= 2 && !isFetching) {
-				prefetchMoreRooms();
+		(roomId: string, dir: SwipeDirection) => {
+			console.info("onSwipe called with:", { dir, roomId });
+			if (rooms.length > 0) handleSwipe(roomId, dir);
+
+			// carga siguiente chunk si quedan pocas
+			if (rooms.length <= 3 && hasNextPage && !isFetchingNextPage) {
+				void fetchNextPage();
 			}
 		},
-		[
-			getRoom,
-			removeRoom,
-			roomsChunk.length,
-			isFetching,
-			prefetchMoreRooms,
-			likeRoom.mutate,
-			check,
-		],
+		[handleSwipe, rooms.length, hasNextPage, isFetchingNextPage, fetchNextPage],
 	);
 
 	return {
@@ -94,6 +52,6 @@ export const useTinderCards = () => {
 		isLoading,
 		onSwipe,
 		refetch,
-		rooms: roomsChunk,
+		rooms,
 	};
 };

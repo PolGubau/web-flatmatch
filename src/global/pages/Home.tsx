@@ -43,7 +43,7 @@ export default function HomePage() {
 						</Drawer>
 
 						<div className="relative h-full w-full grid place-items-center max-h-[900px]">
-							{[...rooms].map((room, index) => (
+							{rooms.map((room, index) => (
 								<RoomTinderCard
 									index={index}
 									key={room.id}
@@ -88,7 +88,11 @@ export default function HomePage() {
 				{!thereAreRooms && (
 					<div className="text-center form text-foreground/60 max-w-md items-center">
 						{t("there_are_no_more_rooms")}
-						<Button className="group" disabled={isLoading} onClick={refetch}>
+						<Button
+							className="group"
+							disabled={isLoading}
+							onClick={() => refetch()}
+						>
 							<HugeiconsIcon
 								className="group-focus:rotate-180 transition-all"
 								icon={RefreshIcon}
