@@ -279,7 +279,7 @@ export async function getFavoriteRooms(): Promise<RoomWithMetadata[]> {
 				last_action_at: room.last_action_at,
 			},
 			owner: null as any,
-			type: null as any,
+			rent_type: null as any,
 			verified: null as any,
 		};
 
@@ -299,7 +299,9 @@ export const interactRoom: InteractApi = async (id, action) => {
 				room_id: id,
 				user_id: userId,
 			},
-			{ ignoreDuplicates: true },
+			{
+				onConflict: "room_id,user_id", // Especifica las columnas únicas para el conflicto
+			},
 		)
 		.select()
 		.single();

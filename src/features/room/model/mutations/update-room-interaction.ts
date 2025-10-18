@@ -33,8 +33,8 @@ export const useUpdateRoomInteraction = (props?: Props) => {
 		onSuccess: (res) => {
 			if (!res) return;
 
-			// Invalida lista de rooms si existe
-			queryClient.invalidateQueries({ queryKey: ["rooms"] });
+			// No invalidamos ["rooms"] porque ya removemos la room del caché manualmente en useSwipeActions
+			// Solo invalidamos la room individual por si está abierta en detalle
 			queryClient.invalidateQueries({ queryKey: ["room", res.roomId] });
 			props?.onSuccessLike?.();
 		},
@@ -46,8 +46,7 @@ export const useUpdateRoomInteraction = (props?: Props) => {
 		},
 		onSuccess: (res) => {
 			if (!res) return;
-			// Invalida lista de rooms si existe
-			queryClient.invalidateQueries({ queryKey: ["rooms"] });
+			// No invalidamos ["rooms"] porque ya removemos la room del caché manualmente
 			queryClient.invalidateQueries({ queryKey: ["room", res.roomId] });
 			props?.onSuccessRemoveLike?.();
 		},

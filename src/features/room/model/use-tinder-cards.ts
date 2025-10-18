@@ -38,8 +38,12 @@ export const useTinderCards = () => {
 			console.info("onSwipe called with:", { dir, roomId });
 			if (rooms.length > 0) handleSwipe(roomId, dir);
 
-			// carga siguiente chunk si quedan pocas
-			if (rooms.length <= 3 && hasNextPage && !isFetchingNextPage) {
+			// Calcula cuántas rooms quedarán después de eliminar la actual
+			const remainingRooms = rooms.length - 1;
+
+			// Solo carga más si quedan 2 o menos rooms y hay más páginas disponibles
+			if (remainingRooms <= 2 && hasNextPage && !isFetchingNextPage) {
+				console.info("Fetching next page, remaining rooms:", remainingRooms);
 				void fetchNextPage();
 			}
 		},
