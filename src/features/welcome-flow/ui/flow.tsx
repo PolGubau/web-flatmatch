@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { type JSX, useMemo, useState } from "react";
 import { Link } from "react-router";
 import type { User } from "~/entities/user/user";
@@ -80,10 +81,10 @@ export const WelcomeFlow = ({ userId }: Props) => {
 						<div className="form px-4 items-center">
 							<Logo height={109} width={109} />
 							<h3 className="mb-4 text-xl text-center font-semibold text-gray-900 dark:text-white">
-								Welcome to Flatmatch!
+								{t("welcome_to_flatmatch")}
 							</h3>
 							<Button asChild>
-								<Link to="/">Let's find you a match</Link>
+								<Link to="/">{t("lets_find_you_a_match")}</Link>
 							</Button>
 						</div>
 					),
@@ -101,7 +102,7 @@ export const WelcomeFlow = ({ userId }: Props) => {
 	return (
 		<div className="animate-fade-in">
 			<progress
-				className="w-full rounded-xl px-4"
+				className="w-full rounded-xl pb-2"
 				max={totalSteps}
 				value={currentStep + 1}
 			/>

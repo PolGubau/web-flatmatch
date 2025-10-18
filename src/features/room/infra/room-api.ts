@@ -258,33 +258,33 @@ async function getUserId(): Promise<string> {
 export async function getFavoriteRooms(): Promise<RoomWithMetadata[]> {
 	const userId = await getUserId();
 
-	const { data, error } = await supabase
+	// Primero obtener los IDs de las rooms que le gustan al usuario
+	const { data: interactions, error: interactionsError } = await supabase
 		.from("room_user_interactions")
-		.select(`*,
-			room:rooms_with_metadata (
-      *
-    
-    )
-  `)
+		.select("room_id")
 		.eq("user_id", userId)
 		.eq("action", "like");
 
+	if (interactionsError) throw interactionsError;
+	if (!interactions || interactions.length === 0) return [];
+
+	const roomIds = interactions.map((i) => i.room_id);
+
+	// Luego obtener las rooms completas con metadata usando el RPC
+	const { data, error } = await supabase
+		.rpc("rooms_with_metadata", {
+			p_user_id: userId,
+		})
+		.in("id", roomIds);
+
 	if (error) throw error;
+	if (!data) return [];
 
-	return data.map((room) => {
-		const withMetadata: RoomWithMetadataDB = {
-			...room.room,
-			interaction: {
-				action: room.action,
-				last_action_at: room.last_action_at,
-			},
-			owner: null as any,
-			rent_type: null as any,
-			verified: null as any,
-		};
-
-		return roomBDtoDomainAndMetadata(withMetadata);
-	});
+	// El RPC devuelve un tipo compatible con RoomWithMetadataDB
+	const roomWithMetadata = data.map((room) =>
+		roomBDtoDomainAndMetadata(room as unknown as RoomWithMetadataDB),
+	);
+	return roomWithMetadata;
 }
 
 export const interactRoom: InteractApi = async (id, action) => {

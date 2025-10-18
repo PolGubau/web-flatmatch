@@ -14,6 +14,7 @@ type UseRoomResponse = {
  */
 export const useFavRooms = (): UseRoomResponse => {
 	const { rooms, isLoading } = getFavRoomsQuery();
+	console.info("useFavRooms:", { isLoading, rooms });
 	const { mutate: updateRoom } = useUpdateRoomMutation();
 	return { isLoading, rooms, updateRoom };
 };
