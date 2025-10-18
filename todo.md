@@ -1,13 +1,13 @@
 - Hacer cards más rápidas
 - flechas siempre visibles
-- Poner foto del propietario
+✅ Poner foto del propietario
 - Estancia máxima (Infinito / Hay maxima chooser)
 - Quitar semanas de la unidad de tiempo
 - Quitar alert al crear la room
-- Botón en rooms de "Contactar propietario"
-- Pantalla de chat
+✅ Botón en rooms de "Contactar propietario"
+✅ Pantalla de chat
 - Botón en home para iniciar chat directamente
-- Botón de filtros
+✅ Botón de filtros
 
 
 - Filtros

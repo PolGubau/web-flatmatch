@@ -95,6 +95,7 @@
 		"db:copy-data": "npx supabase db dump --data-only > seed.sql && psql 'postgresql://postgres:postgres@127.0.0.1:15432/postgres' -f seed.sql",
 		"db:pull": "npx supabase db pull",
 		"db:push": "npx supabase db push",
+		"db:sync": "npx supabase db pull && npx supabase db reset && pnpm gen:types",
 		"dev": "react-router dev --mode dev",
 		"dev-as-prod": "react-router dev --mode prod",
 		"gen:types": "npx supabase gen types typescript --project-id \"eazucuralkbhkzrztanc\" --schema public > src/global/supabase/types.ts",

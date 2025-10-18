@@ -40,7 +40,9 @@ export const getFeed: FindAll<RoomWithMetadata> = async () => {
 	console.log("feed rooms:", data);
 	if (!data) return [];
 
-	const roomWithMetadata = data.map(roomBDtoDomainAndMetadata);
+	const roomWithMetadata = data.map((item) =>
+		roomBDtoDomainAndMetadata(item as unknown as RoomWithMetadataDB),
+	);
 	return roomWithMetadata;
 };
 export const getYourRooms: FindAll<RoomWithMetadata> = async () => {
@@ -54,7 +56,9 @@ export const getYourRooms: FindAll<RoomWithMetadata> = async () => {
 
 	if (error) throw error;
 
-	const roomWithMetadata = data.map(roomBDtoDomainAndMetadata);
+	const roomWithMetadata = data.map((item) =>
+		roomBDtoDomainAndMetadata(item as unknown as RoomWithMetadataDB),
+	);
 	return roomWithMetadata;
 };
 
@@ -76,7 +80,7 @@ export const getOneRoom: FindById<RoomWithMetadata> = async (id) => {
 		return null;
 	}
 
-	return roomBDtoDomainAndMetadata(data);
+	return roomBDtoDomainAndMetadata(data as unknown as RoomWithMetadataDB);
 };
 
 /**
@@ -92,7 +96,9 @@ export const getManyRooms: FindMany<RoomWithMetadata> = async (ids) => {
 		.in("id", ids);
 
 	if (error) throw error;
-	return data.map((room) => roomBDtoDomainAndMetadata(room));
+	return data.map((room) =>
+		roomBDtoDomainAndMetadata(room as unknown as RoomWithMetadataDB),
+	);
 };
 
 /**
@@ -200,7 +206,9 @@ export const updateRoom: Update<RoomWithMetadata, EditableRoom> = async (
 		throw new Error("Room created but then verification not found");
 	}
 
-	return roomBDtoDomainAndMetadata(withVerification);
+	return roomBDtoDomainAndMetadata(
+		withVerification as unknown as RoomWithMetadataDB,
+	);
 };
 
 /**

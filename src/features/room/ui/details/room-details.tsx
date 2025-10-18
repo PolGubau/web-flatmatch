@@ -17,6 +17,8 @@ import { ContactButtons } from "./footer/contact-buttons";
 import { RoomDetailsImage } from "./image";
 import "./room-details.css";
 import i18n from "i18next";
+import { useNavigate } from "react-router";
+import { useGetOrCreateConversationMutation } from "~/features/chat";
 import { Button } from "~/shared/components/ui/button";
 import { useSession } from "~/shared/context/session-context";
 import type { TranslationKey } from "~/shared/i18n/i18n";
@@ -32,6 +34,15 @@ type Props = {
 
 export default function RoomDetails({ room }: Props) {
 	const { t } = useTranslation();
+	const navigate = useNavigate();
+	const createConversation = useGetOrCreateConversationMutation();
+	const handleStartChat = async () => {
+		const conversationId = await createConversation.mutateAsync({
+			otherUserId: room.ownerId,
+			roomId: room.id,
+		});
+		navigate(`/chat?conversationId=${conversationId}`);
+	};
 	const { check } = useSession();
 	const { likeRoom, removeLikeRoom } = useUpdateRoomInteraction();
 	if (!room) {
@@ -114,6 +125,9 @@ export default function RoomDetails({ room }: Props) {
 							</div>
 							<nav className="flex items-center gap-2">
 								<CopyRoomLinkButton />
+								<Button onClick={handleStartChat}>
+									Enviar mensaje al propietario
+								</Button>
 
 								<Button
 									onClick={handleFavouriteClick}
