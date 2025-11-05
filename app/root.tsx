@@ -1,5 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
+
 import {
 	isRouteErrorResponse,
 	Links,
@@ -69,8 +71,10 @@ export default function App() {
 	return (
 		<AuthContextProvider>
 			<QueryClientProvider client={queryClient}>
-				<Outlet />
-				<ReactQueryDevtools buttonPosition="bottom-right" />
+				<NuqsAdapter>
+					<Outlet />
+					{/* <ReactQueryDevtools buttonPosition="bottom-right" /> */}
+				</NuqsAdapter>
 			</QueryClientProvider>
 		</AuthContextProvider>
 	);

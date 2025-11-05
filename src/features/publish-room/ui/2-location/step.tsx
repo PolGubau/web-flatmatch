@@ -9,6 +9,7 @@ import { MapWithMarker } from "~/shared/components/map";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 import { StreetAutocomplete } from "./street-autocomplete";
+import { MapPlaceholder } from "./ui/map-placeholder";
 
 const Step2Schema = EditableRoomSchema.pick({
 	location: true,
@@ -63,40 +64,46 @@ export function LocationForm() {
 							}}
 							value={location.address}
 						/>
-						<ul className="flex flex-col gap-2 text-sm text-foreground/80">
-							<li className="grid grid-cols-2 gap-2">
-								<span className="capitalize text-foreground/60">
-									{t("city")}
-								</span>
-								<span>{location.city}</span>
-							</li>
-							<li className="grid grid-cols-2 gap-2">
-								<span className="capitalize text-foreground/60">
-									{t("country")}
-								</span>
-								<span>{location.country}</span>
-							</li>
-							<li className="grid grid-cols-2 gap-2">
-								<span className="capitalize text-foreground/60">
-									{t("postal_code")}
-								</span>
-								<span>{location.postalCode}</span>
-							</li>
-							<li className="grid grid-cols-2 gap-2">
-								<span className="capitalize text-foreground/60">
-									{t("latitude")}
-								</span>
-								<span>{location.lat}</span>
-							</li>
-							<li className="grid grid-cols-2 gap-2">
-								<span className="capitalize text-foreground/60">
-									{t("longitude")}
-								</span>
-								<span>{location.lng}</span>
-							</li>
-						</ul>
+						{location.address && (
+							<ul className="flex flex-col gap-2 text-sm text-foreground/80">
+								<li className="grid grid-cols-2 gap-2">
+									<span className="capitalize text-foreground/60">
+										{t("city")}
+									</span>
+									<span>{location.city}</span>
+								</li>
+								<li className="grid grid-cols-2 gap-2">
+									<span className="capitalize text-foreground/60">
+										{t("country")}
+									</span>
+									<span>{location.country}</span>
+								</li>
+								<li className="grid grid-cols-2 gap-2">
+									<span className="capitalize text-foreground/60">
+										{t("postal_code")}
+									</span>
+									<span>{location.postalCode}</span>
+								</li>
+								<li className="grid grid-cols-2 gap-2">
+									<span className="capitalize text-foreground/60">
+										{t("latitude")}
+									</span>
+									<span>{location.lat}</span>
+								</li>
+								<li className="grid grid-cols-2 gap-2">
+									<span className="capitalize text-foreground/60">
+										{t("longitude")}
+									</span>
+									<span>{location.lng}</span>
+								</li>
+							</ul>
+						)}
 					</article>
-					{lat && lng ? <MapWithMarker lat={lat} lon={lng} /> : null}
+					{lat && lng ? (
+						<MapWithMarker lat={lat} lon={lng} />
+					) : (
+						<MapPlaceholder />
+					)}
 				</section>
 			</fieldset>
 

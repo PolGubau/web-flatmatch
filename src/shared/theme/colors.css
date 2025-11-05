@@ -95,7 +95,6 @@
 	--color-success: var(--color-success-500);
 	--color-warning: var(--color-warning-500);
 	--color-error: var(--color-error-500);
-
 	--color-canvas: var(--canvas);
 	--color-foreground: var(--foreground);
 }

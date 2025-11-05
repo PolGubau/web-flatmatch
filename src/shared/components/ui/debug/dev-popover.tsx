@@ -10,7 +10,7 @@ export const DevPopover = () => {
 	const { session } = useSession();
 	return (
 		<>
-			<Drawer isOpen={isOpen} onClose={() => setIsOpen(false)}>
+			<Drawer onClose={() => setIsOpen(false)} open={isOpen}>
 				<div>
 					<h2>Session</h2>
 

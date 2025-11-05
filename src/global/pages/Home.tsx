@@ -2,7 +2,6 @@ import {
 	ArrowLeft01Icon,
 	ArrowRight01Icon,
 	ArrowUp01Icon,
-	FilterIcon,
 	RefreshIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -36,8 +35,8 @@ export default function HomePage() {
 					<div className="grid grid-rows-[1fr_auto] gap-6 h-full items-center">
 						<Drawer
 							className="max-w-7xl mx-auto"
-							isOpen={!!bottomDrawerRoom}
 							onClose={handleCloseDrawer}
+							open={!!bottomDrawerRoom}
 						>
 							{bottomDrawerRoom && <RoomDetails room={bottomDrawerRoom} />}
 						</Drawer>
