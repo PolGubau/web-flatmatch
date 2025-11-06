@@ -12,7 +12,13 @@ import type {
 } from "~/shared/abstracts/repo";
 import type { RoomWithMetadataDB } from "../types/dtos";
 import { roomBDtoDomainAndMetadata, roomMapper } from "./adapter/room.adapter";
-import type { InteractApi, RemoveInteractionApi } from "./room-repository";
+import { getRoomsWithMetadata } from "./functions/get-rooms-with-metadata";
+import { getRoomQuery } from "./functions/get-single-room";
+import type {
+	GetFeed,
+	InteractApi,
+	RemoveInteractionApi,
+} from "./room-repository";
 
 export type RoomDB = Tables<"rooms">;
 
@@ -23,20 +29,15 @@ export type UpdateRoom = Updates<"rooms">;
  * Devuelve todas las rooms con su verificación
  */
 
-export const getFeed: FindAll<RoomWithMetadata> = async () => {
+export const getFeed: GetFeed = async ({ filters, page = 0 }) => {
 	const userId = await getUserId();
 
-	const { data, error } = await supabase
-		.rpc("rooms_with_metadata", {
-			p_user_id: userId,
-		})
-		// .or("interaction_action.is.null,interaction_action.neq.like")
-		.neq("owner_id", userId)
-		.eq("status", "available")
+	const data = await getRoomsWithMetadata({
+		filters,
+		notCreatedBy: userId,
+		page,
+	});
 
-		.limit(10);
-
-	if (error) throw error;
 	console.log("feed rooms:", data);
 	if (!data) return [];
 
@@ -48,13 +49,9 @@ export const getFeed: FindAll<RoomWithMetadata> = async () => {
 export const getYourRooms: FindAll<RoomWithMetadata> = async () => {
 	const userId = await getUserId();
 
-	const { data, error } = await supabase
-		.from("rooms_with_metadata")
-		.select("*")
-		.eq("owner_id", userId)
-		.limit(10);
-
-	if (error) throw error;
+	const data = await getRoomsWithMetadata({
+		createdBy: userId,
+	});
 
 	const roomWithMetadata = data.map((item) =>
 		roomBDtoDomainAndMetadata(item as unknown as RoomWithMetadataDB),
@@ -68,14 +65,8 @@ export const getYourRooms: FindAll<RoomWithMetadata> = async () => {
 export const getOneRoom: FindById<RoomWithMetadata> = async (id) => {
 	// const _userId = await getUserId();
 
-	const { data, error } = await supabase
-		.from("rooms_with_metadata")
-		.select("*")
-		// .eq("room_user_interactions.user_id", userId)
-		.eq("id", id)
-		.single();
+	const data = await getRoomQuery({ id });
 
-	if (error && error.code !== "PGRST116") throw error; // PGRST116 = not found
 	if (!data) {
 		return null;
 	}

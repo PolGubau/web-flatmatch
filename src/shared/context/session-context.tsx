@@ -36,15 +36,38 @@ export const SessionProvider = ({ children }: Props) => {
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We want to run this effect only once on mount
 	useEffect(() => {
+		let mounted = true;
+
+		// Fetch initial session immediately so consumers don't see `null` while a valid
+		// session exists (prevents premature redirects from guards relying on session)
+		(async () => {
+			try {
+				const {
+					data: { session: initialSession },
+				} = await supabase.auth.getSession();
+				if (!mounted) return;
+				setSession(initialSession ?? null);
+			} catch (err) {
+				console.warn("Failed to get initial session", err);
+				if (!mounted) return;
+				setSession(null);
+			} finally {
+				if (mounted) setIsLoading(false);
+			}
+		})();
+
 		const {
 			data: { subscription },
-		} = supabase.auth.onAuthStateChange(async (_event, session) => {
+		} = supabase.auth.onAuthStateChange((_event, session) => {
 			console.log("Auth state changed:", _event, session);
 			setSession(session);
 			setIsLoading(false);
 		});
 
-		return () => subscription.unsubscribe();
+		return () => {
+			mounted = false;
+			subscription.unsubscribe();
+		};
 	}, [supabase]);
 
 	return (

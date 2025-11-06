@@ -451,31 +451,42 @@ export type Database = {
       }
     }
     Functions: {
-      rooms_with_metadata: {
-        Args: { p_user_id: string }
-        Returns: {
-          commodities: Json
-          contact: Json
-          created_at: string
-          description: string
-          id: string
-          images: Json
-          interaction: Json
-          location: Json
-          owner: Json
-          owner_id: string
-          preferences: Json
-          price: Json
-          rules: Json
-          status: string
-          timings: Json
-          title: string
-          type: string
-          updated_at: string
-          verified: Json
-          who_is_living: Json
-        }[]
-      }
+      rooms_with_metadata:
+        | {
+            Args: {
+              location?: string
+              max_price?: number
+              min_price?: number
+              p_user_id: string
+              page?: number
+            }
+            Returns: Record<string, unknown>[]
+          }
+        | {
+            Args: { p_user_id: string }
+            Returns: {
+              commodities: Json
+              contact: Json
+              created_at: string
+              description: string
+              id: string
+              images: Json
+              interaction: Json
+              location: Json
+              owner: Json
+              owner_id: string
+              preferences: Json
+              price: Json
+              rules: Json
+              status: string
+              timings: Json
+              title: string
+              type: string
+              updated_at: string
+              verified: Json
+              who_is_living: Json
+            }[]
+          }
       rooms_with_metadata_for_user: {
         Args: { p_user_id: string }
         Returns: {

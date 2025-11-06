@@ -1,5 +1,5 @@
 import { t } from "i18next";
-import { parseAsInteger, useQueryState } from "nuqs";
+import { useFilters } from "~/features/room/model/hooks/use-filters";
 import { Input } from "~/shared/components/ui/input/input";
 import { cn } from "~/shared/utils/utils";
 
@@ -12,9 +12,7 @@ const availableLocations = [
 	"Roma",
 ];
 export const FiltersForm = () => {
-	const [location, setLocation] = useQueryState("location");
-	const [minPrice, setMinPrice] = useQueryState("minPrice", parseAsInteger);
-	const [maxPrice, setMaxPrice] = useQueryState("maxPrice", parseAsInteger);
+	const [{ location, maxPrice, minPrice }, setFilters] = useFilters();
 
 	return (
 		<section className="flex flex-col gap-4">
@@ -33,7 +31,7 @@ export const FiltersForm = () => {
 											"ring-2 ring-foreground bg-foreground/20": isChecked,
 										},
 									)}
-									onClick={() => setLocation(av_location)}
+									onClick={() => setFilters({ location: av_location })}
 									type="button"
 								>
 									<input
@@ -41,7 +39,7 @@ export const FiltersForm = () => {
 										hidden
 										id={av_location}
 										name="av_location"
-										onChange={() => setLocation(av_location)}
+										onChange={() => setFilters({ location: av_location })}
 										type="radio"
 										value={av_location}
 									/>
@@ -59,7 +57,9 @@ export const FiltersForm = () => {
 					<Input
 						label={"min_price"}
 						onChange={(e) =>
-							setMinPrice(e.target.value ? parseInt(e.target.value) : 0)
+							setFilters({
+								minPrice: e.target.value ? parseInt(e.target.value) : 0,
+							})
 						}
 						placeholder="0"
 						type="number"
@@ -68,7 +68,9 @@ export const FiltersForm = () => {
 					<Input
 						label={"max_price"}
 						onChange={(e) =>
-							setMaxPrice(e.target.value ? parseInt(e.target.value) : 1000)
+							setFilters({
+								maxPrice: e.target.value ? parseInt(e.target.value) : 1000,
+							})
 						}
 						placeholder="1000"
 						type="number"

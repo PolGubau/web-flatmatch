@@ -31,10 +31,22 @@ export type RemoveInteractionApi = (
 	id: Room["id"],
 ) => Promise<RemoveInteractionApiResponse>;
 
+type GetFeedFilters = {
+	location?: string;
+	minPrice?: number;
+	maxPrice?: number;
+};
+type GetFeedProps = {
+	filters?: GetFeedFilters;
+	page?: number;
+};
+export type GetFeed = (props: GetFeedProps) => Promise<RoomWithMetadata[]>;
+
 type RoomRepository = Omit<
 	AbstractRepository<RoomWithMetadata, EditableRoom>,
-	"create"
+	"create" | "findAll"
 > & {
+	findAll: GetFeed;
 	create: (data: EditableRoom) => Promise<Room>;
 	findFavorites: () => Promise<RoomWithMetadata[]>;
 	interact: InteractApi;
@@ -44,7 +56,7 @@ type RoomRepository = Omit<
 export const RoomRepository: RoomRepository = {
 	create: (data) => createRoom(data),
 	delete: (id) => deleteRoom(id),
-	findAll: () => getFeed(),
+	findAll: getFeed,
 	findById: (id) => getOneRoom(id),
 	findFavorites: () => getFavoriteRooms(),
 	findMany: (ids) => getManyRooms(ids),

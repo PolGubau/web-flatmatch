@@ -2,11 +2,14 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import type { RoomWithMetadata } from "~/entities/room/room";
 import { RoomRepository } from "../../infra/room-repository";
+import { useFilters } from "../hooks/use-filters";
 
 /**
  * Hook para obtener rooms con paginación infinita.
  */
 export const useListRoomsQuery = () => {
+	const [{ location, maxPrice, minPrice }] = useFilters();
+
 	const {
 		data,
 		isLoading,
@@ -25,8 +28,14 @@ export const useListRoomsQuery = () => {
 		initialPageParam: 0,
 
 		queryFn: async ({ pageParam = 0 }) => {
-			const rooms = await RoomRepository.findAll({ page: pageParam });
-			console.log("Fetched rooms for page", pageParam, rooms);
+			const filters = {
+				location: location ?? undefined,
+				maxPrice: maxPrice ?? undefined,
+				minPrice: minPrice ?? undefined,
+			};
+			const page: number = (pageParam ?? 0) as number;
+			console.log("Fetching rooms with filters:", filters, "page:", pageParam);
+			const rooms = await RoomRepository.findAll({ filters, page });
 			return rooms;
 		},
 		queryKey: ["rooms"],

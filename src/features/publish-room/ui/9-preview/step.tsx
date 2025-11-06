@@ -7,7 +7,6 @@ import { RoomTinderCardUI } from "~/features/room/ui/room-tinder-card-ui";
 import { useUser } from "~/features/user/model/use-user";
 import { Button } from "~/shared/components/ui/button";
 import { useSession } from "~/shared/context/session-context";
-import { useGetSession } from "~/shared/hooks/use-get-session";
 import { usePublishRoom } from "../../model/publish-room";
 import { useFormState } from "../../model/useFormState";
 

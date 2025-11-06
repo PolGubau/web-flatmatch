@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { t } from "i18next";
 import { useNavigate } from "react-router";
 import type { EditableRoom } from "~/entities/room/editable-room";
 import type { Room } from "~/entities/room/room";
@@ -23,7 +24,9 @@ export const usePublishRoom = (): UsePublishRoomResponse => {
 		},
 		onSuccess: (room) => {
 			queryClient.invalidateQueries({ queryKey: ["room", room.id] });
-			alert("Room created successfully!");
+			toast.success(t("room_created_successfully"), {
+				description: t("you_can_see_it_in_your_profile"),
+			});
 			navigate(`/room/${room.id}`);
 		},
 	});

@@ -15,11 +15,13 @@ export async function clientLoader({ params }: Route.ClientLoaderArgs) {
 }
 
 export default function RoomDetailsPage({ params }: Route.ComponentProps) {
-	const { room } = useRoom(params.roomId);
-
+	const { room, isLoading } = useRoom(params.roomId);
+ 	if (isLoading) {
+		return <LoadingSection />;
+	}
 	return (
 		<div className="relative">
-			{!room ? <LoadingSection /> : <RoomDetails room={room} />}
+			{room ? <RoomDetails room={room} /> : <div>Room not found</div>}
 		</div>
 	);
 }

@@ -47,7 +47,7 @@ export const deleteRoomService = async (id: Room["id"]): Promise<void> => {
 };
 
 export const listAllRoomsService = async (): Promise<RoomWithMetadata[]> => {
-	const dtoList = await RoomRepository.findAll();
+	const dtoList = await RoomRepository.findAll({});
 	console.log("all rooms:", dtoList);
 	return dtoList;
 };

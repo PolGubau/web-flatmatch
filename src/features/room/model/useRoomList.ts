@@ -3,7 +3,7 @@ import { RoomRepository } from "../infra/room-repository";
 
 export const useRoomList = () => {
 	return useQuery({
-		queryFn: RoomRepository.findAll,
+		queryFn: () => RoomRepository.findAll({}),
 		queryKey: ["rooms"],
 	});
 };

@@ -9,7 +9,9 @@ export const YourRooms = () => {
 		<RoomListWrapper
 			empty={
 				<div>
-					<p className="text-center text-gray-500">{t("you_have_no_rooms_yet")}</p>
+					<p className="text-center text-gray-500">
+						{t("you_have_no_rooms_yet")}
+					</p>
 					<Link className="text-blue-500 hover:underline" to="/rooms/new">
 						{t("publish_first_property")}
 					</Link>
