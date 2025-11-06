@@ -1,31 +1,31 @@
 import {
-	ArrowAllDirectionIcon,
 	BedDoubleIcon,
 	CancelCircleIcon,
+	ChattingIcon,
 	FavouriteIcon,
 	SecurityCheckIcon,
 	Sink01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import i18n from "i18next";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import type { RoomWithMetadata } from "~/entities/room/room";
+import { useGetOrCreateConversationMutation } from "~/features/chat";
 import { commoditiesMap, extrasMap } from "~/shared/base/maps";
 import { MapWithMarker } from "~/shared/components/map";
-import { cn } from "~/shared/utils/utils";
-import CopyRoomLinkButton from "./copy-room-link-button";
-import { ContactButtons } from "./footer/contact-buttons";
-import { RoomDetailsImage } from "./image";
-import "./room-details.css";
-import i18n from "i18next";
-import { useNavigate } from "react-router";
-import { useGetOrCreateConversationMutation } from "~/features/chat";
 import { Button } from "~/shared/components/ui/button";
 import { useSession } from "~/shared/context/session-context";
 import type { TranslationKey } from "~/shared/i18n/i18n";
 import type { RentType } from "~/shared/types/common";
 import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 import { getRoomPath } from "~/shared/utils/path/get-room-path";
+import { cn } from "~/shared/utils/utils";
 import { useUpdateRoomInteraction } from "../../model/mutations/update-room-interaction";
+import CopyRoomLinkButton from "./copy-room-link-button";
+import { ContactButtons } from "./footer/contact-buttons";
+import { RoomDetailsImage } from "./image";
+import "./room-details.css";
 import { RoomDistanceFromYou } from "./room-distance-from-you";
 
 type Props = {
@@ -125,8 +125,13 @@ export default function RoomDetails({ room }: Props) {
 							</div>
 							<nav className="flex items-center gap-2">
 								<CopyRoomLinkButton />
-								<Button onClick={handleStartChat}>
-									Enviar mensaje al propietario
+								<Button
+									onClick={handleStartChat}
+									size={"icon"}
+									type="button"
+									variant={"ghost"}
+								>
+									<HugeiconsIcon icon={ChattingIcon} size={25} />
 								</Button>
 
 								<Button
