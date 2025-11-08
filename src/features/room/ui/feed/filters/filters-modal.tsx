@@ -8,6 +8,11 @@ import { FiltersForm } from "./filters-form";
 
 export const FiltersModal = () => {
 	const [isOpen, setIsOpen] = React.useState(false);
+
+	function handleApply() {
+		setIsOpen(false);
+	}
+
 	return (
 		<>
 			<Button onClick={() => setIsOpen(true)} variant={"outline"}>
@@ -15,19 +20,11 @@ export const FiltersModal = () => {
 				{t("filters")}
 			</Button>
 			<Drawer
-				footer={
-					<nav className="w-full flex justify-end">
-						<Button onClick={() => setIsOpen(false)}>
-							{t("apply")}
-							<HugeiconsIcon icon={FilterIcon} size={16} strokeWidth={3} />
-						</Button>
-					</nav>
-				}
 				onClose={() => setIsOpen(false)}
 				open={isOpen}
 				title={t("filters")}
 			>
-				<FiltersForm />
+				<FiltersForm onSubmit={handleApply} />
 			</Drawer>
 		</>
 	);

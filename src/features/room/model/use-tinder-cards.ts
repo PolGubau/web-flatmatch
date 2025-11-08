@@ -1,5 +1,5 @@
-import { type InfiniteData, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
 import type { RoomWithMetadata } from "~/entities/room/room";
 import type { SwipeDirection } from "../types/common";
 import { useSwipeActions } from "./hooks/useSwipeActions";
@@ -17,6 +17,13 @@ export const useTinderCards = () => {
 		refetch,
 		hasNextPage,
 	} = useListRoomsQuery();
+
+	const [searchParams] = useSearchParams();
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Refetching rooms when searchParams change is intentional
+	useEffect(() => {
+		// React Query's refetch is stable, safe to call directly here.
+		void refetch();
+	}, [searchParams, refetch]);
 
 	const [bottomDrawerRoom, setBottomDrawerRoom] =
 		useState<RoomWithMetadata | null>(null);

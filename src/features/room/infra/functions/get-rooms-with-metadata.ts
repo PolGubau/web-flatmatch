@@ -35,8 +35,8 @@ export const getRoomsWithMetadata = async (
 	// Filtros dinámicos
 	if (filters?.location)
 		query = query.ilike("location", `%${filters.location}%`);
-	if (filters?.minPrice) query = query.gte("price", filters.minPrice);
-	if (filters?.maxPrice) query = query.lte("price", filters.maxPrice);
+	if (filters?.minPrice) query = query.gte("price->amount", filters.minPrice);
+	if (filters?.maxPrice) query = query.lte("price->amount", filters.maxPrice);
 
 	if (createdBy) query = query.eq("owner_id", createdBy);
 	if (notCreatedBy) query = query.neq("owner_id", notCreatedBy);

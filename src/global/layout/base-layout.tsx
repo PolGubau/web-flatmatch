@@ -1,8 +1,8 @@
 import { Outlet, useNavigation } from "react-router";
 import { LoadingSection } from "~/shared/components/pages/LoadingSection";
-import { Toaster } from "~/shared/components/ui/sonner";
-import "../app.css";
+
 import { DevPopover } from "~/shared/components/ui/debug/dev-popover";
+import { Toaster } from "~/shared/components/ui/sonner";
 import { useEnv } from "~/shared/hooks/use-is-local";
 import { OneTapComponent } from "../ui/sign-in-google";
 

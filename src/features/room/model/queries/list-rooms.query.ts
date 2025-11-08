@@ -38,7 +38,9 @@ export const useListRoomsQuery = () => {
 			const rooms = await RoomRepository.findAll({ filters, page });
 			return rooms;
 		},
-		queryKey: ["rooms"],
+		// Include current filter values in the query key so React Query will
+		// automatically refetch when filters change (driven by URL search params).
+		queryKey: ["rooms", { location, maxPrice, minPrice }],
 		refetchOnWindowFocus: false,
 		staleTime: 1000 * 60 * 5, // cache 5min
 	});

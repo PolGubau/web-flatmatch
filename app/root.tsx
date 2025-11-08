@@ -16,7 +16,7 @@ import { LoadingSection } from "~/shared/components/pages/LoadingSection";
 import { Toaster } from "~/shared/components/ui/sonner";
 import "~/shared/i18n/i18n";
 import type { Route } from "./+types/root";
-import "./app.css";
+import "../src/global/app.css";
 
 export const links: Route.LinksFunction = () => [
 	{ href: "https://fonts.googleapis.com", rel: "preconnect" },

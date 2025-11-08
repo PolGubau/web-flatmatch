@@ -1,32 +1,24 @@
 @import "tailwindcss";
-@plugin "tailwindcss-motion";
-
 @import "../shared/theme/colors.css";
+@import "../shared/theme/animations.css";
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+@font-face {
+	font-family: "Bricolage";
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 800;
+	src: url(/Bricolage.ttf) format("truetype");
+}
+
 @theme {
 	--font-sans:
-		"Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+		"Bricolage", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
 		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
-
-html,
-body {
-	@apply bg-canvas text-foreground;
-	@media (prefers-color-scheme: dark) {
-		color-scheme: dark;
-	}
-}
-
-:root {
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	interpolate-size: allow-keywords;
-}
+ 
 input[type="date"]::-webkit-calendar-picker-indicator {
 	@apply dark:invert dark:brightness-200 text-foreground stroke-foreground fill-foreground;
 }
@@ -60,4 +52,84 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .form {
 	@apply flex flex-col gap-2 w-full;
+}
+
+
+html,
+body {
+ @apply bg-canvas text-foreground;
+
+	@media (prefers-color-scheme: dark) {
+		color-scheme: dark;
+	}
+}
+
+:root {
+	--vh: 1vh;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	interpolate-size: allow-keywords;
+}
+
+/* Support the new `dvh` unit so that dynamically shrinking iOS Safari UI works */
+@supports (height: 1dvh) {
+	:root {
+		--vh: 1dvh;
+	}
+}
+
+/* However when the app is installed as PWA use the `vh` unit to avoid weird layout issues */
+@media all and (display-mode: standalone) {
+	:root {
+		--vh: 1vh;
+	}
+}
+#modal-root {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-height: calc(100 * var(--vh));
+	overflow: hidden;
+}
+
+select,
+::picker(select) {
+	/* appearance: base-select; */
+	@apply placeholder:text-foreground/70 border-foreground/30 flex rounded-xl min-w-0 border-2 px-2 py-1 transition-all outline-none focus-visible:border-foreground;
+}
+select::picker-icon {
+	color: #999999;
+	transition: 0.4s rotate;
+}
+select:open::picker-icon {
+	rotate: 180deg;
+}
+
+::picker(select) {
+	border: none;
+	@apply bg-transparent text-foreground flex flex-col;
+}
+
+option {
+	border: 1px solid #dddddd;
+	transition: 0.4s;
+	@apply bg-canvas p-2 gap-4;
+}
+option:first-of-type {
+	border-radius: 8px 8px 0 0;
+}
+
+option:last-of-type {
+	border-radius: 0 0 8px 8px;
+}
+
+option:not(option:last-of-type) {
+	border-bottom: none;
+}
+
+option:hover,
+option:focus {
+	@apply brightness-90 outline outline-foreground/50;
 }

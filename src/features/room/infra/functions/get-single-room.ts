@@ -56,5 +56,5 @@ export const getRoomQuery = async (
 	if (error && error.code !== "PGRST116") throw error; // PGRST116 = not found
 	console.log("data room with metadata:", data);
 	if (error) throw error;
-	return data;
+	return data as unknown as RoomWithMetadata;
 };

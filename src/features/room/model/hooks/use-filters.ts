@@ -1,15 +1,9 @@
-import { parseAsFloat, parseAsStringEnum, useQueryStates } from "nuqs";
+import { parseAsInteger, parseAsStringEnum, useQueryStates } from "nuqs";
+import { availableLocations } from "../../ui/feed/filters/filters-form";
 export function useFilters() {
 	return useQueryStates({
-		location: parseAsStringEnum([
-			"Barcelona",
-			"Girona",
-			"Tarragona",
-			"Lleida",
-			"Milano",
-			"Roma",
-		]),
-		maxPrice: parseAsFloat,
-		minPrice: parseAsFloat,
+		location: parseAsStringEnum(availableLocations as unknown as string[]) || null,
+		maxPrice: parseAsInteger,
+		minPrice: parseAsInteger,
 	});
 }
