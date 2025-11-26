@@ -6,7 +6,6 @@ import {
 	DeskIcon,
 	PatioIcon,
 	Sink01Icon,
-	SquareArrowExpand01Icon,
 	Wardrobe01Icon,
 	WindowsNewIcon,
 } from "@hugeicons/core-free-icons";
@@ -18,6 +17,10 @@ import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { commoditiesMap, extrasMap } from "~/shared/base/maps";
 import { Input } from "~/shared/components/ui/input/input";
+import {
+	ControlledNumberInput,
+	NumberInput,
+} from "~/shared/components/ui/input/number-input";
 import { RHFSelect } from "~/shared/components/ui/select";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
@@ -57,48 +60,56 @@ export function CommoditiesForm() {
 			<fieldset className="flex flex-col gap-6 p-1 overflow-y-auto">
 				<legend className="text-lg pb-6">{t("select_commodities")}</legend>
 				<header className="grid gap-4 items-center grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
-					<Input
+					<ControlledNumberInput<Step3SchemaType>
+						control={control}
 						icon={Sink01Icon}
 						id="bathrooms"
-						label={"bathrooms"}
+						label="bathrooms"
 						max={10}
 						min={0}
+						name="commodities.whole.bathrooms"
 						placeholder={t("enter_number_bathrooms")}
 						required
-						type="number"
-						{...register("commodities.whole.bathrooms", {
+						rules={{
+							max: 10,
+							min: 0,
 							required: true,
 							valueAsNumber: true,
-						})}
+						}}
 					/>
-
-					<Input
+					<ControlledNumberInput<Step3SchemaType>
+						control={control}
 						icon={BedIcon}
 						id="bedrooms-ind"
 						label={"bedrooms"}
 						max={10}
 						min={0}
+						name="commodities.whole.bedrooms.individual"
 						placeholder={t("enter_amount_private_bedrooms")}
 						required
-						{...register("commodities.whole.bedrooms.individual", {
+						rules={{
+							max: 10,
+							min: 0,
 							required: true,
 							valueAsNumber: true,
-						})}
+						}}
 					/>
-
-					<Input
+					<ControlledNumberInput<Step3SchemaType>
+						control={control}
 						icon={BedBunkIcon}
 						id="bedrooms-shared"
 						label={"shared"}
-						max={999}
+						max={99}
 						min={0}
+						name="commodities.whole.bedrooms.shared"
 						placeholder={t("enter_amount_shared_bedrooms")}
 						required
-						type="number"
-						{...register("commodities.whole.bedrooms.shared", {
+						rules={{
+							max: 99,
+							min: 0,
 							required: true,
 							valueAsNumber: true,
-						})}
+						}}
 					/>
 				</header>
 				<div className="flex flex-col gap-1">
