@@ -1,4 +1,4 @@
-import { Building05Icon } from "@hugeicons/core-free-icons";
+import { Building05Icon, MapPinpoint01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { t } from "i18next";
 import { Outlet, useLocation } from "react-router";
@@ -18,7 +18,7 @@ const steps: Step[] = [
 		path: "/publish",
 	},
 	{
-		icon: Building05Icon,
+		icon: MapPinpoint01Icon,
 		label: "location",
 		path: "/publish/location",
 	},

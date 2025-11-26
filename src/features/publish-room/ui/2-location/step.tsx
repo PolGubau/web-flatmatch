@@ -1,4 +1,3 @@
-// ui/Step1.tsx
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -6,9 +5,9 @@ import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { MapWithMarker } from "~/shared/components/map";
+import { StreetAutocomplete } from "~/shared/components/ui/address-autocomplete/address-autocomplete";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
-import { StreetAutocomplete } from "./street-autocomplete";
 import { MapPlaceholder } from "./ui/map-placeholder";
 
 const Step2Schema = EditableRoomSchema.pick({

@@ -47,7 +47,7 @@ function Button({
 	const Comp = asChild ? Slot : "button";
 
 	return (
-		<Comp
+		<Comp 
 			className={cn(buttonVariants({ className, size, variant }))}
 			data-slot="button"
 			{...props}

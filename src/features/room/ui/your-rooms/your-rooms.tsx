@@ -12,10 +12,10 @@ export const YourRooms = () => {
 	return (
 		<RoomListWrapper
 			empty={
-				<div className="flex flex-col py-6 gap-3">
+				<div className="flex flex-col gap-1">
 					<HugeiconsIcon icon={AlbumNotFound02Icon} size={70} />
-					<p className="text-xl pt-4">{t("you_have_no_rooms_yet")}</p>
-					<Link to="/rooms/new">
+					<p className="text-xl pt-2">{t("you_have_no_rooms_yet")}</p>
+					<Link to="/publish">
 						<Button>
 							<Plus size={18} />
 							{t("publish_first_property")}

@@ -52,7 +52,7 @@ export function MapWithMarker({
 	interactive = true,
 }: MapProps) {
 	return (
-		<div className="w-full h-full min-h-64 rounded-lg overflow-hidden">
+		<div className="w-full z-10 h-full min-h-64 rounded-lg overflow-hidden">
 			<MapContainer
 				center={[lat, lon]}
 				className="w-full h-full min-h-64"

@@ -64,7 +64,7 @@ export default function ProfilePage({ userId, isYours }: Props) {
 				/>
 				<ProfileChipList items={chips} />
 			</header>
-			<section>
+			<section className="flex flex-col gap-8">
 				{isYours && someInfoMissing && (
 					<CompleteProfile
 						aboutMe={user.aboutMe}

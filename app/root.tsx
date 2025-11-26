@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
 
 import {
@@ -15,8 +14,8 @@ import { AuthContextProvider } from "~/global/supabase/auth-context";
 import { LoadingSection } from "~/shared/components/pages/LoadingSection";
 import { Toaster } from "~/shared/components/ui/sonner";
 import "~/shared/i18n/i18n";
-import type { Route } from "./+types/root";
 import "../src/global/app.css";
+import type { Route } from "./+types/root";
 
 export const links: Route.LinksFunction = () => [
 	{ href: "https://fonts.googleapis.com", rel: "preconnect" },

@@ -2,9 +2,11 @@ import { TickIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Command as CommandPrimitive } from "cmdk";
 import { t } from "i18next";
+import { Delete } from "lucide-react";
 import { type HTMLAttributes, useMemo, useState } from "react";
 import type { TranslationKey } from "~/shared/i18n/i18n";
 import { cn } from "~/shared/utils/utils";
+import { Button } from "./button";
 import {
 	Command,
 	CommandEmpty,
@@ -25,6 +27,7 @@ type Props<T extends string> = HTMLAttributes<HTMLInputElement> & {
 	isLoading?: boolean;
 	emptyMessage?: string;
 	placeholder: TranslationKey;
+	rightContent?: React.ReactNode;
 };
 
 export function AutoComplete<T extends string>({
@@ -36,6 +39,7 @@ export function AutoComplete<T extends string>({
 	isLoading,
 	emptyMessage = "No items.",
 	placeholder = "search",
+	rightContent,
 	...rest
 }: Props<T>) {
 	const [open, setOpen] = useState(false);
@@ -72,16 +76,30 @@ export function AutoComplete<T extends string>({
 			<Popover onOpenChange={setOpen} open={open}>
 				<Command shouldFilter={false}>
 					<PopoverAnchor asChild>
-						<CommandPrimitive.Input
-							{...rest}
-							className={cn(inputTheme, "h-12")}
-							onFocus={() => setOpen(true)}
-							onKeyDown={(e) => setOpen(e.key !== "Escape")}
-							onMouseDown={() => setOpen((open) => !!searchValue || !open)}
-							onValueChange={onSearchValueChange}
-							placeholder={t(placeholder)}
-							value={searchValue}
-						/>
+						<div className={cn(inputTheme, "h-12")}>
+							<CommandPrimitive.Input
+								{...rest}
+								className="flex-1 bg-transparent outline-none border-0 focus:ring-0"
+								onFocus={() => setOpen(true)}
+								onKeyDown={(e) => setOpen(e.key !== "Escape")}
+								onMouseDown={() => setOpen((open) => !!searchValue || !open)}
+								onValueChange={onSearchValueChange}
+								placeholder={t(placeholder)}
+								value={searchValue}
+							/>
+							<div className="flex gap-1 items-center">
+								{rightContent}
+								<Button
+									disabled={!selectedValue}
+									onClick={reset}
+									size={"icon"}
+									type="button"
+									variant={"ghost"}
+								>
+									<Delete />
+								</Button>
+							</div>
+						</div>
 					</PopoverAnchor>
 					{!open && <CommandList aria-hidden="true" className="hidden" />}
 					<PopoverContent
@@ -103,10 +121,11 @@ export function AutoComplete<T extends string>({
 							{isLoading && (
 								<CommandPrimitive.Loading>
 									<div className="p-1 flex flex-col gap-1">
-										<Skeleton className="h-6 w-full" />
-										<Skeleton className="h-6 w-full" />
-										<Skeleton className="h-6 w-full" />
-										<Skeleton className="h-6 w-full" />
+										<Skeleton className="w-full min-h-8">Loading...</Skeleton>
+										<Skeleton className="w-full min-h-8">Loading...</Skeleton>
+										<Skeleton className="w-full min-h-8">Loading...</Skeleton>
+										<Skeleton className="w-full min-h-8">Loading...</Skeleton>
+										<Skeleton className="w-full min-h-8">Loading...</Skeleton>
 									</div>
 								</CommandPrimitive.Loading>
 							)}
