@@ -49,7 +49,30 @@ export const OneTapComponent = () => {
 							token: response.credential,
 						});
 						if (error) throw error;
-						console.log("Session data: ", data);
+						// Ensure Supabase has established the session before navigating.
+						// In some mobile flows the auth state change may be delayed, which
+						// causes route guards to run before the session is visible.
+						console.log("Session data (signin result): ", data);
+						const waitForSession = async (timeout = 3000) => {
+							const start = Date.now();
+							while (Date.now() - start < timeout) {
+								const { data: sessionResp } = await supabase.auth.getSession();
+								if (sessionResp.session) return sessionResp.session;
+								// small delay
+								await new Promise((r) => setTimeout(r, 150));
+							}
+							return null;
+						};
+
+						const session = await waitForSession(4000);
+						if (!session) {
+							// As a fallback, reload the page to let the SessionProvider pick up
+							// the new session from storage/cookies. This is less ideal but
+							// prevents the app from immediately redirecting to login.
+							console.warn("Session not visible yet, reloading to pick it up");
+							window.location.reload();
+							return;
+						}
 						navigate("/");
 					} catch (err) {
 						console.error("Error logging in with Google One Tap", err);
