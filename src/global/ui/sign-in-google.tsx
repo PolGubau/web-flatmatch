@@ -1,6 +1,6 @@
 import type { accounts, CredentialResponse } from "google-one-tap";
 import { useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { GOOGLE_ID } from "~/config";
 import { supabase } from "../supabase/client";
 
@@ -26,6 +26,7 @@ const generateNonce = async (): Promise<[string, string]> => {
 
 export const OneTapComponent = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	useEffect(() => {
 		const initializeGoogleOneTap = async () => {
@@ -35,8 +36,17 @@ export const OneTapComponent = () => {
 			if (error) {
 				console.error("Error getting session", error);
 			}
+			// If there's already a session, only redirect to `/` when the
+			// OneTapComponent is rendered inside an auth page (login/register).
+			// Otherwise, avoid forcing navigation on every page reload.
 			if (sessionData.session) {
-				navigate("/");
+				const path = location.pathname || window.location.pathname;
+				if (path.startsWith("/auth")) {
+					navigate("/");
+					return;
+				}
+				// If not on an auth route, don't initialize One Tap since user
+				// is already authenticated.
 				return;
 			}
 
@@ -97,7 +107,7 @@ export const OneTapComponent = () => {
 		return () => {
 			document.body.removeChild(script);
 		};
-	}, [navigate]);
+	}, [navigate, location]);
 
 	return null;
 };

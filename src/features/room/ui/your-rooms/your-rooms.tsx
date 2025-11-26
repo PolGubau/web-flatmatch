@@ -1,5 +1,9 @@
+import { AlbumNotFound02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { t } from "i18next";
+import { Plus } from "lucide-react";
 import { Link } from "react-router";
+import { Button } from "~/shared/components/ui/button";
 import { listYourRoomsQuery } from "../../model/queries/get-your-rooms.query";
 import { RoomListWrapper } from "../rooms-list/room-list-wrapper";
 
@@ -8,12 +12,14 @@ export const YourRooms = () => {
 	return (
 		<RoomListWrapper
 			empty={
-				<div>
-					<p className="text-center text-gray-500">
-						{t("you_have_no_rooms_yet")}
-					</p>
-					<Link className="text-blue-500 hover:underline" to="/rooms/new">
-						{t("publish_first_property")}
+				<div className="flex flex-col py-6 gap-3">
+					<HugeiconsIcon icon={AlbumNotFound02Icon} size={70} />
+					<p className="text-xl pt-4">{t("you_have_no_rooms_yet")}</p>
+					<Link to="/rooms/new">
+						<Button>
+							<Plus size={18} />
+							{t("publish_first_property")}
+						</Button>
 					</Link>
 				</div>
 			}

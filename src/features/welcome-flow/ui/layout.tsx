@@ -15,7 +15,7 @@ bg-[length:200%_200%] animate-gradient-move"
 				>
 					<div className="">
 						<h1 className="md:text-center max-md:px-3 font-regular tracking-wide line-clamp-1 text-canvas/80 text-4xl pb-3 ">
-							{name ? `Hi ${name}` : "Welcome"}
+							{name ? `${t("hi")} ${name}` : t("welcome")}
 						</h1>
 						<h2 className="md:text-center text-canvas/80">
 							{t("lets_know_each_other")}
