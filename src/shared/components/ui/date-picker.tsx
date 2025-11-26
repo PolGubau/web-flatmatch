@@ -18,6 +18,7 @@ export type DatePickerProps = Omit<
 	placeholder?: TranslationKey;
 	name?: string;
 	required?: boolean;
+	defaultIsoValue?: string | null;
 	label?: TranslationKey;
 };
 export function DatePicker({
@@ -26,11 +27,14 @@ export function DatePicker({
 	placeholder = "select_option",
 	label,
 	required = false,
+	defaultIsoValue,
 	...props
 }: DatePickerProps) {
 	const { i18n } = useTranslation();
 	const [open, setOpen] = React.useState<boolean>(false);
-	const [date, setDate] = React.useState<string | null>(null);
+	const [date, setDate] = React.useState<string | null>(
+		defaultIsoValue ?? null,
+	);
 
 	return (
 		<div className="flex flex-col gap-1">

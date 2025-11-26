@@ -4,6 +4,7 @@ import { t } from "i18next";
 import { useState } from "react";
 import { useFilters } from "~/features/room/model/hooks/use-filters";
 import { Button } from "~/shared/components/ui/button";
+import { DatePicker } from "~/shared/components/ui/date-picker";
 import { Input } from "~/shared/components/ui/input/input";
 import { cn } from "~/shared/utils/utils";
 
@@ -21,6 +22,7 @@ export type Filters = {
 	location: Location | null;
 	minPrice: number | null;
 	maxPrice: number | null;
+	afterDate: Date | null;
 };
 
 type Props = {
@@ -30,7 +32,12 @@ type Props = {
 export const FiltersForm = ({ onSubmit }: Props) => {
 	const [filters, setFilters] = useFilters();
 
-	const { minPrice, maxPrice, location: rawLocation } = filters ?? {};
+	const {
+		minPrice,
+		maxPrice,
+		location: rawLocation,
+		afterDate,
+	} = filters ?? {};
 	const location = rawLocation as Location | null;
 	const [selectedLocation, setSelectedLocation] = useState<Location | null>(
 		location ?? null,
@@ -40,8 +47,10 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 		const formData = new FormData(event.target as HTMLFormElement);
 		const minPriceValue = formData.get("minPrice");
 		const maxPriceValue = formData.get("maxPrice");
+		const afterDateValue = formData.get("afterDate");
 
-		const filters = {
+		const filters: Filters = {
+			afterDate: afterDateValue ? new Date(afterDateValue as string) : null,
 			location: selectedLocation,
 			maxPrice: maxPriceValue ? Number(maxPriceValue) : null,
 			minPrice: minPriceValue ? Number(minPriceValue) : null,
@@ -110,6 +119,16 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 						name="maxPrice"
 						placeholder={t("any")}
 						type="number"
+					/>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>{t("when_do_you_want_to_move")}</legend>
+				<div className="grid gap-4 md:grid-cols-2">
+					<DatePicker
+						defaultIsoValue={afterDate?.toISOString() ?? null}
+						label={"after_date"}
+						name="afterDate"
 					/>
 				</div>
 			</fieldset>

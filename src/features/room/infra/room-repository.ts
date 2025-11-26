@@ -31,8 +31,9 @@ export type RemoveInteractionApi = (
 	id: Room["id"],
 ) => Promise<RemoveInteractionApiResponse>;
 
-type GetFeedFilters = {
+export type GetFeedFilters = {
 	location?: string;
+	afterDate?: Date;
 	minPrice?: number;
 	maxPrice?: number;
 };

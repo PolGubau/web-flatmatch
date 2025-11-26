@@ -8,7 +8,7 @@ import { useFilters } from "../hooks/use-filters";
  * Hook para obtener rooms con paginación infinita.
  */
 export const useListRoomsQuery = () => {
-	const [{ location, maxPrice, minPrice }] = useFilters();
+	const [{ location, maxPrice, minPrice, afterDate }] = useFilters();
 
 	const {
 		data,
@@ -19,8 +19,6 @@ export const useListRoomsQuery = () => {
 		isFetchingNextPage,
 	} = useInfiniteQuery<RoomWithMetadata[], Error>({
 		getNextPageParam: (lastPage, allPages) => {
-			console.log("lastPage:", lastPage);
-			console.log("allPages:", allPages);
 			if (lastPage.length === 0) return undefined;
 			return allPages.length; // la siguiente página es el número de páginas ya cargadas
 		},
@@ -29,6 +27,7 @@ export const useListRoomsQuery = () => {
 
 		queryFn: async ({ pageParam = 0 }) => {
 			const filters = {
+				afterDate: afterDate ?? undefined,
 				location: location ?? undefined,
 				maxPrice: maxPrice ?? undefined,
 				minPrice: minPrice ?? undefined,
@@ -40,7 +39,7 @@ export const useListRoomsQuery = () => {
 		},
 		// Include current filter values in the query key so React Query will
 		// automatically refetch when filters change (driven by URL search params).
-		queryKey: ["rooms", { location, maxPrice, minPrice }],
+		queryKey: ["rooms", { afterDate, location, maxPrice, minPrice }],
 		refetchOnWindowFocus: false,
 		staleTime: 1000 * 60 * 5, // cache 5min
 	});

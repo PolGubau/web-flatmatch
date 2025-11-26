@@ -1,7 +1,7 @@
 import type { ConversationWithMetadata } from "~/entities/message/conversation";
 import type { Message } from "~/entities/message/message";
 import { supabase } from "~/global/supabase/client";
-import type { ConversationDB, MessageDB } from "../types/dtos";
+import type { MessageDB } from "../types/dtos";
 import { messageMapper } from "../types/dtos";
 
 async function getUserId(): Promise<string> {
