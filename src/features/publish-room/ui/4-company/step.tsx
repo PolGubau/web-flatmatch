@@ -1,10 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+	FemaleSymbolIcon,
+	MaleSymbolIcon,
+	UserQuestion01Icon,
+} from "@hugeicons/core-free-icons";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { Input } from "~/shared/components/ui/input/input";
+import { ControlledNumberInput } from "~/shared/components/ui/input/number-input";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 
@@ -18,6 +24,7 @@ export function CompanyForm() {
 	const { t } = useTranslation();
 	const {
 		register,
+		control,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<Step3SchemaType>({
@@ -45,47 +52,58 @@ export function CompanyForm() {
 					<h3>{t("current_tenants")}</h3>
 					<ul className="grid gap-4 items-center grid-cols-2 md:grid-cols-3">
 						<li>
-							<Input
+							<ControlledNumberInput<Step3SchemaType>
+								control={control}
+								icon={MaleSymbolIcon}
 								id="bedrooms-male"
-								// icon={BedIcon}
 								label="male"
-								max={10}
+								max={20}
 								min={0}
+								name="whoIsLiving.currentTenants.male"
 								placeholder={t("how_many_male_tenants")}
-								type="number"
-								{...register("whoIsLiving.currentTenants.male", {
+								required
+								rules={{
+									max: 20,
+									min: 0,
 									required: true,
 									valueAsNumber: true,
-								})}
+								}}
 							/>
 						</li>
 						<li>
-							<Input
-								// icon={BedBunkIcon}
+							<ControlledNumberInput<Step3SchemaType>
+								control={control}
+								icon={FemaleSymbolIcon}
 								id="bedrooms-female"
 								label="female"
 								max={20}
 								min={0}
+								name="whoIsLiving.currentTenants.female"
 								placeholder={t("how_many_female_tenants")}
-								type="number"
-								{...register("whoIsLiving.currentTenants.female", {
+								rules={{
+									max: 20,
+									min: 0,
 									required: true,
 									valueAsNumber: true,
-								})}
+								}}
 							/>
 						</li>
 						<li>
-							<Input
+							<ControlledNumberInput<Step3SchemaType>
+								control={control}
+								icon={UserQuestion01Icon}
 								id="bedrooms-other"
 								label="non_binary"
 								max={20}
 								min={0}
+								name="whoIsLiving.currentTenants.other"
 								placeholder={t("how_many_other_tenants")}
-								type="number"
-								{...register("whoIsLiving.currentTenants.other", {
+								rules={{
+									max: 20,
+									min: 0,
 									required: true,
 									valueAsNumber: true,
-								})}
+								}}
 							/>
 						</li>
 					</ul>

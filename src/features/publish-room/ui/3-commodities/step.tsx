@@ -16,10 +16,8 @@ import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { commoditiesMap, extrasMap } from "~/shared/base/maps";
-import { Input } from "~/shared/components/ui/input/input";
 import {
-	ControlledNumberInput,
-	NumberInput,
+	ControlledNumberInput
 } from "~/shared/components/ui/input/number-input";
 import { RHFSelect } from "~/shared/components/ui/select";
 import { useFormState } from "../../model/useFormState";
