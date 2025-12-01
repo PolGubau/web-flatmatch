@@ -23,7 +23,7 @@ type RentTypeSelector = {
 	description: string;
 };
 
-const RENT_TYPES: RentTypeSelector[] = [
+export const RENT_TYPES: RentTypeSelector[] = [
 	{
 		description: "A private room for one or more guests",
 		icon: MeetingRoomIcon,

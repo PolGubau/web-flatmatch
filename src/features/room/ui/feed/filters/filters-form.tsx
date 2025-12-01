@@ -2,19 +2,22 @@ import { FilterIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { t } from "i18next";
 import { useState } from "react";
+import { RENT_TYPES } from "~/features/publish-room/ui/1-type/step";
 import { useFilters } from "~/features/room/model/hooks/use-filters";
 import { Button } from "~/shared/components/ui/button";
 import { DatePicker } from "~/shared/components/ui/date-picker";
 import { Input } from "~/shared/components/ui/input/input";
-import { cn } from "~/shared/utils/utils";
+import { NumberInput } from "~/shared/components/ui/input/number-input";
+import type { RentType } from "~/shared/types/common";
+import { OptionList } from "./options-list/list";
 
 export const availableLocations = [
-	"Barcelona",
-	"Girona",
-	"Tarragona",
-	"Lleida",
-	"Milano",
-	"Roma",
+	"barcelona",
+	"girona",
+	"tarragona",
+	"lleida",
+	"milano",
+	"roma",
 ] as const;
 export type Location = (typeof availableLocations)[number];
 
@@ -23,6 +26,7 @@ export type Filters = {
 	minPrice: number | null;
 	maxPrice: number | null;
 	afterDate: Date | null;
+	rentType: RentType | null;
 };
 
 type Props = {
@@ -33,27 +37,31 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 	const [filters, setFilters] = useFilters();
 
 	const {
-		minPrice,
-		maxPrice,
-		location: rawLocation,
+		minPrice: minPriceState,
+		maxPrice: maxPriceState,
+		location,
 		afterDate,
+		rentType,
 	} = filters ?? {};
-	const location = rawLocation as Location | null;
 	const [selectedLocation, setSelectedLocation] = useState<Location | null>(
-		location ?? null,
+		location,
 	);
+	const [selectedType, setSelectedType] = useState<RentType | null>(rentType);
+
+	const [minPrice, setMinPrice] = useState<number>(minPriceState);
+	const [maxPrice, setMaxPrice] = useState<number>(maxPriceState);
+
 	function handleSubmit(event: React.FormEvent) {
 		event.preventDefault();
 		const formData = new FormData(event.target as HTMLFormElement);
-		const minPriceValue = formData.get("minPrice");
-		const maxPriceValue = formData.get("maxPrice");
 		const afterDateValue = formData.get("afterDate");
 
 		const filters: Filters = {
 			afterDate: afterDateValue ? new Date(afterDateValue as string) : null,
 			location: selectedLocation,
-			maxPrice: maxPriceValue ? Number(maxPriceValue) : null,
-			minPrice: minPriceValue ? Number(minPriceValue) : null,
+			maxPrice,
+			minPrice,
+			rentType: selectedType,
 		};
 		onSubmit(filters);
 		setFilters(filters);
@@ -63,62 +71,37 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 		<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
 			<fieldset>
 				<legend>{t("location")}</legend>
-				<ul className="grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-2">
-					{availableLocations.map((av_location) => {
-						const isChecked = av_location === selectedLocation;
-						function toggleThisLocation() {
-							if (isChecked) {
-								setSelectedLocation(null);
-								return;
-							}
-							setSelectedLocation(av_location);
-						}
-
-						return (
-							<li className="w-full h-full" key={av_location}>
-								<button
-									className={cn(
-										"p-4 transition-all w-full h-full  rounded-xl outline-none flex items-center justify-center font-medium text-sm md:text-base hover:scale-[1.03] focus:scale-[1.03]",
-										{
-											" bg-foreground/10": !isChecked,
-											"ring-2 ring-foreground bg-foreground/20": isChecked,
-										},
-									)}
-									onClick={toggleThisLocation}
-									type="button"
-								>
-									<input
-										checked={isChecked}
-										defaultValue={av_location}
-										hidden
-										id={av_location}
-										name="av_location"
-										type="radio"
-									/>
-									<span className="capitalize">{av_location}</span>
-								</button>
-							</li>
-						);
-					})}
-				</ul>
+				<OptionList
+					name="location"
+					onSelectOption={setSelectedLocation}
+					options={availableLocations.map((location) => ({
+						label: location,
+						value: location,
+					}))}
+					selectedOption={selectedLocation}
+				/>
 			</fieldset>
 
 			<fieldset>
 				<legend>{t("price_range")}</legend>
 				<div className="grid gap-4 md:grid-cols-2">
-					<Input
-						defaultValue={minPrice ?? ""}
+					<NumberInput
+						defaultValue={minPrice}
 						label={"min_price"}
+						max={maxPrice ?? undefined}
 						name="minPrice"
+						onValueChange={setMinPrice}
 						placeholder={t("any")}
-						type="number"
+						step={50}
 					/>
-					<Input
-						defaultValue={maxPrice ?? ""}
+					<NumberInput
+						defaultValue={maxPrice}
 						label={"max_price"}
+						min={minPrice ?? undefined}
 						name="maxPrice"
+						onValueChange={setMaxPrice}
 						placeholder={t("any")}
-						type="number"
+						step={50}
 					/>
 				</div>
 			</fieldset>
@@ -126,12 +109,26 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 				<legend>{t("when_do_you_want_to_move")}</legend>
 				<div className="grid gap-4 md:grid-cols-2">
 					<DatePicker
-						defaultIsoValue={afterDate?.toISOString() ?? null}
+						defaultIsoValue={afterDate?.toISOString()}
 						label={"after_date"}
 						name="afterDate"
 					/>
 				</div>
 			</fieldset>
+			<fieldset>
+				<legend>{t("type")}</legend>
+				<OptionList
+					name="type"
+					onSelectOption={setSelectedType}
+					options={RENT_TYPES.map((rentType) => ({
+						label: rentType.label,
+						value: rentType.value,
+					}))}
+					selectedOption={selectedType}
+				/>
+			</fieldset>
+
+			{/*  */}
 			<footer className="w-full flex justify-end">
 				<Button type="submit">
 					{t("apply")}

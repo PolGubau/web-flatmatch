@@ -1,12 +1,12 @@
 import type { RoomWithMetadata } from "~/entities/room/room";
 import { supabase } from "~/global/supabase/client";
-import type { GetFeedFilters } from "../room-repository";
+import type { Filters } from "../../ui/feed/filters/filters-form";
 import { ROOM_QUERY_SELECT } from "./get-single-room";
 
 type GetRoomsWithMetadataProps = {
 	createdBy?: string;
 	notCreatedBy?: string;
-	filters?: GetFeedFilters;
+	filters?: Filters;
 	page?: number;
 };
 
@@ -36,7 +36,7 @@ export const getRoomsWithMetadata = async (
 	if (filters?.maxPrice) query = query.lte("price->amount", filters.maxPrice);
 	if (filters?.afterDate)
 		query = query.gte("timings->available_from", filters.afterDate);
-
+	if (filters?.rentType) query = query.eq("rent_type", filters.rentType);
 	if (createdBy) query = query.eq("owner_id", createdBy);
 	if (notCreatedBy) query = query.neq("owner_id", notCreatedBy);
 

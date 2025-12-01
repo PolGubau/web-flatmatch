@@ -22,8 +22,8 @@ type NumberInputProps = Omit<
 	icon?: IconSvgElement;
 	label?: TranslationKey;
 	size?: Breakpoints;
-	/** Handler limpio, sin event hacks */
 	onValueChange?: (value: number) => void;
+	step?: number;
 };
 
 /**
@@ -36,7 +36,7 @@ export function NumberInput({
 	size = "md",
 	onValueChange,
 	value,
-	defaultValue,
+	defaultValue, step = 1,
 	id,
 	...props
 }: NumberInputProps) {
@@ -70,19 +70,19 @@ export function NumberInput({
 	);
 
 	const addOne = useCallback(() => {
-		const newValue = internalValue + 1;
+		const newValue = internalValue + step;
 		// add one if that does not exceed max
 		if (props.max === undefined || newValue <= Number(props.max)) {
 			update(newValue);
 		}
-	}, [internalValue, update, props.max]);
+	}, [internalValue, update, props.max, step]);
 	const subtractOne = useCallback(() => {
-		const newValue = internalValue - 1;
+		const newValue = internalValue - step;
 		// subtract one if that does not go below min
 		if (props.min === undefined || newValue >= Number(props.min)) {
 			update(newValue);
 		}
-	}, [internalValue, update, props.min]);
+	}, [internalValue, update, props.min, step]);
 
 	return (
 		<div className="flex flex-col gap-1">
