@@ -20,6 +20,7 @@ export const getRoomsWithMetadata = async (
 	props: GetRoomsWithMetadataProps,
 ): Promise<RoomWithMetadata[]> => {
 	const { createdBy, notCreatedBy, filters, page = 0 } = props;
+
 	// Base query
 	let query = supabase
 		.from("rooms")
@@ -34,8 +35,10 @@ export const getRoomsWithMetadata = async (
 		query = query.ilike("location", `%${filters.location}%`);
 	if (filters?.minPrice) query = query.gte("price->amount", filters.minPrice);
 	if (filters?.maxPrice) query = query.lte("price->amount", filters.maxPrice);
-	if (filters?.afterDate)
-		query = query.gte("timings->available_from", filters.afterDate);
+	if (filters?.afterDate) {
+		const afterDate = new Date(filters.afterDate).toISOString();
+		query = query.gte("timings->>available_from", afterDate);
+	}
 	if (filters?.rentType) query = query.eq("rent_type", filters.rentType);
 	if (createdBy) query = query.eq("owner_id", createdBy);
 	if (notCreatedBy) query = query.neq("owner_id", notCreatedBy);

@@ -54,10 +54,10 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 	function handleSubmit(event: React.FormEvent) {
 		event.preventDefault();
 		const formData = new FormData(event.target as HTMLFormElement);
-		const afterDateValue = formData.get("afterDate");
+		const afterDateValue = formData.get("afterDate") as string | null;
 
 		const filters: Filters = {
-			afterDate: afterDateValue ? new Date(afterDateValue as string) : null,
+			afterDate: afterDateValue ? new Date(afterDateValue) : null,
 			location: selectedLocation,
 			maxPrice,
 			minPrice,
