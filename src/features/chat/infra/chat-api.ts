@@ -28,7 +28,7 @@ export async function getConversations(): Promise<ConversationWithMetadata[]> {
 			*,
 			participant_1:users!conversations_participant_1_id_fkey(id, name, avatar),
 			participant_2:users!conversations_participant_2_id_fkey(id, name, avatar),
-			messages(content, sent_at, sender_id)
+			messages(content, sent_at, sender_id, is_read)
 		`)
 		.or(`participant_1_id.eq.${userId},participant_2_id.eq.${userId}`)
 		.order("last_message_at", { ascending: false });

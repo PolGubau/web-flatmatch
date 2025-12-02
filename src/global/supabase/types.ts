@@ -7,10 +7,30 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: "13.0.4"
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   public: {
     Tables: {
@@ -43,6 +63,20 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "conversations_participant_1_id_fkey"
+            columns: ["participant_1_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "conversations_participant_2_id_fkey"
+            columns: ["participant_2_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "conversations_room_id_fkey"
             columns: ["room_id"]
@@ -93,6 +127,13 @@ export type Database = {
             columns: ["conversation_id"]
             isOneToOne: false
             referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_sender_id_fkey"
+            columns: ["sender_id"]
+            isOneToOne: false
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
         ]
@@ -451,42 +492,39 @@ export type Database = {
       }
     }
     Functions: {
-      rooms_with_metadata:
-        | {
-            Args: {
+      rooms_with_metadata: {
+        Args:
+          | {
               location?: string
               max_price?: number
               min_price?: number
               p_user_id: string
               page?: number
             }
-            Returns: Record<string, unknown>[]
-          }
-        | {
-            Args: { p_user_id: string }
-            Returns: {
-              commodities: Json
-              contact: Json
-              created_at: string
-              description: string
-              id: string
-              images: Json
-              interaction: Json
-              location: Json
-              owner: Json
-              owner_id: string
-              preferences: Json
-              price: Json
-              rules: Json
-              status: string
-              timings: Json
-              title: string
-              type: string
-              updated_at: string
-              verified: Json
-              who_is_living: Json
-            }[]
-          }
+          | { p_user_id: string }
+        Returns: {
+          commodities: Json
+          contact: Json
+          created_at: string
+          description: string
+          id: string
+          images: Json
+          interaction: Json
+          location: Json
+          owner: Json
+          owner_id: string
+          preferences: Json
+          price: Json
+          rules: Json
+          status: string
+          timings: Json
+          title: string
+          type: string
+          updated_at: string
+          verified: Json
+          who_is_living: Json
+        }[]
+      }
       rooms_with_metadata_for_user: {
         Args: { p_user_id: string }
         Returns: {
@@ -642,6 +680,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {
       Gender: ["male", "female", "non_binary", "prefer_not_to_say"],
@@ -650,3 +691,4 @@ export const Constants = {
     },
   },
 } as const
+
