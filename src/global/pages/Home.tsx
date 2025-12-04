@@ -29,7 +29,7 @@ export default function HomePage() {
 	const thereAreRooms = rooms.length > 0 && !isLoading;
 
 	return (
-		<section className="grid grid-rows-[1fr_auto] gap-4 h-full py-4 md:py-8 overflow-hidden">
+		<section className="grid grid-rows-[1fr_auto] gap-4 h-full py-4 md:py-8 overflow-hidden max-h-screen">
 			<div className="grid grid-rows-1 grid-cols-1 mx-auto place-items-center">
 				{thereAreRooms && (
 					<div className="grid grid-rows-[1fr_auto] gap-6 h-full items-center">

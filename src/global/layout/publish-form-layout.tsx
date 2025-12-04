@@ -80,13 +80,14 @@ export default function FormLayout() {
 
 	return (
 		<div className=" min-h-dvh grid grid-rows-[auto_1fr_auto] gap-2 py-3 md:py-6 max-w-7xl mx-auto px-4 md:px-6 w-full">
-			<header className="w-full pt-6 flex gap-2 items-center">
-				<GoHomeButton hasLabel={false} />
+			<header className="w-full pt-6 flex max-md:flex-col gap-2 md:items-center">
+				<div className="flex gap-2 items-center">
+					<GoHomeButton hasLabel={false} />
+					<h1 className="text-2xl font-bold">{t("publish_place")}</h1>
+				</div>
 
-				<h1 className="text-2xl font-bold">{t("publish_place")}</h1>
-
-				<nav className="flex items-center gap-4 justify-end flex-1">
-					<ul className="flex items-center">
+				<nav className="flex items-center gap-4 md:justify-end flex-1">
+					<ul className="flex items-center justify-between max-md:w-full overflow-x-auto">
 						{steps.map((step, index) => {
 							const StepIcon = step.icon;
 							const isCurrent = isBeingDone(index);
@@ -94,7 +95,7 @@ export default function FormLayout() {
 							return (
 								<li
 									className={cn(
-										`flex gap-1 items-center border-b  border-transparent text-foreground/50 h-7 px-1`,
+										`flex gap-1 flex-1 justify-center items-center border-b  border-transparent text-foreground/50 h-7 px-1`,
 										{
 											"text-foreground  border-foreground/20": isThisDone,
 											"text-primary px-2 border-foreground/20": isCurrent,

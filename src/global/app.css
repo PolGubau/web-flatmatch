@@ -74,6 +74,8 @@ body {
 	@media (prefers-color-scheme: dark) {
 		color-scheme: dark;
 	}
+	min-height: 100dvh;
+	min-height: -webkit-fill-available;
 }
 
 :root {
