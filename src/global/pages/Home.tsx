@@ -63,7 +63,7 @@ export default function HomePage() {
 								<HugeiconsIcon icon={ArrowLeft01Icon} size={25} />
 							</Button>
 							<Button
-								className="h-14"
+								className="max-md:size-14 md:h-14"
 								disabled={isLoading}
 								onClick={() => onSwipe(rooms[0].id, "up")}
 								variant={"ghost"}
@@ -71,6 +71,8 @@ export default function HomePage() {
 								<HugeiconsIcon icon={ArrowUp01Icon} />
 								<span className="max-sm:hidden">{t("see_details")}</span>
 							</Button>
+							<FiltersModal />
+
 							<Button
 								className="bg-success/10 size-14"
 								disabled={isLoading}
@@ -102,10 +104,8 @@ export default function HomePage() {
 						</Button>
 					</div>
 				)}
-			</div>{" "}
-			<nav className="flex gap-4 items-center justify-center p-1">
-				<FiltersModal />
-			</nav>
+			</div>
+
 		</section>
 	);
 }
