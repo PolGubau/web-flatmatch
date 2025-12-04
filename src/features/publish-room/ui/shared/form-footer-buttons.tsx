@@ -1,5 +1,6 @@
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { t } from "i18next";
 import { Link, type To } from "react-router";
 
 type Props = {
@@ -14,14 +15,14 @@ export function FormFooterButtons({ backHref = "" }: Props) {
 					to={backHref}
 				>
 					<HugeiconsIcon icon={ArrowLeft01Icon} size={20} />
-					Back
+					{t("back")}
 				</Link>
 			)}
 			<button
 				className="cursor-pointer hover:brightness-80 transition-all bg-primary p-4 px-8 max-md:py-2 justify-end text-white rounded-full flex gap-1 items-center"
 				type="submit"
 			>
-				Next
+				{t("next")}
 				<HugeiconsIcon icon={ArrowRight01Icon} />
 			</button>
 		</nav>

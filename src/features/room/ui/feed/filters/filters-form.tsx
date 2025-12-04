@@ -6,7 +6,6 @@ import { RENT_TYPES } from "~/features/publish-room/ui/1-type/step";
 import { useFilters } from "~/features/room/model/hooks/use-filters";
 import { Button } from "~/shared/components/ui/button";
 import { DatePicker } from "~/shared/components/ui/date-picker";
-import { Input } from "~/shared/components/ui/input/input";
 import { NumberInput } from "~/shared/components/ui/input/number-input";
 import type { RentType } from "~/shared/types/common";
 import { OptionList } from "./options-list/list";

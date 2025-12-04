@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
-import { Input } from "~/shared/components/ui/input/input";
 import { ControlledNumberInput } from "~/shared/components/ui/input/number-input";
 import { useFormState } from "../../model/useFormState";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
@@ -134,7 +133,7 @@ export function CompanyForm() {
 						{JSON.stringify(errors.whoIsLiving.message)}
 					</p>
 				)}
-				<FormFooterButtons backHref={"/publish/location"} />
+				<FormFooterButtons backHref={"/publish/commodities"} />
 			</footer>
 		</form>
 	);

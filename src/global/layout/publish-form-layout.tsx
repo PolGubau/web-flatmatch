@@ -1,36 +1,74 @@
-import { Building05Icon, MapPinpoint01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { t } from "i18next";
+import {
+	BadgeQuestionMark,
+	Book,
+	BookA,
+	BookCheck,
+	Building,
+	Camera,
+	Check,
+	Clock,
+	MailQuestion,
+	Option,
+	Pin,
+	UserSearch,
+	WashingMachine,
+} from "lucide-react";
 import { Outlet, useLocation } from "react-router";
 import { GoHomeButton } from "~/shared/components/go-home-button";
 import type { TranslationKey } from "~/shared/i18n/i18n";
 import { cn } from "~/shared/utils/utils";
 
 type Step = {
-	icon: typeof Building05Icon;
+	icon: typeof Building;
 	label: TranslationKey;
 	path: string;
 };
 const steps: Step[] = [
 	{
-		icon: Building05Icon,
+		icon: Building,
 		label: "type",
 		path: "/publish",
 	},
 	{
-		icon: MapPinpoint01Icon,
+		icon: Pin,
 		label: "location",
 		path: "/publish/location",
 	},
 	{
-		icon: Building05Icon,
+		icon: WashingMachine,
 		label: "commodities",
 		path: "/publish/commodities",
 	},
 	{
-		icon: Building05Icon,
+		icon: UserSearch,
 		label: "people",
-		path: "/publish/people",
+		path: "/publish/company",
+	},
+	{
+		icon: Camera,
+		label: "metadata",
+		path: "/publish/metadata",
+	},
+	{
+		icon: BadgeQuestionMark,
+		label: "preferences",
+		path: "/publish/preferences",
+	},
+	{
+		icon: BookCheck,
+		label: "rules",
+		path: "/publish/rules",
+	},
+	{
+		icon: Clock,
+		label: "timings",
+		path: "/publish/timings",
+	},
+	{
+		icon: Check,
+		label: "preview",
+		path: "/publish/preview",
 	},
 ];
 
@@ -48,7 +86,7 @@ export default function FormLayout() {
 				<h1 className="text-2xl font-bold">{t("publish_place")}</h1>
 
 				<nav className="flex items-center gap-4 justify-end flex-1">
-					<ul className="flex">
+					<ul className="flex items-center">
 						{steps.map((step, index) => {
 							const StepIcon = step.icon;
 							const isCurrent = isBeingDone(index);
@@ -56,28 +94,18 @@ export default function FormLayout() {
 							return (
 								<li
 									className={cn(
-										`flex gap-1 items-center first:rounded-l-full first:pl-3 px-1 py-1 last:rounded-r-full last:pr-3`,
+										`flex gap-1 items-center border-b  border-transparent text-foreground/50 h-7 px-1`,
 										{
-											"bg-foreground/10 rounded-r-full": isCurrent,
-											"bg-primary/10": isThisDone,
+											"text-foreground  border-foreground/20": isThisDone,
+											"text-primary px-2 border-foreground/20": isCurrent,
 										},
 									)}
 									key={step.label}
 									title={t(step.label)}
 								>
-									<HugeiconsIcon
-										className={
-											isThisDone
-												? "text-primary"
-												: isCurrent
-													? "text-foreground"
-													: "text-foreground/60"
-										}
-										icon={StepIcon}
-										size={20}
-									/>
+									<StepIcon size={14} />
 									{isCurrent && (
-										<span className={"text-sm pr-1.5"}>{t(step.label)}</span>
+										<span className={"text-sm"}>{t(step.label)}</span>
 									)}
 								</li>
 							);

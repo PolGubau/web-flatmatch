@@ -22,6 +22,18 @@
 input[type="date"]::-webkit-calendar-picker-indicator {
 	@apply dark:invert dark:brightness-200 text-foreground stroke-foreground fill-foreground;
 }
+
+/* Remove spinner buttons from number inputs */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type="number"] {
+	-moz-appearance: textfield;
+	appearance: textfield;
+}
 @theme {
 	--animate-rotate: rotate 1s infinite;
 	--animate-gradient-move: gradient-move ease 5s ease infinite;

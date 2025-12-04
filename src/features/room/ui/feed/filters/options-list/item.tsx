@@ -14,7 +14,7 @@ export const OptionItem = ({ option, label, isChecked, onSelect, name }: Props) 
     <li className="w-full h-full">
       <button
         className={cn(
-          "p-4 transition-all w-full h-full  rounded-xl outline-none flex items-center justify-center font-medium text-sm md:text-base hover:scale-[1.03] focus:scale-[1.03]",
+          "p-4 transition-all cursor-pointer w-full h-full rounded-xl outline-none flex items-center justify-center font-medium text-sm md:text-base hover:scale-[1.03] focus:scale-[1.03]",
           {
             " bg-foreground/10": !isChecked,
             "ring-2 ring-foreground bg-foreground/20": isChecked,
