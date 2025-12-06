@@ -15,8 +15,6 @@ export const FiltersModal = () => {
 
 	return (
 		<>
-
-
 			<Button
 				className="max-md:size-14 md:h-14"
 
