@@ -12,6 +12,7 @@ import { ProfileChipList } from "~/features/user/ui/profile/chips/chip-list";
 import { CompleteProfile } from "~/features/user/ui/profile/complete-profile/complete-profile";
 import ProfileHeader from "~/features/user/ui/profile/header";
 import { ProfileSkeleton } from "~/features/user/ui/profile/states/profile-skeleton";
+import { ErrorSection } from "~/shared/components/ui/error-section";
 import { dateToYearsAgo } from "~/shared/utils/formatters/dates/date-to-years-ago";
 
 type Props = {
@@ -22,20 +23,20 @@ type Props = {
 export default function ProfilePage({ userId, isYours }: Props) {
 	const { data: user, isLoading, error } = useUser(userId);
 	// get user by id
+	console.log(error)
 	const { t } = useTranslation();
-	if (!user) {
-		return <ProfileSkeleton />;
-	}
-	if (!user.name || !user.lastname) {
-		return <Navigate replace to="/welcome" />;
-	}
-	if (isLoading) {
-		return <ProfileSkeleton />;
-	}
+
+
 	if (error) {
-		return <p>
-			An error occurred while loading the profile: {error.message}
-		</p>
+		return <ErrorSection/>
+	}
+
+
+	if (!user || isLoading) {
+		return <ProfileSkeleton />;
+	}
+	if (isYours && (!user.name || !user.lastname)) {
+		return <Navigate replace to="/welcome" />;
 	}
 	const chips: Item[] = [
 		{

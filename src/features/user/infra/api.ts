@@ -34,7 +34,7 @@ export const getOneUser: FindById<User> = async (id) => {
 		.from("users")
 		.select("*")
 		.eq("id", id)
-		.maybeSingle();
+		.single();
 
 	if (error) throw error;
 	return data ? userMapper.toDomain(data) : null;
