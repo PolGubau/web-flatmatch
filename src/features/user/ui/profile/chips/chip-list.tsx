@@ -33,7 +33,7 @@ export const ChipListLayout = ({ children }: PropsWithChildren) => {
 	return (
 		<div className="relative max-w-[93vw] select-none">
 			<ul className="flex gap-4 items-center overflow-x-auto">{children}</ul>
-			<div className="w-8 h-full bg-gradient-to-r to-canvas absolute right-0 top-0 z-10"></div>
+			<div className="w-8 h-full bg-gradient-to-r to-background absolute right-0 top-0 z-10"></div>
 		</div>
 	);
 };

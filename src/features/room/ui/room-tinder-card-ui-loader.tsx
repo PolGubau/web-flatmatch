@@ -6,19 +6,19 @@ export function RoomTinderCardUILoader() {
 			<div className="bg-gradient-to-tr from-black w-full h-full inset-0 absolute to-transparent rounded-lg" />
 
 			<div className="grid place-items-center h-full w-full">
-				<Loader className="text-canvas" label="loading" />
+				<Loader className="text-background" label="loading" />
 			</div>
 
 			<header className="absolute bottom-0 left-0 p-4 pb-6 flex flex-col gap-2 z-10">
-				<h2 className="text-2xl text-pretty line-clamp-2  bg-canvas/20 text-transparent rounded-full w-fit">
+				<h2 className="text-2xl text-pretty line-clamp-2  bg-background/20 text-transparent rounded-full w-fit">
 					Loading first card of the pile
 				</h2>
 
-				<p className="text-sm bg-canvas/10 text-transparent rounded-full w-fit">
+				<p className="text-sm bg-background/10 text-transparent rounded-full w-fit">
 					XXX.XX €
 				</p>
 
-				<p className="text-sm bg-canvas/10 text-transparent rounded-full w-fit line-clamp-2">
+				<p className="text-sm bg-background/10 text-transparent rounded-full w-fit line-clamp-2">
 					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis
 					inventore, corporis quisquam culpa cupiditate voluptatum
 					exercitationem neque consequuntur nam aliquid? Laborum fugiat ipsa ut

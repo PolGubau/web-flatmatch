@@ -26,6 +26,7 @@ import CopyRoomLinkButton from "./copy-room-link-button";
 import { ContactButtons } from "./footer/contact-buttons";
 import { RoomDetailsImage } from "./image";
 import "./room-details.css";
+import { ProfileAvatar } from "~/features/user/ui/profile/avatar";
 import { RoomDistanceFromYou } from "./room-distance-from-you";
 
 type Props = {
@@ -89,7 +90,7 @@ export default function RoomDetails({ room }: Props) {
 	return (
 		<div className="relative overflow-y-auto h-full">
 			<section className="grid gap-4 mx-auto max-w-7xl">
-				<ul className="room-details-gallery max-h-[50vh] gap-2 w-full flex overflow-x-auto rounded-2xl px-2">
+				<ul className="room-details-gallery max-h-[50vh] gap-2 w-full flex overflow-x-auto rounded-xl">
 					{sortedImages.map((src) => (
 						<li key={src}>
 							<RoomDetailsImage alt={room.title} src={src} />
@@ -97,8 +98,8 @@ export default function RoomDetails({ room }: Props) {
 					))}
 				</ul>
 
-				<div className="flex flex-col gap-8 px-4 relative">
-					<header className=" gap-2 sticky top-0 bg-canvas z-10 flex flex-col">
+				<div className="flex flex-col gap-8 relative">
+					<header className=" gap-2 sticky top-0 bg-background z-10 flex flex-col">
 						<div className="grid grid-cols-[1fr_auto] items-center gap-2">
 							<div className="flex flex-col gap-1">
 								<p className="text-lg text-foreground/80 flex gap-1 items-center">
@@ -204,13 +205,23 @@ export default function RoomDetails({ room }: Props) {
 							{room.description}
 						</p>
 					</div>
+					<div className="flex flex-col gap-1">
+						<span>Published by</span>
+						<ProfileAvatar
+							avatarUrl={room.owner.avatar}
+							name={room.owner.name}
+						/>
+						<h2 className="text-pretty text-2xl max-md:max-w-md first-letter:capitalize font-semibold">
+							{room.owner.name}
+						</h2>
+					</div>
 					<article className="py-4 border-t border-foreground/10 flex flex-col gap-2">
 						<h3>{t("commodities")}</h3>
 						<ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2 items-center">
 							{Object.keys(room?.commodities?.whole?.appliances).map((key) => {
 								const value =
 									room.commodities?.whole?.appliances[
-										key as keyof typeof room.commodities.whole.appliances
+									key as keyof typeof room.commodities.whole.appliances
 									];
 								const match =
 									commoditiesMap[key as keyof typeof commoditiesMap];
@@ -242,7 +253,7 @@ export default function RoomDetails({ room }: Props) {
 							{Object.keys(room.commodities.whole.extras).map((key) => {
 								const value =
 									room.commodities.whole.extras[
-										key as keyof typeof room.commodities.whole.extras
+									key as keyof typeof room.commodities.whole.extras
 									];
 								const match = extrasMap[key as keyof typeof extrasMap];
 								if (!match) {

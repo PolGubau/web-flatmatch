@@ -45,7 +45,7 @@ export const Drawer = ({
 					{" "}
 					<div
 						className={cn(
-							"bg-background grid grid-rows-[auto_1fr_auto] rounded-t-3xl md:rounded-3xl h-fit max-h-[90dvh] shadow-lg md:mb-4 md:max-w-4xl w-full transition-all",
+							"bg-background grid grid-rows-[auto_1fr_auto] rounded-t-2xl md:rounded-2xl h-fit max-h-[90dvh] shadow-lg md:mb-4 md:max-w-4xl w-full transition-all",
 							className,
 						)}
 					>
@@ -104,10 +104,12 @@ const ChildrenMightBeForm = ({
 }) => {
 	if (isForm) {
 		return (
-			<form className="flex flex-col gap-2" onSubmit={onSubmit}>
+			<form className={CHILD_CLASS} onSubmit={onSubmit}>
 				{children}
 			</form>
 		);
 	}
-	return <div className="flex flex-col gap-2">{children}</div>;
+	return <div className={CHILD_CLASS}>{children}</div>;
 };
+
+const CHILD_CLASS = "flex flex-col gap-2 overflow-y-auto";

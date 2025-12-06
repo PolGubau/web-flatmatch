@@ -115,7 +115,7 @@ export function AutoComplete<T extends string>({
 						onOpenAutoFocus={(e) => e.preventDefault()}
 					>
 						<CommandList
-							className="w-[90vw] p-0 max-w-2xl rounded-lg border border-foreground/30 bg-canvas"
+							className="w-[90vw] p-0 max-w-2xl rounded-lg border border-foreground/30 bg-background"
 							style={{ zIndex: 9999 }}
 						>
 							{isLoading && (

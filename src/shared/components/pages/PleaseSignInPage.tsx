@@ -21,7 +21,7 @@ export const PleaseSignInPage = () => {
 
 			<nav className="flex flex-col justify-center gap-4 mt-8">
 				<Link
-					className="flex gap-4 p-4 bg-primary text-canvas rounded-xl hover:bg-primary/80 transition-all hover:outline-2 duration-75 focus:outline-4 outline-primary"
+					className="flex gap-4 p-4 bg-primary text-background rounded-xl hover:bg-primary/80 transition-all hover:outline-2 duration-75 focus:outline-4 outline-primary"
 					to="/auth/login"
 				>
 					<HugeiconsIcon icon={UserUnlock01Icon} strokeWidth={2} />
@@ -35,7 +35,7 @@ export const PleaseSignInPage = () => {
 				</Link>
 
 				<Link
-					className="flex gap-4 p-4 bg-canvas text-foreground rounded-xl hover:bg-foreground/5 hover:outline-2 transition-all duration-75 focus:outline-4 outline-primary"
+					className="flex gap-4 p-4 bg-background text-foreground rounded-xl hover:bg-foreground/5 hover:outline-2 transition-all duration-75 focus:outline-4 outline-primary"
 					to="/auth/register"
 				>
 					<HugeiconsIcon icon={UserAdd01Icon} />

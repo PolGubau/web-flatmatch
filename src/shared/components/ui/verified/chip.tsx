@@ -6,8 +6,8 @@ export function VerifiedChip() {
 	const { t } = useTranslation();
 
 	return (
-		<div className="gap-1 flex w-fit items-center rounded-full text-canvas/90 bg-primary/70 backdrop-blur-md px-2 py-1 text-xs">
-			<HugeiconsIcon className="fill-canvas/80" icon={StarIcon} size={13} />
+		<div className="gap-1 flex w-fit items-center rounded-full text-background/90 bg-primary/70 backdrop-blur-md px-2 py-1 text-xs">
+			<HugeiconsIcon className="fill-background/80" icon={StarIcon} size={13} />
 			<span className="text-xs">{t("verified")}</span>
 		</div>
 	);

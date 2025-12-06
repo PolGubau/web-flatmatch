@@ -1,5 +1,5 @@
 import ProfilePage from "~/global/pages/Profile";
-import type { Route } from "./+types/profile";
+import type { Route } from "./+types/view";
 
 export function meta() {
 	return [

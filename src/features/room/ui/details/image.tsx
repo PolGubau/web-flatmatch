@@ -7,7 +7,7 @@ export function RoomDetailsImage({ src, alt }: Props) {
 		<div>
 			<img
 				alt={alt}
-				className="h-full w-full aspect-video object-cover rounded-2xl shadow"
+				className="h-full w-full aspect-video object-cover rounded-xl shadow"
 				src={src}
 			/>
 		</div>

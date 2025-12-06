@@ -9,12 +9,12 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { t } from "i18next";
 import type * as React from "react";
+import { type Control, Controller, type FieldValues } from "react-hook-form";
 import type { TranslationKey } from "~/shared/i18n/i18n";
 import type { Breakpoints } from "~/shared/types/common";
 import { cn } from "~/shared/utils/utils";
 import { inputTheme } from "./input/theme";
-import { Controller, type Control, type FieldValues } from "react-hook-form";
-export type Option = { value: string; label: TranslationKey }
+export type Option = { value: string; label: TranslationKey };
 
 export type SelectProps = Omit<
 	React.ComponentProps<typeof SelectPrimitive.Root>,
@@ -40,7 +40,11 @@ function Select({
 					<span className="text-sm">{t(label)}</span>
 				</label>
 			)}
-			<SelectPrimitive.Root data-slot="select" {...props}  onValueChange={props.onChange}>
+			<SelectPrimitive.Root
+				data-slot="select"
+				{...props}
+				onValueChange={props.onChange}
+			>
 				<SelectTrigger className="">
 					<SelectValue placeholder={t(placeholder)} />
 				</SelectTrigger>
@@ -56,16 +60,14 @@ function Select({
 	);
 }
 
-
-
 interface RHFSelectProps<TFormValues extends FieldValues> {
-	control: Control<TFormValues>
-	name: keyof TFormValues | string // permite paths anidados con string
-	options: Option[]
-	label?: TranslationKey
-	placeholder?: TranslationKey
-	defaultValue?: string
-	onChange?: (value: string) => void
+	control: Control<TFormValues>;
+	name: keyof TFormValues | string; // permite paths anidados con string
+	options: Option[];
+	label?: TranslationKey;
+	placeholder?: TranslationKey;
+	defaultValue?: string;
+	onChange?: (value: string) => void;
 }
 
 export function RHFSelect<TFormValues extends FieldValues>({
@@ -80,25 +82,23 @@ export function RHFSelect<TFormValues extends FieldValues>({
 	return (
 		<Controller
 			control={control as any}
-			name={name as any}  
 			defaultValue={defaultValue}
+			name={name as any}
 			render={({ field }) => (
 				<Select
 					label={label}
-					options={options}
-					value={field.value}
 					onChange={(value) => {
-						field.onChange(value)     // actualiza RHF
-						customOnChange?.(value)   // callback opcional extra
+						field.onChange(value); // actualiza RHF
+						customOnChange?.(value); // callback opcional extra
 					}}
+					options={options}
 					placeholder={placeholder}
+					value={field.value}
 				/>
 			)}
 		/>
-	)
+	);
 }
-
-
 
 function SelectGroup({
 	...props
@@ -149,9 +149,9 @@ function SelectContent({
 					"data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right] :slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
 
 					// Base
-					"bg-canvas text-foreground relative z-50 min-w-[8rem] overflow-x-hidden overflow-y-auto rounded-xl border-2 border-foreground/30 shadow-md",
+					"bg-background text-foreground relative z-50 min-w-[8rem] overflow-x-hidden overflow-y-auto rounded-xl border-2 border-foreground/30 shadow-md",
 					position === "popper" &&
-						"data-[side=bottom]:translate-y-[2px] data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+					"data-[side=bottom]:translate-y-[2px] data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
 					"origin-(--radix-select-content-transform-origin) max-h-(--radix-select-content-available-height)",
 					className,
 				)}
@@ -164,7 +164,7 @@ function SelectContent({
 					className={cn(
 						"p-1",
 						position === "popper" &&
-							"h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1",
+						"h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1",
 					)}
 				>
 					{children}

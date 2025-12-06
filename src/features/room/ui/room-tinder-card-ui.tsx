@@ -1,6 +1,17 @@
+import { ArrowRight } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import type { RoomWithMetadata } from "~/entities/room/room";
-import { ProfileAvatar } from "~/features/user/ui/profile/avatar";
+import { UserChip } from "~/features/user/ui/profile/user-chip";
+import { Button } from "~/shared/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "~/shared/components/ui/dropdown-menu";
 import { VerifiedChip } from "~/shared/components/ui/verified/chip";
 import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 
@@ -17,6 +28,8 @@ export function RoomTinderCardUI({
 	owner,
 }: RoomTinderUIProps) {
 	const { cover, gallery } = images;
+	const navigate = useNavigate();
+
 	const restImages = gallery?.filter((path) => path !== cover) || [];
 
 	const sortedImages = [cover, ...restImages];
@@ -33,70 +46,77 @@ export function RoomTinderCardUI({
 	return (
 		// gradient from black to transparent
 		<article className="relative group w-full h-full bg-primary/10">
-			<div className="bg-gradient-to-tr from-black w-full h-full inset-0 absolute to-transparent rounded-lg z-10 pointer-events-none" />
-
-			{/* current image index indicator */}
 			<nav className="absolute top-4 left-1/2 -translate-x-1/2 z-20 flex gap-2 pointer-events-none">
 				{sortedImages.map((url, idx) => (
 					<span
-						className={`h-1 w-6 rounded-full ${
-							idx === currentImageIdx ? "bg-canvas" : "bg-canvas/20"
-						}`}
+						className={`h-1 w-6 rounded-full ${idx === currentImageIdx ? "bg-background" : "bg-background/20"
+							}`}
 						key={url}
 					/>
 				))}
 			</nav>
 
-			<header className="absolute bottom-0 left-0 p-4 pb-6 flex flex-col gap-2 z-20 pointer-events-none">
-				<div className="flex gap-2 mb-2 items-center rounded-full pr-3 bg-secondary/30 w-max text-canvas">
-					<ProfileAvatar
-						avatarUrl={owner?.avatar ?? undefined}
-						className="text-canvas bg-secondary/70"
-						name={owner?.name}
-						size="sm"
+			<div className="grid grid-rows-[1fr_auto] h-full">
+				<div className="grid grid-cols-2 opacity-0 h-full relative w-full">
+					<button
+						className="h-full z-10 w-full bg-red-500"
+						onClick={goPrevImage}
+						type="button"
 					/>
-					<span className="text-canvas/70 text-sm self-center line-clamp-1">
-						{owner?.name ?? "Unknown"}
-					</span>
+					<button
+						className="h-full z-10 w-full bg-green-500"
+						onClick={goNextImage}
+						type="button"
+					/>
 				</div>
 
-				{!!verification.verifiedAt && <VerifiedChip />}
+				<header className="bottom-0 left-0 p-4 pb-6 flex flex-col gap-2 z-20 ">
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button className="w-fit pl-0" variant="ghost">
+								<UserChip
+									avatarUrl={owner?.avatar ?? undefined}
+									username={owner?.name ?? "Unknown"}
+								/>
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent>
+							<DropdownMenuLabel>{owner?.name ?? "Unknown"}</DropdownMenuLabel>
+							<DropdownMenuSeparator />
 
-				<h2 className="text-canvas text-xl text-pretty line-clamp-2">
-					{title}
-				</h2>
+							<DropdownMenuItem className="justify-between"
+								onSelect={() => navigate("/profile")}
+							>
+								See profile
+								<ArrowRight />
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
 
-				{price.amount && (
-					<p className="text-canvas/60 text-sm">
-						{currencyFormat(price.amount, price.currency)}
+					{!!verification.verifiedAt && <VerifiedChip />}
+
+					<h2 className="text-background text-xl text-pretty line-clamp-2">
+						{title}
+					</h2>
+
+					{price.amount && (
+						<p className="text-background/60 text-sm">
+							{currencyFormat(price.amount, price.currency)}
+						</p>
+					)}
+
+					<p className="text-sm text-background/70 line-clamp-4  whitespace-pre-wrap break-words">
+						{description}
 					</p>
-				)}
-
-				<p className="text-sm text-canvas/70 line-clamp-4  whitespace-pre-wrap break-words">
-					{description}
-				</p>
-			</header>
-
-			<div className={`grid h-full relative`}>
-				{/* invisible lateral buttons to change image */}
-
-				<button
-					className="absolute z-20 top-0 left-0 h-full w-1/2 opacity-0"
-					onClick={goPrevImage}
-					type="button"
-				/>
-				<button
-					className="absolute z-20 top-0 right-0 h-full w-1/2 opacity-0"
-					onClick={goNextImage}
-					type="button"
-				/>
-
-				<img
-					alt={title}
-					className="object-cover h-full object-bottom w-full pointer-events-none"
-					src={sortedImages[currentImageIdx]}
-				/>
+				</header>
 			</div>
+
+			<div className="inset-0 absolute bg-gradient-to-tr from-black to-transparent rounded-lg z-10 pointer-events-none h-full" />
+			<img
+				alt={title}
+				className="inset-0 absolute h-full object-cover object-bottom pointer-events-none"
+				src={sortedImages[currentImageIdx]}
+			/>
 		</article>
 	);
 }

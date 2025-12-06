@@ -23,8 +23,9 @@ export default [
 				route("chat", "./routes/chat.tsx"),
 				route("room/:roomId", "./routes/room-details.tsx"),
 				...prefix("profile", [
-					index("./routes/your-profile.tsx"),
-					route(":userId", "./routes/profile.tsx"),
+					index("./routes/profile/view-yours.tsx"),
+					route(":userId", "./routes/profile/view.tsx"),
+					route("/edit/:userId", "./routes/profile/edit.tsx"),
 				]),
 			]),
 

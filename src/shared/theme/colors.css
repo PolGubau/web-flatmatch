@@ -71,20 +71,19 @@
 	--color-secondary-900: oklch(20.46% 0 0); /* #171717 */
 	--color-secondary-950: oklch(14.48% 0 0); /* #0a0a0a */
 
-	--color-background: oklch(1 0 1);
-}
+ }
 @theme inline {
 	--color-dark: var(--color-secondary-950);
 	--color-light: var(--color-secondary-25);
 }
 
 :root {
-	--canvas: var(--color-light);
+	--background: var(--color-light);
 	--foreground: var(--color-dark);
 }
 
 .dark {
-	--canvas: var(--color-dark);
+	--background: var(--color-dark);
 	--foreground: var(--color-light);
 }
 
@@ -95,6 +94,6 @@
 	--color-success: var(--color-success-500);
 	--color-warning: var(--color-warning-500);
 	--color-error: var(--color-error-500);
-	--color-canvas: var(--canvas);
+	--color-background: var(--background);
 	--color-foreground: var(--foreground);
 }

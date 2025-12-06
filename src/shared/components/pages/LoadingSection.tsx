@@ -16,7 +16,7 @@ export const LoadingSection: React.FC<Props> = ({
 		<div
 			{...props}
 			className={cn(
-				"w-full h-full bg-canvas grid place-items-center p-4",
+				"w-full h-full bg-background grid place-items-center p-4",
 				props.className,
 			)}
 		>

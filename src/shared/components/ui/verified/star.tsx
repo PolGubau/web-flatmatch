@@ -7,10 +7,10 @@ export function VerifiedStar() {
 
 	return (
 		<div
-			className="gap-1 flex w-fit items-center rounded-full text-canvas/90 bg-primary/70 backdrop-blur-md p-1 text-xs"
+			className="gap-1 flex w-fit items-center rounded-full text-background/90 bg-primary/70 backdrop-blur-md p-1 text-xs"
 			title={t("verified")}
 		>
-			<HugeiconsIcon className="fill-canvas/80" icon={StarIcon} size={13} />
+			<HugeiconsIcon className="fill-background/80" icon={StarIcon} size={13} />
 		</div>
 	);
 }

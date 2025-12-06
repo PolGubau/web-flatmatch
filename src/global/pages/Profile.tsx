@@ -20,7 +20,7 @@ type Props = {
 };
 
 export default function ProfilePage({ userId, isYours }: Props) {
-	const { data: user, isLoading } = useUser(userId);
+	const { data: user, isLoading, error } = useUser(userId);
 	// get user by id
 	const { t } = useTranslation();
 	if (!user) {
@@ -31,6 +31,11 @@ export default function ProfilePage({ userId, isYours }: Props) {
 	}
 	if (isLoading) {
 		return <ProfileSkeleton />;
+	}
+	if (error) {
+		return <p>
+			An error occurred while loading the profile: {error.message}
+		</p>
 	}
 	const chips: Item[] = [
 		{

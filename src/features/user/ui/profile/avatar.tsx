@@ -5,7 +5,7 @@ import { cn } from "~/shared/utils/utils";
 type ProfileAvatarSize = "sm" | "md";
 type ProfileAvatarProps = {
 	name: string;
-	avatarUrl?: string;
+	avatarUrl?: string | null;
 	size?: ProfileAvatarSize;
 	className?: string;
 };

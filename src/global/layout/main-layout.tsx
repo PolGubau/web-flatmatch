@@ -5,6 +5,7 @@ import {
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+import { ArrowUpFromLine, Plus } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, Outlet } from "react-router";
@@ -28,7 +29,7 @@ export const menuItems: FooterMenuItem[] = [
 const MainLayout = ({ children }: PropsWithChildren) => {
 	const { t } = useTranslation();
 	return (
-		<div className="grid grid-rows-[auto_1fr_auto] md:grid-rows-[auto_1fr] relative flex-col h-dvh gap-4 overflow-hidden bg-canvas text-foreground">
+		<div className="grid grid-rows-[auto_1fr_auto] md:grid-rows-[auto_1fr] relative flex-col h-dvh gap-4 overflow-hidden bg-background text-foreground">
 			<header
 				className="p-2 md:p-4 pl-4 flex justify-between items-center backdrop-blur-md"
 				style={{ zIndex: 11 }}
@@ -54,10 +55,11 @@ const MainLayout = ({ children }: PropsWithChildren) => {
 
 				<div className="flex gap-2 items-center">
 					<Link
-						className="bg-primary hover:brightness-75 transition-all rounded-full px-4 py-2 text-canvas text-sm font-semibold line-clamp-1 truncate"
+						className="bg-primary flex gap-2 items-center hover:brightness-75 transition-all rounded-full px-4 py-2 text-background text-sm font-semibold line-clamp-1 truncate"
 						to={"/publish"}
 					>
-						{t("publish_place")}
+						<ArrowUpFromLine size={18} />
+						<span className="max-md:hidden">{t("publish_place")}</span>
 					</Link>
 					<UserButton />
 				</div>

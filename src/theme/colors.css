@@ -79,12 +79,12 @@
 }
 
 :root {
-	--canvas: var(--color-light);
+	--background: var(--color-light);
 	--foreground: var(--color-dark);
 }
 
 .dark {
-	--canvas: var(--color-dark);
+	--background: var(--color-dark);
 	--foreground: var(--color-light);
 }
 
@@ -96,6 +96,6 @@
 	--color-warning: var(--color-warning-500);
 	--color-error: var(--color-error-500);
 
-	--color-canvas: var(--canvas);
+	--color-background: var(--background);
 	--color-foreground: var(--foreground);
 }
