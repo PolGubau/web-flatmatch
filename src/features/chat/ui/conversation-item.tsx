@@ -1,46 +1,39 @@
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
+import { t } from "i18next";
 import type { ConversationWithMetadata } from "~/entities/message/conversation";
+import { ProfileAvatar } from "~/features/user/ui/profile/avatar";
 import { cn } from "~/shared/utils/utils";
 
 interface ConversationItemProps {
 	conversation: ConversationWithMetadata;
 	isActive: boolean;
-	onClick: () => void;
 	currentUserId: string;
 }
 
 export const ConversationItem = ({
 	conversation,
 	isActive,
-	onClick,
 	currentUserId,
 }: ConversationItemProps) => {
 	const { otherParticipant, lastMessage, unreadCount } = conversation;
 	const isUnread = unreadCount > 0;
 
 	return (
-		<button
+		<div
 			className={cn(
-				"w-full p-3 flex gap-3 items-start hover:bg-muted/50 transition-colors border-b border-border/50",
-				isActive && "bg-muted",
+				"w-full p-3 flex gap-3 items-start hover:bg-muted/50 transition-colors border-b border-foreground/10 cursor-pointer",
+				isActive && "bg-primary/10",
 			)}
-			onClick={onClick}
-			type="button"
 		>
 			{/* Avatar */}
-			<div className="relative flex-shrink-0">
-				{otherParticipant.avatar ? (
-					<img
-						alt={otherParticipant.name}
-						className="w-12 h-12 rounded-full object-cover"
-						src={otherParticipant.avatar}
-					/>
-				) : (
-					<div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
-						{otherParticipant.name.charAt(0).toUpperCase()}
-					</div>
-				)}
+			<div className="relative shrink-0">
+				<ProfileAvatar
+					avatarUrl={otherParticipant.avatar}
+					name={otherParticipant.name}
+					size="sm"
+				/>
+
 				{isUnread && (
 					<div className="absolute -top-1 -right-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center text-xs text-primary-foreground font-bold">
 						{unreadCount}
@@ -52,7 +45,7 @@ export const ConversationItem = ({
 			<div className="flex-1 min-w-0 text-left">
 				<div className="flex justify-between items-start gap-2 mb-1">
 					<h3
-						className={cn("font-medium truncate", isUnread && "font-semibold")}
+						className={cn("font-medium truncate line-clamp-1", isUnread && "font-semibold")}
 					>
 						{otherParticipant.name}
 					</h3>
@@ -72,11 +65,11 @@ export const ConversationItem = ({
 							isUnread && "font-medium text-foreground",
 						)}
 					>
-						{lastMessage.senderId === currentUserId ? "Tú: " : ""}
+						{lastMessage.senderId === currentUserId ? `${t("you")}: ` : ""}
 						{lastMessage.content}
 					</p>
 				)}
 			</div>
-		</button>
+		</div>
 	);
 };

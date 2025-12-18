@@ -1,10 +1,13 @@
 import { Sent02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useRef, useState } from "react";
+import { Button } from "~/shared/components/ui/button";
+import { Input } from "~/shared/components/ui/input/input";
 import { useMarkAsReadMutation } from "../model/mutations/use-mark-as-read.mutation";
 import { useSendMessageMutation } from "../model/mutations/use-send-message.mutation";
 import { useMessagesQuery } from "../model/queries/use-messages.query";
 import { useRealtimeMessages } from "../model/use-realtime-messages";
+import { ChatMessagesSkeleton } from "./chat-messages-skeleton";
 import { MessageItem } from "./message-item";
 
 interface ChatMessagesProps {
@@ -22,7 +25,11 @@ export const ChatMessages = ({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-  const { data: messages = [], isLoading } = useMessagesQuery(conversationId);
+  const {
+    data: messages = [],
+    isLoading,
+    isError,
+  } = useMessagesQuery(conversationId);
   const sendMessage = useSendMessageMutation(conversationId);
   const markAsRead = useMarkAsReadMutation();
 
@@ -62,9 +69,13 @@ export const ChatMessages = ({
   };
 
   if (isLoading) {
+    return <ChatMessagesSkeleton />;
+  }
+
+  if (isError) {
     return (
       <div className="flex items-center justify-center h-full">
-        <div className="text-foreground/50">Cargando mensajes...</div>
+        <div className="text-destructive">Error al cargar los mensajes</div>
       </div>
     );
   }
@@ -72,12 +83,12 @@ export const ChatMessages = ({
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="p-4 border-b border-border/50 bg-card">
+      <header className="p-4 border-b border-foreground/20 flex items-center gap-3">
         <h2 className="font-semibold text-lg">{otherUserName}</h2>
-      </div>
+      </header>
 
       {/* Messages */}
-      <div
+      <section
         className="flex-1 overflow-y-auto p-4 space-y-1"
         ref={messagesContainerRef}
       >
@@ -107,13 +118,13 @@ export const ChatMessages = ({
           })
         )}
         <div ref={messagesEndRef} />
-      </div>
+      </section>
 
       {/* Input */}
-      <div className="p-4 border-t border-border/50 bg-card">
-        <div className="flex gap-2">
-          <input
-            className="flex-1 px-4 py-2 rounded-full border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+      <div className="p-4 border-t border-foreground/20">
+        <div className="grid grid-cols-[1fr_auto] gap-2 items-center">
+          <Input
+            className="w-full"
             disabled={sendMessage.isPending}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -121,14 +132,14 @@ export const ChatMessages = ({
             type="text"
             value={inputValue}
           />
-          <button
-            className="px-4 py-2 rounded-full bg-primary text-primary-foreground disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary/90 transition-colors"
+          <Button
             disabled={!inputValue.trim() || sendMessage.isPending}
             onClick={handleSend}
+            size={"icon"}
             type="button"
           >
-            <HugeiconsIcon className="w-5 h-5" icon={Sent02Icon} />
-          </button>
+            <HugeiconsIcon className="size-5" icon={Sent02Icon} />
+          </Button>
         </div>
       </div>
     </div>

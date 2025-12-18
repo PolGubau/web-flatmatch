@@ -39,7 +39,7 @@ export default function RoomDetails({ room }: Props) {
 	const createConversation = useGetOrCreateConversationMutation();
 	const handleStartChat = async () => {
 		const conversationId = await createConversation.mutateAsync({
-			otherUserId: room.ownerId,
+			otherUserId: room.owner.id,
 			roomId: room.id,
 		});
 		navigate(`/chat?conversationId=${conversationId}`);

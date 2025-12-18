@@ -26,7 +26,7 @@ export const UserButton = () => {
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<button
-					className="hover:border-primary border border-foreground/5 p-px rounded-full cursor-pointer"
+					className="hover:border-primary text-foreground border border-foreground/5 p-px rounded-full cursor-pointer"
 					type="button"
 				>
 					<YourAvatar />

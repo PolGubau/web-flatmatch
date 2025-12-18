@@ -1,6 +1,6 @@
 "use client";
 
- import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { supabase } from "~/global/supabase/client";
 
 interface UseRealtimeChatProps {
@@ -20,13 +20,13 @@ export interface ChatMessage {
 const EVENT_MESSAGE_TYPE = "message";
 
 export function useRealtimeChat({ roomName, username }: UseRealtimeChatProps) {
- 	const [messages, setMessages] = useState<ChatMessage[]>([]);
+	const [messages, setMessages] = useState<ChatMessage[]>([]);
 	const [channel, setChannel] = useState<ReturnType<
 		typeof supabase.channel
 	> | null>(null);
 	const [isConnected, setIsConnected] = useState(false);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	// biome-ignore lint/correctness/useExhaustiveDependencies: channel setup needs to run only when roomName changes
 	useEffect(() => {
 		const newChannel = supabase.channel(roomName);
 

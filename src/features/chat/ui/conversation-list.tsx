@@ -1,25 +1,23 @@
+import { Link } from "react-router";
 import { useConversationsQuery } from "../model/queries/use-conversations.query";
 import { ConversationItem } from "./conversation-item";
+import { ConversationListSkeleton } from "./conversation-list-skeleton";
 
 interface ConversationListProps {
 	currentUserId: string;
-	activeConversationId: string | null;
-	onSelectConversation: (conversationId: string) => void;
+	activeConversationId?: string;
+	isLoading: boolean;
 }
 
 export const ConversationList = ({
 	currentUserId,
 	activeConversationId,
-	onSelectConversation,
+	isLoading,
 }: ConversationListProps) => {
-	const { data: conversations = [], isLoading } = useConversationsQuery();
+	const { data: conversations = [] } = useConversationsQuery();
 
 	if (isLoading) {
-		return (
-			<div className="flex items-center justify-center h-full">
-				<div className="text-foreground/50">Cargando conversaciones...</div>
-			</div>
-		);
+		return <ConversationListSkeleton />;
 	}
 
 	if (conversations.length === 0) {
@@ -36,13 +34,17 @@ export const ConversationList = ({
 	return (
 		<div className="flex flex-col h-full overflow-y-auto">
 			{conversations.map((conversation) => (
-				<ConversationItem
-					conversation={conversation}
-					currentUserId={currentUserId}
-					isActive={conversation.id === activeConversationId}
+				<Link
+					className="block"
 					key={conversation.id}
-					onClick={() => onSelectConversation(conversation.id)}
-				/>
+					to={`/chat/${conversation.id}`}
+				>
+					<ConversationItem
+						conversation={conversation}
+						currentUserId={currentUserId}
+						isActive={conversation.id === activeConversationId}
+					/>
+				</Link>
 			))}
 		</div>
 	);

@@ -17,7 +17,7 @@ const theme = {
 };
 
 export const ProfileAvatar = ({
-	name,
+	name = "",
 	avatarUrl,
 	size = "md",
 	className: customClassName,
@@ -33,11 +33,13 @@ export const ProfileAvatar = ({
 	if (!avatarUrl) {
 		return (
 			<div className={className}>
-				<HugeiconsIcon
-					icon={UserIcon}
-					size={size === "md" ? 90 : 20}
-					stroke="currentColor"
-				/>
+				{name?.length > 0 ? <span>{name.split("")[0]}</span>
+					:
+					<HugeiconsIcon
+						icon={UserIcon}
+						size={size === "md" ? 90 : 20}
+						stroke="currentColor"
+					/>}
 			</div>
 		);
 	}

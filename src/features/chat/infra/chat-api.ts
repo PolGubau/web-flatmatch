@@ -10,17 +10,22 @@ async function getUserId(): Promise<string> {
 		error: userError,
 	} = await supabase.auth.getUser();
 
-	if (userError || !user) {
-		throw new Error("No authenticated user found");
+	if (userError) {
+		throw new Error(`Authentication error: ${userError.message}`);
 	}
+
+	if (!user) {
+		throw new Error("No authenticated user found. Please log in.");
+	}
+
 	return user.id;
 }
 
 interface MessageRow {
 	content: string;
-	sent_at: string;
+	sent_at: string | null;
 	sender_id: string;
-	is_read: boolean;
+	is_read: boolean | null;
 }
 
 interface ConversationRow {
@@ -28,9 +33,9 @@ interface ConversationRow {
 	participant_1_id: string;
 	participant_2_id: string;
 	room_id: string | null;
-	last_message_at: string;
-	created_at: string;
-	updated_at: string;
+	last_message_at: string | null;
+	created_at: string | null;
+	updated_at: string | null;
 	participant_1: {
 		id: string;
 		name: string;
@@ -48,62 +53,79 @@ interface ConversationRow {
  * Obtiene todas las conversaciones del usuario con metadata
  */
 export async function getConversations(): Promise<ConversationWithMetadata[]> {
-	const userId = await getUserId();
+	try {
+		const userId = await getUserId();
 
-	const { data, error } = await supabase
-		.from("conversations")
-		.select(`
-			*,
-			participant_1:users!conversations_participant_1_id_fkey(id, name, avatar_url),
-			participant_2:users!conversations_participant_2_id_fkey(id, name, avatar_url),
-			messages(content, sent_at, sender_id, is_read)
-		`)
-		.or(`participant_1_id.eq.${userId},participant_2_id.eq.${userId}`)
-		.order("last_message_at", { ascending: false });
+		const { data, error } = await supabase
+			.from("conversations")
+			.select(`
+				*,
+				participant_1:users!conversations_participant_1_id_fkey(id, name, avatar_url),
+				participant_2:users!conversations_participant_2_id_fkey(id, name, avatar_url),
+				messages(content, sent_at, sender_id, is_read)
+			`)
+			.or(`participant_1_id.eq.${userId},participant_2_id.eq.${userId}`)
+			.order("last_message_at", { ascending: false });
 
-	if (error) throw error;
-	if (!data) return [];
+		if (error) {
+			throw new Error(`Failed to fetch conversations: ${error.message}`);
+		}
 
-	return data.map((conv: ConversationRow) => {
-		const isParticipant1 = conv.participant_1_id === userId;
-		const otherParticipant = isParticipant1
-			? conv.participant_2
-			: conv.participant_1;
+		if (!data) return [];
 
-		// Obtener último mensaje
-		const sortedMessages = (conv.messages || []).sort(
-			(a: MessageRow, b: MessageRow) =>
-				new Date(b.sent_at).getTime() - new Date(a.sent_at).getTime(),
-		);
-		const lastMessage = sortedMessages[0];
+		return data.map((conv: ConversationRow) => {
+			const isParticipant1 = conv.participant_1_id === userId;
+			const otherParticipant = isParticipant1
+				? conv.participant_2
+				: conv.participant_1;
 
-		// Contar mensajes no leídos del otro participante
-		const unreadCount = (conv.messages || []).filter(
-			(msg: MessageRow) => msg.sender_id !== userId && !msg.is_read,
-		).length;
+			// Obtener último mensaje
+			const sortedMessages = (conv.messages || []).sort(
+				(a: MessageRow, b: MessageRow) => {
+					const timeA = a.sent_at ? new Date(a.sent_at).getTime() : 0;
+					const timeB = b.sent_at ? new Date(b.sent_at).getTime() : 0;
+					return timeB - timeA;
+				},
+			);
+			const lastMessage = sortedMessages[0];
 
-		return {
-			createdAt: new Date(conv.created_at),
-			id: conv.id,
-			lastMessage: lastMessage
-				? {
-						content: lastMessage.content,
-						senderId: lastMessage.sender_id,
-						sentAt: new Date(lastMessage.sent_at),
-					}
-				: null,
-			lastMessageAt: new Date(conv.last_message_at),
-			otherParticipant: {
-				avatar: otherParticipant.avatar_url,
-				id: otherParticipant.id,
-				name: otherParticipant.name,
-			},
-			participantIds: [conv.participant_1_id, conv.participant_2_id],
-			roomId: conv.room_id,
-			unreadCount,
-			updatedAt: new Date(conv.updated_at),
-		};
-	});
+			// Contar mensajes no leídos del otro participante
+			const unreadCount = (conv.messages || []).filter(
+				(msg: MessageRow) => msg.sender_id !== userId && !msg.is_read,
+			).length;
+
+			return {
+				createdAt: conv.created_at ? new Date(conv.created_at) : new Date(),
+				id: conv.id,
+				lastMessage: lastMessage
+					? {
+							content: lastMessage.content,
+							senderId: lastMessage.sender_id,
+							sentAt: lastMessage.sent_at
+								? new Date(lastMessage.sent_at)
+								: new Date(),
+						}
+					: null,
+				lastMessageAt: conv.last_message_at
+					? new Date(conv.last_message_at)
+					: new Date(),
+				otherParticipant: {
+					avatar: otherParticipant.avatar_url,
+					id: otherParticipant.id,
+					name: otherParticipant.name,
+				},
+				participantIds: [conv.participant_1_id, conv.participant_2_id],
+				roomId: conv.room_id ?? undefined,
+				unreadCount,
+				updatedAt: conv.updated_at ? new Date(conv.updated_at) : new Date(),
+			};
+		});
+	} catch (error) {
+		if (error instanceof Error) {
+			throw error;
+		}
+		throw new Error("Unknown error fetching conversations");
+	}
 }
 
 /**
@@ -146,16 +168,30 @@ export async function getOrCreateConversation(
  * Obtiene los mensajes de una conversación
  */
 export async function getMessages(conversationId: string): Promise<Message[]> {
-	const { data, error } = await supabase
-		.from("messages")
-		.select("*")
-		.eq("conversation_id", conversationId)
-		.order("sent_at", { ascending: true });
+	if (!conversationId) {
+		throw new Error("Conversation ID is required");
+	}
 
-	if (error) throw error;
-	if (!data) return [];
+	try {
+		const { data, error } = await supabase
+			.from("messages")
+			.select("*")
+			.eq("conversation_id", conversationId)
+			.order("sent_at", { ascending: true });
 
-	return data.map((msg: MessageDB) => messageMapper.toDomain(msg));
+		if (error) {
+			throw new Error(`Failed to fetch messages: ${error.message}`);
+		}
+
+		if (!data) return [];
+
+		return data.map((msg: MessageDB) => messageMapper.toDomain(msg));
+	} catch (error) {
+		if (error instanceof Error) {
+			throw error;
+		}
+		throw new Error("Unknown error fetching messages");
+	}
 }
 
 /**
@@ -165,29 +201,51 @@ export async function sendMessage(
 	conversationId: string,
 	content: string,
 ): Promise<Message> {
-	const userId = await getUserId();
+	if (!conversationId) {
+		throw new Error("Conversation ID is required");
+	}
 
-	const { data, error } = await supabase
-		.from("messages")
-		.insert({
-			content,
-			conversation_id: conversationId,
-			is_read: false,
-			sender_id: userId,
-			sent_at: new Date().toISOString(),
-		})
-		.select()
-		.single();
+	if (!content?.trim()) {
+		throw new Error("Message content cannot be empty");
+	}
 
-	if (error) throw error;
+	try {
+		const userId = await getUserId();
 
-	// Actualizar last_message_at de la conversación
-	await supabase
-		.from("conversations")
-		.update({ last_message_at: new Date().toISOString() })
-		.eq("id", conversationId);
+		const { data, error } = await supabase
+			.from("messages")
+			.insert({
+				content: content.trim(),
+				conversation_id: conversationId,
+				is_read: false,
+				sender_id: userId,
+				sent_at: new Date().toISOString(),
+			})
+			.select()
+			.single();
 
-	return messageMapper.toDomain(data);
+		if (error) {
+			throw new Error(`Failed to send message: ${error.message}`);
+		}
+
+		// Actualizar last_message_at de la conversación
+		const { error: updateError } = await supabase
+			.from("conversations")
+			.update({ last_message_at: new Date().toISOString() })
+			.eq("id", conversationId);
+
+		if (updateError) {
+			console.error("Failed to update conversation timestamp:", updateError);
+			// No lanzamos error aquí porque el mensaje se envió correctamente
+		}
+
+		return messageMapper.toDomain(data);
+	} catch (error) {
+		if (error instanceof Error) {
+			throw error;
+		}
+		throw new Error("Unknown error sending message");
+	}
 }
 
 /**

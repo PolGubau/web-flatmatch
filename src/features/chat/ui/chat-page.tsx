@@ -1,33 +1,33 @@
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router";
+import { t } from "i18next";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { Drawer } from "~/shared/components/ui/drawer";
 import { useSession } from "~/shared/context/session-context";
 import { useConversationsQuery } from "../model/queries/use-conversations.query";
 import { ChatMessages } from "./chat-messages";
 import { ConversationList } from "./conversation-list";
 import { EmptyChatState } from "./empty-chat-state";
 
-export default function ChatPage() {
+interface ChatPageProps {
+  initialConversationId?: string;
+}
+
+export default function ChatPage({ initialConversationId }: ChatPageProps) {
   const { session } = useSession();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [activeConversationId, setActiveConversationId] = useState<
-    string | null
-  >(null);
+  const navigate = useNavigate();
+  const { data: conversations = [], isLoading } = useConversationsQuery();
 
-  // Leer conversationId de la URL al cargar
-  useEffect(() => {
-    const conversationIdFromUrl = searchParams.get("conversationId");
-    if (conversationIdFromUrl) {
-      setActiveConversationId(conversationIdFromUrl);
-      // Limpiar el parámetro de la URL después de usarlo
-      searchParams.delete("conversationId");
-      setSearchParams(searchParams, { replace: true });
-    }
-  }, [searchParams, setSearchParams]);
-
-  const { data: conversations = [] } = useConversationsQuery();
   const activeConversation = conversations.find(
-    (c) => c.id === activeConversationId,
+    (c) => c.id === initialConversationId,
   );
+
+  // Si no hay conversación seleccionada pero hay conversaciones disponibles,
+  // seleccionar la primera automáticamente
+  useEffect(() => {
+    if (!initialConversationId && conversations.length > 0 && !isLoading) {
+      navigate(`/chat/${conversations[0].id}`, { replace: true });
+    }
+  }, [initialConversationId, conversations, isLoading, navigate]);
 
   if (!session?.user) {
     return (
@@ -40,30 +40,28 @@ export default function ChatPage() {
   const userId = session.user.id;
 
   return (
-    <div className="flex h-[calc(100vh-4rem)] max-h-[800px]">
+    <div className="h-full divide-x divide-foreground/20 overflow-hidden grid grid-cols-[auto_1fr]">
       {/* Lista de conversaciones */}
-      <div className="w-80 border-r border-border bg-card flex-shrink-0">
-        <div className="p-4 border-b border-border/50">
-          <h1 className="text-xl font-bold">Mensajes</h1>
+      <aside className="md:w-80 h-full">
+        <div className="p-4">
+          <h1 className="text-xl font-bold">{t("messages")}</h1>
         </div>
         <ConversationList
-          activeConversationId={activeConversationId}
+          activeConversationId={initialConversationId}
           currentUserId={userId}
-          onSelectConversation={setActiveConversationId}
+          isLoading={isLoading}
         />
-      </div>
+      </aside>
 
       {/* Chat activo */}
-      <div className="flex-1 bg-background">
+      <div className="grid grid-cols-1 h-full">
         {activeConversation ? (
           <ChatMessages
             conversationId={activeConversation.id}
             currentUserId={userId}
             otherUserName={activeConversation.otherParticipant.name}
           />
-        ) : (
-          <EmptyChatState />
-        )}
+        ) : <EmptyChatState />}
       </div>
     </div>
   );

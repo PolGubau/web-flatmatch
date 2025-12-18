@@ -67,7 +67,7 @@ export const RealtimeChat = ({
     }
   }, [allMessages, onMessage]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: only want to scroll when message count changes
   useEffect(() => {
     // Scroll to bottom whenever messages change
     scrollToBottom();

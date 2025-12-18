@@ -1,3 +1,4 @@
+import { useParams } from "react-router";
 import { ChatPage } from "~/features/chat";
 
 export function meta() {
@@ -8,8 +9,7 @@ export function meta() {
 }
 
 export default function Chat() {
+	const { conversationId } = useParams<{ conversationId?: string }>();
 
-	return (
-		<ChatPage />
-	)
+	return <ChatPage initialConversationId={conversationId} />;
 }

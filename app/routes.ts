@@ -20,7 +20,7 @@ export default [
 			layout("../src/global/layout/main-layout.tsx", [
 				index("./routes/home.tsx"),
 				route("favs", "./routes/favs.tsx"),
-				route("chat", "./routes/chat.tsx"),
+				route("chat/:conversationId?", "./routes/chat.tsx"),
 				route("room/:roomId", "./routes/room-details.tsx"),
 				...prefix("profile", [
 					index("./routes/profile/view-yours.tsx"),

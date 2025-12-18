@@ -7,10 +7,11 @@ export interface MessageDB {
 	id: string;
 	conversation_id: string;
 	sender_id: string;
-	receiver_id: string;
+	receiver_id: string | null;
 	content: string;
-	sent_at: string;
-	is_read: boolean;
+	sent_at: string | null;
+	is_read: boolean | null;
+	created_at?: string | null;
 	room_id?: string;
 }
 
@@ -31,10 +32,10 @@ export const messageMapper = {
 		content: db.content,
 		conversationId: db.conversation_id,
 		id: db.id,
-		isRead: db.is_read,
-		receiverId: db.receiver_id,
+		isRead: db.is_read ?? false,
+		receiverId: db.receiver_id ?? "",
 		roomId: db.room_id,
 		senderId: db.sender_id,
-		sentAt: new Date(db.sent_at),
+		sentAt: db.sent_at ? new Date(db.sent_at) : new Date(),
 	}),
 };
