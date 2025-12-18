@@ -7,30 +7,10 @@ export type Json =
   | Json[]
 
 export type Database = {
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "13.0.4"
   }
   public: {
     Tables: {
@@ -100,6 +80,7 @@ export type Database = {
           created_at: string | null
           id: string
           is_read: boolean | null
+          receiver_id: string | null
           sender_id: string
           sent_at: string | null
         }
@@ -109,6 +90,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           is_read?: boolean | null
+          receiver_id?: string | null
           sender_id: string
           sent_at?: string | null
         }
@@ -118,6 +100,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           is_read?: boolean | null
+          receiver_id?: string | null
           sender_id?: string
           sent_at?: string | null
         }
@@ -127,6 +110,13 @@ export type Database = {
             columns: ["conversation_id"]
             isOneToOne: false
             referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_receiver_id_fkey"
+            columns: ["receiver_id"]
+            isOneToOne: false
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
           {
@@ -492,39 +482,42 @@ export type Database = {
       }
     }
     Functions: {
-      rooms_with_metadata: {
-        Args:
-          | {
+      rooms_with_metadata:
+        | {
+            Args: { p_user_id: string }
+            Returns: {
+              commodities: Json
+              contact: Json
+              created_at: string
+              description: string
+              id: string
+              images: Json
+              interaction: Json
+              location: Json
+              owner: Json
+              owner_id: string
+              preferences: Json
+              price: Json
+              rules: Json
+              status: string
+              timings: Json
+              title: string
+              type: string
+              updated_at: string
+              verified: Json
+              who_is_living: Json
+            }[]
+          }
+        | {
+            Args: {
               location?: string
               max_price?: number
               min_price?: number
               p_user_id: string
               page?: number
             }
-          | { p_user_id: string }
-        Returns: {
-          commodities: Json
-          contact: Json
-          created_at: string
-          description: string
-          id: string
-          images: Json
-          interaction: Json
-          location: Json
-          owner: Json
-          owner_id: string
-          preferences: Json
-          price: Json
-          rules: Json
-          status: string
-          timings: Json
-          title: string
-          type: string
-          updated_at: string
-          verified: Json
-          who_is_living: Json
-        }[]
-      }
+            Returns: Record<string, unknown>[]
+          }
       rooms_with_metadata_for_user: {
         Args: { p_user_id: string }
         Returns: {
@@ -680,9 +673,6 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {
       Gender: ["male", "female", "non_binary", "prefer_not_to_say"],
@@ -691,4 +681,3 @@ export const Constants = {
     },
   },
 } as const
-

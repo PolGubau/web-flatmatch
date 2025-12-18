@@ -36,6 +36,8 @@ export const useUpdateRoomInteraction = (props?: Props) => {
 			// No invalidamos ["rooms"] porque ya removemos la room del caché manualmente en useSwipeActions
 			// Solo invalidamos la room individual por si está abierta en detalle
 			queryClient.invalidateQueries({ queryKey: ["room", res.roomId] });
+			// Invalidamos favoritos para que se actualice cuando el usuario navegue a /favs
+			queryClient.invalidateQueries({ queryKey: ["favoriteRooms"] });
 			props?.onSuccessLike?.();
 		},
 	});
@@ -48,6 +50,8 @@ export const useUpdateRoomInteraction = (props?: Props) => {
 			if (!res) return;
 			// No invalidamos ["rooms"] porque ya removemos la room del caché manualmente
 			queryClient.invalidateQueries({ queryKey: ["room", res.roomId] });
+			// Invalidamos favoritos para que se actualice cuando el usuario quite el like
+			queryClient.invalidateQueries({ queryKey: ["favoriteRooms"] });
 			props?.onSuccessRemoveLike?.();
 		},
 	});

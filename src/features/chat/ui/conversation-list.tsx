@@ -1,47 +1,44 @@
-import { Loading01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { useConversationsQuery } from "../model/queries/conversations.query";
+import { useConversationsQuery } from "../model/queries/use-conversations.query";
 import { ConversationItem } from "./conversation-item";
 
 interface ConversationListProps {
+	currentUserId: string;
 	activeConversationId: string | null;
 	onSelectConversation: (conversationId: string) => void;
 }
 
-export function ConversationList({
+export const ConversationList = ({
+	currentUserId,
 	activeConversationId,
 	onSelectConversation,
-}: ConversationListProps) {
-	const { data: conversations, isLoading } = useConversationsQuery();
+}: ConversationListProps) => {
+	const { data: conversations = [], isLoading } = useConversationsQuery();
 
 	if (isLoading) {
 		return (
 			<div className="flex items-center justify-center h-full">
-				<HugeiconsIcon
-					className="animate-spin"
-					icon={Loading01Icon}
-					size={32}
-				/>
+				<div className="text-foreground/50">Cargando conversaciones...</div>
 			</div>
 		);
 	}
 
-	if (!conversations || conversations.length === 0) {
+	if (conversations.length === 0) {
 		return (
-			<div className="flex flex-col items-center justify-center h-full text-center p-8">
-				<p className="text-neutral-500">No tienes conversaciones aún</p>
-				<p className="text-sm text-neutral-400 mt-2">
-					Envía un mensaje desde el detalle de una habitación
+			<div className="flex flex-col items-center justify-center h-full p-6 text-center">
+				<p className="text-foreground/50 mb-2">No tienes conversaciones</p>
+				<p className="text-sm text-foreground/40">
+					Dale like a una habitación para empezar a chatear
 				</p>
 			</div>
 		);
 	}
 
 	return (
-		<div className="h-full overflow-y-auto">
+		<div className="flex flex-col h-full overflow-y-auto">
 			{conversations.map((conversation) => (
 				<ConversationItem
 					conversation={conversation}
+					currentUserId={currentUserId}
 					isActive={conversation.id === activeConversationId}
 					key={conversation.id}
 					onClick={() => onSelectConversation(conversation.id)}
@@ -49,4 +46,4 @@ export function ConversationList({
 			))}
 		</div>
 	);
-}
+};

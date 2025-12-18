@@ -16,6 +16,34 @@ async function getUserId(): Promise<string> {
 	return user.id;
 }
 
+interface MessageRow {
+	content: string;
+	sent_at: string;
+	sender_id: string;
+	is_read: boolean;
+}
+
+interface ConversationRow {
+	id: string;
+	participant_1_id: string;
+	participant_2_id: string;
+	room_id: string | null;
+	last_message_at: string;
+	created_at: string;
+	updated_at: string;
+	participant_1: {
+		id: string;
+		name: string;
+		avatar_url: string | null;
+	};
+	participant_2: {
+		id: string;
+		name: string;
+		avatar_url: string | null;
+	};
+	messages: MessageRow[];
+}
+
 /**
  * Obtiene todas las conversaciones del usuario con metadata
  */
@@ -26,8 +54,8 @@ export async function getConversations(): Promise<ConversationWithMetadata[]> {
 		.from("conversations")
 		.select(`
 			*,
-			participant_1:users!conversations_participant_1_id_fkey(id, name, avatar),
-			participant_2:users!conversations_participant_2_id_fkey(id, name, avatar),
+			participant_1:users!conversations_participant_1_id_fkey(id, name, avatar_url),
+			participant_2:users!conversations_participant_2_id_fkey(id, name, avatar_url),
 			messages(content, sent_at, sender_id, is_read)
 		`)
 		.or(`participant_1_id.eq.${userId},participant_2_id.eq.${userId}`)
@@ -36,7 +64,7 @@ export async function getConversations(): Promise<ConversationWithMetadata[]> {
 	if (error) throw error;
 	if (!data) return [];
 
-	return data.map((conv: any) => {
+	return data.map((conv: ConversationRow) => {
 		const isParticipant1 = conv.participant_1_id === userId;
 		const otherParticipant = isParticipant1
 			? conv.participant_2
@@ -44,14 +72,14 @@ export async function getConversations(): Promise<ConversationWithMetadata[]> {
 
 		// Obtener último mensaje
 		const sortedMessages = (conv.messages || []).sort(
-			(a: any, b: any) =>
+			(a: MessageRow, b: MessageRow) =>
 				new Date(b.sent_at).getTime() - new Date(a.sent_at).getTime(),
 		);
 		const lastMessage = sortedMessages[0];
 
 		// Contar mensajes no leídos del otro participante
 		const unreadCount = (conv.messages || []).filter(
-			(msg: any) => msg.sender_id !== userId && !msg.is_read,
+			(msg: MessageRow) => msg.sender_id !== userId && !msg.is_read,
 		).length;
 
 		return {
@@ -66,7 +94,7 @@ export async function getConversations(): Promise<ConversationWithMetadata[]> {
 				: null,
 			lastMessageAt: new Date(conv.last_message_at),
 			otherParticipant: {
-				avatar: otherParticipant.avatar,
+				avatar: otherParticipant.avatar_url,
 				id: otherParticipant.id,
 				name: otherParticipant.name,
 			},
