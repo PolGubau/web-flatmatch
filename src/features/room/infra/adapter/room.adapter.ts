@@ -88,24 +88,27 @@ export const roomBDtoDomainAndMetadata = (
 ): RoomWithMetadata => {
 	const interactionDto = row.interaction as any;
 	const verificationDto = row.verified as any;
-	const ownerDto = row.owner as Owner;
+	const ownerDto = row.owner as any;
 
-	//
+	// Manejar interaction que puede venir como objeto o undefined
 	const interaction: Interaction = {
-		action: interactionDto.action ?? null,
-		lastActionAt: interactionDto.last_action_at ?? null,
+		action: interactionDto?.action ?? null,
+		lastActionAt: interactionDto?.last_action_at ?? null,
 	};
 
+	// Manejar verification que puede venir como objeto o undefined
 	const verification: Verification = {
-		notes: verificationDto.notes ?? null,
-		verificationType: verificationDto.verification_type ?? null,
-		verifiedAt: verificationDto.verified_at ?? null,
-		verifiedBy: verificationDto.verified_by ?? null,
+		notes: verificationDto?.notes ?? null,
+		verificationType: verificationDto?.verification_type ?? null,
+		verifiedAt: verificationDto?.verified_at ?? null,
+		verifiedBy: verificationDto?.verified_by ?? null,
 	};
+
+	// Manejar owner que puede venir como objeto o undefined
 	const owner = {
-		avatar: ownerDto.avatar,
-		id: ownerDto.id,
-		name: ownerDto.name,
+		avatar: ownerDto?.avatar ?? null,
+		id: ownerDto?.id ?? row.owner_id ?? "",
+		name: ownerDto?.name ?? "Unknown",
 	};
 
 	const baseRoom: RoomDB = {

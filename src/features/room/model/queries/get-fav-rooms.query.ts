@@ -10,15 +10,25 @@ import { getFavoriteRoomsService } from "../services/room.service";
 type GetRoomResponse = {
 	isLoading: boolean;
 	rooms: RoomWithMetadata[];
+	error: Error | null;
 };
 type GetRoom = () => GetRoomResponse;
 
 export const getFavRoomsQuery: GetRoom = () => {
-	const { data, isLoading } = useQuery<RoomWithMetadata[]>({
-		queryFn: () => getFavoriteRoomsService(),
+	const { data, isLoading, error } = useQuery<RoomWithMetadata[]>({
+		queryFn: async () => {
+			console.log("🔄 Fetching favorite rooms...");
+			const result = await getFavoriteRoomsService();
+			console.log("✅ Favorite rooms fetched:", result);
+			return result;
+		},
 		queryKey: ["favoriteRooms"],
 	});
 	const rooms = data ?? [];
 
-	return { isLoading, rooms };
+	if (error) {
+		console.error("❌ Error fetching favorite rooms:", error);
+	}
+
+	return { error: error as Error | null, isLoading, rooms };
 };

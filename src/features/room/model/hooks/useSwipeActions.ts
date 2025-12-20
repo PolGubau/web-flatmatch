@@ -16,20 +16,25 @@ export const useSwipeActions = ({ onOpenDetails }: Params) => {
 
 	const removeRoomFromCache = useCallback(
 		(roomId: Room["id"]) => {
-			queryClient.setQueryData<InfiniteData<RoomWithMetadata[], Error>>(
-				["rooms"],
+			// Usar queryKey parcial para que coincida con cualquier combinación de filtros
+			queryClient.setQueriesData<InfiniteData<RoomWithMetadata[], Error>>(
+				{ queryKey: ["rooms"] },
 				(oldData) => {
-					console.log("Old data before removing room:", oldData);
-
 					if (!oldData) {
 						console.warn("No rooms in cache yet!");
 						return oldData;
 					}
-					// ⚠️ creamos nuevas referencias para pages y arrays internos
+
+					// Crear nuevas referencias para pages y arrays internos
 					const newPages = oldData.pages.map((page) =>
 						page.filter((r) => r.id !== roomId),
 					);
-					console.log("Removing room from cache:", roomId, { newPages });
+
+					console.log("Removing room from cache:", roomId, {
+						newPagesCount: newPages.length,
+						oldPagesCount: oldData.pages.length,
+					});
+
 					return {
 						...oldData,
 						pageParams: oldData.pageParams,

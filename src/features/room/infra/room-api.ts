@@ -268,17 +268,15 @@ export async function getFavoriteRooms(): Promise<RoomWithMetadata[]> {
 
 	const roomIds = interactions.map((i) => i.room_id);
 
-	// Luego obtener las rooms completas con metadata usando el RPC
 	const { data, error } = await supabase
-		.rpc("rooms_with_metadata", {
-			p_user_id: userId,
-		})
-		.in("id", roomIds);
+		.from("rooms_with_metadata")
+		.select("*")
+		.in("id", roomIds)
+		.eq("interaction_user_id", userId);
 
 	if (error) throw error;
 	if (!data) return [];
 
-	// El RPC devuelve un tipo compatible con RoomWithMetadataDB
 	const roomWithMetadata = data.map((room) =>
 		roomBDtoDomainAndMetadata(room as unknown as RoomWithMetadataDB),
 	);
