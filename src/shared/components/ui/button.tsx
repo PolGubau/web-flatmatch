@@ -1,12 +1,10 @@
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import type * as React from "react";
-
 import { cn } from "~/shared/utils/utils";
 
-// [&_svg:not([class*='size-'])]:size-4
 const buttonVariants = cva(
-	"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none  shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-foreground/50 focus-visible:ring-2 aria-invalid:ring-error/20 dark:aria-invalid:ring-error/40 aria-invalid:border-error cursor-pointer",
+	"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
 	{
 		defaultVariants: {
 			size: "default",
@@ -16,19 +14,22 @@ const buttonVariants = cva(
 			size: {
 				default: "h-9 px-4 py-2 has-[>svg]:px-3",
 				icon: "size-9",
+				"icon-lg": "size-10",
+				"icon-sm": "size-8",
 				lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
 				sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
 			},
 			variant: {
-				default: "bg-primary text-background shadow-xs hover:bg-primary/90",
+				default: "bg-primary text-primary-foreground hover:bg-primary/90",
 				destructive:
-					"bg-error text-white shadow-xs hover:bg-error/90 focus-visible:ring-error/20 dark:focus-visible:ring-error/40 dark:bg-error/60",
-				ghost: "hover:bg-foreground/10 hover:text-foreground",
+					"bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+				ghost:
+					"hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
 				link: "text-primary underline-offset-4 hover:underline",
 				outline:
-					"bg-transparent border-2 border-foreground/30 shadow-xs hover:bg-foreground/5 text-foreground/80 hover:text-foreground",
+					"border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
 				secondary:
-					"bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
+					"bg-secondary text-secondary-foreground hover:bg-secondary/80",
 			},
 		},
 	},
@@ -36,8 +37,8 @@ const buttonVariants = cva(
 
 function Button({
 	className,
-	variant,
-	size,
+	variant = "default",
+	size = "default",
 	asChild = false,
 	...props
 }: React.ComponentProps<"button"> &
@@ -49,8 +50,9 @@ function Button({
 	return (
 		<Comp
 			className={cn(buttonVariants({ className, size, variant }))}
+			data-size={size}
 			data-slot="button"
-			type={props.type ?? "button"}
+			data-variant={variant}
 			{...props}
 		/>
 	);

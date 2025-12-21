@@ -2,7 +2,7 @@ import { UserIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cn } from "~/shared/utils/utils";
 
-type ProfileAvatarSize = "sm" | "md";
+export type ProfileAvatarSize = "sm" | "md" | "lg";
 type ProfileAvatarProps = {
 	name: string;
 	avatarUrl?: string | null;
@@ -12,6 +12,7 @@ type ProfileAvatarProps = {
 
 const theme = {
 	base: "bg-primary/10 text-foreground/80 place-items-center grid",
+	lg: "h-[80px] w-[80px] rounded-xl",
 	md: "h-[120px] w-[120px] rounded-2xl",
 	sm: "h-[32px] w-[32px] rounded-full",
 };
@@ -27,6 +28,7 @@ export const ProfileAvatar = ({
 		{
 			[theme.sm]: size === "sm",
 			[theme.md]: size === "md",
+			[theme.lg]: size === "lg",
 		},
 		customClassName,
 	);
@@ -37,7 +39,7 @@ export const ProfileAvatar = ({
 					:
 					<HugeiconsIcon
 						icon={UserIcon}
-						size={size === "md" ? 90 : 20}
+						size={size === "md" ? 90 : size === "lg" ? 60 : 20}
 						stroke="currentColor"
 					/>}
 			</div>

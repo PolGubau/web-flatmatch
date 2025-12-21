@@ -2,7 +2,7 @@ import type { HTMLAttributes } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "~/shared/utils/utils";
 import type { TranslationKey } from "../../i18n/i18n";
-import { Loader } from "../ui/loader";
+import { Spinner } from "../ui/spinner";
 
 type Props = HTMLAttributes<HTMLDivElement> & {
 	label?: TranslationKey;
@@ -21,7 +21,7 @@ export const LoadingSection: React.FC<Props> = ({
 			)}
 		>
 			<div className="flex flex-col gap-2 items-center">
-				<Loader /> {t(label)}
+				<Spinner /> {t(label)}
 			</div>
 		</div>
 	);

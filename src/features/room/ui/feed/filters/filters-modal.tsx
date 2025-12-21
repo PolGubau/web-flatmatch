@@ -16,9 +16,9 @@ export const FiltersModal = () => {
 	return (
 		<>
 			<Button
-				className="max-md:size-14 md:h-14"
+				className="max-md:size-14 md:h-14 md:flex-1"
 
-				onClick={() => setIsOpen(true)} variant={"ghost"}
+				onClick={() => setIsOpen(true)} variant={"secondary"}
 			>
 				<HugeiconsIcon icon={FilterHorizontalIcon} size={16} strokeWidth={3} />
 				<span className="max-sm:hidden">{t("filters")}</span>

@@ -1,4 +1,4 @@
-import { Loader } from "~/shared/components/ui/loader";
+import { Spinner } from "~/shared/components/ui/spinner";
 
 export function RoomTinderCardUILoader() {
 	return (
@@ -6,7 +6,7 @@ export function RoomTinderCardUILoader() {
 			<div className="bg-gradient-to-tr from-black w-full h-full inset-0 absolute to-transparent rounded-lg" />
 
 			<div className="grid place-items-center h-full w-full">
-				<Loader className="text-background" label="loading" />
+				<Spinner className="text-background" />
 			</div>
 
 			<header className="absolute bottom-0 left-0 p-4 pb-6 flex flex-col gap-2 z-10">
