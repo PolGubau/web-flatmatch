@@ -6,7 +6,6 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "~/shared/components/ui/button";
 import { cn } from "~/shared/utils/utils";
-import CopyRoomLinkButton from "../copy-room-link-button";
 
 type RoomActionsBarProps = {
   isFavourite: boolean;
@@ -28,24 +27,23 @@ export const RoomActionsBar = ({
       <Button
         disabled={isSharing}
         onClick={onShare}
-        size="icon"
+        size="icon-lg"
         title="Share"
         variant="ghost"
       >
-        <HugeiconsIcon
+        <HugeiconsIcon 
           className={cn("transition-transform", {
             "animate-pulse": isSharing,
           })}
           icon={Share08Icon}
-          size={22}
         />
       </Button>
-      <Button onClick={onChat} size="icon" title="Chat" variant="ghost">
-        <HugeiconsIcon icon={ChattingIcon} size={22} />
+      <Button onClick={onChat} size="icon-lg" title="Chat" variant="ghost">
+        <HugeiconsIcon icon={ChattingIcon} />
       </Button>
       <Button
         onClick={onFavouriteToggle}
-        size="icon"
+        size="icon-lg"
         title={isFavourite ? "Remove from favorites" : "Add to favorites"}
         variant="ghost"
       >

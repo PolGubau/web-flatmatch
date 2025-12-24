@@ -42,10 +42,10 @@ export const OwnerSidebar = ({
   const { t } = useTranslation();
 
   return (
-    <aside className="w-full lg:w-80 space-y-4 md:space-y-6">
+    <aside className="w-full space-y-4 md:space-y-6">
       <Card className="lg:sticky lg:top-6">
         <CardHeader>
-          <CardTitle>Published by</CardTitle>
+          <CardTitle>{t("published_by")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center gap-3">
@@ -56,7 +56,7 @@ export const OwnerSidebar = ({
             />
             <div>
               <h3 className="font-semibold text-lg">{owner.name}</h3>
-              <p className="text-sm text-muted-foreground">Landlord</p>
+              <p className="text-sm text-muted-foreground">{t("landlord")}</p>
             </div>
           </div>
 
@@ -64,7 +64,7 @@ export const OwnerSidebar = ({
 
           <Button className="w-full" onClick={onStartChat} size="lg">
             <HugeiconsIcon icon={ChattingIcon} size={20} />
-            Message landlord
+            {t("message_landlord")}
           </Button>
 
           <ContactButtons
@@ -82,19 +82,19 @@ export const OwnerSidebar = ({
       {roommates.total > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle>Current Roommates</CardTitle>
+            <CardTitle>{t("current_roommates")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
               {roommates.female > 0 && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm">Female</span>
+                  <span className="text-sm">{t("female")}</span>
                   <Badge>{roommates.female}</Badge>
                 </div>
               )}
               {roommates.male > 0 && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm">Male</span>
+                  <span className="text-sm">{t("male")}</span>
                   <Badge>{roommates.male}</Badge>
                 </div>
               )}

@@ -4,12 +4,6 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import i18n from "i18next";
 import { Clock, Euro } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "~/shared/components/ui/card";
 import { currencyFormat } from "~/shared/utils/formatters/numbers/currencyFormat";
 
 type AvailabilityCostsCardProps = {

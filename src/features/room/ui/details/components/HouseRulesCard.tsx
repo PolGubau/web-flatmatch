@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Badge } from "~/shared/components/ui/badge";
 
 type HouseRulesCardProps = {
@@ -5,6 +6,7 @@ type HouseRulesCardProps = {
 };
 
 export const HouseRulesCard = ({ rules }: HouseRulesCardProps) => {
+  const { t } = useTranslation();
   const booleanRules = Object.entries(rules).filter(
     ([, value]) => typeof value === "boolean",
   ) as [string, boolean][];
@@ -14,7 +16,7 @@ export const HouseRulesCard = ({ rules }: HouseRulesCardProps) => {
   return (
     <section className="space-y-4 border-t border-foreground/10 pt-6 mt-8">
       <header>
-        <h3 className="text-xl">House Rules</h3>
+        <h3 className="text-xl">{t("house_rules")}</h3>
       </header>
       <div className="grid gap-4">
         {booleanRules.map(([key, value]) => (
@@ -26,7 +28,7 @@ export const HouseRulesCard = ({ rules }: HouseRulesCardProps) => {
               {key.replace(/([A-Z])/g, " $1").trim()}
             </span>
             <Badge variant={value ? "success" : "secondary"}>
-              {value ? "Allowed" : "Not allowed"}
+              {value ? t("allowed") : t("not_allowed")}
             </Badge>
           </div>
         ))}
