@@ -42,8 +42,8 @@ export const OwnerSidebar = ({
   const { t } = useTranslation();
 
   return (
-    <aside className="lg:w-80 space-y-6">
-      <Card className="sticky top-6">
+    <aside className="w-full lg:w-80 space-y-4 md:space-y-6">
+      <Card className="lg:sticky lg:top-6">
         <CardHeader>
           <CardTitle>Published by</CardTitle>
         </CardHeader>

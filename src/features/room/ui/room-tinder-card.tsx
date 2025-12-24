@@ -53,7 +53,7 @@ export const RoomTinderCard = ({
 
 	return (
 		<motion.div
-			className="h-full max-h-[80dvh] bg-neutral-500 backdrop-blur-md overflow-hidden w-[80vw] max-w-[500px] rounded-3xl hover:cursor-grab active:cursor-grabbing origin-bottom shadow shadow-neutral-500/10 relative"
+			className="h-full max-h-[calc(100dvh-12rem)] md:max-h-[min(800px,calc(100dvh-10rem))] bg-neutral-500 backdrop-blur-md overflow-hidden w-[80vw] max-w-[500px] rounded-3xl hover:cursor-grab active:cursor-grabbing origin-bottom shadow shadow-neutral-500/10 relative"
 			drag
 			dragConstraints={{ bottom: 0, left: 0, right: 0, top: 0 }}
 			dragElastic={1}

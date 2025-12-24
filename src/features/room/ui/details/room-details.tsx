@@ -68,13 +68,13 @@ export default function RoomDetails({ room }: Props) {
 
 	return (
 		<div className="relative overflow-y-auto h-full">
-			<section className="grid gap-6 mx-auto max-w-7xl pb-8">
+			<section className="grid gap-4 md:gap-6 mx-auto max-w-7xl pb-8 px-4">
 				{/* Gallery */}
 				<RoomGallery images={sortedImages} title={room.title} />
 
-				<div className="flex flex-col lg:flex-row gap-6">
+				<div className="flex flex-col lg:flex-row gap-4 md:gap-6">
 					{/* Main Content */}
-					<div className="flex-1 flex flex-col gap-6">
+					<div className="flex-1 flex flex-col gap-4 md:gap-6">
 						{/* Header with price and actions */}
 						<RoomHeaderCard
 							formattedPrice={formattedPrice}
