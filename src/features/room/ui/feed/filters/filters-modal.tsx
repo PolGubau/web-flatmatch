@@ -16,7 +16,7 @@ export const FiltersModal = () => {
 	return (
 		<>
 			<Button
-				className="max-md:size-14 md:h-14 md:flex-1"
+				className="min-w-14 h-14 flex-1"
 
 				onClick={() => setIsOpen(true)} variant={"secondary"}
 			>

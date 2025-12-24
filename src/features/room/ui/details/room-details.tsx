@@ -12,14 +12,13 @@ import {
 	CardTitle,
 } from "~/shared/components/ui/card";
 import { cn } from "~/shared/utils/utils";
-import "./room-details.css";
 import { AvailabilityCostsCard } from "./components/AvailabilityCostsCard";
 import { OwnerSidebar } from "./components/OwnerSidebar";
-import { QuickStatsCard } from "./components/QuickStatsCard";
 import { RoomGallery } from "./components/RoomGallery";
 import { RoomHeaderCard } from "./components/RoomHeaderCard";
 import { useRoomDetailsActions } from "./hooks/useRoomDetailsActions";
 import { useRoomDetailsData } from "./hooks/useRoomDetailsData";
+import "./room-details.css";
 import { RoomDistanceFromYou } from "./room-distance-from-you";
 import { createShareData } from "./utils/room-details.utils";
 
@@ -68,13 +67,13 @@ export default function RoomDetails({ room }: Props) {
 
 	return (
 		<div className="relative overflow-y-auto h-full">
-			<section className="grid gap-4 md:gap-6 mx-auto max-w-7xl pb-8 px-4">
+			<section className="grid gap-4 md:gap-6 mx-auto max-w-7xl pb-8">
 				{/* Gallery */}
 				<RoomGallery images={sortedImages} title={room.title} />
 
-				<div className="flex flex-col lg:flex-row gap-4 md:gap-6">
+				<div className="flex flex-col lg:flex-row gap-2">
 					{/* Main Content */}
-					<div className="flex-1 flex flex-col gap-4 md:gap-6">
+					<div className="flex-1 flex flex-col gap-2">
 						{/* Header with price and actions */}
 						<RoomHeaderCard
 							formattedPrice={formattedPrice}
@@ -86,24 +85,13 @@ export default function RoomDetails({ room }: Props) {
 							room={room}
 						/>
 
-						{/* Quick Stats */}
-						<QuickStatsCard
-							bathrooms={room.commodities.whole?.bathrooms}
-							bedrooms={bedrooms}
-							roommates={roommatesData.total}
-						/>
 
-						{/* Description */}
-						<Card>
-							<CardHeader>
-								<CardTitle>About this place</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<p className="text-foreground/80 whitespace-pre-wrap break-words leading-relaxed">
-									{room.description}
-								</p>
-							</CardContent>
-						</Card>
+
+
+						<p className="text-foreground/80 whitespace-pre-wrap break-words leading-relaxed">
+							{room.description}
+						</p>
+
 
 						{/* Availability & Costs */}
 						<AvailabilityCostsCard
@@ -113,128 +101,117 @@ export default function RoomDetails({ room }: Props) {
 							minimumStay={minimumStay}
 						/>
 
-						{/* Amenities */}
-						<Card>
-							<CardHeader>
-								<CardTitle>{t("commodities")}</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-									{Object.keys(room?.commodities?.whole?.appliances).map(
-										(key) => {
-											const value =
-												room.commodities?.whole?.appliances[
-												key as keyof typeof room.commodities.whole.appliances
-												];
-											const match =
-												commoditiesMap[key as keyof typeof commoditiesMap];
-											if (!match) return null;
-
-											return (
-												<div
-													className={cn(
-														"flex items-center gap-3 p-3 rounded-lg border transition-colors",
-														{
-															"bg-success/10 border-success/30": value,
-															"opacity-40 bg-muted border-muted": !value,
-														},
-													)}
-													key={key}
-												>
-													{match.icon && (
-														<HugeiconsIcon
-															className={
-																value ? "text-success" : "text-muted-foreground"
-															}
-															icon={match.icon}
-															size={20}
-														/>
-													)}
-													<span className="text-sm font-medium">
-														{t(match.label)}
-													</span>
-												</div>
-											);
-										},
-									)}
-								</div>
-							</CardContent>
-						</Card>
-
-						{/* Extra Spaces */}
-						<Card>
-							<CardHeader>
-								<CardTitle>{t("extra_spaces")}</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-									{Object.keys(room.commodities.whole.extras).map((key) => {
+						<section className="space-y-4 border-t border-foreground/10 pt-6 mt-8">
+							<header>
+								<h3 className="text-xl">{t("commodities")}</h3>
+							</header>
+							<ul className="grid grid-cols-2 md:grid-cols-3 gap-5">
+								{Object.keys(room?.commodities?.whole?.appliances).map(
+									(key) => {
 										const value =
-											room.commodities.whole.extras[
-											key as keyof typeof room.commodities.whole.extras
+											room.commodities?.whole?.appliances[
+											key as keyof typeof room.commodities.whole.appliances
 											];
-										const match = extrasMap[key as keyof typeof extrasMap];
+										const match =
+											commoditiesMap[key as keyof typeof commoditiesMap];
 										if (!match) return null;
 
 										return (
-											<div
+											<li
 												className={cn(
-													"flex items-center gap-3 p-3 rounded-lg border transition-colors",
+													"flex items-center gap-4",
 													{
-														"bg-success/10 border-success/30": value,
-														"opacity-40 bg-muted border-muted": !value,
+														"opacity-30": !value,
 													},
 												)}
 												key={key}
 											>
 												{match.icon && (
 													<HugeiconsIcon
-														className={
-															value ? "text-success" : "text-muted-foreground"
-														}
 														icon={match.icon}
-														size={20}
+														size={25}
 													/>
 												)}
-												<span className="text-sm font-medium">
+												<span className={cn({
+													"line-through": !value
+												})}>
 													{t(match.label)}
 												</span>
-											</div>
+											</li>
 										);
-									})}
-								</div>
-							</CardContent>
-						</Card>
+									},
+								)}
+							</ul>
+						</section>
+
+						{/* Extra Spaces */}
+						<section className="space-y-4 border-t border-foreground/10 pt-6 mt-8">
+							<header>
+								<h3 className="text-xl">{t("extra_spaces")}</h3>
+							</header>
+							<ul className="grid grid-cols-2 md:grid-cols-3 gap-5">
+								{Object.keys(room.commodities.whole.extras).map((key) => {
+									const value =
+										room.commodities.whole.extras[
+										key as keyof typeof room.commodities.whole.extras
+										];
+									const match = extrasMap[key as keyof typeof extrasMap];
+									if (!match) return null;
+
+									return (
+										<li
+											className={cn(
+												"flex items-center gap-4",
+												{
+													"opacity-30": !value,
+												},
+											)}
+											key={key}
+										>
+											{match.icon && (
+												<HugeiconsIcon
+													icon={match.icon}
+													size={25}
+												/>
+											)}
+											<span className={cn({
+												"line-through": !value
+											})}>
+												{t(match.label)}
+											</span>
+										</li>
+									);
+								})}
+							</ul>
+						</section>
 
 						{/* House Rules */}
 						{room.rules && (
-							<Card>
-								<CardHeader>
-									<CardTitle>House Rules</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<div className="space-y-3">
-										{Object.entries(room.rules).map(([key, value]) => {
-											if (typeof value === "boolean") {
-												return (
-													<div
-														className="flex items-center justify-between py-2 border-b border-border/50 last:border-0"
-														key={key}
-													>
-														<span className="text-sm font-medium capitalize">
-															{key.replace(/([A-Z])/g, " $1").trim()}
-														</span>
-														<Badge variant={value ? "success" : "secondary"}>
-															{value ? "Allowed" : "Not allowed"}
-														</Badge>
-													</div>
-												);
-											}
-											return null;
-										})}
-									</div>
-								</CardContent>
-							</Card>
+							<section className="space-y-4 border-t border-foreground/10 pt-6 mt-8">
+								<header>
+									<h3 className="text-xl">House Rules</h3>
+								</header>
+								<div className="grid gap-4">
+									{Object.entries(room.rules).map(([key, value]) => {
+										if (typeof value === "boolean") {
+											return (
+												<div
+													className="flex items-center justify-between py-2 border-b border-border/50 last:border-0"
+													key={key}
+												>
+													<span className="text-sm font-medium capitalize">
+														{key.replace(/([A-Z])/g, " $1").trim()}
+													</span>
+													<Badge variant={value ? "success" : "secondary"}>
+														{value ? "Allowed" : "Not allowed"}
+													</Badge>
+												</div>
+											);
+										}
+										return null;
+									})}
+								</div>
+							</section>
 						)}
 
 						{/* Preferences */}

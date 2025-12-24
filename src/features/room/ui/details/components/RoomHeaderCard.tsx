@@ -3,13 +3,8 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslation } from "react-i18next";
 import type { RoomWithMetadata } from "~/entities/room/room";
 import { Badge } from "~/shared/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "~/shared/components/ui/card";
 import { ContactButtons } from "../footer/contact-buttons";
+import { useRoomDetailsData } from "../hooks/useRoomDetailsData";
 import { getRentTypeLabel } from "../utils/room-details.utils";
 import { RoomActionsBar } from "./RoomActionsBar";
 
@@ -25,54 +20,57 @@ type RoomHeaderCardProps = {
 
 export const RoomHeaderCard = ({
   room,
-  formattedPrice,
-  isFavourite,
+
   isSharing,
   onShare,
   onChat,
   onFavouriteToggle,
 }: RoomHeaderCardProps) => {
   const { t } = useTranslation();
-
+  const {
+    formattedPrice,
+    isFavourite,
+    roommatesData,
+  } = useRoomDetailsData(room);
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            <CardTitle className="text-3xl mb-2">{room.title}</CardTitle>
-            <div className="flex items-center gap-2 flex-wrap">
-              <Badge className="text-base" variant="secondary">
-                {formattedPrice} / {room.price.paymentFrequency}
+    <header className="flex flex-col gap-4 mb-4">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex flex-col">
+          <h1 className="text-2xl mb-2 line-clamp-3">{room.title}</h1>
+          <div className="flex items-center gap-2 flex-wrap divide-x divide-foreground/20 text-sm text-foreground/90 [&>span]:px-2">
+            <span>
+              {formattedPrice} / {room.price.paymentFrequency}
+            </span>
+            <span>{t(getRentTypeLabel(room.rentType))}</span>
+            <span>
+              {t("x_bathrooms", {
+                count: room.commodities.whole.bathrooms,
+              })}
+            </span>
+            <span>{t("roommates", { count: roommatesData.total })}</span>
+            {room.verification.verifiedAt && (
+              <Badge className="gap-1" variant="success">
+                <HugeiconsIcon icon={SecurityCheckIcon} size={14} />
+                {t("verified")}
               </Badge>
-              <Badge variant="outline">
-                {t(getRentTypeLabel(room.rentType))}
-              </Badge>
-              {room.verification.verifiedAt && (
-                <Badge className="gap-1" variant="success">
-                  <HugeiconsIcon icon={SecurityCheckIcon} size={14} />
-                  {t("verified")}
-                </Badge>
-              )}
-            </div>
+            )}
           </div>
-          <RoomActionsBar
-            isFavourite={isFavourite}
-            isSharing={isSharing}
-            onChat={onChat}
-            onFavouriteToggle={onFavouriteToggle}
-            onShare={onShare}
-          />
         </div>
-      </CardHeader>
-      <CardContent>
-        <ContactButtons
-          email={room.contact.agent?.email ?? room.contact.owner?.email}
-          infoMessage={t("contact_message", {
-            name: room.title,
-          })}
-          phone={room.contact.agent?.phone ?? room.contact.owner?.phone}
+        <RoomActionsBar
+          isFavourite={isFavourite}
+          isSharing={isSharing}
+          onChat={onChat}
+          onFavouriteToggle={onFavouriteToggle}
+          onShare={onShare}
         />
-      </CardContent>
-    </Card>
+      </div>
+      <ContactButtons
+        email={room.contact.agent?.email ?? room.contact.owner?.email}
+        infoMessage={t("contact_message", {
+          name: room.title,
+        })}
+        phone={room.contact.agent?.phone ?? room.contact.owner?.phone}
+      />
+    </header>
   );
 };

@@ -40,7 +40,6 @@ export const RoomActionsBar = ({
           size={22}
         />
       </Button>
-      <CopyRoomLinkButton />
       <Button onClick={onChat} size="icon" title="Chat" variant="ghost">
         <HugeiconsIcon icon={ChattingIcon} size={22} />
       </Button>

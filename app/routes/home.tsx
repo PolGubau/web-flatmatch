@@ -1,4 +1,4 @@
-import HomePage from "src/global/pages/Home";
+import HomePage from "~/global/pages/home/Home";
 
 export function meta() {
 	return [

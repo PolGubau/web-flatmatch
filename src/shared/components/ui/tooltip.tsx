@@ -58,13 +58,13 @@ function TooltipContent({
 	);
 }
 // sugar export
-function Tooltip({ children, trigger, ...props }: React.ComponentProps<typeof TooltipPrimitive.Root> & {
-	trigger: React.ReactNode;
+function Tooltip({ children, label, ...props }: React.ComponentProps<typeof TooltipPrimitive.Root> & {
+	label: React.ReactNode;
 }) {
 	return (
 		<TooltipRoot {...props}>
-			<TooltipTrigger>{trigger}</TooltipTrigger>
-			<TooltipContent>{children}</TooltipContent>
+			<TooltipTrigger>{children}</TooltipTrigger>
+			<TooltipContent>{label}</TooltipContent>
 		</TooltipRoot>
 	);
 }

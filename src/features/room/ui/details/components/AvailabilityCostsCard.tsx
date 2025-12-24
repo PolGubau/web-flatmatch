@@ -29,51 +29,49 @@ export const AvailabilityCostsCard = ({
   currency,
 }: AvailabilityCostsCardProps) => {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Availability & Costs</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid gap-3">
-          {availableFrom && (
-            <div className="flex items-center gap-3">
-              <HugeiconsIcon
-                className="text-muted-foreground"
-                icon={Calendar03Icon}
-                size={20}
-              />
-              <div>
-                <p className="text-sm font-medium">Available from</p>
-                <p className="text-sm text-muted-foreground">
-                  {format(availableFrom, "PPP", { locale: es })}
-                </p>
-              </div>
+    <section className="space-y-4 border-t border-foreground/10 pt-6 mt-8">
+      <header>
+        <h3 className="text-xl">Availability & Costs</h3>
+      </header>
+      <div className="grid gap-6">
+        {availableFrom && (
+          <div className="flex items-center gap-6">
+            <HugeiconsIcon
+              className="text-muted-foreground"
+              icon={Calendar03Icon}
+              size={25}
+            />
+            <div>
+              <p className="text-sm font-medium">Available from</p>
+              <p className="text-sm text-muted-foreground">
+                {format(availableFrom, "PPP", { locale: es })}
+              </p>
             </div>
-          )}
-          {minimumStay?.value && (
-            <div className="flex items-center gap-3">
-              <Clock className="text-muted-foreground" size={20} />
-              <div>
-                <p className="text-sm font-medium">Minimum stay</p>
-                <p className="text-sm text-muted-foreground">
-                  {minimumStay.value} {minimumStay.unit}s
-                </p>
-              </div>
+          </div>
+        )}
+        {minimumStay?.value && (
+          <div className="flex items-center gap-6">
+            <Clock className="text-muted-foreground" size={25} />
+            <div>
+              <p className="text-sm font-medium">Minimum stay</p>
+              <p className="text-sm text-muted-foreground">
+                {minimumStay.value} {minimumStay.unit}s
+              </p>
             </div>
-          )}
-          {deposit > 0 && (
-            <div className="flex items-center gap-3">
-              <Euro className="text-muted-foreground" size={20} />
-              <div>
-                <p className="text-sm font-medium">Deposit</p>
-                <p className="text-sm text-muted-foreground">
-                  {currencyFormat(deposit, currency, i18n.language)}
-                </p>
-              </div>
+          </div>
+        )}
+        {deposit > 0 && (
+          <div className="flex items-center gap-6">
+            <Euro className="text-muted-foreground" size={25} />
+            <div>
+              <p className="text-sm font-medium">Deposit</p>
+              <p className="text-sm text-muted-foreground">
+                {currencyFormat(deposit, currency, i18n.language)}
+              </p>
             </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+          </div>
+        )}
+      </div>
+    </section>
   );
 };
