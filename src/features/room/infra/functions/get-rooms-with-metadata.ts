@@ -1,9 +1,10 @@
 import type { RoomWithMetadata } from "~/entities/room/room";
 import { supabase } from "~/global/supabase/client";
 import type { Filters } from "../../ui/feed/filters/filters-form";
-import { ROOM_QUERY_SELECT } from "./get-single-room";
+import { buildRoomSelect } from "./get-single-room";
 
 type GetRoomsWithMetadataProps = {
+	userId?: string;
 	createdBy?: string;
 	notCreatedBy?: string;
 	filters?: Filters;
@@ -12,21 +13,22 @@ type GetRoomsWithMetadataProps = {
 
 /**
  * Obtiene las rooms con filtros y joins de metadata (owner, interaction, verified)
- * @param userId ID del usuario actual
+ * @param userId ID del usuario actual para filtrar sus interacciones
+ * @param createdBy Filtrar rooms creadas por este usuario
+ * @param notCreatedBy Excluir rooms creadas por este usuario
  * @param filters Filtros opcionales (location, minPrice, maxPrice)
  * @param page Número de página (paginación de 10 en 10)
  */
 export const getRoomsWithMetadata = async (
 	props: GetRoomsWithMetadataProps,
 ): Promise<RoomWithMetadata[]> => {
-	const { createdBy, notCreatedBy, filters, page = 0 } = props;
+	const { userId, createdBy, notCreatedBy, filters, page = 0 } = props;
 
 	// Base query
 	let query = supabase
 		.from("rooms")
-		.select(ROOM_QUERY_SELECT)
+		.select(buildRoomSelect(userId))
 		.eq("status", "available")
-		// .neq("owner_id", userId)
 		.range(page * 10, page * 10 + 9)
 		.order("created_at", { ascending: false });
 

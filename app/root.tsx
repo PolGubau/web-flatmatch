@@ -9,6 +9,7 @@ import {
 	Scripts,
 	ScrollRestoration,
 } from "react-router";
+import { CACHE_CONFIG } from "~/global/constants";
 import MainLayout from "~/global/layout/main-layout";
 import { AuthContextProvider } from "~/global/supabase/auth-context";
 import { LoadingSection } from "~/shared/components/pages/LoadingSection";
@@ -56,12 +57,26 @@ export function Layout({ children }: { children: React.ReactNode }) {
 	);
 }
 
-// ✅ Mover QueryClient fuera del componente para evitar recrearlo en cada render
+// ✅ QueryClient instance outside component to prevent recreation on renders
 const queryClient = new QueryClient({
 	defaultOptions: {
-		queries: {
+		mutations: {
+			onError: (error) => {
+				console.error("Mutation error:", error);
+			},
 			retry: 1,
-			staleTime: 1000 * 60 * 5,
+		},
+		queries: {
+			refetchOnWindowFocus: false,
+			retry: (failureCount, error) => {
+				// Don't retry on 4xx errors
+				if (error instanceof Error && "statusCode" in error) {
+					const statusCode = (error as { statusCode: number }).statusCode;
+					if (statusCode >= 400 && statusCode < 500) return false;
+				}
+				return failureCount < 2;
+			},
+			staleTime: CACHE_CONFIG.medium,
 		},
 	},
 });

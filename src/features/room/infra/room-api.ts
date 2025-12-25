@@ -10,6 +10,7 @@ import type {
 	FindMany,
 	Update,
 } from "~/shared/abstracts/repo";
+import { authUtils } from "~/shared/utils/auth-utils";
 import type { RoomWithMetadataDB } from "../types/dtos";
 import { roomBDtoDomainAndMetadata, roomMapper } from "./adapter/room.adapter";
 import { getRoomsWithMetadata } from "./functions/get-rooms-with-metadata";
@@ -30,12 +31,13 @@ export type UpdateRoom = Updates<"rooms">;
  */
 
 export const getFeed: GetFeed = async ({ filters, page = 0 }) => {
-	const userId = await getUserId();
+	const userId = await authUtils.getUserId();
 
 	const data = await getRoomsWithMetadata({
 		filters,
 		notCreatedBy: userId,
 		page,
+		userId,
 	});
 
 	if (!data) return [];
@@ -46,10 +48,11 @@ export const getFeed: GetFeed = async ({ filters, page = 0 }) => {
 	return roomWithMetadata;
 };
 export const getYourRooms: FindAll<RoomWithMetadata> = async () => {
-	const userId = await getUserId();
+	const userId = await authUtils.getUserId();
 
 	const data = await getRoomsWithMetadata({
 		createdBy: userId,
+		userId,
 	});
 
 	const roomWithMetadata = data.map((item) =>
@@ -62,9 +65,9 @@ export const getYourRooms: FindAll<RoomWithMetadata> = async () => {
  * Devuelve una room por id con verificación
  */
 export const getOneRoom: FindById<RoomWithMetadata> = async (id) => {
-	// const _userId = await getUserId();
+	const userId = await authUtils.getUserId();
 
-	const data = await getRoomQuery({ id });
+	const data = await getRoomQuery({ id, userId });
 
 	if (!data) {
 		return null;
@@ -77,7 +80,7 @@ export const getOneRoom: FindById<RoomWithMetadata> = async (id) => {
  * Devuelve varias rooms por id con verificación
  */
 export const getManyRooms: FindMany<RoomWithMetadata> = async (ids) => {
-	const userId = await getUserId();
+	const userId = await authUtils.getUserId();
 
 	const { data, error } = await supabase
 		.from("rooms_with_metadata")
@@ -95,7 +98,7 @@ export const getManyRooms: FindMany<RoomWithMetadata> = async (ids) => {
  * Crea una nueva room (sin verificación, solo en `rooms`)
  */
 export const createRoom: Create<Room, EditableRoom> = async (editableRoom) => {
-	const userId = await getUserId();
+	const userId = await authUtils.getUserId();
 
 	const allImages = editableRoom.images.gallery;
 	const existingUrls = allImages.filter((img) => typeof img === "string");
@@ -157,7 +160,7 @@ export const updateRoom: Update<RoomWithMetadata, EditableRoom> = async (
 	data,
 ) => {
 	// 1. obtener user loggeado
-	const userId = await getUserId();
+	const userId = await authUtils.getUserId();
 	const newGallery = data.images?.gallery
 		? await uploadNewImages(userId, data.images.gallery)
 		: undefined;
@@ -241,20 +244,8 @@ async function uploadNewImages(
 	return [...existingUrls, ...newUrls];
 }
 
-async function getUserId(): Promise<string> {
-	const {
-		data: { user },
-		error: userError,
-	} = await supabase.auth.getUser();
-
-	if (userError || !user) {
-		throw new Error("No authenticated user found");
-	}
-	return user.id;
-}
-
 export async function getFavoriteRooms(): Promise<RoomWithMetadata[]> {
-	const userId = await getUserId();
+	const userId = await authUtils.getUserId();
 
 	// Primero obtener los IDs de las rooms que le gustan al usuario
 	const { data: interactions, error: interactionsError } = await supabase
@@ -284,7 +275,7 @@ export async function getFavoriteRooms(): Promise<RoomWithMetadata[]> {
 }
 
 export const interactRoom: InteractApi = async (id, action) => {
-	const userId = await getUserId();
+	const userId = await authUtils.getUserId();
 
 	const { error, data } = await supabase
 		.from("room_user_interactions")
@@ -310,7 +301,7 @@ export const interactRoom: InteractApi = async (id, action) => {
 	};
 };
 export const removeInteraction: RemoveInteractionApi = async (id) => {
-	const userId = await getUserId();
+	const userId = await authUtils.getUserId();
 
 	const { error } = await supabase
 		.from("room_user_interactions")

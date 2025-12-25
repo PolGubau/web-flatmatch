@@ -1,4 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEYS } from "~/global/constants";
+import { errorHandler } from "~/shared/utils/error-handler";
 import { deleteRoomService } from "../services/room.service";
 
 /**
@@ -9,11 +11,14 @@ export const useDeleteRoomMutation = () => {
 
 	return useMutation({
 		mutationFn: deleteRoomService,
+		onError: (error) => {
+			errorHandler.logError(error, "Error deleting room");
+		},
 		onSuccess: (_, id) => {
 			// Invalida la cache de la room eliminada
-			queryClient.invalidateQueries({ queryKey: ["room", id] });
+			queryClient.invalidateQueries({ queryKey: QUERY_KEYS.rooms.detail(id) });
 			// Invalida lista de rooms si existe
-			queryClient.invalidateQueries({ queryKey: ["rooms"] });
+			queryClient.invalidateQueries({ queryKey: QUERY_KEYS.rooms.all });
 		},
 	});
 };

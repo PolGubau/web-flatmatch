@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import type { RoomWithMetadata } from "~/entities/room/room";
+import { CACHE_CONFIG, QUERY_KEYS } from "~/global/constants";
 import { RoomRepository } from "../../infra/room-repository";
 import type { Filters } from "../../ui/feed/filters/filters-form";
 import { useFilters } from "../hooks/use-filters";
@@ -41,9 +42,14 @@ export const useListRoomsQuery = () => {
 		},
 		// Include current filter values in the query key so React Query will
 		// automatically refetch when filters change (driven by URL search params).
-		queryKey: ["rooms", { afterDate, location, maxPrice, minPrice }],
+		queryKey: QUERY_KEYS.rooms.list({
+			afterDate,
+			location,
+			maxPrice,
+			minPrice,
+		}),
 		refetchOnWindowFocus: false,
-		staleTime: 1000 * 60 * 5, // cache 5min
+		staleTime: CACHE_CONFIG.medium,
 	});
 
 	const rooms = useMemo(() => data?.pages.flat() ?? [], [data]);

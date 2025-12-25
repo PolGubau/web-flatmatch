@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Room } from "~/entities/room/room";
+import { QUERY_KEYS } from "~/global/constants";
+import { errorHandler } from "~/shared/utils/error-handler";
 import { roomToEditableRoom } from "../../infra/adapter/room.adapter";
 import { updateRoomService } from "../services/room.service";
 
@@ -12,12 +14,18 @@ export const useUpdateRoomMutation = () => {
 	return useMutation({
 		mutationFn: (room: Room) =>
 			updateRoomService(room.id, roomToEditableRoom(room)),
+		onError: (error) => {
+			errorHandler.logError(error, "Error updating room");
+		},
 		onSuccess: (updatedRoom) => {
 			if (!updatedRoom) return;
 			// Actualiza el cache de la room actualizada
-			queryClient.setQueryData(["room", updatedRoom.id], updatedRoom);
+			queryClient.setQueryData(
+				QUERY_KEYS.rooms.detail(updatedRoom.id),
+				updatedRoom,
+			);
 			// Invalida lista de rooms si existe
-			queryClient.invalidateQueries({ queryKey: ["rooms"] });
+			queryClient.invalidateQueries({ queryKey: QUERY_KEYS.rooms.all });
 		},
 	});
 };

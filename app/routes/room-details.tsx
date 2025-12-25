@@ -20,7 +20,7 @@ export default function RoomDetailsPage({ params }: Route.ComponentProps) {
 		return <LoadingSection />;
 	}
 	return (
-		<div className="relative p-2 md:p-6">
+		<div className="relative overflow-y-auto h-full pb-40">
 			{room ? <RoomDetails room={room} /> : <div>Room not found</div>}
 		</div>
 	);

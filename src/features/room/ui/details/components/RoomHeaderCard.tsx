@@ -20,16 +20,10 @@ type RoomHeaderCardProps = {
 
 export const RoomHeaderCard = ({
   room,
-
-  isSharing,
-  onShare,
-  onChat,
-  onFavouriteToggle,
 }: RoomHeaderCardProps) => {
   const { t } = useTranslation();
   const {
     formattedPrice,
-    isFavourite,
     roommatesData,
   } = useRoomDetailsData(room);
   return (
@@ -37,7 +31,7 @@ export const RoomHeaderCard = ({
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col">
           <h1 className="text-2xl mb-2 line-clamp-3">{room.title}</h1>
-          <div className="flex items-center gap-2 flex-wrap divide-x divide-foreground/20 text-sm text-foreground/90 [&>span]:px-2">
+          <div className="flex md:items-center max-md:flex-col gap-2 flex-wrap md:divide-x divide-foreground/20 text-sm text-foreground/90 md:[&>span]:px-2">
             <span>
               {formattedPrice} / {room.price.paymentFrequency}
             </span>
@@ -56,13 +50,7 @@ export const RoomHeaderCard = ({
             )}
           </div>
         </div>
-        <RoomActionsBar
-          isFavourite={isFavourite}
-          isSharing={isSharing}
-          onChat={onChat}
-          onFavouriteToggle={onFavouriteToggle}
-          onShare={onShare}
-        />
+
       </div>
       <ContactButtons
         email={room.contact.agent?.email ?? room.contact.owner?.email}

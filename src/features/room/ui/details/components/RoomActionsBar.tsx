@@ -5,6 +5,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "~/shared/components/ui/button";
+import { LikeButton } from "~/shared/components/ui/like-button";
 import { cn } from "~/shared/utils/utils";
 
 type RoomActionsBarProps = {
@@ -23,7 +24,10 @@ export const RoomActionsBar = ({
   onFavouriteToggle,
 }: RoomActionsBarProps) => {
   return (
-    <nav className="flex items-center gap-2">
+    <nav
+      className="flex gap-1 items-center fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-background/80 backdrop-blur-md px-4 py-2 rounded-full shadow-lg"
+      style={{ zIndex: 999 }}
+    >
       <Button
         disabled={isSharing}
         onClick={onShare}
@@ -31,7 +35,7 @@ export const RoomActionsBar = ({
         title="Share"
         variant="ghost"
       >
-        <HugeiconsIcon 
+        <HugeiconsIcon
           className={cn("transition-transform", {
             "animate-pulse": isSharing,
           })}
@@ -41,7 +45,8 @@ export const RoomActionsBar = ({
       <Button onClick={onChat} size="icon-lg" title="Chat" variant="ghost">
         <HugeiconsIcon icon={ChattingIcon} />
       </Button>
-      <Button
+      <LikeButton isLiked={isFavourite} onToggle={onFavouriteToggle} />
+      {/* <Button
         onClick={onFavouriteToggle}
         size="icon-lg"
         title={isFavourite ? "Remove from favorites" : "Add to favorites"}
@@ -54,7 +59,7 @@ export const RoomActionsBar = ({
           icon={FavouriteIcon}
           size={26}
         />
-      </Button>
+      </Button> */}
     </nav>
   );
 };

@@ -1,7 +1,25 @@
 import type { RoomWithMetadata } from "~/entities/room/room";
 import { supabase } from "~/global/supabase/client";
+import type { RoomWithMetadataDB } from "../../types/dtos";
+import { roomBDtoDomainAndMetadata } from "../adapter/room.adapter";
 
-export const ROOM_QUERY_SELECT = `
+type GetRoomWithMetadataProps = {
+	id: string;
+	userId?: string;
+};
+
+/**
+ * Builds the SELECT string for room queries with metadata
+ * @param userId Optional user ID to filter interactions
+ * @returns PostgreSQL SELECT string
+ */
+export const buildRoomSelect = (userId?: string): string => {
+	// Build the select with optional user_id filter
+	const interactionSelect = userId
+		? `interaction:room_user_interactions!left(action,last_action_at,user_id).eq(user_id,${userId})`
+		: `interaction:room_user_interactions!left(action,last_action_at,user_id)`;
+
+	return `
         id,
         owner_id,
         title,
@@ -24,11 +42,7 @@ export const ROOM_QUERY_SELECT = `
           name,
           avatar_url
         ),
-        interaction:room_user_interactions!left (
-          action,
-          last_action_at,
-          user_id
-        ),
+        ${interactionSelect},
         verified:room_verifications!left (
           id,
           verified_by,
@@ -37,18 +51,17 @@ export const ROOM_QUERY_SELECT = `
           notes
         )
       `;
-type GetRoomWithMetadataProps = {
-	id: string;
 };
 
 export const getRoomQuery = async (
 	props: GetRoomWithMetadataProps,
 ): Promise<RoomWithMetadata> => {
-	const { id } = props;
+	const { id, userId } = props;
+
 	// Base query
 	const query = supabase
 		.from("rooms")
-		.select(ROOM_QUERY_SELECT)
+		.select(buildRoomSelect(userId))
 		.eq("id", id)
 		.single();
 
@@ -56,5 +69,6 @@ export const getRoomQuery = async (
 	if (error && error.code !== "PGRST116") throw error; // PGRST116 = not found
 	console.log("data room with metadata:", data);
 	if (error) throw error;
-	return data as unknown as RoomWithMetadata;
+
+	return roomBDtoDomainAndMetadata(data as unknown as RoomWithMetadataDB);
 };

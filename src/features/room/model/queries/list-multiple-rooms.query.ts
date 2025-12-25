@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Room } from "~/entities/room/room";
+import { QUERY_KEYS } from "~/global/constants";
 import { listMultipleRoomsService } from "../services/room.service";
 
 /**
@@ -17,7 +18,7 @@ type ListRoomQuery = (ids: string[]) => ListRoomResponse;
 export const listMultipleRoomsQuery: ListRoomQuery = (ids) => {
 	const { data, isLoading } = useQuery<Room[]>({
 		queryFn: () => listMultipleRoomsService(ids),
-		queryKey: ["rooms", ids],
+		queryKey: QUERY_KEYS.rooms.multiple(ids),
 	});
 
 	return { isLoading, rooms: data ?? [] };

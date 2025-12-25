@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import type { RoomWithMetadata } from "~/entities/room/room";
+import { QUERY_KEYS } from "~/global/constants";
 import { listYourRoomsService } from "../services/room.service";
 
 /**
@@ -17,7 +18,7 @@ type YourRoomQuery = () => YourRoomResponse;
 export const listYourRoomsQuery: YourRoomQuery = () => {
 	const { data, isLoading } = useQuery<RoomWithMetadata[]>({
 		queryFn: () => listYourRoomsService(),
-		queryKey: ["your-rooms"],
+		queryKey: QUERY_KEYS.rooms.yours,
 	});
 
 	return { isLoading, rooms: data ?? [] };

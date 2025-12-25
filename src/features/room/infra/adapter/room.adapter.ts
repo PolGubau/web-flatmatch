@@ -14,10 +14,9 @@ import type {
 } from "~/entities/room/editable-room.schema";
 import type {
 	Interaction,
-	Owner,
 	Room,
 	RoomWithMetadata,
-	Verification,
+	Verification
 } from "~/entities/room/room";
 import type { RentType } from "~/shared/types/common";
 import type { RoomWithMetadataDB } from "../../types/dtos";
@@ -90,10 +89,14 @@ export const roomBDtoDomainAndMetadata = (
 	const verificationDto = row.verified as any;
 	const ownerDto = row.owner as any;
 
-	// Manejar interaction que puede venir como objeto o undefined
+	// Manejar interaction que puede venir como objeto, array o undefined
+	// Supabase devuelve un array cuando hay un left join, tomamos el primer elemento
+	const interactionData = Array.isArray(interactionDto)
+		? interactionDto[0]
+		: interactionDto;
 	const interaction: Interaction = {
-		action: interactionDto?.action ?? null,
-		lastActionAt: interactionDto?.last_action_at ?? null,
+		action: interactionData?.action ?? null,
+		lastActionAt: interactionData?.last_action_at ?? null,
 	};
 
 	// Manejar verification que puede venir como objeto o undefined

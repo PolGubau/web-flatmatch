@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import type { RoomWithMetadata } from "~/entities/room/room";
+import { QUERY_KEYS } from "~/global/constants";
 import { getRoomService } from "../services/room.service";
 
 /**
@@ -17,7 +18,7 @@ export const getRoomQuery: GetRoom = (id) => {
 	const { data, isLoading } = useQuery<RoomWithMetadata | null>({
 		enabled: !!id,
 		queryFn: () => getRoomService(id),
-		queryKey: ["room", id],
+		queryKey: QUERY_KEYS.rooms.detail(id),
 	});
 	const room = data ?? null;
 

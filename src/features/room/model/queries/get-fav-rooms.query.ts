@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import type { RoomWithMetadata } from "~/entities/room/room";
+import { QUERY_KEYS } from "~/global/constants";
 import { getFavoriteRoomsService } from "../services/room.service";
 
 /**
@@ -22,7 +23,7 @@ export const getFavRoomsQuery: GetRoom = () => {
 			console.log("✅ Favorite rooms fetched:", result);
 			return result;
 		},
-		queryKey: ["favoriteRooms"],
+		queryKey: QUERY_KEYS.rooms.favorites,
 	});
 	const rooms = data ?? [];
 
