@@ -1,12 +1,12 @@
-import {
-  CalendarAdd01Icon,
-  Location01Icon,
-} from "@hugeicons/core-free-icons";
+import { CalendarAdd01Icon, Location01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Heart } from "lucide-react";
+import { Heart, ImageOff, Loader2 } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router";
 import type { Room } from "~/entities/room/room";
 import { Card, CardContent } from "~/shared/components/ui/card";
+import { cn } from "~/shared/utils/utils";
+import { useRoomFavoriteToggle } from "../hooks/useRoomFavoriteToggle";
 
 type Props = Pick<Room, "id" | "title" | "description"> & {
   image: string;
@@ -22,24 +22,77 @@ export function RoomGridCard({
   description,
   image,
   price,
-  isFavorite,
+  isFavorite = false,
   location,
   availableFrom,
 }: Props) {
+  const { toggleFavorite, isLoading } = useRoomFavoriteToggle({
+    isFavorite,
+    roomId: id,
+  });
+  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+
   return (
     <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 border-border/50 hover:border-primary/50">
       <Link className="block" to={`/room/${id}`}>
         <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-          <img
-            alt={title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-            src={image}
-          />
-          {isFavorite && (
-            <div className="absolute top-3 right-3 bg-background/90 backdrop-blur-sm rounded-full p-2 shadow-md">
-              <Heart className="w-4 h-4 fill-primary text-primary" />
+          {imageError ? (
+            <div className="w-full h-full flex items-center justify-center bg-muted">
+              <ImageOff className="w-12 h-12 text-muted-foreground/50" />
             </div>
+          ) : (
+            <>
+              {imageLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-muted">
+                  <Loader2 className="w-8 h-8 animate-spin text-muted-foreground/50" />
+                </div>
+              )}
+              <img
+                alt={title}
+                className={cn(
+                  "w-full h-full object-cover transition-transform duration-300 group-hover:scale-105",
+                  imageLoading && "opacity-0",
+                )}
+                decoding="async"
+                loading="lazy"
+                onError={() => {
+                  setImageError(true);
+                  setImageLoading(false);
+                }}
+                onLoad={() => setImageLoading(false)}
+                src={image}
+              />
+            </>
           )}
+          <button
+            aria-label={
+              isFavorite ? "Remove from favorites" : "Add to favorites"
+            }
+            className={cn(
+              "absolute top-3 right-3 bg-background/90 backdrop-blur-sm rounded-full p-2 shadow-md",
+              "hover:bg-background hover:scale-110 transition-all duration-200",
+              "active:scale-95",
+              "disabled:opacity-50 disabled:cursor-not-allowed",
+              "z-10",
+            )}
+            disabled={isLoading}
+            onClick={toggleFavorite}
+            type="button"
+          >
+            {isLoading ? (
+              <Loader2 className="w-4 h-4 animate-spin text-primary" />
+            ) : (
+              <Heart
+                className={cn(
+                  "w-4 h-4 transition-all duration-200",
+                  isFavorite
+                    ? "fill-primary text-primary"
+                    : "text-foreground hover:text-primary",
+                )}
+              />
+            )}
+          </button>
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
         <CardContent className="p-4 space-y-3">

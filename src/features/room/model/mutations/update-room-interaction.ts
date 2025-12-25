@@ -10,6 +10,7 @@ import {
 
 type MutationContext = {
 	previousRoom: RoomWithMetadata | undefined;
+	previousFavorites?: RoomWithMetadata[];
 };
 
 type Props = {
@@ -47,6 +48,12 @@ export const useUpdateRoomInteraction = (props?: Props) => {
 					context.previousRoom,
 				);
 			}
+			if (context?.previousFavorites) {
+				queryClient.setQueryData(
+					QUERY_KEYS.rooms.favorites,
+					context.previousFavorites,
+				);
+			}
 			props?.onFailedLike?.();
 		},
 		onMutate: async ({ roomId, action }) => {
@@ -54,13 +61,19 @@ export const useUpdateRoomInteraction = (props?: Props) => {
 			await queryClient.cancelQueries({
 				queryKey: QUERY_KEYS.rooms.detail(roomId),
 			});
+			await queryClient.cancelQueries({
+				queryKey: QUERY_KEYS.rooms.favorites,
+			});
 
 			// Snapshot the previous value
 			const previousRoom = queryClient.getQueryData<RoomWithMetadata>(
 				QUERY_KEYS.rooms.detail(roomId),
 			);
+			const previousFavorites = queryClient.getQueryData<RoomWithMetadata[]>(
+				QUERY_KEYS.rooms.favorites,
+			);
 
-			// Optimistically update to the new value
+			// Optimistically update room detail
 			queryClient.setQueryData<RoomWithMetadata>(
 				QUERY_KEYS.rooms.detail(roomId),
 				(old) => {
@@ -76,8 +89,29 @@ export const useUpdateRoomInteraction = (props?: Props) => {
 				},
 			);
 
+			// Optimistically update favorites list
+			queryClient.setQueryData<RoomWithMetadata[]>(
+				QUERY_KEYS.rooms.favorites,
+				(old) => {
+					if (!old) return old;
+					// Update the room in the list if it exists
+					return old.map((room) =>
+						room.id === roomId
+							? {
+									...room,
+									interaction: {
+										...room.interaction,
+										action: action,
+										lastActionAt: new Date().toISOString(),
+									},
+								}
+							: room,
+					);
+				},
+			);
+
 			// Return context with the snapshotted value
-			return { previousRoom };
+			return { previousFavorites, previousRoom };
 		},
 		onSuccess: (res) => {
 			if (!res) return;
@@ -118,6 +152,12 @@ export const useUpdateRoomInteraction = (props?: Props) => {
 					context.previousRoom,
 				);
 			}
+			if (context?.previousFavorites) {
+				queryClient.setQueryData(
+					QUERY_KEYS.rooms.favorites,
+					context.previousFavorites,
+				);
+			}
 			props?.onFailedRemoveLike?.();
 		},
 		onMutate: async (roomId) => {
@@ -125,13 +165,19 @@ export const useUpdateRoomInteraction = (props?: Props) => {
 			await queryClient.cancelQueries({
 				queryKey: QUERY_KEYS.rooms.detail(roomId),
 			});
+			await queryClient.cancelQueries({
+				queryKey: QUERY_KEYS.rooms.favorites,
+			});
 
 			// Snapshot the previous value
 			const previousRoom = queryClient.getQueryData<RoomWithMetadata>(
 				QUERY_KEYS.rooms.detail(roomId),
 			);
+			const previousFavorites = queryClient.getQueryData<RoomWithMetadata[]>(
+				QUERY_KEYS.rooms.favorites,
+			);
 
-			// Optimistically update to remove the interaction
+			// Optimistically update room detail
 			queryClient.setQueryData<RoomWithMetadata>(
 				QUERY_KEYS.rooms.detail(roomId),
 				(old) => {
@@ -147,8 +193,18 @@ export const useUpdateRoomInteraction = (props?: Props) => {
 				},
 			);
 
+			// Optimistically remove from favorites list
+			queryClient.setQueryData<RoomWithMetadata[]>(
+				QUERY_KEYS.rooms.favorites,
+				(old) => {
+					if (!old) return old;
+					// Remove the room from favorites
+					return old.filter((room) => room.id !== roomId);
+				},
+			);
+
 			// Return context with the snapshotted value
-			return { previousRoom };
+			return { previousFavorites, previousRoom };
 		},
 		onSuccess: (res) => {
 			if (!res) return;
