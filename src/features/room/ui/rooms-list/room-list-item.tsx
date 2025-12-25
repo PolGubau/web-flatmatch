@@ -1,5 +1,3 @@
-import { ArrowUpRight03Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { ChevronRightIcon } from "lucide-react";
 import { Link } from "react-router";
 import type { Room } from "~/entities/room/room";
