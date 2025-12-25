@@ -32,8 +32,8 @@ export default function ProfilePage({ userId, isYours }: Props) {
 	if (error || !user) {
 		return (
 			<ErrorSection
-				description={"error_loading_profile_description" as any}
-				title={"error_loading_profile" as any}
+				description={"error_loading_profile_description"}
+				title={"error_loading_profile"}
 			/>
 		);
 	}

@@ -1,4 +1,5 @@
 import { toast } from "~/shared/components/ui/sonner";
+import { logger } from "./logger";
 
 /**
  * Custom error class for application-specific errors
@@ -30,7 +31,7 @@ export const errorHandler = {
 	 * Handle API errors and show appropriate user feedback
 	 */
 	handleApiError: (error: unknown, fallbackMessage = "An error occurred") => {
-		console.error("API Error:", error);
+		logger.error("API Error", error);
 
 		if (error instanceof AppError) {
 			toast.error(error.message);
@@ -57,7 +58,6 @@ export const errorHandler = {
 	 * Log error without showing UI feedback
 	 */
 	logError: (error: unknown, context?: string) => {
-		const prefix = context ? `[${context}]` : "";
-		console.error(`${prefix} Error:`, error);
+		logger.error(context || "Error", error);
 	},
 };

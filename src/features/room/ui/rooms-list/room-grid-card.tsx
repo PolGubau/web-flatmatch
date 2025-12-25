@@ -1,7 +1,7 @@
 import { CalendarAdd01Icon, Location01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Heart, ImageOff, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { Link } from "react-router";
 import type { Room } from "~/entities/room/room";
 import { Card, CardContent } from "~/shared/components/ui/card";
@@ -16,7 +16,7 @@ type Props = Pick<Room, "id" | "title" | "description"> & {
   availableFrom?: string;
 };
 
-export function RoomGridCard({
+export const RoomGridCard = memo(function RoomGridCard({
   id,
   title,
   description,
@@ -70,6 +70,7 @@ export function RoomGridCard({
             aria-label={
               isFavorite ? "Remove from favorites" : "Add to favorites"
             }
+            aria-pressed={isFavorite}
             className={cn(
               "absolute top-3 right-3 bg-background/90 backdrop-blur-sm rounded-full p-2 shadow-md",
               "hover:bg-background hover:scale-110 transition-all duration-200",
@@ -79,6 +80,12 @@ export function RoomGridCard({
             )}
             disabled={isLoading}
             onClick={toggleFavorite}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                toggleFavorite(e);
+              }
+            }}
             type="button"
           >
             {isLoading ? (
@@ -137,4 +144,4 @@ export function RoomGridCard({
       </Link>
     </Card>
   );
-}
+});

@@ -4,7 +4,7 @@ import { Button } from "./button";
 import { Tooltip } from "./tooltip";
 
 const CircleAnimation = () => {
-  const CIRCLE_RADIUS = 20;
+  const CIRCLE_RADIUS = 24;
 
   return (
     <svg
@@ -60,7 +60,7 @@ const BurstAnimation = () => {
   ];
 
   return (
-    <div className="pointer-events-none absolute -top-3 -left-3 grid size-10 place-items-center">
+    <div className="pointer-events-none absolute -top-3 -left-3 grid size-12 place-items-center">
       {colorPairs.map((colors, index) => (
         <Particle
           fromColor={colors.from}
@@ -184,7 +184,7 @@ export const LikeButton = ({
         }
         onClick={toggleLike}
         ref={iconButtonRef}
-        size={"icon"}
+        size={"icon-lg"}
         type="button"
         variant={"ghost"}
       >
@@ -196,7 +196,7 @@ export const LikeButton = ({
               animate={{ scale: 1 }}
               className="text-red-500"
               fill="currentColor"
-              height="16"
+              height="20"
               initial={{ scale: 0 }}
               key="animating-heart"
               onAnimationComplete={() => setIsAnimating(false)}
@@ -208,7 +208,7 @@ export const LikeButton = ({
                 type: "spring",
               }}
               viewBox="0 0 24 24"
-              width="16"
+              width="20"
             >
               <title>Liked</title>
               <path d="m18.199 2.04c-2.606-.284-4.262.961-6.199 3.008-2.045-2.047-3.593-3.292-6.199-3.008-3.544.388-6.321 4.43-5.718 7.96.966 5.659 5.944 9 11.917 12 5.973-3 10.951-6.341 11.917-12 .603-3.53-2.174-7.572-5.718-7.96z" />
@@ -217,10 +217,10 @@ export const LikeButton = ({
             <svg
               className={`${externalIsLiked ? "text-red-500" : "text-inherit"}`}
               fill="currentColor"
-              height="16"
+              height="20"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              width="16"
+              width="20"
             >
               <title>{externalIsLiked ? "Liked" : "Not liked"}</title>
               <path d="m18.199 2.04c-2.606-.284-4.262.961-6.199 3.008-2.045-2.047-3.593-3.292-6.199-3.008-3.544.388-6.321 4.43-5.718 7.96.966 5.659 5.944 9 11.917 12 5.973-3 10.951-6.341 11.917-12 .603-3.53-2.174-7.572-5.718-7.96z" />

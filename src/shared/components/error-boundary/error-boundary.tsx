@@ -5,7 +5,9 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Component, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { ts } from "~/shared/i18n/translation-helpers";
 import { errorHandler } from "~/shared/utils/error-handler";
+import { logger } from "~/shared/utils/logger";
 import { Button } from "../ui/button";
 
 interface ErrorBoundaryProps {
@@ -34,7 +36,7 @@ class ErrorBoundaryClass extends Component<
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     errorHandler.logError(error, "ErrorBoundary");
-    console.error("Component stack:", errorInfo.componentStack);
+    logger.error("Component stack", error, { componentStack: errorInfo.componentStack });
   }
 
   handleReset = () => {
@@ -69,8 +71,6 @@ const DefaultErrorFallback = ({
   error,
   onReset,
 }: DefaultErrorFallbackProps) => {
-  const { t } = useTranslation();
-
   return (
     <div className="flex flex-col items-center justify-center min-h-[400px] gap-6 p-8">
       <HugeiconsIcon
@@ -80,15 +80,15 @@ const DefaultErrorFallback = ({
       />
       <div className="flex flex-col gap-2 text-center max-w-md">
         <h2 className="text-2xl font-semibold text-foreground">
-          {t("something_went_wrong" as any)}
+          {ts("something_went_wrong")}
         </h2>
         <p className="text-foreground/70">
-          {error?.message || t("error_boundary_default_message" as any)}
+          {error?.message || ts("error_boundary_default_message")}
         </p>
       </div>
       <Button onClick={onReset} variant="default">
         <HugeiconsIcon icon={ArrowReloadHorizontalIcon} size={16} />
-        {t("try_again" as any)}
+        {ts("try_again")}
       </Button>
     </div>
   );

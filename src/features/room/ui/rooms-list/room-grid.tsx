@@ -16,6 +16,7 @@ export function RoomGrid({ rooms }: Props) {
           room.price.currency,
           i18n.language,
         );
+
         return (
           <RoomGridCard
             availableFrom={room.timings?.availableFrom}

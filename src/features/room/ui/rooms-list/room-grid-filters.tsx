@@ -1,16 +1,5 @@
-import {
-  ArrowDownWideNarrowIcon,
-  ArrowUpNarrowWideIcon,
-  CalendarIcon,
-} from "lucide-react";
 import { useTranslation } from "react-i18next";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "~/shared/components/ui/select";
+import { Select } from "~/shared/components/ui/select";
 
 export type SortOption = "price-asc" | "price-desc" | "date-desc" | "date-asc";
 
