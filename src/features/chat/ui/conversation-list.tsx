@@ -25,9 +25,9 @@ export const ConversationList = ({
 	if (conversations.length === 0) {
 		return (
 			<div className="flex flex-col items-center justify-center h-full p-6 text-center">
-				<p className="text-foreground/50 mb-2">{t("no_conversations_yet" as any)}</p>
+				<p className="text-foreground/50 mb-2">{t("no_conversations_yet")}</p>
 				<p className="text-sm text-foreground/40">
-					{t("no_conversations_description" as any)}
+					{t("no_conversations_description")}
 				</p>
 			</div>
 		);

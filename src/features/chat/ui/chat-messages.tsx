@@ -102,7 +102,7 @@ export const ChatMessages = ({
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <p className="text-foreground/50">
-              {t("no_messages_start_conversation" as any)}
+              {t("no_messages_start_conversation")}
             </p>
           </div>
         ) : (
