@@ -11,7 +11,7 @@ import { useRoomFavoriteToggle } from "../hooks/useRoomFavoriteToggle";
 type Props = Pick<Room, "id" | "title" | "description"> & {
   image: string;
   price: string;
-  isFavorite?: boolean;
+  interaction?: { action: string | null };
   location?: string;
   availableFrom?: string;
 };
@@ -22,10 +22,11 @@ export function RoomGridCard({
   description,
   image,
   price,
-  isFavorite = false,
+  interaction,
   location,
   availableFrom,
 }: Props) {
+  const isFavorite = interaction?.action === "like";
   const { toggleFavorite, isLoading } = useRoomFavoriteToggle({
     isFavorite,
     roomId: id,

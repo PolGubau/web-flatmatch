@@ -131,8 +131,25 @@ export const useUpdateRoomInteraction = (props?: Props) => {
 				},
 			);
 
-			// Invalidamos favoritos para que se actualice cuando el usuario navegue a /favs
-			queryClient.invalidateQueries({ queryKey: QUERY_KEYS.rooms.favorites });
+			// Actualizar favoritos directamente en el cache
+			queryClient.setQueryData<RoomWithMetadata[]>(
+				QUERY_KEYS.rooms.favorites,
+				(old) => {
+					if (!old) return old;
+					return old.map((room) =>
+						room.id === res.roomId
+							? {
+									...room,
+									interaction: {
+										...room.interaction,
+										action: res.action,
+										lastActionAt: res.lastActionAt,
+									},
+								}
+							: room,
+					);
+				},
+			);
 			props?.onSuccessLike?.();
 		},
 	});
@@ -224,8 +241,14 @@ export const useUpdateRoomInteraction = (props?: Props) => {
 				},
 			);
 
-			// Invalidamos favoritos para que se actualice cuando el usuario quite el like
-			queryClient.invalidateQueries({ queryKey: QUERY_KEYS.rooms.favorites });
+			// Actualizar favoritos directamente en el cache (remover de la lista)
+			queryClient.setQueryData<RoomWithMetadata[]>(
+				QUERY_KEYS.rooms.favorites,
+				(old) => {
+					if (!old) return old;
+					return old.filter((room) => room.id !== res.roomId);
+				},
+			);
 			props?.onSuccessRemoveLike?.();
 		},
 	});

@@ -22,7 +22,7 @@ export function RoomGrid({ rooms }: Props) {
             description={room.description}
             id={room.id}
             image={room.images.cover}
-            isFavorite={room.interaction.action === "like"}
+            interaction={room.interaction}
             key={room.id}
             location={room.location?.city}
             price={formattedPrice}
