@@ -2,6 +2,7 @@ import { Outlet, useNavigation } from "react-router";
 import { LoadingSection } from "~/shared/components/pages/LoadingSection";
 
 import { DevPopover } from "~/shared/components/ui/debug/dev-popover";
+import { InstallPrompt } from "~/shared/components/ui/install-prompt";
 import { Toaster } from "~/shared/components/ui/sonner";
 import { useEnv } from "~/shared/hooks/use-is-local";
 import { OneTapComponent } from "../ui/sign-in-google";
@@ -17,6 +18,7 @@ export default function BaseLayout() {
 			<Outlet />
 			<Toaster />
 			<OneTapComponent />
+			<InstallPrompt />
 		</div>
 	);
 }

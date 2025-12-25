@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
+import { useEffect } from "react";
 
 import {
 	isRouteErrorResponse,
@@ -15,6 +16,7 @@ import { AuthContextProvider } from "~/global/supabase/auth-context";
 import { LoadingSection } from "~/shared/components/pages/LoadingSection";
 import { Toaster } from "~/shared/components/ui/sonner";
 import "~/shared/i18n/i18n";
+import { registerServiceWorker, setupInstallPrompt } from "~/shared/utils/pwa";
 import "../src/global/app.css";
 import type { Route } from "./+types/root";
 
@@ -44,6 +46,43 @@ export function Layout({ children }: { children: React.ReactNode }) {
 			<head>
 				<meta charSet="utf-8" />
 				<meta content="width=device-width, initial-scale=1" name="viewport" />
+
+				{/* PWA Meta Tags */}
+				<meta content="Flatmatch" name="application-name" />
+				<meta content="yes" name="apple-mobile-web-app-capable" />
+				<meta
+					content="black-translucent"
+					name="apple-mobile-web-app-status-bar-style"
+				/>
+				<meta content="Flatmatch" name="apple-mobile-web-app-title" />
+				<meta
+					content="Find your perfect roommate and flat sharing experience"
+					name="description"
+				/>
+				<meta content="telephone=no" name="format-detection" />
+				<meta content="yes" name="mobile-web-app-capable" />
+				<meta content="#000000" name="theme-color" />
+
+				{/* iOS Splash Screens */}
+				<link
+					href="/icons/icon-192x192.png"
+					rel="apple-touch-icon"
+					sizes="180x180"
+				/>
+				<link href="/icons/icon-512x512.png" rel="apple-touch-startup-image" />
+
+				{/* Manifest */}
+				<link href="/manifest.json" rel="manifest" />
+
+				{/* Favicon */}
+				<link
+					href="/icons/icon-192x192.png"
+					rel="icon"
+					sizes="32x32"
+					type="image/png"
+				/>
+				<link href="/icons/icon-192x192.png" rel="shortcut icon" />
+
 				<Meta />
 				<Links />
 			</head>
@@ -82,6 +121,13 @@ const queryClient = new QueryClient({
 });
 
 export default function App() {
+	useEffect(() => {
+		// Register service worker for PWA
+		registerServiceWorker();
+		// Setup install prompt
+		setupInstallPrompt();
+	}, []);
+
 	return (
 		<AuthContextProvider>
 			<QueryClientProvider client={queryClient}>
