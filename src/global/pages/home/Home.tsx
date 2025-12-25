@@ -1,4 +1,5 @@
 import { useTinderCards } from "~/features/room/model/use-tinder-cards";
+import { ErrorBoundary } from "~/shared/components/error-boundary/error-boundary";
 import { LoadingCardsSection } from "~/shared/components/pages/LoadingCardsSection";
 import { EmptyRoomsState } from "./components/EmptyRoomsState";
 import { RoomCardsStack } from "./components/RoomCardsStack";
@@ -29,26 +30,28 @@ export default function HomePage() {
 	if (isLoading) return <LoadingCardsSection />;
 
 	return (
-		<section className="grid grid-rows-[1fr_auto] gap-4 h-full overflow-hidden">
-			<div className="grid grid-rows-1 grid-cols-1 mx-auto place-items-center px-4">
-				{thereAreRooms ? (
-					<>
-						<div className="grid grid-rows-[1fr_auto] gap-4 h-full w-full items-center max-h-[calc(100dvh-12rem)] md:max-h-[min(1000px,calc(100dvh-10rem))]">
-							<RoomCardsStack onSwipe={onSwipe} rooms={rooms} />
-							<SwipeActions
-								disabled={isLoading}
-								onSwipe={(direction) => onSwipe(currentRoom.id, direction)}
+		<ErrorBoundary onReset={refetch}>
+			<section className="grid grid-rows-[1fr_auto] gap-4 h-full overflow-hidden">
+				<div className="grid grid-rows-1 grid-cols-1 mx-auto place-items-center px-4">
+					{thereAreRooms ? (
+						<>
+							<div className="grid grid-rows-[1fr_auto] gap-4 h-full w-full items-center max-h-[calc(100dvh-12rem)] md:max-h-[min(1000px,calc(100dvh-10rem))]">
+								<RoomCardsStack onSwipe={onSwipe} rooms={rooms} />
+								<SwipeActions
+									disabled={isLoading}
+									onSwipe={(direction) => onSwipe(currentRoom.id, direction)}
+								/>
+							</div>
+							<RoomDetailsDrawer
+								onClose={handleCloseDrawer}
+								room={bottomDrawerRoom}
 							/>
-						</div>
-						<RoomDetailsDrawer
-							onClose={handleCloseDrawer}
-							room={bottomDrawerRoom}
-						/>
-					</>
-				) : (
-					<EmptyRoomsState isLoading={isLoading} onRefetch={refetch} />
-				)}
-			</div>
-		</section>
+						</>
+					) : (
+						<EmptyRoomsState isLoading={isLoading} onRefetch={refetch} />
+					)}
+				</div>
+			</section>
+		</ErrorBoundary>
 	);
 }

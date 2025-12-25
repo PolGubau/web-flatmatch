@@ -6,7 +6,7 @@ import { Badge } from "~/shared/components/ui/badge";
 import { ContactButtons } from "../footer/contact-buttons";
 import { useRoomDetailsData } from "../hooks/useRoomDetailsData";
 import { getRentTypeLabel } from "../utils/room-details.utils";
-import { RoomActionsBar } from "./RoomActionsBar";
+
 
 type RoomHeaderCardProps = {
   room: RoomWithMetadata;

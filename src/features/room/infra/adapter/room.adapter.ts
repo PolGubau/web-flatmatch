@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
+// biome-ignore lint/suspicious/noExplicitAny: Complex adapter with varying types from API
 import type { EditableRoom } from "~/entities/room/editable-room";
 import type {
 	RoomCommodities,
@@ -16,7 +16,7 @@ import type {
 	Interaction,
 	Room,
 	RoomWithMetadata,
-	Verification
+	Verification,
 } from "~/entities/room/room";
 import type { RentType } from "~/shared/types/common";
 import type { RoomWithMetadataDB } from "../../types/dtos";

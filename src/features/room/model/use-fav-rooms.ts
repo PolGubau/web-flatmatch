@@ -7,6 +7,7 @@ type UseRoomResponse = {
 	rooms: RoomWithMetadata[];
 	updateRoom: (room: Room) => void;
 	error: Error | null;
+	refetch: () => void;
 };
 
 /**
@@ -14,8 +15,8 @@ type UseRoomResponse = {
  * desde la UI (lectura, actualización, borrado...).
  */
 export const useFavRooms = (): UseRoomResponse => {
-	const { rooms, isLoading, error } = getFavRoomsQuery();
+	const { rooms, isLoading, error, refetch } = getFavRoomsQuery();
 	console.info("useFavRooms:", { error, isLoading, rooms });
 	const { mutate: updateRoom } = useUpdateRoomMutation();
-	return { error, isLoading, rooms, updateRoom };
+	return { error, isLoading, refetch, rooms, updateRoom };
 };

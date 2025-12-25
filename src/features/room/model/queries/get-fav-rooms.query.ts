@@ -12,11 +12,12 @@ type GetRoomResponse = {
 	isLoading: boolean;
 	rooms: RoomWithMetadata[];
 	error: Error | null;
+	refetch: () => void;
 };
 type GetRoom = () => GetRoomResponse;
 
 export const getFavRoomsQuery: GetRoom = () => {
-	const { data, isLoading, error } = useQuery<RoomWithMetadata[]>({
+	const { data, isLoading, error, refetch } = useQuery<RoomWithMetadata[]>({
 		queryFn: async () => {
 			console.log("🔄 Fetching favorite rooms...");
 			const result = await getFavoriteRoomsService();
@@ -31,5 +32,5 @@ export const getFavRoomsQuery: GetRoom = () => {
 		console.error("❌ Error fetching favorite rooms:", error);
 	}
 
-	return { error: error as Error | null, isLoading, rooms };
+	return { error: error as Error | null, isLoading, refetch, rooms };
 };

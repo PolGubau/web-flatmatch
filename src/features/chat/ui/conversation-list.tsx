@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { useConversationsQuery } from "../model/queries/use-conversations.query";
 import { ConversationItem } from "./conversation-item";
@@ -14,6 +15,7 @@ export const ConversationList = ({
 	activeConversationId,
 	isLoading,
 }: ConversationListProps) => {
+	const { t } = useTranslation();
 	const { data: conversations = [] } = useConversationsQuery();
 
 	if (isLoading) {
@@ -23,9 +25,9 @@ export const ConversationList = ({
 	if (conversations.length === 0) {
 		return (
 			<div className="flex flex-col items-center justify-center h-full p-6 text-center">
-				<p className="text-foreground/50 mb-2">No tienes conversaciones</p>
+				<p className="text-foreground/50 mb-2">{t("no_conversations_yet" as any)}</p>
 				<p className="text-sm text-foreground/40">
-					Dale like a una habitación para empezar a chatear
+					{t("no_conversations_description" as any)}
 				</p>
 			</div>
 		);

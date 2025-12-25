@@ -12,6 +12,7 @@ import { ProfileChipList } from "~/features/user/ui/profile/chips/chip-list";
 import { CompleteProfile } from "~/features/user/ui/profile/complete-profile/complete-profile";
 import ProfileHeader from "~/features/user/ui/profile/header";
 import { ProfileSkeleton } from "~/features/user/ui/profile/states/profile-skeleton";
+import { ErrorBoundary } from "~/shared/components/error-boundary/error-boundary";
 import { ErrorSection } from "~/shared/components/ui/error-section";
 import { dateToYearsAgo } from "~/shared/utils/formatters/dates/date-to-years-ago";
 
@@ -21,23 +22,26 @@ type Props = {
 };
 
 export default function ProfilePage({ userId, isYours }: Props) {
-	const { data: user, isLoading, error } = useUser(userId);
-	// get user by id
-	console.log(error)
+	const { data: user, isLoading, error, refetch } = useUser(userId);
 	const { t } = useTranslation();
 
-
-	if (error) {
-		return <ErrorSection/>
-	}
-
-
-	if (!user || isLoading) {
+	if (isLoading) {
 		return <ProfileSkeleton />;
 	}
+
+	if (error || !user) {
+		return (
+			<ErrorSection
+				description={"error_loading_profile_description" as any}
+				title={"error_loading_profile" as any}
+			/>
+		);
+	}
+
 	if (isYours && (!user.name || !user.lastname)) {
 		return <Navigate replace to="/welcome" />;
 	}
+
 	const chips: Item[] = [
 		{
 			icon: UserAccountIcon,
@@ -59,29 +63,31 @@ export default function ProfilePage({ userId, isYours }: Props) {
 		!user.aboutMe || !user.birthDate || !user.occupation || !user.gender;
 
 	return (
-		<div className="gap-10 grid grid-rows-[auto_1fr]">
-			<header className="flex flex-col gap-2">
-				<ProfileHeader
-					aboutMe={user.aboutMe}
-					avatarUrl={user.avatarUrl}
-					hereSince={user.createdAt}
-					lastname={user.lastname}
-					name={user.name}
-				/>
-				<ProfileChipList items={chips} />
-			</header>
-			<section className="flex flex-col gap-8">
-				{isYours && someInfoMissing && (
-					<CompleteProfile
+		<ErrorBoundary onReset={refetch}>
+			<div className="gap-10 grid grid-rows-[auto_1fr]">
+				<header className="flex flex-col gap-2">
+					<ProfileHeader
 						aboutMe={user.aboutMe}
-						birthDate={user.birthDate}
-						gender={user.gender}
-						occupation={user.occupation}
-						userId={user.id}
+						avatarUrl={user.avatarUrl}
+						hereSince={user.createdAt}
+						lastname={user.lastname}
+						name={user.name}
 					/>
-				)}
-				<YourRooms />
-			</section>
-		</div>
+					<ProfileChipList items={chips} />
+				</header>
+				<section className="flex flex-col gap-8">
+					{isYours && someInfoMissing && (
+						<CompleteProfile
+							aboutMe={user.aboutMe}
+							birthDate={user.birthDate}
+							gender={user.gender}
+							occupation={user.occupation}
+							userId={user.id}
+						/>
+					)}
+					<YourRooms />
+				</section>
+			</div>
+		</ErrorBoundary>
 	);
 }

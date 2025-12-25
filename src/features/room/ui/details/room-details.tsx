@@ -2,17 +2,9 @@ import { useTranslation } from "react-i18next";
 import type { RoomWithMetadata } from "~/entities/room/room";
 import { commoditiesMap, extrasMap } from "~/shared/base/maps";
 import { MapWithMarker } from "~/shared/components/map";
-import { Badge } from "~/shared/components/ui/badge";
-import {
-	Card,
-	CardContent,
-	CardHeader,
-	CardTitle,
-} from "~/shared/components/ui/card";
 import { AvailabilityCostsCard } from "./components/AvailabilityCostsCard";
 import { FeaturesList } from "./components/FeaturesList";
 import { HouseRulesCard } from "./components/HouseRulesCard";
-import { OwnerSidebar } from "./components/OwnerSidebar";
 import { RoomGallery } from "./components/RoomGallery";
 import { RoomHeaderCard } from "./components/RoomHeaderCard";
 import { TenantPreferencesCard } from "./components/TenantPreferencesCard";
@@ -23,9 +15,7 @@ import { ChattingIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ProfileAvatar } from "~/features/user/ui/profile/avatar";
 import { Button } from "~/shared/components/ui/button";
-import { Separator } from "~/shared/components/ui/separator";
 import { RoomActionsBar } from "./components/RoomActionsBar";
-import { ContactButtons } from "./footer/contact-buttons";
 import { RoomDistanceFromYou } from "./room-distance-from-you";
 import { createShareData } from "./utils/room-details.utils";
 
@@ -43,7 +33,6 @@ export default function RoomDetails({ room }: Props) {
 		isFavourite,
 		availableFrom,
 		minimumStay,
-		roommatesData,
 	} = useRoomDetailsData(room);
 
 	// Actions layer - Handle user interactions

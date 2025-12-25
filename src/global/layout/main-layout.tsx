@@ -5,7 +5,7 @@ import {
 	UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { ArrowUpFromLine, Plus } from "lucide-react";
+import { ArrowUpFromLine } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, Outlet } from "react-router";

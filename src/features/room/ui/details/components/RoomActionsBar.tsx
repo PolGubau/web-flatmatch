@@ -1,6 +1,5 @@
 import {
   ChattingIcon,
-  FavouriteIcon,
   Share08Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";

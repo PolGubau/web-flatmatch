@@ -1,7 +1,9 @@
 import { Sent02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "~/shared/components/ui/button";
+import { ErrorSection } from "~/shared/components/ui/error-section";
 import { Input } from "~/shared/components/ui/input/input";
 import { useMarkAsReadMutation } from "../model/mutations/use-mark-as-read.mutation";
 import { useSendMessageMutation } from "../model/mutations/use-send-message.mutation";
@@ -21,6 +23,7 @@ export const ChatMessages = ({
   currentUserId,
   otherUserName,
 }: ChatMessagesProps) => {
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -74,8 +77,12 @@ export const ChatMessages = ({
 
   if (isError) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-destructive">Error al cargar los mensajes</div>
+      <div className="flex items-center justify-center h-full p-4">
+        <ErrorSection
+          description="error_loading_messages_description"
+          title="error_loading_messages"
+          withoutNavigation
+        />
       </div>
     );
   }
@@ -95,7 +102,7 @@ export const ChatMessages = ({
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <p className="text-foreground/50">
-              No hay mensajes. ¡Empieza la conversación!
+              {t("no_messages_start_conversation" as any)}
             </p>
           </div>
         ) : (
