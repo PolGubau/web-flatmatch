@@ -31,7 +31,7 @@ export const SwipeActions = ({ onSwipe, disabled = false }: SwipeActionsProps) =
           className="bg-destructive/10 size-14"
           disabled={disabled}
           onClick={() => onSwipe("left")}
-          size={"icon"}
+          size={"icon-lg"}
 
           variant={"ghost"}
         >
@@ -63,7 +63,7 @@ export const SwipeActions = ({ onSwipe, disabled = false }: SwipeActionsProps) =
           className="bg-green-500/20 size-14"
           disabled={disabled}
           onClick={() => onSwipe("right")}
-          size={"icon"}
+          size={"icon-lg"}
           title="Like (→ or D)"
           variant={"ghost"}
         >
