@@ -70,7 +70,7 @@ export function RoomTinderCardUI({
 					/>
 				</div>
 
-				<header className="bottom-0 left-0 p-4 pb-6 flex flex-col gap-2 z-20 ">
+				<header className="bottom-0 left-0 p-3 pb-4 md:p-4 md:pb-6 flex flex-col gap-1.5 md:gap-2 z-20 ">
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button className="w-fit pl-0" variant="ghost">
@@ -95,7 +95,7 @@ export function RoomTinderCardUI({
 
 					{!!verification.verifiedAt && <VerifiedChip />}
 
-					<h2 className="text-background text-xl text-pretty line-clamp-2">
+					<h2 className="text-background text-lg md:text-xl text-pretty line-clamp-2">
 						{title}
 					</h2>
 
@@ -105,7 +105,7 @@ export function RoomTinderCardUI({
 						</p>
 					)}
 
-					<p className="text-sm text-background/70 line-clamp-4  whitespace-pre-wrap break-words">
+					<p className="text-sm text-background/70 line-clamp-3 md:line-clamp-4 whitespace-pre-wrap break-words">
 						{description}
 					</p>
 				</header>

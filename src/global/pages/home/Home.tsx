@@ -32,10 +32,10 @@ export default function HomePage() {
 	return (
 		<ErrorBoundary onReset={refetch}>
 			<section className="grid grid-rows-[1fr_auto] gap-4 h-full overflow-hidden">
-				<div className="grid grid-rows-1 grid-cols-1 mx-auto place-items-center px-4">
+				<div className="grid grid-rows-1 grid-cols-1 mx-auto place-items-center px-4 h-full">
 					{thereAreRooms ? (
 						<>
-							<div className="grid grid-rows-[1fr_auto] gap-4 h-full w-full items-center max-h-[calc(100dvh-12rem)] md:max-h-[min(1000px,calc(100dvh-10rem))]">
+							<div className="grid grid-rows-[1fr_auto] gap-3 h-full w-full items-center max-h-[calc(100dvh-8rem)] md:max-h-[min(1000px,calc(100dvh-10rem))] min-h-0">
 								<RoomCardsStack onSwipe={onSwipe} rooms={rooms} />
 								<SwipeActions
 									disabled={isLoading}
