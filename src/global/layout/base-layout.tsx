@@ -12,7 +12,7 @@ export default function BaseLayout() {
 	const isNavigating = Boolean(navigation.location);
 	const { isLocal } = useEnv();
 	return (
-		<div className="bg-foreground/10 text-foreground w-screen h-dvh relative">
+		<div className="bg-background text-foreground w-screen h-dvh relative">
 			{isLocal && <DevPopover />}
 			{isNavigating && <LoadingSection label="loading_page" />}
 			<Outlet />

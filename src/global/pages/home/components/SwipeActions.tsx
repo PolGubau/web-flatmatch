@@ -28,7 +28,7 @@ export const SwipeActions = ({ onSwipe, disabled = false }: SwipeActionsProps) =
         </div>
       }>
         <Button
-          className="bg-destructive/10 size-12 md:size-14"
+          className="bg-destructive/10 size-12 md:size-14 backdrop-blur-md"
           disabled={disabled}
           onClick={() => onSwipe("left")}
           size={"icon-lg"}
@@ -60,7 +60,7 @@ export const SwipeActions = ({ onSwipe, disabled = false }: SwipeActionsProps) =
         </div>
       }>
         <Button
-          className="bg-green-500/20 size-12 md:size-14"
+          className="bg-green-500/20 size-12 md:size-14 backdrop-blur-md"
           disabled={disabled}
           onClick={() => onSwipe("right")}
           size={"icon-lg"}
