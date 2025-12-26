@@ -38,12 +38,12 @@ export default function Register() {
 	};
 
 	return (
-		<div className="flex flex-col gap-4">
-			<header className="flex flex-col gap-1">
-				<h1 className="text-2xl font-bold">{t("nice_to_meet_you")}</h1>
+		<div className="flex flex-col gap-6">
+			<header className="flex flex-col gap-1.5">
+				<h1 className="text-3xl font-bold tracking-tight">{t("nice_to_meet_you")}</h1>
 				<p className="text-sm text-muted-foreground">
 					{t("already_have_an_account")}{" "}
-					<Link className="text-primary underline" to="/auth/login">
+					<Link className="text-primary hover:underline font-medium" to="/auth/login">
 						{t("sign_in")}
 					</Link>
 				</p>

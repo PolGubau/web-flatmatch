@@ -10,10 +10,12 @@ type InputProps = Omit<React.ComponentProps<"input">, "size"> & {
 	icon?: IconSvgElement;
 	label?: TranslationKey;
 	size?: Breakpoints;
+	classWithIcon?: string;
 };
 
 function Input({
 	className,
+	classWithIcon,
 	type,
 	icon,
 	label,

@@ -20,7 +20,7 @@ export const SwipeActions = ({ onSwipe, disabled = false }: SwipeActionsProps) =
   const { t } = useTranslation();
 
   return (
-    <nav className="flex gap-2 justify-between mx-auto w-[80vw] max-w-lg relative z-20">
+    <nav className="flex gap-2 justify-between mx-auto w-[85vw] max-w-lg relative z-20">
       {/* Reject - Left Arrow or A */}
       <Tooltip label={
         <div className="flex items-center gap-2">
@@ -28,7 +28,7 @@ export const SwipeActions = ({ onSwipe, disabled = false }: SwipeActionsProps) =
         </div>
       }>
         <Button
-          className="bg-destructive/10 size-14"
+          className="bg-destructive/10 size-12 md:size-14"
           disabled={disabled}
           onClick={() => onSwipe("left")}
           size={"icon-lg"}
@@ -41,7 +41,7 @@ export const SwipeActions = ({ onSwipe, disabled = false }: SwipeActionsProps) =
 
       {/* See Details - Up Arrow or W */}
       <Button
-        className="min-w-14 h-14 flex-1"
+        className="min-w-12 h-12 md:min-w-14 md:h-14 flex-1"
         disabled={disabled}
         onClick={() => onSwipe("up")}
         title="See details (↑ or W)"
@@ -60,7 +60,7 @@ export const SwipeActions = ({ onSwipe, disabled = false }: SwipeActionsProps) =
         </div>
       }>
         <Button
-          className="bg-green-500/20 size-14"
+          className="bg-green-500/20 size-12 md:size-14"
           disabled={disabled}
           onClick={() => onSwipe("right")}
           size={"icon-lg"}

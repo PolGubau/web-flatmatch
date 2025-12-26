@@ -9,7 +9,7 @@ type RoomCardsStackProps = {
 
 export const RoomCardsStack = ({ rooms, onSwipe }: RoomCardsStackProps) => {
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-full w-full max-w-lg">
       {rooms.map((room, index) => (
         <RoomTinderCard
           index={index}

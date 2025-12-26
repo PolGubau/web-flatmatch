@@ -44,12 +44,12 @@ export default function LoginPage() {
 	};
 
 	return (
-		<div className="flex flex-col gap-4">
-			<header className="flex flex-col gap-1">
-				<h1 className="text-2xl font-bold">{t("welcome_back")}</h1>
+		<div className="flex flex-col gap-6">
+			<header className="flex flex-col gap-1.5">
+				<h1 className="text-3xl font-bold tracking-tight">{t("welcome_back")}</h1>
 				<p className="text-sm text-muted-foreground">
 					{t("dont_have_an_account_yet")}{" "}
-					<Link className="text-primary underline" to="/auth/register">
+					<Link className="text-primary hover:underline font-medium" to="/auth/register">
 						{t("sign_up")}
 					</Link>
 				</p>
