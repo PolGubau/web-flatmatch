@@ -1,18 +1,14 @@
 import { t } from "i18next";
 import {
 	BadgeQuestionMark,
-	Book,
-	BookA,
 	BookCheck,
 	Building,
 	Camera,
 	Check,
 	Clock,
-	MailQuestion,
-	Option,
 	Pin,
 	UserSearch,
-	WashingMachine,
+	WashingMachine
 } from "lucide-react";
 import { Outlet, useLocation } from "react-router";
 import { GoHomeButton } from "~/shared/components/go-home-button";
@@ -95,7 +91,7 @@ export default function FormLayout() {
 							return (
 								<li
 									className={cn(
-										`flex gap-1 flex-1 justify-center items-center border-b  border-transparent text-foreground/50 h-7 px-1`,
+										`flex gap-1 flex-1 justify-center items-center border-b text-foreground/50 h-7 px-1`,
 										{
 											"text-foreground  border-foreground/20": isThisDone,
 											"text-primary px-2 border-foreground/20": isCurrent,
