@@ -7,12 +7,13 @@ import {
 import type { IconSvgElement } from "@hugeicons/react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import type { TranslationKey } from "~/shared/i18n/i18n";
 import type { RentType } from "~/shared/types/common";
+import { useFormNavigation } from "../../model/use-form-navigation";
 import { useFormState } from "../../model/useFormState";
+import { ErrorMessage } from "../shared/error-message";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 import { RadioBox } from "../shared/radiobox";
 
@@ -48,9 +49,11 @@ const Step1Schema = EditableRoomSchema.pick({
 });
 export type Step1SchemaType = z.infer<typeof Step1Schema>;
 export function Step1() {
-	const navigate = useNavigate();
 	const { t } = useTranslation();
-	const { data, setData } = useFormState();
+	const { data } = useFormState();
+	const { wrapSubmit } = useFormNavigation<Step1SchemaType>({
+		nextStep: "/publish/location",
+	});
 
 	const {
 		register,
@@ -64,15 +67,7 @@ export function Step1() {
 	return (
 		<form
 			className="grid grid-rows-[1fr_auto] gap-2 h-full"
-			onSubmit={handleSubmit(
-				(values) => {
-					setData(values);
-					navigate("/publish/location", { replace: true });
-				},
-				(errors) => {
-					console.error(errors);
-				},
-			)}
+			onSubmit={wrapSubmit(handleSubmit)}
 		>
 			<fieldset className="flex flex-col gap-6 p-1 overflow-y-auto">
 				<legend className="text-lg pb-12">{t("what_are_you_renting")}</legend>
@@ -95,11 +90,7 @@ export function Step1() {
 				</ul>
 			</fieldset>
 			<footer className="flex flex-col gap-1">
-				{errors.rentType && (
-					<p className="text-error text-sm p-4 rounded-xl bg-error/10">
-						{errors.rentType.message}
-					</p>
-				)}
+				<ErrorMessage error={errors.rentType} />
 				<FormFooterButtons />
 			</footer>
 		</form>

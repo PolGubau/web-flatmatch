@@ -2,11 +2,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { t } from "i18next";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { boolRulesMap } from "~/shared/base/maps";
+import { useFormNavigation } from "../../model/use-form-navigation";
 import { useFormState } from "../../model/useFormState";
+import { ErrorMessage } from "../shared/error-message";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 
 export const Step7Schema = EditableRoomSchema.pick({
@@ -14,8 +15,10 @@ export const Step7Schema = EditableRoomSchema.pick({
 });
 export type Step7SchemaType = z.infer<typeof Step7Schema>;
 export function RulesForm() {
-	const navigate = useNavigate();
-	const { data, setData } = useFormState();
+	const { data } = useFormState();
+	const { wrapSubmit } = useFormNavigation<Step7SchemaType>({
+		nextStep: "/publish/timings",
+	});
 
 	const {
 		register,
@@ -28,15 +31,7 @@ export function RulesForm() {
 	return (
 		<form
 			className="grid grid-rows-[1fr_auto] max-h-[85vh] gap-2 h-full"
-			onSubmit={handleSubmit(
-				(values) => {
-					setData(values);
-					navigate("/publish/timings", { replace: true });
-				},
-				(errors) => {
-					console.error(errors);
-				},
-			)}
+			onSubmit={wrapSubmit(handleSubmit)}
 		>
 			<fieldset className="flex flex-col gap-6 overflow-y-auto">
 				<legend className="text-lg pb-10">
@@ -80,11 +75,8 @@ export function RulesForm() {
 			</fieldset>
 
 			<footer className="flex flex-col gap-1">
-				{errors.rules && (
-					<p className="text-error text-sm p-4 rounded-xl bg-error/10">
-						{JSON.stringify(errors.rules.message, null, 2)}
-					</p>
-				)}
+				{/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form complex type */}
+				<ErrorMessage error={errors.rules as any} />
 				<FormFooterButtons backHref={"/publish/preferences"} />
 			</footer>
 		</form>

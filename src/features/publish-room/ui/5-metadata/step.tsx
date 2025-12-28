@@ -2,12 +2,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { EuroIcon } from "@hugeicons/core-free-icons";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { Input } from "~/shared/components/ui/input/input";
 import { Textarea } from "~/shared/components/ui/textarea";
+import { useFormNavigation } from "../../model/use-form-navigation";
 import { useFormState } from "../../model/useFormState";
+import { ErrorMessage } from "../shared/error-message";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 import { GalleryForm } from "./gallery-form";
 
@@ -19,8 +20,10 @@ export const Step5Schema = EditableRoomSchema.pick({
 });
 export type Step5SchemaType = z.infer<typeof Step5Schema>;
 export function MetadataForm() {
-	const navigate = useNavigate();
-	const { data, setData } = useFormState();
+	const { data } = useFormState();
+	const { wrapSubmit } = useFormNavigation<Step5SchemaType>({
+		nextStep: "/publish/preferences",
+	});
 	const { t } = useTranslation();
 
 	const {
@@ -40,15 +43,7 @@ export function MetadataForm() {
 	return (
 		<form
 			className="grid grid-rows-[1fr_auto] max-h-[85vh] gap-2 h-full"
-			onSubmit={handleSubmit(
-				(values) => {
-					setData(values);
-					navigate("/publish/preferences", { replace: true });
-				},
-				(errors) => {
-					console.error(errors);
-				},
-			)}
+			onSubmit={wrapSubmit(handleSubmit)}
 		>
 			<fieldset className="flex flex-col gap-6 p-1 overflow-y-auto">
 				<legend className="text-lg pb-10">{t("add_metadata")}</legend>
@@ -106,13 +101,9 @@ export function MetadataForm() {
 			</fieldset>
 
 			<footer className="flex flex-col gap-1">
-				{(errors.description || errors.title || errors.images) && (
-					<p className="text-error text-sm p-4 rounded-xl bg-error/10">
-						{JSON.stringify(errors.description)}
-						{JSON.stringify(errors.title)}
-						{JSON.stringify(errors.images)}
-					</p>
-				)}
+				<ErrorMessage
+					error={errors.description || errors.title || errors.images}
+				/>
 				<FormFooterButtons backHref={"/publish/company"} />
 			</footer>
 		</form>

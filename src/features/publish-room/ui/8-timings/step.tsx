@@ -3,7 +3,6 @@ import { InformationCircleIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { t } from "i18next";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import type z from "zod";
 import {
 	EditableRoomSchema,
@@ -11,8 +10,10 @@ import {
 } from "~/entities/room/editable-room.schema";
 import { DatePicker } from "~/shared/components/ui/date-picker";
 import { Input } from "~/shared/components/ui/input/input";
-import { RHFSelect, Select } from "~/shared/components/ui/select";
+import { RHFSelect } from "~/shared/components/ui/select";
+import { useFormNavigation } from "../../model/use-form-navigation";
 import { useFormState } from "../../model/useFormState";
+import { ErrorMessage } from "../shared/error-message";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 
 export const Step8Schema = EditableRoomSchema.pick({
@@ -20,8 +21,10 @@ export const Step8Schema = EditableRoomSchema.pick({
 });
 export type Step8SchemaType = z.infer<typeof Step8Schema>;
 export function TimingsForm() {
-	const navigate = useNavigate();
-	const { data, setData } = useFormState();
+	const { data } = useFormState();
+	const { wrapSubmit } = useFormNavigation<Step8SchemaType>({
+		nextStep: "/publish/preview",
+	});
 
 	const {
 		register,
@@ -40,15 +43,7 @@ export function TimingsForm() {
 	return (
 		<form
 			className="grid grid-rows-[1fr_auto] max-h-[85vh] gap-2 h-full"
-			onSubmit={handleSubmit(
-				(values) => {
-					setData(values);
-					navigate("/publish/preview", { replace: true });
-				},
-				(errors) => {
-					console.error(errors);
-				},
-			)}
+			onSubmit={wrapSubmit(handleSubmit)}
 		>
 			<fieldset className="flex flex-col gap-6 overflow-y-auto">
 				<legend className="text-lg pb-10">What are you searching?</legend>
@@ -134,11 +129,8 @@ export function TimingsForm() {
 			</fieldset>
 
 			<footer className="flex flex-col gap-1">
-				{errors.timings && (
-					<pre className="text-error text-sm p-4 rounded-xl bg-error/10 overflow-auto max-h-40">
-						{JSON.stringify(errors?.timings?.message, null, 2)}
-					</pre>
-				)}
+				{/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form complex type */}
+				<ErrorMessage error={errors.timings as any} />
 				<FormFooterButtons backHref={"/publish/rules"} />
 			</footer>
 		</form>

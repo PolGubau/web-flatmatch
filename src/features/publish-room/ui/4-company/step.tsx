@@ -6,11 +6,12 @@ import {
 } from "@hugeicons/core-free-icons";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { ControlledNumberInput } from "~/shared/components/ui/input/number-input";
+import { useFormNavigation } from "../../model/use-form-navigation";
 import { useFormState } from "../../model/useFormState";
+import { ErrorMessage } from "../shared/error-message";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 
 const Step3Schema = EditableRoomSchema.pick({
@@ -18,8 +19,10 @@ const Step3Schema = EditableRoomSchema.pick({
 });
 export type Step3SchemaType = z.infer<typeof Step3Schema>;
 export function CompanyForm() {
-	const navigate = useNavigate();
-	const { data, setData } = useFormState();
+	const { data } = useFormState();
+	const { wrapSubmit } = useFormNavigation<Step3SchemaType>({
+		nextStep: "/publish/metadata",
+	});
 	const { t } = useTranslation();
 	const {
 		register,
@@ -34,15 +37,7 @@ export function CompanyForm() {
 	return (
 		<form
 			className="grid grid-rows-[1fr_auto] max-h-[85vh] gap-2 h-full"
-			onSubmit={handleSubmit(
-				(values) => {
-					setData(values);
-					navigate("/publish/metadata", { replace: true });
-				},
-				(errors) => {
-					console.error(errors);
-				},
-			)}
+			onSubmit={wrapSubmit(handleSubmit)}
 		>
 			<fieldset className="flex flex-col gap-6 p-1 overflow-y-auto">
 				<legend className="text-lg pb-10">{t("who_is_living")}</legend>
@@ -128,11 +123,8 @@ export function CompanyForm() {
 			</fieldset>
 
 			<footer className="flex flex-col gap-1">
-				{errors.whoIsLiving && (
-					<p className="text-error text-sm p-4 rounded-xl bg-error/10">
-						{JSON.stringify(errors.whoIsLiving.message)}
-					</p>
-				)}
+				{/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form complex type */}
+				<ErrorMessage error={errors.whoIsLiving as any} />
 				<FormFooterButtons backHref={"/publish/commodities"} />
 			</footer>
 		</form>

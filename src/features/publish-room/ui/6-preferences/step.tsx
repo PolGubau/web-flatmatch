@@ -2,13 +2,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { type FieldPath, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { genderMap, occupationMap } from "~/shared/base/maps";
 import { Input } from "~/shared/components/ui/input/input";
 import type { Gender } from "~/shared/types/common";
+import { useFormNavigation } from "../../model/use-form-navigation";
 import { useFormState } from "../../model/useFormState";
+import { ErrorMessage } from "../shared/error-message";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 
 export const Step6Schema = EditableRoomSchema.pick({
@@ -16,8 +17,10 @@ export const Step6Schema = EditableRoomSchema.pick({
 });
 export type Step6SchemaType = z.infer<typeof Step6Schema>;
 export function PreferencesForm() {
-	const navigate = useNavigate();
-	const { data, setData } = useFormState();
+	const { data } = useFormState();
+	const { wrapSubmit } = useFormNavigation<Step6SchemaType>({
+		nextStep: "/publish/rules",
+	});
 	const { t } = useTranslation();
 	const {
 		register,
@@ -31,15 +34,7 @@ export function PreferencesForm() {
 	return (
 		<form
 			className="grid grid-rows-[1fr_auto] max-h-[85vh] gap-2 h-full"
-			onSubmit={handleSubmit(
-				(values) => {
-					setData(values);
-					navigate("/publish/rules", { replace: true });
-				},
-				(errors) => {
-					console.error(errors);
-				},
-			)}
+			onSubmit={wrapSubmit(handleSubmit)}
 		>
 			<fieldset className="flex flex-col gap-6 overflow-y-auto">
 				<legend className="text-lg pb-10">
@@ -146,13 +141,8 @@ export function PreferencesForm() {
 			</fieldset>
 
 			<footer className="flex flex-col gap-1">
-				{errors.preferences && (
-					<p className="text-error text-sm p-4 rounded-xl bg-error/10">
-						{JSON.stringify(errors.preferences.age?.max?.message, null, 2)}
-						{JSON.stringify(errors.preferences.age?.min?.message, null, 2)}
-						{JSON.stringify(errors.preferences.gender?.message, null, 2)}
-					</p>
-				)}
+				{/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form complex type */}
+				<ErrorMessage error={errors.preferences as any} />
 				<FormFooterButtons backHref={"/publish/metadata"} />
 			</footer>
 		</form>

@@ -12,15 +12,15 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { type FieldPath, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
 import type z from "zod";
 import { EditableRoomSchema } from "~/entities/room/editable-room.schema";
 import { commoditiesMap, extrasMap } from "~/shared/base/maps";
-import {
-	ControlledNumberInput
-} from "~/shared/components/ui/input/number-input";
+import { ControlledNumberInput } from "~/shared/components/ui/input/number-input";
+
 import { RHFSelect } from "~/shared/components/ui/select";
+import { useFormNavigation } from "../../model/use-form-navigation";
 import { useFormState } from "../../model/useFormState";
+import { ErrorMessage } from "../shared/error-message";
 import { FormFooterButtons } from "../shared/form-footer-buttons";
 
 const Step3Schema = EditableRoomSchema.pick({
@@ -28,8 +28,10 @@ const Step3Schema = EditableRoomSchema.pick({
 });
 export type Step3SchemaType = z.infer<typeof Step3Schema>;
 export function CommoditiesForm() {
-	const navigate = useNavigate();
-	const { data, setData } = useFormState();
+	const { data } = useFormState();
+	const { wrapSubmit } = useFormNavigation<Step3SchemaType>({
+		nextStep: "/publish/company",
+	});
 
 	const {
 		register,
@@ -45,15 +47,7 @@ export function CommoditiesForm() {
 	return (
 		<form
 			className="grid grid-rows-[1fr_auto] max-h-[85vh] gap-2 h-full"
-			onSubmit={handleSubmit(
-				(values) => {
-					setData(values);
-					navigate("/publish/company", { replace: true });
-				},
-				(errors) => {
-					console.error(errors);
-				},
-			)}
+			onSubmit={wrapSubmit(handleSubmit)}
 		>
 			<fieldset className="flex flex-col gap-6 p-1 overflow-y-auto">
 				<legend className="text-lg pb-6">{t("select_commodities")}</legend>
@@ -319,11 +313,8 @@ export function CommoditiesForm() {
 			</fieldset>
 
 			<footer className="flex flex-col gap-1">
-				{errors.commodities && (
-					<pre className="text-error text-sm p-4 rounded-xl bg-error/10">
-						{JSON.stringify(errors.commodities.room?.message, null, 2)}
-					</pre>
-				)}
+				{/* biome-ignore lint/suspicious/noExplicitAny: react-hook-form complex type */}
+				<ErrorMessage error={errors.commodities as any} />
 				<FormFooterButtons backHref={"/publish/location"} />
 			</footer>
 		</form>
