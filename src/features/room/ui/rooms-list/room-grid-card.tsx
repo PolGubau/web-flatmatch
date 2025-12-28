@@ -22,15 +22,11 @@ export const RoomGridCard = memo(function RoomGridCard({
   description,
   image,
   price,
-  interaction,
   location,
   availableFrom,
 }: Props) {
-  const isFavorite = interaction?.action === "like";
-  const { toggleFavorite, isLoading } = useRoomFavoriteToggle({
-    isFavorite,
-    roomId: id,
-  });
+
+
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
 
@@ -66,41 +62,7 @@ export const RoomGridCard = memo(function RoomGridCard({
               />
             </>
           )}
-          <button
-            aria-label={
-              isFavorite ? "Remove from favorites" : "Add to favorites"
-            }
-            aria-pressed={isFavorite}
-            className={cn(
-              "absolute top-3 right-3 bg-background/90 backdrop-blur-sm rounded-full p-2 shadow-md",
-              "hover:bg-background hover:scale-110 transition-all duration-200",
-              "active:scale-95",
-              "disabled:opacity-50 disabled:cursor-not-allowed",
-              "z-10",
-            )}
-            disabled={isLoading}
-            onClick={toggleFavorite}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                toggleFavorite(e);
-              }
-            }}
-            type="button"
-          >
-            {isLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin text-primary" />
-            ) : (
-              <Heart
-                className={cn(
-                  "w-4 h-4 transition-all duration-200",
-                  isFavorite
-                    ? "fill-primary text-primary"
-                    : "text-foreground hover:text-primary",
-                )}
-              />
-            )}
-          </button>
+
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
         <CardContent className="p-4 space-y-3">
