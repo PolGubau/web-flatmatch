@@ -24,7 +24,7 @@ export const RoomActionsBar = ({
 }: RoomActionsBarProps) => {
   return (
     <nav
-      className="flex gap-1 items-center fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-background/80 backdrop-blur-md px-4 py-2 rounded-full shadow-lg"
+      className="flex gap-1 items-center fixed bottom-16 md:bottom-4 left-1/2 transform -translate-x-1/2 bg-background/60 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg"
       style={{ zIndex: 999 }}
     >
       <Button
