@@ -6,6 +6,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { toast } from "~/shared/components/ui/sonner";
 import { setValueForSecs } from "~/shared/hooks/set-value-for-secs";
 import { cn } from "~/shared/utils/utils";
+import { vibrateSuccess } from "~/shared/utils/vibration";
 
 export default function CopyRoomLinkButton() {
 	const { isTrue, setTrue } = setValueForSecs();
@@ -14,6 +15,7 @@ export default function CopyRoomLinkButton() {
 			.writeText(window.location.href)
 			.then(() => {
 				setTrue();
+				vibrateSuccess();
 			})
 			.catch(() => {
 				toast.error("Failed to copy link");

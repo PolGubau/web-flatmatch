@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { useGetOrCreateConversationMutation } from "~/features/chat";
 import { useSession } from "~/shared/context/session-context";
 import { useUpdateRoomInteraction } from "../../../model/mutations/update-room-interaction";
+import { vibrateLike, vibrateSuccess } from "~/shared/utils/vibration";
 
 type UseRoomDetailsActionsProps = {
 	roomId: string;
@@ -34,6 +35,8 @@ export const useRoomDetailsActions = ({
 		if (isFavourite) {
 			removeLikeRoom.mutate(roomId);
 		} else {
+			// Add haptic feedback when favoriting a room
+			vibrateLike();
 			likeRoom.mutate({ action: "like", roomId });
 		}
 	};
@@ -65,6 +68,8 @@ export const useRoomDetailsActions = ({
 	const fallbackShare = async (url?: string) => {
 		try {
 			await navigator.clipboard.writeText(url ?? window.location.href);
+			// Add haptic feedback for successful copy
+			vibrateSuccess();
 			// You could add a toast notification here
 		} catch (error) {
 			console.error("Failed to copy to clipboard:", error);
