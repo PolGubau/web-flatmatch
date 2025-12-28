@@ -344,14 +344,15 @@ Visit `/browser-apis-demo` to see an interactive demonstration of all available 
 |-----|--------|---------|--------|------|
 | Vibration | ✅ | ✅ | ❌ | ✅ |
 | Network Info | ✅ | ❌ | ❌ | ✅ |
-| Battery | ✅* | ✅* | ❌ | ✅* |
+| Battery | ✅* | ❌** | ❌ | ✅* |
 | Wake Lock | ✅ | ❌ | ❌ | ✅ |
-| Orientation | ✅ | ✅ | ✅** | ✅ |
+| Orientation | ✅ | ✅ | ✅*** | ✅ |
 | Page Visibility | ✅ | ✅ | ✅ | ✅ |
 | Broadcast | ✅ | ✅ | ✅ | ✅ |
 
 \* Deprecated in some versions but still functional  
-\*\* Requires permission on iOS 13+
+\*\* Removed from Firefox for privacy reasons  
+\*\*\* Requires permission on iOS 13+
 
 ---
 

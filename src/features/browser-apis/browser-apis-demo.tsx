@@ -30,6 +30,8 @@ export default function BrowserAPIsDemo() {
 	const isPageVisible = usePageVisibility();
 	const { postMessage, message } = useBroadcastChannel("demo-channel");
 
+	const SECONDS_PER_MINUTE = 60;
+
 	const handleVibration = (pattern: number | number[]) => {
 		vibrate(pattern);
 	};
@@ -53,7 +55,7 @@ export default function BrowserAPIsDemo() {
 						<p>Level: {getBatteryPercentage(battery.level)}</p>
 						<p>Charging: {battery.charging ? "Yes ⚡" : "No"}</p>
 						{battery.dischargingTime && battery.dischargingTime !== Infinity && (
-							<p>Time remaining: {Math.round(battery.dischargingTime / 60)} minutes</p>
+							<p>Time remaining: {Math.round(battery.dischargingTime / SECONDS_PER_MINUTE)} minutes</p>
 						)}
 					</div>
 				) : (

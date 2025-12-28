@@ -23,7 +23,8 @@ export async function requestWakeLock(): Promise<WakeLockSentinel | null> {
 	}
 
 	try {
-		const wakeLock = await navigator.wakeLock.request("screen");
+		// Type assertion needed as wakeLock is not in all Navigator types
+		const wakeLock = await (navigator as Navigator & { wakeLock: WakeLock }).wakeLock.request("screen");
 		console.log("✅ Screen wake lock acquired");
 		return wakeLock;
 	} catch (error) {

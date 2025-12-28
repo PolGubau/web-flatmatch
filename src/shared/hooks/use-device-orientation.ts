@@ -40,7 +40,7 @@ export function useDeviceOrientation(enabled: boolean = true) {
 
 	useEffect(() => {
 		// Check if API is supported
-		if (typeof window === "undefined" || !window.DeviceOrientationEvent) {
+		if (typeof window === "undefined" || !window?.DeviceOrientationEvent) {
 			setIsSupported(false);
 			return;
 		}

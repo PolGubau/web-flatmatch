@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 
 /**
  * Battery status information
+ * 
+ * Note: Battery Status API has been deprecated in many browsers (including Firefox)
+ * for privacy reasons. It may have limited availability. Use with graceful fallbacks.
  */
 export interface BatteryStatus {
 	/** Whether battery API is supported */
