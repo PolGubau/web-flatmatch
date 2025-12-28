@@ -91,6 +91,35 @@ export function isPWA(): boolean {
 }
 
 /**
+ * Check if device is iOS
+ */
+export function isIOS(): boolean {
+	if (typeof window === "undefined") {
+		return false;
+	}
+
+	const userAgent = window.navigator.userAgent.toLowerCase();
+	return (
+		/iphone|ipad|ipod/.test(userAgent) ||
+		(navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) // iPad on iOS 13+
+	);
+}
+
+/**
+ * Check if device is in Safari browser (iOS)
+ */
+export function isIOSSafari(): boolean {
+	if (!isIOS()) return false;
+
+	const ua = window.navigator.userAgent;
+	const webkit = !!ua.match(/WebKit/i);
+	const chrome = !!ua.match(/CriOS/i);
+	const firefox = !!ua.match(/FxiOS/i);
+
+	return webkit && !chrome && !firefox;
+}
+
+/**
  * Prompt user to install PWA
  */
 let deferredPrompt: any;
