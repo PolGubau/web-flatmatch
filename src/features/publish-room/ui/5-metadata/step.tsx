@@ -102,7 +102,8 @@ export function MetadataForm() {
 
 			<footer className="flex flex-col gap-1">
 				<ErrorMessage
-					error={errors.description || errors.title || errors.images}
+					// biome-ignore lint/suspicious/noExplicitAny: react-hook-form complex type
+					error={(errors.description || errors.title || errors.images) as any}
 				/>
 				<FormFooterButtons backHref={"/publish/company"} />
 			</footer>
