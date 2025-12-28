@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useTransform } from "motion/react";
+import { animate, motion, useMotionValue, useTransform } from "motion/react";
 import type { Room, RoomWithMetadata } from "~/entities/room/room";
 import type { SwipeDirection } from "../types/common";
 import { RoomTinderCardUI } from "./room-tinder-card-ui";
@@ -16,21 +16,22 @@ export const RoomTinderCard = ({
 	const isFront = index === 0;
 
 	const x = useMotionValue(0);
-	const opacity = useTransform(x, [-200, 0, 200], [0.8, 1, 0.8]);
-	const rotateRaw = useTransform(x, [-200, 200], [-10, 10]);
-	const size = useTransform(x, [-200, 0, 200], [0.9, 1, 0.9]);
+	const y = useMotionValue(0);
+	const opacity = useTransform(x, [-250, 0, 250], [0.7, 1, 0.7]);
+	const rotateRaw = useTransform(x, [-250, 250], [-18, 18]);
+	const size = useTransform(x, [-250, 0, 250], [0.95, 1, 0.95]);
 
 	const colorOverlay = useTransform(
 		x,
-		[-500, 0, 500],
-		["#ff000060", "#ffffff00", "#00ff0060"],
+		[-400, 0, 400],
+		["#ff000050", "#ffffff00", "#00ff0050"],
 	);
 
 	// Emoji feedback opacity (shows when dragging past threshold)
-	const likeEmojiOpacity = useTransform(x, [0, 150, 200], [0, 0.5, 1]);
-	const dislikeEmojiOpacity = useTransform(x, [-200, -150, 0], [1, 0.5, 0]);
-	const likeEmojiScale = useTransform(x, [0, 150, 200], [0.5, 0.8, 1.2]);
-	const dislikeEmojiScale = useTransform(x, [-200, -150, 0], [1.2, 0.8, 0.5]);
+	const likeEmojiOpacity = useTransform(x, [0, 100, 150], [0, 0.6, 1]);
+	const dislikeEmojiOpacity = useTransform(x, [-150, -100, 0], [1, 0.6, 0]);
+	const likeEmojiScale = useTransform(x, [0, 100, 150], [0.7, 0.9, 1.3]);
+	const dislikeEmojiScale = useTransform(x, [-150, -100, 0], [1.3, 0.9, 0.7]);
 
 	const rotate = useTransform(() => {
 		const amount = 2;
@@ -39,36 +40,82 @@ export const RoomTinderCard = ({
 	});
 
 	const handleDragEnd = (
-		_event: MouseEvent | TouchEvent,
-		info: { offset: { x: number; y: number } },
+		_event: MouseEvent | TouchEvent | PointerEvent,
+		info: {
+			offset: { x: number; y: number };
+			velocity: { x: number; y: number };
+		},
 	) => {
-		if (Math.abs(info.offset.x) > 200) {
-			onSwipe(room.id, info.offset.x > 0 ? "right" : "left");
-		} else if (Math.abs(info.offset.y) > 200) {
-			onSwipe(room.id, info.offset.y > 0 ? "down" : "up");
+		const threshold = 120;
+		const velocityThreshold = 500;
+
+		// Check if swipe based on distance or velocity
+		const shouldSwipeX =
+			Math.abs(info.offset.x) > threshold ||
+			Math.abs(info.velocity.x) > velocityThreshold;
+		const shouldSwipeY =
+			Math.abs(info.offset.y) > threshold ||
+			Math.abs(info.velocity.y) > velocityThreshold;
+
+		if (shouldSwipeX) {
+			// Animate out with velocity
+			const direction = info.offset.x > 0 ? "right" : "left";
+			const exitX = direction === "right" ? 500 : -500;
+
+			animate(x, exitX, {
+				duration: 0.3,
+				ease: "easeOut",
+			});
+
+			setTimeout(() => onSwipe(room.id, direction), 100);
+		} else if (shouldSwipeY) {
+			const direction = info.offset.y > 0 ? "down" : "up";
+			const exitY = direction === "down" ? 500 : -500;
+
+			animate(y, exitY, {
+				duration: 0.3,
+				ease: "easeOut",
+			});
+
+			setTimeout(() => onSwipe(room.id, direction), 100);
 		} else {
-			x.set(0);
+			// Smooth return to center
+			animate(x, 0, {
+				damping: 30,
+				stiffness: 300,
+				type: "spring",
+			});
+			animate(y, 0, {
+				damping: 30,
+				stiffness: 300,
+				type: "spring",
+			});
 		}
 	};
 
 	return (
 		<motion.div
-			className="h-full bg-neutral-500 backdrop-blur-md overflow-hidden w-[85vw] max-w-lg rounded-3xl hover:cursor-grab active:cursor-grabbing origin-bottom shadow shadow-neutral-500/10 relative"
+			className="h-full bg-neutral-500 backdrop-blur-md overflow-hidden w-[85vw] max-w-lg rounded-3xl hover:cursor-grab active:cursor-grabbing origin-bottom shadow-lg shadow-neutral-500/20 relative touch-none"
 			drag
 			dragConstraints={{ bottom: 0, left: 0, right: 0, top: 0 }}
-			dragElastic={1}
+			dragElastic={0.7}
+			dragTransition={{
+				power: 0.3,
+				timeConstant: 200,
+			}}
 			onDragEnd={handleDragEnd}
 			style={{
 				gridColumn: 1,
 				gridRow: 1,
 				opacity,
-				pointerEvents: isFront ? "auto" : "none", // la de arriba es la interactiva
+				pointerEvents: isFront ? "auto" : "none",
 				rotate: rotate,
 				scale: size,
-				transition: "0.125s transform",
 				x,
+				y,
 				zIndex: 10 - index,
 			}}
+			whileTap={{ cursor: "grabbing" }}
 		>
 			<motion.div
 				className="absolute inset-0 z-40 pointer-events-none  w-full h-full"
