@@ -76,7 +76,7 @@ export default function ChatPage({ initialConversationId }: ChatPageProps) {
     <ErrorBoundary onReset={refetch}>
       <div className="h-full divide-x divide-foreground/20 overflow-hidden grid grid-cols-1 md:grid-cols-[auto_1fr]">
         {/* Desktop: Sidebar visible */}
-        <aside className="hidden md:block md:w-80 h-full">
+        <aside className="hidden md:block md:w-80 h-full overflow-hidden">
           {conversationListContent}
         </aside>
 
@@ -93,7 +93,7 @@ export default function ChatPage({ initialConversationId }: ChatPageProps) {
         </Drawer>
 
         {/* Chat activo */}
-        <div className="grid grid-cols-1 h-full">
+        <div className="grid grid-cols-1 h-full overflow-hidden">
           {activeConversation ? (
             <ChatMessages
               conversationId={activeConversation.id}
@@ -102,7 +102,7 @@ export default function ChatPage({ initialConversationId }: ChatPageProps) {
               otherUserName={activeConversation.otherParticipant.name}
             />
           ) : (
-            <div className="flex flex-col h-full">
+            <div className="flex flex-col h-full overflow-hidden">
               {/* Header en móvil cuando no hay chat activo */}
               <header className="p-4 border-b border-muted md:hidden flex items-center gap-3">
                 <Button

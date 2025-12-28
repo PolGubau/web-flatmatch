@@ -91,9 +91,9 @@ export const ChatMessages = ({
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="grid grid-rows-[auto_1fr_auto] h-full overflow-hidden">
       {/* Header */}
-      <header className="px-2 pb-1 border-b border-border flex items-center gap-3">
+      <header className="px-2 py-3 border-b border-border flex items-center gap-3 min-h-[60px] bg-background">
         {/* Botón de menú solo en móvil */}
         {onOpenConversations && (
           <Button
@@ -110,7 +110,7 @@ export const ChatMessages = ({
 
       {/* Messages */}
       <section
-        className="flex-1 overflow-y-auto p-4 space-y-1"
+        className="overflow-y-auto overflow-x-hidden p-4 space-y-1 min-h-0"
         ref={messagesContainerRef}
       >
         {messages.length === 0 ? (
@@ -142,7 +142,7 @@ export const ChatMessages = ({
       </section>
 
       {/* Input */}
-      <div className="p-4 border-t border-foreground/20">
+      <div className="p-4 border-t border-foreground/20 bg-background">
         <div className="grid grid-cols-[1fr_auto] gap-2 items-center">
           <Input
             className="w-full"

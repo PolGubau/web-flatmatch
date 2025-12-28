@@ -4,7 +4,7 @@ export const ChatMessagesSkeleton = () => {
   return (
     <div className="flex flex-col h-full">
       {/* Header skeleton */}
-      <div className="p-4 border-b border-border/50 bg-card">
+      <div className="px-2 py-3 border-b border-border/50 bg-card min-h-[60px] flex items-center">
         <Skeleton className="h-6 w-32" />
       </div>
 
