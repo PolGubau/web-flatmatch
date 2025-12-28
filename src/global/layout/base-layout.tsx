@@ -14,7 +14,18 @@ export default function BaseLayout() {
 	return (
 		<div className="bg-background text-foreground w-screen h-dvh relative">
 			{isLocal && <DevPopover />}
-			{isNavigating && <LoadingSection label="loading_page" />}
+			{isNavigating && (
+				<>
+					{/* Barra de progreso superior */}
+					<LoadingSection delay={300} type="bar" />
+					{/* Overlay semi-transparente después de 1 segundo */}
+					<LoadingSection
+						className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40"
+						delay={1000}
+						label="loading_page"
+					/>
+				</>
+			)}
 			<Outlet />
 			<Toaster />
 			<OneTapComponent />
