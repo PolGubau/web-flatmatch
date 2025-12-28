@@ -10,6 +10,7 @@ import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, Outlet } from "react-router";
 import type { TranslationKey } from "~/shared/i18n/i18n";
+import { NetworkStatusIndicator } from "~/shared/components/network-status-indicator";
 import { UserButton } from "./header/user-button";
 import { MobileNavigation } from "./navigation/mobile";
 
@@ -30,6 +31,7 @@ const MainLayout = ({ children }: PropsWithChildren) => {
 	const { t } = useTranslation();
 	return (
 		<div className="grid grid-rows-[auto_1fr_auto] md:grid-rows-[auto_1fr] relative flex-col h-dvh gap-4 overflow-hidden bg-background text-foreground">
+			<NetworkStatusIndicator />
 			<header
 				className="p-2 md:p-4 pl-4 flex justify-between items-center backdrop-blur-md"
 				style={{ zIndex: 11 }}
