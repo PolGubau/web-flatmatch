@@ -1,5 +1,5 @@
-import { ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { ArrowRight, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import type { RoomWithMetadata } from "~/entities/room/room";
 import { UserChip } from "~/features/user/ui/profile/user-chip";
@@ -34,14 +34,67 @@ export function RoomTinderCardUI({
 
 	const sortedImages = [cover, ...restImages];
 	const [currentImageIdx, setCurrentImageIndex] = useState(0);
+	const [isImageLoading, setIsImageLoading] = useState(false);
+	const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0])); // Primera imagen pre-cargada
+
+	// Precargar la primera imagen
+	useEffect(() => {
+		const img = new Image();
+		img.src = sortedImages[0];
+		img.onload = () => {
+			setLoadedImages((prev) => new Set(prev).add(0));
+		};
+	}, [sortedImages[0]]);
+
+	// Precargar la siguiente imagen cuando cambias de índice
+	useEffect(() => {
+		const nextIdx = (currentImageIdx + 1) % sortedImages.length;
+		if (!loadedImages.has(nextIdx)) {
+			const img = new Image();
+			img.src = sortedImages[nextIdx];
+			img.onload = () => {
+				setLoadedImages((prev) => new Set(prev).add(nextIdx));
+			};
+		}
+	}, [currentImageIdx, sortedImages, loadedImages]);
+
 	const goNextImage = () => {
-		setCurrentImageIndex((idx) => (idx + 1) % sortedImages.length);
+		const nextIdx = (currentImageIdx + 1) % sortedImages.length;
+		if (!loadedImages.has(nextIdx)) {
+			setIsImageLoading(true);
+		}
+		setCurrentImageIndex(nextIdx);
 	};
+
 	const goPrevImage = () => {
-		setCurrentImageIndex((idx) =>
-			idx === 0 ? sortedImages.length - 1 : idx - 1,
-		);
+		const prevIdx =
+			currentImageIdx === 0 ? sortedImages.length - 1 : currentImageIdx - 1;
+		if (!loadedImages.has(prevIdx)) {
+			setIsImageLoading(true);
+		}
+		setCurrentImageIndex(prevIdx);
 	};
+
+	// Manejar la carga de la imagen actual
+	useEffect(() => {
+		if (loadedImages.has(currentImageIdx)) {
+			setIsImageLoading(false);
+			return;
+		}
+
+		setIsImageLoading(true);
+		const img = new Image();
+		img.src = sortedImages[currentImageIdx];
+
+		img.onload = () => {
+			setLoadedImages((prev) => new Set(prev).add(currentImageIdx));
+			setIsImageLoading(false);
+		};
+
+		img.onerror = () => {
+			setIsImageLoading(false);
+		};
+	}, [currentImageIdx, sortedImages, loadedImages]);
 
 	return (
 		// gradient from black to transparent
@@ -84,7 +137,8 @@ export function RoomTinderCardUI({
 							<DropdownMenuLabel>{owner?.name ?? "Unknown"}</DropdownMenuLabel>
 							<DropdownMenuSeparator />
 
-							<DropdownMenuItem className="justify-between"
+							<DropdownMenuItem
+								className="justify-between"
 								onSelect={() => navigate("/profile")}
 							>
 								See profile
@@ -112,9 +166,19 @@ export function RoomTinderCardUI({
 			</div>
 
 			<div className="inset-0 absolute bg-gradient-to-tr from-black to-transparent rounded-lg z-10 pointer-events-none h-full" />
+
+			{/* Loading spinner */}
+			{isImageLoading && (
+				<div className="absolute inset-0 z-[5] flex items-center justify-center bg-black/20 backdrop-blur-sm">
+					<Loader2 className="w-8 h-8 text-white animate-spin" />
+				</div>
+			)}
+
 			<img
 				alt={title}
-				className="inset-0 absolute h-full object-cover object-bottom pointer-events-none"
+				className={`inset-0 absolute h-full object-cover object-bottom pointer-events-none transition-opacity duration-300 ${isImageLoading ? "opacity-0" : "opacity-100"
+					}`}
+				onLoad={() => setIsImageLoading(false)}
 				src={sortedImages[currentImageIdx]}
 			/>
 		</article>
