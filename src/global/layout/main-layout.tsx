@@ -21,25 +21,30 @@ type FooterMenuItem = {
 	icon: IconSvgElement;
 	label: TranslationKey;
 	badge?: number;
+	isLoadingBadge?: boolean;
 };
 
-export const getMenuItems = (unreadCount = 0): FooterMenuItem[] => [
-	{ href: "/", icon: Home01Icon, label: "home" },
-	{ href: "/favs", icon: FavouriteIcon, label: "favourites" },
-	{
-		badge: unreadCount || undefined,
-		href: "/chat",
-		icon: Message01Icon,
-		label: "chat",
-	},
-	{ href: "/profile", icon: UserIcon, label: "profile" },
-];
+export const getMenuItems = (
+	unreadCount = 0,
+	isLoading = false,
+): FooterMenuItem[] => [
+		{ href: "/", icon: Home01Icon, label: "home" },
+		{ href: "/favs", icon: FavouriteIcon, label: "favourites" },
+		{
+			badge: unreadCount || undefined,
+			href: "/chat",
+			icon: Message01Icon,
+			isLoadingBadge: isLoading,
+			label: "chat",
+		},
+		{ href: "/profile", icon: UserIcon, label: "profile" },
+	];
 
 const MainLayout = ({ children }: PropsWithChildren) => {
 	const { t } = useTranslation();
-	const { unreadCount } = useUnreadMessages();
+	const { unreadCount, isLoading } = useUnreadMessages();
 	useChatNotifications(); // Activa notificaciones automáticas
-	const menuItems = getMenuItems(unreadCount);
+	const menuItems = getMenuItems(unreadCount, isLoading);
 
 	return (
 		<div className="grid grid-rows-[auto_1fr_auto] md:grid-rows-[auto_1fr] relative flex-col h-dvh gap-4 overflow-hidden bg-background text-foreground">

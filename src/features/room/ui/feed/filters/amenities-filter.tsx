@@ -7,14 +7,13 @@ import type { TranslationKey } from "~/shared/i18n/i18n";
 import {
   AMENITY_GROUPS,
   type AmenityKey,
+  FILTERABLE_AMENITIES,
 } from "../../../model/constants/filter-amenities";
 
 interface AmenitiesFilterProps {
   selectedAmenities: Partial<Record<AmenityKey, boolean>>;
   onAmenityToggle: (amenity: AmenityKey, checked: boolean) => void;
-}
-
-/**
+} /**
  * Componente para filtrar por amenidades agrupadas por categoría
  */
 export const AmenitiesFilter = ({
@@ -23,11 +22,7 @@ export const AmenitiesFilter = ({
 }: AmenitiesFilterProps) => {
   const { t } = useTranslation();
 
-  const amenityGroups: {
-    amenities: AmenityKey[];
-    key: string;
-    label: TranslationKey;
-  }[] = [
+  const amenityGroups = [
     {
       amenities: AMENITY_GROUPS.appliances,
       key: "appliances",
@@ -63,8 +58,9 @@ export const AmenitiesFilter = ({
                     onAmenityToggle(amenity, checked === true)
                   }
                 />
-                {/* @ts-expect-error - dynamic translation key */}
-                <span className="text-sm">{t(amenity)}</span>
+                <span className="text-sm">
+                  {t(FILTERABLE_AMENITIES[amenity])}
+                </span>
               </Label>
             ))}
           </div>

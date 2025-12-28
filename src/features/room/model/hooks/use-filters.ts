@@ -9,6 +9,15 @@ import { RENT_TYPES } from "~/features/publish-room/ui/1-type/step";
 import { availableLocations } from "../../ui/feed/filters/filters-form";
 
 /**
+ * Valores por defecto para filtros.
+ * Se aplican en el backend cuando el valor es null, no en la URL.
+ */
+export const DEFAULT_FILTER_VALUES = {
+	maxPrice: 5000,
+	minPrice: 0,
+} as const;
+
+/**
  * Hook que sincroniza los filtros con la URL usando nuqs.
  * Los cambios en filtros se reflejan automáticamente en los query params.
  */
@@ -35,8 +44,8 @@ export function useFilters() {
 			isFurnished: parseAsBoolean,
 			isWheelchairAccessible: parseAsBoolean,
 			location: parseAsStringLiteral(availableLocations),
-			maxPrice: parseAsInteger.withDefault(5000),
-			minPrice: parseAsInteger.withDefault(0),
+			maxPrice: parseAsInteger,
+			minPrice: parseAsInteger,
 			rentType: parseAsStringLiteral(
 				RENT_TYPES.map((rentType) => rentType.value),
 			),

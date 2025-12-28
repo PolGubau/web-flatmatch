@@ -66,6 +66,7 @@ export function NotificationBanner() {
             aria-label="Cerrar"
             className="text-muted-foreground hover:text-foreground transition-colors"
             onClick={handleDismiss}
+            type="button"
           >
             <svg
               fill="none"
@@ -75,6 +76,7 @@ export function NotificationBanner() {
               viewBox="0 0 16 16"
               width="16"
             >
+              <title>Close</title>
               <path d="M4 4l8 8M12 4l-8 8" />
             </svg>
           </button>

@@ -1,15 +1,24 @@
 import { useMemo } from "react";
-import { useFilters } from "./use-filters";
+import { DEFAULT_FILTER_VALUES, useFilters } from "./use-filters";
 
 export function useActiveFilters() {
 	const [filters, setFilters] = useFilters();
 
-	// Calcular el número de filtros activos
+	// Calcular el número de filtros activos (excluyendo valores null y defaults)
 	const activeFiltersCount = useMemo(() => {
-		return Object.entries(filters).filter(
-			([_, value]) =>
-				value !== null && value !== undefined && value !== false && value !== 0,
-		).length;
+		return Object.entries(filters).filter(([key, value]) => {
+			// Excluir null, undefined, false
+			if (value === null || value === undefined || value === false)
+				return false;
+
+			// Excluir valores por defecto de precio
+			if (key === "minPrice" && value === DEFAULT_FILTER_VALUES.minPrice)
+				return false;
+			if (key === "maxPrice" && value === DEFAULT_FILTER_VALUES.maxPrice)
+				return false;
+
+			return true;
+		}).length;
 	}, [filters]);
 
 	// Eliminar un filtro específico

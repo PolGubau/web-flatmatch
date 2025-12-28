@@ -1,9 +1,12 @@
 import { FilterIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { t } from "i18next";
-import { useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { RENT_TYPES } from "~/features/publish-room/ui/1-type/step";
-import { useFilters } from "~/features/room/model/hooks/use-filters";
+import {
+	DEFAULT_FILTER_VALUES,
+	useFilters,
+} from "~/features/room/model/hooks/use-filters";
 import { Button } from "~/shared/components/ui/button";
 import {
 	Collapsible,
@@ -89,8 +92,13 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 	);
 	const [selectedType, setSelectedType] = useState<RentType | null>(rentType);
 
-	const [minPrice, setMinPrice] = useState<number>(minPriceState);
-	const [maxPrice, setMaxPrice] = useState<number>(maxPriceState);
+	// Usar defaults si los valores son null
+	const [minPrice, setMinPrice] = useState<number>(
+		minPriceState ?? DEFAULT_FILTER_VALUES.minPrice,
+	);
+	const [maxPrice, setMaxPrice] = useState<number>(
+		maxPriceState ?? DEFAULT_FILTER_VALUES.maxPrice,
+	);
 
 	// Estado local para amenidades
 	const [selectedAmenities, setSelectedAmenities] = useState<
@@ -114,11 +122,11 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 		isWheelchairAccessible: isWheelchairAccessible ?? false,
 	});
 
-	const handleAmenityToggle = (amenity: AmenityKey, checked: boolean) => {
+	const handleAmenityToggle = useCallback((amenity: AmenityKey, checked: boolean) => {
 		setSelectedAmenities((prev) => ({ ...prev, [amenity]: checked }));
-	};
+	}, []);
 
-	function handleSubmit(event: React.FormEvent) {
+	const handleSubmit = useCallback((event: React.FormEvent) => {
 		event.preventDefault();
 		const formData = new FormData(event.target as HTMLFormElement);
 		const afterDateValue = formData.get("afterDate") as string | null;
@@ -143,13 +151,14 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 			isFurnished: selectedAmenities.isFurnished || null,
 			isWheelchairAccessible: selectedAmenities.isWheelchairAccessible || null,
 			location: selectedLocation,
-			maxPrice,
-			minPrice,
+			// Solo agregar a URL si difieren de los defaults
+			maxPrice: maxPrice === DEFAULT_FILTER_VALUES.maxPrice ? null : maxPrice,
+			minPrice: minPrice === DEFAULT_FILTER_VALUES.minPrice ? null : minPrice,
 			rentType: selectedType,
 		};
 		onSubmit(filters);
 		setFilters(filters);
-	}
+	}, [selectedLocation, selectedType, minPrice, maxPrice, selectedAmenities, onSubmit, setFilters]);
 
 	return (
 		<form className="flex flex-col gap-4" onSubmit={handleSubmit}>

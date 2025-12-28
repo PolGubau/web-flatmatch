@@ -1,5 +1,6 @@
 import type { RoomWithMetadata } from "~/entities/room/room";
 import { supabase } from "~/global/supabase/client";
+import { DEFAULT_FILTER_VALUES } from "../../model/hooks/use-filters";
 import type { Filters } from "../../ui/feed/filters/filters-form";
 import { buildRoomSelect } from "./get-single-room";
 
@@ -35,8 +36,14 @@ export const getRoomsWithMetadata = async (
 	// Filtros dinámicos
 	if (filters?.location)
 		query = query.ilike("location", `%${filters.location}%`);
-	if (filters?.minPrice) query = query.gte("price->amount", filters.minPrice);
-	if (filters?.maxPrice) query = query.lte("price->amount", filters.maxPrice);
+
+	// Aplicar defaults si los valores son null
+	const minPrice = filters?.minPrice ?? DEFAULT_FILTER_VALUES.minPrice;
+	const maxPrice = filters?.maxPrice ?? DEFAULT_FILTER_VALUES.maxPrice;
+
+	query = query.gte("price->amount", minPrice);
+	query = query.lte("price->amount", maxPrice);
+
 	if (filters?.afterDate) {
 		const afterDate = new Date(filters.afterDate).toISOString();
 		query = query.gte("timings->>available_from", afterDate);

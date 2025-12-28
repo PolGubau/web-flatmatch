@@ -1,6 +1,7 @@
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslation } from "react-i18next";
+import { DEFAULT_FILTER_VALUES } from "~/features/room/model/hooks/use-filters";
 import { Badge } from "~/shared/components/ui/badge";
 import { Button } from "~/shared/components/ui/button";
 import type { Filters } from "./filters-form";
@@ -25,13 +26,18 @@ export const ActiveFiltersChips = ({
 }: ActiveFiltersChipsProps) => {
   const { t } = useTranslation();
 
-  const activeFilters = Object.entries(filters).filter(
-    ([_, value]) => value !== null && value !== undefined && value !== false,
-  );
+  const activeFilters = Object.entries(filters).filter(([key, value]) => {
+    // Excluir null, undefined, false
+    if (value === null || value === undefined || value === false) return false;
 
-  if (activeFilters.length === 0) return null;
+    // Excluir valores por defecto
+    if (key === "minPrice" && value === DEFAULT_FILTER_VALUES.minPrice) return false;
+    if (key === "maxPrice" && value === DEFAULT_FILTER_VALUES.maxPrice) return false;
 
-  const getFilterLabel = (key: string, value: unknown): string => {
+    return true;
+  });
+
+  if (activeFilters.length === 0) return null; const getFilterLabel = (key: string, value: unknown): string => {
     // @ts-expect-error - dynamic translation key
     if (typeof value === "boolean") return t(key);
     // @ts-expect-error - dynamic translation key

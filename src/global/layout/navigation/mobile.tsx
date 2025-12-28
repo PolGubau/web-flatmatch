@@ -9,6 +9,7 @@ type FooterMenuItem = {
 	icon: IconSvgElement;
 	label: TranslationKey;
 	badge?: number;
+	isLoadingBadge?: boolean;
 };
 
 type MobileNavigationProps = {
@@ -27,7 +28,6 @@ export const MobileNavigation = ({ items }: MobileNavigationProps) => {
 				{items.map((item) => (
 					<li key={item.href}>
 						<NavLink
-							aria-current={undefined}
 							aria-label={t(item.label)}
 							className={({ isActive }) =>
 								cn(
@@ -71,19 +71,23 @@ export const MobileNavigation = ({ items }: MobileNavigationProps) => {
 										/>
 
 										{/* Badge de notificación */}
-										{item.badge && item.badge > 0 && (
+										{item.badge !== undefined && (
 											<span
-												aria-label={`${item.badge} unread`}
 												className={cn(
 													"absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1",
 													"flex items-center justify-center",
-													"bg-destructive text-destructive-foreground",
 													"rounded-full border-2 border-background",
 													"text-[10px] font-bold leading-none",
-													"animate-in zoom-in duration-200",
+													item.isLoadingBadge
+														? "bg-muted animate-pulse text-foreground/40"
+														: "bg-destructive text-destructive-foreground animate-in zoom-in duration-200",
 												)}
 											>
-												{item.badge > 99 ? "99+" : item.badge}
+												{item.isLoadingBadge
+													? "..."
+													: item.badge > 99
+														? "99+"
+														: item.badge || "0"}
 											</span>
 										)}
 									</div>
