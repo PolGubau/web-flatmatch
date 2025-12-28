@@ -1,4 +1,4 @@
-import { FilterHorizontalIcon, FilterIcon } from "@hugeicons/core-free-icons";
+import { FilterHorizontalIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { t } from "i18next";
 import React from "react";
