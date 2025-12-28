@@ -94,5 +94,10 @@ export function useUnreadMessages() {
 		};
 	}, []);
 
-	return { isLoading, unreadCount };
+	// Función para forzar actualización inmediata del contador
+	const refetch = () => {
+		fetchUnreadCount(true);
+	};
+
+	return { isLoading, refetch, unreadCount };
 }
