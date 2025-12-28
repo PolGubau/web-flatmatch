@@ -1,5 +1,6 @@
 import { Sent02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { Menu } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "~/shared/components/ui/button";
@@ -16,12 +17,14 @@ interface ChatMessagesProps {
   conversationId: string;
   currentUserId: string;
   otherUserName: string;
+  onOpenConversations?: () => void;
 }
 
 export const ChatMessages = ({
   conversationId,
   currentUserId,
   otherUserName,
+  onOpenConversations,
 }: ChatMessagesProps) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
@@ -90,7 +93,18 @@ export const ChatMessages = ({
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <header className="p-4 border-b border-foreground/20 flex items-center gap-3">
+      <header className="px-2 pb-1 border-b border-border flex items-center gap-3">
+        {/* Botón de menú solo en móvil */}
+        {onOpenConversations && (
+          <Button
+            className="md:hidden"
+            onClick={onOpenConversations}
+            size="icon"
+            variant="ghost"
+          >
+            <Menu className="w-5 h-5" />
+          </Button>
+        )}
         <h2 className="font-semibold text-lg">{otherUserName}</h2>
       </header>
 
