@@ -1,5 +1,5 @@
 import { ArrowRight, Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import type { RoomWithMetadata } from "~/entities/room/room";
 import { UserChip } from "~/features/user/ui/profile/user-chip";
@@ -30,9 +30,11 @@ export function RoomTinderCardUI({
 	const { cover, gallery } = images;
 	const navigate = useNavigate();
 
-	const restImages = gallery?.filter((path) => path !== cover) || [];
-
-	const sortedImages = [cover, ...restImages];
+	const sortedImages = useMemo(() => {
+		const restImages = gallery?.filter((path) => path !== cover) || [];
+		return [cover, ...restImages];
+	}, [cover, gallery]);
+	
 	const [currentImageIdx, setCurrentImageIndex] = useState(0);
 	const [isImageLoading, setIsImageLoading] = useState(false);
 	const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0])); // Primera imagen pre-cargada
@@ -112,15 +114,21 @@ export function RoomTinderCardUI({
 			<div className="grid grid-rows-[1fr_auto] h-full">
 				<div className="grid grid-cols-2 opacity-0 h-full relative w-full">
 					<button
-						className="h-full z-10 w-full bg-red-500"
+						aria-label="Previous image"
+						className="h-full z-10 w-full"
 						onClick={goPrevImage}
 						type="button"
-					/>
+					>
+						<span className="sr-only">Previous image</span>
+					</button>
 					<button
-						className="h-full z-10 w-full bg-green-500"
+						aria-label="Next image"
+						className="h-full z-10 w-full"
 						onClick={goNextImage}
 						type="button"
-					/>
+					>
+						<span className="sr-only">Next image</span>
+					</button>
 				</div>
 
 				<header className="bottom-0 left-0 p-3 pb-4 md:p-4 md:pb-6 flex flex-col gap-1.5 md:gap-2 z-20 ">

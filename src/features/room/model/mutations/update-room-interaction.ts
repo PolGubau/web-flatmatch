@@ -27,7 +27,7 @@ export const useUpdateRoomInteraction = (props?: Props) => {
 	const queryClient = useQueryClient();
 
 	const likeRoom = useMutation<
-		{ roomId: string; action: RoomAction | null; lastActionAt: string },
+		{ roomId: string; action: RoomAction | null; lastActionAt: string | null },
 		Error,
 		{ roomId: Room["id"]; action: RoomAction },
 		MutationContext

@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "~/shared/components/ui/button";
 import { ErrorSection } from "~/shared/components/ui/error-section";
 import { Input } from "~/shared/components/ui/input/input";
+import { useRateLimit } from "~/shared/hooks/use-rate-limit";
 import { useMarkAsReadMutation } from "../model/mutations/use-mark-as-read.mutation";
 import { useSendMessageMutation } from "../model/mutations/use-send-message.mutation";
 import { useMessagesQuery } from "../model/queries/use-messages.query";
@@ -28,6 +29,7 @@ export const ChatMessages = ({
 }: ChatMessagesProps) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
+  const checkRateLimit = useRateLimit(5, 10000); // Max 5 messages per 10 seconds
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
@@ -59,6 +61,9 @@ export const ChatMessages = ({
   const handleSend = () => {
     const trimmed = inputValue.trim();
     if (!trimmed) return;
+
+    // Check rate limit before sending
+    if (!checkRateLimit()) return;
 
     sendMessage.mutate(trimmed, {
       onSuccess: () => {

@@ -9,7 +9,7 @@ import {
 export default [
 	layout("./routes/providers/session-provider.tsx", [
 		layout("../src/global/layout/base-layout.tsx", [
-			// Auth routes (login, register...)
+			// Auth routes
 			layout("../src/global/layout/auth-layout.tsx", [
 				route("auth/login", "./routes/auth/login.tsx"),
 				route("auth/register", "./routes/auth/register.tsx"),

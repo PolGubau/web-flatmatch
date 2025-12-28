@@ -42,6 +42,51 @@ export const getRoomsWithMetadata = async (
 		query = query.gte("timings->>available_from", afterDate);
 	}
 	if (filters?.rentType) query = query.eq("rent_type", filters.rentType);
+
+	// Filtros de amenidades - electrodomésticos
+	if (filters?.hasWifi)
+		query = query.eq("commodities->whole->appliances->>hasWifi", "true");
+	if (filters?.hasAirConditioning)
+		query = query.eq(
+			"commodities->whole->appliances->>hasAirConditioning",
+			"true",
+		);
+	if (filters?.hasHeating)
+		query = query.eq("commodities->whole->appliances->>hasHeating", "true");
+	if (filters?.hasLaundry)
+		query = query.eq("commodities->whole->appliances->>hasLaundry", "true");
+	if (filters?.hasElevator)
+		query = query.eq("commodities->whole->appliances->>hasElevator", "true");
+	if (filters?.hasDishwasher)
+		query = query.eq("commodities->whole->appliances->>hasDishwasher", "true");
+	if (filters?.hasTV)
+		query = query.eq("commodities->whole->appliances->>hasTV", "true");
+	if (filters?.isWheelchairAccessible)
+		query = query.eq(
+			"commodities->whole->appliances->>isWheelchairAccessible",
+			"true",
+		);
+
+	// Filtros de amenidades - extras
+	if (filters?.hasParking)
+		query = query.eq("commodities->whole->extras->>hasParking", "true");
+	if (filters?.hasTerrace)
+		query = query.eq("commodities->whole->extras->>hasTerrace", "true");
+	if (filters?.hasGarden)
+		query = query.eq("commodities->whole->extras->>hasGarden", "true");
+	if (filters?.hasPool)
+		query = query.eq("commodities->whole->extras->>hasPool", "true");
+
+	// Filtros de amenidades - habitación
+	if (filters?.hasBalcony)
+		query = query.eq("commodities->room->>hasBalcony", "true");
+	if (filters?.hasPrivateBathroom)
+		query = query.eq("commodities->room->>hasPrivateBathroom", "true");
+	if (filters?.hasWorkingDesk)
+		query = query.eq("commodities->room->>hasWorkingDesk", "true");
+	if (filters?.isFurnished)
+		query = query.eq("commodities->room->>isFurnished", "true");
+
 	if (createdBy) query = query.eq("owner_id", createdBy);
 	if (notCreatedBy) query = query.neq("owner_id", notCreatedBy);
 

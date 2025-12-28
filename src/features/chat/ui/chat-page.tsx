@@ -7,6 +7,7 @@ import { Button } from "~/shared/components/ui/button";
 import { Drawer } from "~/shared/components/ui/drawer";
 import { useSession } from "~/shared/context/session-context";
 import { useConversationsQuery } from "../model/queries/use-conversations.query";
+import { ChatErrorFallback } from "./chat-error-fallback";
 import { ChatMessages } from "./chat-messages";
 import { ConversationList } from "./conversation-list";
 import { ConversationListSkeleton } from "./conversation-list-skeleton";
@@ -73,7 +74,10 @@ export default function ChatPage({ initialConversationId }: ChatPageProps) {
   );
 
   return (
-    <ErrorBoundary onReset={refetch}>
+    <ErrorBoundary
+      fallback={<ChatErrorFallback onReset={refetch} />}
+      onReset={refetch}
+    >
       <div className="h-full divide-x divide-foreground/20 overflow-hidden grid grid-cols-1 md:grid-cols-[auto_1fr]">
         {/* Desktop: Sidebar visible */}
         <aside className="hidden md:block md:w-80 h-full overflow-hidden">

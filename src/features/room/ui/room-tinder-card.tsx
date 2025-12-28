@@ -1,5 +1,7 @@
 import { animate, motion, useMotionValue, useTransform } from "motion/react";
+import { useEffect, useRef } from "react";
 import type { Room, RoomWithMetadata } from "~/entities/room/room";
+import { useHapticFeedback } from "~/shared/hooks/use-haptic-feedback";
 import type { SwipeDirection } from "../types/common";
 import { RoomTinderCardUI } from "./room-tinder-card-ui";
 
@@ -14,6 +16,8 @@ export const RoomTinderCard = ({
 	index,
 }: RoomTinderCardProps) => {
 	const isFront = index === 0;
+	const triggerHaptic = useHapticFeedback();
+	const hasTriggeredHaptic = useRef(false);
 
 	const x = useMotionValue(0);
 	const y = useMotionValue(0);
@@ -39,6 +43,21 @@ export const RoomTinderCard = ({
 		return `${rotateRaw.get() + offset}deg`;
 	});
 
+	// Trigger haptic feedback when crossing threshold
+	useEffect(() => {
+		const unsubscribe = x.on("change", (value) => {
+			const threshold = 120;
+			if (Math.abs(value) > threshold && !hasTriggeredHaptic.current) {
+				triggerHaptic("medium");
+				hasTriggeredHaptic.current = true;
+			} else if (Math.abs(value) < threshold / 2) {
+				hasTriggeredHaptic.current = false;
+			}
+		});
+
+		return () => unsubscribe();
+	}, [x, triggerHaptic]);
+
 	const handleDragEnd = (
 		_event: MouseEvent | TouchEvent | PointerEvent,
 		info: {
@@ -62,6 +81,7 @@ export const RoomTinderCard = ({
 			const direction = info.offset.x > 0 ? "right" : "left";
 			const exitX = direction === "right" ? 500 : -500;
 
+			triggerHaptic("heavy");
 			animate(x, exitX, {
 				duration: 0.3,
 				ease: "easeOut",
@@ -72,6 +92,7 @@ export const RoomTinderCard = ({
 			const direction = info.offset.y > 0 ? "down" : "up";
 			const exitY = direction === "down" ? 500 : -500;
 
+			triggerHaptic("heavy");
 			animate(y, exitY, {
 				duration: 0.3,
 				ease: "easeOut",
@@ -80,6 +101,7 @@ export const RoomTinderCard = ({
 			setTimeout(() => onSwipe(room.id, direction), 100);
 		} else {
 			// Smooth return to center
+			hasTriggeredHaptic.current = false;
 			animate(x, 0, {
 				damping: 30,
 				stiffness: 300,

@@ -8,6 +8,7 @@ type UseRoomResponse = {
 	room: RoomWithMetadata | null;
 	deleteRoom: (id: string) => void;
 	updateRoom: (room: Room) => void;
+	refetch: () => void;
 };
 
 /**
@@ -15,8 +16,8 @@ type UseRoomResponse = {
  * desde la UI (lectura, actualización, borrado...).
  */
 export const useRoom = (id: string): UseRoomResponse => {
-	const { room, isLoading } = getRoomQuery(id);
+	const { room, isLoading, refetch } = getRoomQuery(id);
 	const { mutate: updateRoom } = useUpdateRoomMutation();
 	const { mutate: deleteRoom } = useDeleteRoomMutation();
-	return { deleteRoom, isLoading, room, updateRoom };
+	return { deleteRoom, isLoading, refetch, room, updateRoom };
 };

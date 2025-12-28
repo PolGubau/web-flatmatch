@@ -1,4 +1,6 @@
+import { useActiveFilters } from "~/features/room/model/hooks/use-active-filters";
 import { useTinderCards } from "~/features/room/model/use-tinder-cards";
+import { ActiveFiltersChips } from "~/features/room/ui/feed/filters/active-filters-chips";
 import { ErrorBoundary } from "~/shared/components/error-boundary/error-boundary";
 import { LoadingCardsSection } from "~/shared/components/pages/LoadingCardsSection";
 import { EmptyRoomsState } from "./components/EmptyRoomsState";
@@ -17,6 +19,9 @@ export default function HomePage() {
 		refetch,
 	} = useTinderCards();
 
+	const { filters, activeFiltersCount, removeFilter, clearAllFilters } =
+		useActiveFilters();
+
 	const thereAreRooms = rooms.length > 0 && !isLoading;
 	const currentRoom = rooms[0];
 
@@ -32,7 +37,19 @@ export default function HomePage() {
 	return (
 		<ErrorBoundary onReset={refetch}>
 			<section className="flex flex-col h-full overflow-hidden">
-				<div className="flex-1 flex items-center justify-center px-4 min-h-0">
+				{/* Chips de filtros activos con contador */}
+				{activeFiltersCount > 0 && (
+					<div className="px-4 py-2 shrink-0">
+						<ActiveFiltersChips
+							filters={filters}
+							onClearAll={clearAllFilters}
+							onRemoveFilter={removeFilter}
+							resultsCount={rooms.length}
+						/>
+					</div>
+				)}
+
+				<div className="flex-1 flex items-center justify-center min-h-0">
 					{thereAreRooms ? (
 						<>
 							<div className="flex flex-col gap-6 w-full h-full md:h-full md:max-h-[1000px] items-center justify-center min-h-0">

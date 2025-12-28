@@ -10,7 +10,83 @@ import { useFilters } from "../hooks/use-filters";
  * Hook para obtener rooms con paginación infinita.
  */
 export const useListRoomsQuery = () => {
-	const [{ location, maxPrice, minPrice, rentType, afterDate }] = useFilters();
+	const [
+		{
+			location,
+			maxPrice,
+			minPrice,
+			rentType,
+			afterDate,
+			// Amenidades
+			hasWifi,
+			hasAirConditioning,
+			hasHeating,
+			hasLaundry,
+			hasElevator,
+			hasDishwasher,
+			hasTV,
+			hasParking,
+			hasTerrace,
+			hasBalcony,
+			hasGarden,
+			hasPool,
+			hasPrivateBathroom,
+			hasWorkingDesk,
+			isFurnished,
+			isWheelchairAccessible,
+		},
+	] = useFilters();
+
+	// Memoizar filtros para evitar recrear el objeto en cada render
+	const memoizedFilters = useMemo<Filters>(
+		() => ({
+			afterDate,
+			hasAirConditioning,
+			hasBalcony,
+			hasDishwasher,
+			hasElevator,
+			hasGarden,
+			hasHeating,
+			hasLaundry,
+			hasParking,
+			hasPool,
+			hasPrivateBathroom,
+			hasTerrace,
+			hasTV,
+			// Amenidades
+			hasWifi,
+			hasWorkingDesk,
+			isFurnished,
+			isWheelchairAccessible,
+			location,
+			maxPrice,
+			minPrice,
+			rentType,
+		}),
+		[
+			afterDate,
+			location,
+			maxPrice,
+			minPrice,
+			rentType,
+			hasWifi,
+			hasAirConditioning,
+			hasHeating,
+			hasLaundry,
+			hasElevator,
+			hasDishwasher,
+			hasTV,
+			hasParking,
+			hasTerrace,
+			hasBalcony,
+			hasGarden,
+			hasPool,
+			hasPrivateBathroom,
+			hasWorkingDesk,
+			isFurnished,
+			isWheelchairAccessible,
+		],
+	);
 
 	const {
 		data,
@@ -28,16 +104,17 @@ export const useListRoomsQuery = () => {
 		initialPageParam: 0,
 
 		queryFn: async ({ pageParam = 0 }) => {
-			const filters: Filters = {
-				afterDate: afterDate,
-				location: location,
-				maxPrice: maxPrice,
-				minPrice: minPrice,
-				rentType: rentType,
-			};
 			const page: number = (pageParam ?? 0) as number;
-			console.log("Fetching rooms with filters:", filters, "page:", pageParam);
-			const rooms = await RoomRepository.findAll({ filters, page });
+			console.log(
+				"Fetching rooms with filters:",
+				memoizedFilters,
+				"page:",
+				pageParam,
+			);
+			const rooms = await RoomRepository.findAll({
+				filters: memoizedFilters,
+				page,
+			});
 			return rooms;
 		},
 		// Include current filter values in the query key so React Query will

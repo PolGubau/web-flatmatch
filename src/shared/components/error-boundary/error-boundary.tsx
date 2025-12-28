@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { ts } from "~/shared/i18n/translation-helpers";
 import { errorHandler } from "~/shared/utils/error-handler";
 import { logger } from "~/shared/utils/logger";
+import { ErrorSection } from "../error-section";
 import { Button } from "../ui/button";
 
 interface ErrorBoundaryProps {
@@ -36,7 +37,9 @@ class ErrorBoundaryClass extends Component<
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     errorHandler.logError(error, "ErrorBoundary");
-    logger.error("Component stack", error, { componentStack: errorInfo.componentStack });
+    logger.error("Component stack", error, {
+      componentStack: errorInfo.componentStack,
+    });
   }
 
   handleReset = () => {
@@ -51,8 +54,9 @@ class ErrorBoundaryClass extends Component<
       }
 
       return (
-        <DefaultErrorFallback
+        <ErrorSection
           error={this.state.error}
+          icon={Alert01Icon}
           onReset={this.handleReset}
         />
       );
@@ -61,37 +65,5 @@ class ErrorBoundaryClass extends Component<
     return this.props.children;
   }
 }
-
-interface DefaultErrorFallbackProps {
-  error?: Error;
-  onReset: () => void;
-}
-
-const DefaultErrorFallback = ({
-  error,
-  onReset,
-}: DefaultErrorFallbackProps) => {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-[400px] gap-6 p-8">
-      <HugeiconsIcon
-        className="text-destructive opacity-80"
-        icon={Alert01Icon}
-        size={64}
-      />
-      <div className="flex flex-col gap-2 text-center max-w-md">
-        <h2 className="text-2xl font-semibold text-foreground">
-          {ts("something_went_wrong")}
-        </h2>
-        <p className="text-foreground/70">
-          {error?.message || ts("error_boundary_default_message")}
-        </p>
-      </div>
-      <Button onClick={onReset} variant="default">
-        <HugeiconsIcon icon={ArrowReloadHorizontalIcon} size={16} />
-        {ts("try_again")}
-      </Button>
-    </div>
-  );
-};
 
 export const ErrorBoundary = ErrorBoundaryClass;

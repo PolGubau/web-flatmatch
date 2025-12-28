@@ -19,7 +19,13 @@
 		"types": ["node", "vite/client", "vitest/globals"],
 		"verbatimModuleSyntax": true
 	},
-	"exclude": ["node_modules", "dist", "build", "oxlintrc.json"],
+	"exclude": [
+		"node_modules",
+		"dist",
+		"build",
+		"oxlintrc.json",
+		"supabase/functions"
+	],
 	"include": [
 		"**/*",
 		"**/.server/**/*",

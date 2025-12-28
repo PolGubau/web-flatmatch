@@ -55,6 +55,22 @@ function showUpdateNotification() {
 	}
 }
 
+export function isStandalone(): boolean {
+	if (typeof window === "undefined") {
+		return false;
+	}
+	if (window.matchMedia("(display-mode: standalone)").matches) {
+		return true;
+	}
+	if ((window.navigator as any).standalone === true) {
+		return true;
+	}
+	if (document.referrer.includes("android-app://")) {
+		return true;
+	}
+	return false;
+}
+
 /**
  * Request notification permission for PWA
  */

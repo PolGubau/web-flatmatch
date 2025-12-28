@@ -1,13 +1,20 @@
 import { FilterIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { t } from "i18next";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { RENT_TYPES } from "~/features/publish-room/ui/1-type/step";
 import { useFilters } from "~/features/room/model/hooks/use-filters";
 import { Button } from "~/shared/components/ui/button";
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "~/shared/components/ui/collapsible";
 import { DatePicker } from "~/shared/components/ui/date-picker";
 import { NumberInput } from "~/shared/components/ui/input/number-input";
 import type { RentType } from "~/shared/types/common";
+import type { AmenityKey } from "../../../model/constants/filter-amenities";
+import { AmenitiesFilter } from "./amenities-filter";
 import { OptionList } from "./options-list/list";
 
 export const availableLocations = [
@@ -26,6 +33,23 @@ export type Filters = {
 	maxPrice: number | null;
 	afterDate: Date | null;
 	rentType: RentType | null;
+	// Amenidades
+	hasWifi: boolean | null;
+	hasAirConditioning: boolean | null;
+	hasHeating: boolean | null;
+	hasLaundry: boolean | null;
+	hasElevator: boolean | null;
+	hasDishwasher: boolean | null;
+	hasTV: boolean | null;
+	hasParking: boolean | null;
+	hasTerrace: boolean | null;
+	hasBalcony: boolean | null;
+	hasGarden: boolean | null;
+	hasPool: boolean | null;
+	hasPrivateBathroom: boolean | null;
+	hasWorkingDesk: boolean | null;
+	isFurnished: boolean | null;
+	isWheelchairAccessible: boolean | null;
 };
 
 type Props = {
@@ -41,7 +65,25 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 		location,
 		afterDate,
 		rentType,
+		// Amenidades
+		hasWifi,
+		hasAirConditioning,
+		hasHeating,
+		hasLaundry,
+		hasElevator,
+		hasDishwasher,
+		hasTV,
+		hasParking,
+		hasTerrace,
+		hasBalcony,
+		hasGarden,
+		hasPool,
+		hasPrivateBathroom,
+		hasWorkingDesk,
+		isFurnished,
+		isWheelchairAccessible,
 	} = filters ?? {};
+
 	const [selectedLocation, setSelectedLocation] = useState<Location | null>(
 		location,
 	);
@@ -50,6 +92,32 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 	const [minPrice, setMinPrice] = useState<number>(minPriceState);
 	const [maxPrice, setMaxPrice] = useState<number>(maxPriceState);
 
+	// Estado local para amenidades
+	const [selectedAmenities, setSelectedAmenities] = useState<
+		Partial<Record<AmenityKey, boolean>>
+	>({
+		hasAirConditioning: hasAirConditioning ?? false,
+		hasBalcony: hasBalcony ?? false,
+		hasDishwasher: hasDishwasher ?? false,
+		hasElevator: hasElevator ?? false,
+		hasGarden: hasGarden ?? false,
+		hasHeating: hasHeating ?? false,
+		hasLaundry: hasLaundry ?? false,
+		hasParking: hasParking ?? false,
+		hasPool: hasPool ?? false,
+		hasPrivateBathroom: hasPrivateBathroom ?? false,
+		hasTerrace: hasTerrace ?? false,
+		hasTV: hasTV ?? false,
+		hasWifi: hasWifi ?? false,
+		hasWorkingDesk: hasWorkingDesk ?? false,
+		isFurnished: isFurnished ?? false,
+		isWheelchairAccessible: isWheelchairAccessible ?? false,
+	});
+
+	const handleAmenityToggle = (amenity: AmenityKey, checked: boolean) => {
+		setSelectedAmenities((prev) => ({ ...prev, [amenity]: checked }));
+	};
+
 	function handleSubmit(event: React.FormEvent) {
 		event.preventDefault();
 		const formData = new FormData(event.target as HTMLFormElement);
@@ -57,6 +125,23 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 
 		const filters: Filters = {
 			afterDate: afterDateValue ? new Date(afterDateValue) : null,
+			hasAirConditioning: selectedAmenities.hasAirConditioning || null,
+			hasBalcony: selectedAmenities.hasBalcony || null,
+			hasDishwasher: selectedAmenities.hasDishwasher || null,
+			hasElevator: selectedAmenities.hasElevator || null,
+			hasGarden: selectedAmenities.hasGarden || null,
+			hasHeating: selectedAmenities.hasHeating || null,
+			hasLaundry: selectedAmenities.hasLaundry || null,
+			hasParking: selectedAmenities.hasParking || null,
+			hasPool: selectedAmenities.hasPool || null,
+			hasPrivateBathroom: selectedAmenities.hasPrivateBathroom || null,
+			hasTerrace: selectedAmenities.hasTerrace || null,
+			hasTV: selectedAmenities.hasTV || null,
+			// Amenidades
+			hasWifi: selectedAmenities.hasWifi || null,
+			hasWorkingDesk: selectedAmenities.hasWorkingDesk || null,
+			isFurnished: selectedAmenities.isFurnished || null,
+			isWheelchairAccessible: selectedAmenities.isWheelchairAccessible || null,
 			location: selectedLocation,
 			maxPrice,
 			minPrice,
@@ -126,6 +211,29 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 					selectedOption={selectedType}
 				/>
 			</fieldset>
+
+			{/* Amenidades con collapsible */}
+			<Collapsible>
+				<CollapsibleTrigger asChild>
+					<Button
+						className="w-full justify-between"
+						type="button"
+						variant="outline"
+					>
+						<span>{t("amenities")}</span>
+						<span className="text-xs text-muted-foreground">
+							{Object.values(selectedAmenities).filter(Boolean).length}{" "}
+							{t("selected")}
+						</span>
+					</Button>
+				</CollapsibleTrigger>
+				<CollapsibleContent className="pt-4">
+					<AmenitiesFilter
+						onAmenityToggle={handleAmenityToggle}
+						selectedAmenities={selectedAmenities}
+					/>
+				</CollapsibleContent>
+			</Collapsible>
 
 			{/*  */}
 			<footer className="w-full flex justify-end">

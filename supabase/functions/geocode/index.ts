@@ -1,16 +1,22 @@
+// @ts-ignore Deno types
 import { serve } from "https://deno.land/std/http/server.ts";
 
+// @ts-ignore Deno types
 const allowedOrigins = Deno.env.get("ALLOWED_ORIGINS")?.split(",") ?? [];
 
 function getCorsHeaders(origin: string | null): HeadersInit {
-	const allowedOrigin = allowedOrigins.includes(origin ?? "") ? origin : (allowedOrigins[0] ?? "*");
+	const allowedOrigin = allowedOrigins.includes(origin ?? "")
+		? origin
+		: (allowedOrigins[0] ?? "*");
 	return {
-		"Access-Control-Allow-Headers": "authorization, apikey, x-client-info, content-type",
+		"Access-Control-Allow-Headers":
+			"authorization, apikey, x-client-info, content-type",
 		"Access-Control-Allow-Methods": "GET,OPTIONS",
 		"Access-Control-Allow-Origin": allowedOrigin ?? "",
 		Vary: "Origin",
 	};
 }
+// @ts-ignore Deno types
 
 serve(async (req) => {
 	const corsHeaders: HeadersInit = getCorsHeaders(req.headers.get("origin"));

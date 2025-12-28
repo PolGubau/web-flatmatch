@@ -12,6 +12,7 @@ import { ProfileChipList } from "~/features/user/ui/profile/chips/chip-list";
 import { CompleteProfile } from "~/features/user/ui/profile/complete-profile/complete-profile";
 import ProfileHeader from "~/features/user/ui/profile/header";
 import { ProfileSkeleton } from "~/features/user/ui/profile/states/profile-skeleton";
+import { ProfileErrorFallback } from "~/features/user/ui/profile-error-fallback";
 import { ErrorBoundary } from "~/shared/components/error-boundary/error-boundary";
 import { ErrorSection } from "~/shared/components/ui/error-section";
 import { dateToYearsAgo } from "~/shared/utils/formatters/dates/date-to-years-ago";
@@ -63,7 +64,10 @@ export default function ProfilePage({ userId, isYours }: Props) {
 		!user.aboutMe || !user.birthDate || !user.occupation || !user.gender;
 
 	return (
-		<ErrorBoundary onReset={refetch}>
+		<ErrorBoundary
+			fallback={<ProfileErrorFallback onReset={refetch} />}
+			onReset={refetch}
+		>
 			<div className="gap-10 grid grid-rows-[auto_1fr]">
 				<header className="flex flex-col gap-2">
 					<ProfileHeader
