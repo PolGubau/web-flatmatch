@@ -57,19 +57,26 @@ export const SwipeActions = ({
         </div>
       </Tooltip>
 
-      {/* See Details - Up Arrow or W */}
-      <Button
-        aria-label={t("see_details")}
-        className="min-w-12 h-12 md:min-w-14 md:h-14 flex-1"
-        disabled={disabled}
-        onClick={() => handleSwipe("up")}
-        title="See details (↑ or W)"
-        variant={"secondary"}
+      <Tooltip
+        aria-label={t("like")}
+        label={
+          <div className="flex items-center gap-2">
+            {t("see_details")} <Kbd>W</Kbd> / <Kbd>↑</Kbd>
+          </div>
+        }
       >
-        <HugeiconsIcon aria-hidden="true" icon={ArrowUp01Icon} />
-        <span className="max-sm:hidden">{t("see_details")}</span>
-      </Button>
-
+        <Button
+          aria-label={t("see_details")}
+          className="min-w-12 h-12 md:min-w-14 md:h-14 flex-1"
+          disabled={disabled}
+          onClick={() => handleSwipe("up")}
+          title="See details (↑ or W)"
+          variant={"secondary"}
+        >
+          <HugeiconsIcon aria-hidden="true" icon={ArrowUp01Icon} />
+          <span className="max-sm:hidden">{t("see_details")}</span>
+        </Button>
+      </Tooltip>
       <FiltersModal />
 
       {/* Like - Right Arrow or D */}

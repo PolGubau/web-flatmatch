@@ -77,7 +77,7 @@ function Tooltip({
 }) {
 	return (
 		<TooltipRoot {...props}>
-			<TooltipTrigger asChild={asChild}>{children}</TooltipTrigger>
+			<TooltipTrigger asChild={asChild} className="flex">{children}</TooltipTrigger>
 			<TooltipContent>{label}</TooltipContent>
 		</TooltipRoot>
 	);
