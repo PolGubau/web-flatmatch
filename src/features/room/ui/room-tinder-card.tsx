@@ -89,16 +89,31 @@ export const RoomTinderCard = ({
 
 			setTimeout(() => onSwipe(room.id, direction), 100);
 		} else if (shouldSwipeY) {
+			// For vertical swipes we only want to show a short 'peek' and then
+			// return the card to the center, because "up" opens details (doesn't
+			// remove the card) and "down" currently doesn't remove it either.
 			const direction = info.offset.y > 0 ? "down" : "up";
-			const exitY = direction === "down" ? 500 : -500;
 
 			triggerHaptic("heavy");
-			animate(y, exitY, {
-				duration: 0.3,
+
+			// Small quick translation to give feedback, then spring back to center.
+			const peek = direction === "down" ? 180 : -180;
+			animate(y, peek, {
+				duration: 0.12,
 				ease: "easeOut",
 			});
 
-			setTimeout(() => onSwipe(room.id, direction), 100);
+			setTimeout(() => {
+				// Return to center smoothly
+				animate(y, 0, {
+					damping: 30,
+					stiffness: 300,
+					type: "spring",
+				});
+
+				// Trigger the action (e.g. open details for "up") after the peek
+				onSwipe(room.id, direction);
+			}, 140);
 		} else {
 			// Smooth return to center
 			hasTriggeredHaptic.current = false;

@@ -11,8 +11,10 @@ import { TenantPreferencesCard } from "./components/TenantPreferencesCard";
 import { useRoomDetailsActions } from "./hooks/useRoomDetailsActions";
 import { useRoomDetailsData } from "./hooks/useRoomDetailsData";
 import "./room-details.css";
-import { ChattingIcon } from "@hugeicons/core-free-icons";
+import { ChattingIcon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { SearchIcon } from "lucide-react";
+import { Link } from "react-router";
 import { ProfileAvatar } from "~/features/user/ui/profile/avatar";
 import { Button } from "~/shared/components/ui/button";
 import { RoomActionsBar } from "./components/RoomActionsBar";
@@ -58,7 +60,7 @@ export default function RoomDetails({ room }: Props) {
 	};
 
 	return (
-		<section className="grid relative gap-4 md:gap-6 mx-auto max-w-7xl">
+		<section className="grid relative gap-4 md:gap-6 mx-auto max-w-7xl pb-4">
 			{/* Gallery */}
 			<RoomGallery images={sortedImages} title={room.title} />
 
@@ -85,14 +87,35 @@ export default function RoomDetails({ room }: Props) {
 							size="lg"
 						/>
 						<div className="flex flex-col">
-							<p>{t("landlord")}</p>
-							<h3 className="font-semibold text-lg">{room.owner.name}</h3>
+							<p className="text-sm">{t("landlord")}</p>
+							<h3 className="font-semibold">{room.owner.name}</h3>
 						</div>
 					</div>
-					<div>
-						<Button onClick={handleStartChat} size={"sm"}>
+					<div className="flex justify-end gap-2">
+						<Link to={`/profile/${room.owner.id}`}>
+							<Button
+								aria-label={t("view_profile")}
+								size={"sm"}
+								variant="secondary"
+							>
+
+								<SearchIcon className="size-4" />
+								<span className="max-md:hidden">
+									{t("view_profile")}
+								</span>
+							</Button>
+						</Link>
+						<Button
+							aria-label={t("start_chatting")}
+							onClick={handleStartChat}
+							size={"sm"}
+							variant="default"
+						>
+
 							<HugeiconsIcon icon={ChattingIcon} size={20} />
-							{t("start_chatting")}
+							<span className="max-md:hidden">
+								{t("start_chatting")}
+							</span>
 						</Button>
 					</div>
 				</section>
@@ -112,8 +135,7 @@ export default function RoomDetails({ room }: Props) {
 								room.commodities?.whole?.appliances[
 								key as keyof typeof room.commodities.whole.appliances
 								];
-							const match =
-								commoditiesMap[key as keyof typeof commoditiesMap];
+							const match = commoditiesMap[key as keyof typeof commoditiesMap];
 							return {
 								icon: match?.icon,
 								key,
