@@ -245,7 +245,7 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 			</Collapsible>
 
 			{/*  */}
-			<footer className="w-full flex justify-end">
+			<footer className="w-full flex justify-end sticky bottom-0 bg-background pt-4 mt-4">
 				<Button type="submit">
 					{t("apply")}
 					<HugeiconsIcon icon={FilterIcon} size={16} strokeWidth={3} />
