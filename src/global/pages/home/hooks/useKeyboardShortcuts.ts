@@ -12,41 +12,33 @@ type UseKeyboardShortcutsProps = {
  * Custom hook for handling keyboard shortcuts in the room swipe interface
  * Supports arrow keys (←, →, ↑) and WASD keys (A, D, W)
  */
+import { useCallback } from "react";
+import { useKeyMap } from "~/shared/hooks/use-key-map";
+
 export const useKeyboardShortcuts = ({
 	isEnabled,
 	currentRoom,
 	onSwipe,
 }: UseKeyboardShortcutsProps) => {
-	useEffect(() => {
-		if (!isEnabled || !currentRoom) return;
+	// Create a stable handler for swiping the current room
+	const swipeCurrentRoom = useCallback(
+		(direction: SwipeDirection) => {
+			if (!currentRoom) return;
+			onSwipe(currentRoom.id, direction);
+		},
+		[currentRoom, onSwipe],
+	);
 
-		const handleKeyPress = (event: KeyboardEvent) => {
-			// Ignore if user is typing in an input field
-			if (
-				event.target instanceof HTMLInputElement ||
-				event.target instanceof HTMLTextAreaElement
-			) {
-				return;
-			}
+	// Map keyboard keys to swipe actions (lowercase keys expected)
+	const actionMap: Record<string, () => void> = {
+		a: () => swipeCurrentRoom("left"),
+		arrowleft: () => swipeCurrentRoom("left"),
+		arrowright: () => swipeCurrentRoom("right"),
+		arrowup: () => swipeCurrentRoom("up"),
+		d: () => swipeCurrentRoom("right"),
+		w: () => swipeCurrentRoom("up"),
+	};
 
-			const key = event.key.toLowerCase();
-			const actionMap: Record<string, SwipeDirection> = {
-				a: "left",
-				arrowleft: "left",
-				arrowright: "right",
-				arrowup: "up",
-				d: "right",
-				w: "up",
-			};
-
-			const direction = actionMap[key];
-			if (direction) {
-				event.preventDefault();
-				onSwipe(currentRoom.id, direction);
-			}
-		};
-
-		window.addEventListener("keydown", handleKeyPress);
-		return () => window.removeEventListener("keydown", handleKeyPress);
-	}, [isEnabled, currentRoom, onSwipe]);
+	// Delegate key handling to the reusable hook
+	useKeyMap(actionMap, isEnabled && !!currentRoom);
 };

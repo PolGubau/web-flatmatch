@@ -42,19 +42,17 @@ export const SwipeActions = ({
           </div>
         }
       >
-        <div>
-          <Button
-            aria-label={t("reject")}
-            className="bg-destructive/10 size-12 md:size-14 backdrop-blur-md"
-            disabled={disabled}
-            onClick={() => handleSwipe("left")}
-            size={"icon-lg"}
-            variant={"ghost"}
-          >
-            <HugeiconsIcon aria-hidden="true" icon={ArrowLeft01Icon} size={25} />
-            <span className="sr-only">{t("reject")}</span>
-          </Button>
-        </div>
+        <Button
+          aria-label={t("reject")}
+          className="bg-destructive/10 size-12 md:size-14 backdrop-blur-md"
+          disabled={disabled}
+          onClick={() => handleSwipe("left")}
+          size={"icon-lg"}
+          variant={"ghost"}
+        >
+          <HugeiconsIcon aria-hidden="true" icon={ArrowLeft01Icon} size={25} />
+          <span className="sr-only">{t("reject")}</span>
+        </Button>
       </Tooltip>
 
       <Tooltip
@@ -67,7 +65,7 @@ export const SwipeActions = ({
       >
         <Button
           aria-label={t("see_details")}
-          className="min-w-12 h-12 md:min-w-14 md:h-14 flex-1"
+          className="min-w-12 w-full h-12 md:min-w-14 md:h-14 flex-1"
           disabled={disabled}
           onClick={() => handleSwipe("up")}
           title="See details (↑ or W)"
