@@ -75,7 +75,13 @@ export default function ChatPage({ initialConversationId }: ChatPageProps) {
 
   return (
     <ErrorBoundary
+      context={{
+        conversationsCount: conversations.length,
+        hasActiveConversation: !!activeConversation,
+        userId,
+      }}
       fallback={<ChatErrorFallback onReset={refetch} />}
+      name="ChatPage"
       onReset={refetch}
     >
       <div className="h-full divide-x divide-foreground/20 overflow-hidden grid grid-cols-1 md:grid-cols-[auto_1fr]">

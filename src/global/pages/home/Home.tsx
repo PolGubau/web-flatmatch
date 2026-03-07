@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { useActiveFilters } from "~/features/room/model/hooks/use-active-filters";
 import { useTinderCards } from "~/features/room/model/use-tinder-cards";
 import { ActiveFiltersChips } from "~/features/room/ui/feed/filters/active-filters-chips";
 import { ErrorBoundary } from "~/shared/components/error-boundary/error-boundary";
 import { LoadingCardsSection } from "~/shared/components/pages/LoadingCardsSection";
+import { logger } from "~/shared/utils/logger";
 import { EmptyRoomsState } from "./components/EmptyRoomsState";
 import { RoomCardsStack } from "./components/RoomCardsStack";
 import { RoomDetailsDrawer } from "./components/RoomDetailsDrawer";
@@ -10,6 +12,14 @@ import { SwipeActions } from "./components/SwipeActions";
 import { useKeyboardShortcuts } from "./hooks/useKeyboardShortcuts";
 
 export default function HomePage() {
+	// Log para debugging en iOS
+	useEffect(() => {
+		logger.info("HomePage mounted", {
+			platform: navigator.platform,
+			userAgent: navigator.userAgent,
+		});
+	}, []);
+
 	const {
 		rooms,
 		onSwipe,
@@ -35,7 +45,15 @@ export default function HomePage() {
 	if (isLoading) return <LoadingCardsSection />;
 
 	return (
-		<ErrorBoundary onReset={refetch}>
+		<ErrorBoundary
+			context={{
+				activeFiltersCount,
+				isLoading,
+				roomsCount: rooms.length,
+			}}
+			name="HomePage"
+			onReset={refetch}
+		>
 			<section className="flex flex-col h-full overflow-hidden">
 				{/* Chips de filtros activos con contador */}
 				{activeFiltersCount > 0 && (

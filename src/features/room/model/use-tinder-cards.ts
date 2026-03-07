@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router";
 import type { RoomWithMetadata } from "~/entities/room/room";
+import { logger } from "~/shared/utils/logger";
 import type { SwipeDirection } from "../types/common";
 import { useSwipeActions } from "./hooks/useSwipeActions";
 import { useListRoomsQuery } from "./queries/list-rooms.query";
@@ -19,11 +20,26 @@ export const useTinderCards = () => {
 	} = useListRoomsQuery();
 
 	const [searchParams] = useSearchParams();
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Refetching rooms when searchParams change is intentional
+	const searchParamsString = searchParams.toString();
+	const previousSearchParamsRef = useRef<string>("");
+
 	useEffect(() => {
-		// React Query's refetch is stable, safe to call directly here.
-		void refetch();
-	}, [searchParams, refetch]);
+		// Evitar refetch innecesarios en iOS comparando el string de searchParams
+		if (previousSearchParamsRef.current === searchParamsString) {
+			return;
+		}
+
+		previousSearchParamsRef.current = searchParamsString;
+
+		try {
+			logger.info("Refetching rooms due to search params change", {
+				searchParams: searchParamsString,
+			});
+			void refetch();
+		} catch (error) {
+			logger.error("Error refetching rooms", error);
+		}
+	}, [searchParamsString, refetch]);
 
 	const [bottomDrawerRoom, setBottomDrawerRoom] =
 		useState<RoomWithMetadata | null>(null);

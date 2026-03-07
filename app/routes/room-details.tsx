@@ -25,7 +25,12 @@ export default function RoomDetailsPage({ params }: Route.ComponentProps) {
 
 	return (
 		<ErrorBoundary
+			context={{
+				hasRoom: !!room,
+				roomId: params.roomId,
+			}}
 			fallback={<RoomErrorFallback onReset={refetch} />}
+			name="RoomDetailsPage"
 			onReset={refetch}
 		>
 			<div className="relative overflow-y-auto h-full pb-40 px-4">

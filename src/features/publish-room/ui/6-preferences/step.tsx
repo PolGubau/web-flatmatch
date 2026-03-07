@@ -79,7 +79,7 @@ export function PreferencesForm() {
 									<li className="flex group cursor-pointer" key={key}>
 										<label
 											className={
-												"has-checked:bg-primary/20 has-checked:hover:bg-primary/10 bg-secondary/5 hover:bg-foreground/10 transition-all p-4 w-full h-full rounded-xl gap-4"
+												"has-checked:bg-primary/20 has-checked:hover:bg-primary/10 bg-foreground/5 hover:bg-foreground/10 transition-all p-4 w-full h-full rounded-xl gap-4"
 											}
 										>
 											<div className="flex gap-2">

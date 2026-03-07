@@ -1,25 +1,63 @@
-import {
-  Alert01Icon,
-  ArrowReloadHorizontalIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Alert01Icon } from "@hugeicons/core-free-icons";
 import { Component, type ReactNode } from "react";
-import { useTranslation } from "react-i18next";
-import { ts } from "~/shared/i18n/translation-helpers";
 import { errorHandler } from "~/shared/utils/error-handler";
 import { logger } from "~/shared/utils/logger";
 import { ErrorSection } from "../error-section";
-import { Button } from "../ui/button";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
   fallback?: ReactNode;
   onReset?: () => void;
+  /** Nombre del componente/sección para mejor tracking */
+  name?: string;
+  /** Información adicional de contexto */
+  context?: Record<string, unknown>;
 }
 
 interface ErrorBoundaryState {
   hasError: boolean;
   error?: Error;
+  errorInfo?: React.ErrorInfo;
+  errorId?: string;
+}
+
+/**
+ * Genera un ID único para el error para facilitar el tracking
+ */
+function generateErrorId(): string {
+  return `err_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
+}
+
+/**
+ * Extrae información útil del error sin exponer detalles sensibles
+ */
+function getErrorDetails(error: Error): {
+  type: string;
+  message: string;
+  isNetworkError: boolean;
+  isMemoryError: boolean;
+} {
+  const message = error.message || "Unknown error";
+  const type = error.name || "Error";
+
+  // Detectar tipos comunes de errores
+  const isNetworkError =
+    message.includes("fetch") ||
+    message.includes("network") ||
+    message.includes("Failed to fetch") ||
+    type === "NetworkError";
+
+  const isMemoryError =
+    message.includes("memory") ||
+    message.includes("quota") ||
+    message.includes("createObjectURL");
+
+  return {
+    isMemoryError,
+    isNetworkError,
+    message,
+    type,
+  };
 }
 
 class ErrorBoundaryClass extends Component<
@@ -32,18 +70,59 @@ class ErrorBoundaryClass extends Component<
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { error, hasError: true };
+    const errorId = generateErrorId();
+    return {
+      error,
+      errorId,
+      hasError: true,
+    };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    errorHandler.logError(error, "ErrorBoundary");
-    logger.error("Component stack", error, {
-      componentStack: errorInfo.componentStack,
-    });
+    const { name, context } = this.props;
+    const errorDetails = getErrorDetails(error);
+
+    // Log completo con contexto
+    const logContext = {
+      ...context,
+      componentName: name || "Unknown",
+      errorDetails,
+      errorId: this.state.errorId,
+      userAgent: navigator.userAgent,
+      viewport: {
+        height: window.innerHeight,
+        width: window.innerWidth,
+      },
+    };
+
+    errorHandler.logError(error, `ErrorBoundary${name ? ` (${name})` : ""}`);
+    logger.error("Component error caught", error, logContext);
+
+    // Log del component stack (útil para debugging)
+    if (errorInfo.componentStack) {
+      logger.error("Component stack trace", undefined, {
+        componentStack: errorInfo.componentStack,
+        errorId: this.state.errorId,
+      });
+    }
+
+    // Guardar errorInfo en el estado para mostrarlo si es necesario
+    this.setState({ errorInfo });
   }
 
   handleReset = () => {
-    this.setState({ error: undefined, hasError: false });
+    logger.info("Error boundary reset", {
+      componentName: this.props.name,
+      errorId: this.state.errorId,
+    });
+
+    this.setState({
+      error: undefined,
+      errorId: undefined,
+      errorInfo: undefined,
+      hasError: false,
+    });
+
     this.props.onReset?.();
   };
 
@@ -55,7 +134,9 @@ class ErrorBoundaryClass extends Component<
 
       return (
         <ErrorSection
+          componentName={this.props.name}
           error={this.state.error}
+          errorId={this.state.errorId}
           icon={Alert01Icon}
           onReset={this.handleReset}
         />

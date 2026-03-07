@@ -53,7 +53,14 @@ export default function FavsPage() {
 	}
 
 	return (
-		<ErrorBoundary onReset={refetch}>
+		<ErrorBoundary
+			context={{
+				roomsCount: rooms.length,
+				sortBy,
+			}}
+			name="FavsPage"
+			onReset={refetch}
+		>
 			<div className="overflow-y-auto overflow-x-hidden max-w-7xl mx-auto px-4 md:px-6 py-6">
 				<h1 className="text-2xl font-bold mb-6">{t("favorites")}</h1>
 

@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useCallback } from "react";
 import type { Room } from "~/entities/room/room";
 import type { SwipeDirection } from "~/features/room/types/common";
+import { useKeyMap } from "~/shared/hooks/use-key-map";
 
 type UseKeyboardShortcutsProps = {
 	isEnabled: boolean;
@@ -12,8 +13,6 @@ type UseKeyboardShortcutsProps = {
  * Custom hook for handling keyboard shortcuts in the room swipe interface
  * Supports arrow keys (←, →, ↑) and WASD keys (A, D, W)
  */
-import { useCallback } from "react";
-import { useKeyMap } from "~/shared/hooks/use-key-map";
 
 export const useKeyboardShortcuts = ({
 	isEnabled,

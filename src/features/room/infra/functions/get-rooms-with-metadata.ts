@@ -33,6 +33,13 @@ export const getRoomsWithMetadata = async (
 		.range(page * 10, page * 10 + 9)
 		.order("created_at", { ascending: false });
 
+	// Si hay userId, filtrar las interacciones para ese usuario específico
+	if (userId) {
+		query = query.or(`user_id.eq.${userId},user_id.is.null`, {
+			referencedTable: "room_user_interactions",
+		});
+	}
+
 	// Filtros dinámicos
 	if (filters?.location)
 		query = query.ilike("location", `%${filters.location}%`);

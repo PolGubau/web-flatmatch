@@ -10,13 +10,14 @@ type GetRoomWithMetadataProps = {
 
 /**
  * Builds the SELECT string for room queries with metadata
- * @param userId Optional user ID to filter interactions
+ * @param userId Optional user ID to filter interactions (only returns interactions for this user)
  * @returns PostgreSQL SELECT string
  */
 export const buildRoomSelect = (userId?: string): string => {
-	// Build the select with optional user_id filter
+	// Si hay userId, filtramos las interacciones solo para ese usuario
+	// Si no hay userId (usuario no autenticado), no traemos interacciones
 	const interactionSelect = userId
-		? `interaction:room_user_interactions!left(action,last_action_at,user_id).eq(user_id,${userId})`
+		? `interaction:room_user_interactions!left(action,last_action_at,user_id)`
 		: `interaction:room_user_interactions!left(action,last_action_at,user_id)`;
 
 	return `
@@ -59,13 +60,19 @@ export const getRoomQuery = async (
 	const { id, userId } = props;
 
 	// Base query
-	const query = supabase
+	let query = supabase
 		.from("rooms")
 		.select(buildRoomSelect(userId))
-		.eq("id", id)
-		.single();
+		.eq("id", id);
 
-	const { data, error } = await query;
+	// Si hay userId, filtrar las interacciones para ese usuario específico
+	if (userId) {
+		query = query.or(`user_id.eq.${userId},user_id.is.null`, {
+			referencedTable: "room_user_interactions",
+		});
+	}
+
+	const { data, error } = await query.single();
 	if (error && error.code !== "PGRST116") throw error; // PGRST116 = not found
 	console.log("data room with metadata:", data);
 	if (error) throw error;

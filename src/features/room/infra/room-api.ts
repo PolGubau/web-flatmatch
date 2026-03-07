@@ -28,16 +28,19 @@ export type UpdateRoom = Updates<"rooms">;
 
 /**
  * Devuelve todas las rooms con su verificación
+ * Permite acceso sin autenticación para ver el feed
  */
 
 export const getFeed: GetFeed = async ({ filters, page = 0 }) => {
-	const userId = await authUtils.getUserId();
+	// Permitir acceso sin autenticación - getCurrentUser devuelve null si no hay usuario
+	const user = await authUtils.getCurrentUser();
+	const userId = user?.id ?? null;
 
 	const data = await getRoomsWithMetadata({
 		filters,
-		notCreatedBy: userId,
+		notCreatedBy: userId ?? undefined,
 		page,
-		userId,
+		userId: userId ?? undefined,
 	});
 
 	if (!data) return [];

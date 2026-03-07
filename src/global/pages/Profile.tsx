@@ -65,7 +65,13 @@ export default function ProfilePage({ userId, isYours }: Props) {
 
 	return (
 		<ErrorBoundary
+			context={{
+				isYours,
+				someInfoMissing,
+				userId: user.id,
+			}}
 			fallback={<ProfileErrorFallback onReset={refetch} />}
+			name="ProfilePage"
 			onReset={refetch}
 		>
 			<div className="gap-10 grid grid-rows-[auto_1fr]">

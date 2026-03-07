@@ -1,6 +1,8 @@
 import type { RoomWithMetadata } from "~/entities/room/room";
 import type { SwipeDirection } from "~/features/room/types/common";
 import { RoomTinderCard } from "~/features/room/ui/room-tinder-card";
+import { ErrorBoundary } from "~/shared/components/error-boundary/error-boundary";
+import { logger } from "~/shared/utils/logger";
 
 type RoomCardsStackProps = {
   rooms: RoomWithMetadata[];
@@ -8,16 +10,27 @@ type RoomCardsStackProps = {
 };
 
 export const RoomCardsStack = ({ rooms, onSwipe }: RoomCardsStackProps) => {
+  const handleReset = () => {
+    logger.info("RoomCardsStack error boundary reset");
+    window.location.reload();
+  };
+
   return (
-    <div className="relative h-full w-full max-w-lg grid justify-center">
-      {rooms.map((room, index) => (
-        <RoomTinderCard
-          index={index}
-          key={room.id}
-          onSwipe={onSwipe}
-          room={room}
-        />
-      ))}
-    </div>
+    <ErrorBoundary
+      context={{ roomsCount: rooms.length }}
+      name="RoomCardsStack"
+      onReset={handleReset}
+    >
+      <div className="relative h-full w-full max-w-lg grid justify-center">
+        {rooms.map((room, index) => (
+          <RoomTinderCard
+            index={index}
+            key={room.id}
+            onSwipe={onSwipe}
+            room={room}
+          />
+        ))}
+      </div>
+    </ErrorBoundary>
   );
 };

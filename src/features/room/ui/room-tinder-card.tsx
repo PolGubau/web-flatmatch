@@ -2,6 +2,7 @@ import { animate, motion, useMotionValue, useTransform } from "motion/react";
 import { useEffect, useRef } from "react";
 import type { Room, RoomWithMetadata } from "~/entities/room/room";
 import { useHapticFeedback } from "~/shared/hooks/use-haptic-feedback";
+import { logger } from "~/shared/utils/logger";
 import type { SwipeDirection } from "../types/common";
 import { RoomTinderCardUI } from "./room-tinder-card-ui";
 
@@ -18,6 +19,15 @@ export const RoomTinderCard = ({
 	const isFront = index === 0;
 	const triggerHaptic = useHapticFeedback();
 	const hasTriggeredHaptic = useRef(false);
+
+	// Log para debugging en iOS
+	useEffect(() => {
+		logger.info("RoomTinderCard mounted", {
+			index,
+			isFront,
+			roomId: room.id,
+		});
+	}, [index, isFront, room.id]);
 
 	const x = useMotionValue(0);
 	const y = useMotionValue(0);
@@ -37,11 +47,15 @@ export const RoomTinderCard = ({
 	const likeEmojiScale = useTransform(x, [0, 100, 150], [0.7, 0.9, 1.3]);
 	const dislikeEmojiScale = useTransform(x, [-150, -100, 0], [1.3, 0.9, 0.7]);
 
-	const rotate = useTransform(() => {
-		const amount = 2;
-		const offset = isFront ? 0 : index % 2 === 0 ? -amount : amount;
-		return `${rotateRaw.get() + offset}deg`;
-	});
+	// Calcular el offset estático basado en el índice (evita usar .get() que causa problemas en iOS)
+	const amount = 2;
+	const staticOffset = isFront ? 0 : index % 2 === 0 ? -amount : amount;
+
+	// Usar useTransform con valores estáticos en lugar de callback con .get()
+	const rotate = useTransform(
+		rotateRaw,
+		(value) => `${value + staticOffset}deg`
+	);
 
 	// Trigger haptic feedback when crossing threshold
 	useEffect(() => {
@@ -65,68 +79,80 @@ export const RoomTinderCard = ({
 			velocity: { x: number; y: number };
 		},
 	) => {
-		const threshold = 120;
-		const velocityThreshold = 500;
+		try {
+			const threshold = 120;
+			const velocityThreshold = 500;
 
-		// Check if swipe based on distance or velocity
-		const shouldSwipeX =
-			Math.abs(info.offset.x) > threshold ||
-			Math.abs(info.velocity.x) > velocityThreshold;
-		const shouldSwipeY =
-			Math.abs(info.offset.y) > threshold ||
-			Math.abs(info.velocity.y) > velocityThreshold;
+			// Check if swipe based on distance or velocity
+			const shouldSwipeX =
+				Math.abs(info.offset.x) > threshold ||
+				Math.abs(info.velocity.x) > velocityThreshold;
+			const shouldSwipeY =
+				Math.abs(info.offset.y) > threshold ||
+				Math.abs(info.velocity.y) > velocityThreshold;
 
-		if (shouldSwipeX) {
-			// Animate out with velocity
-			const direction = info.offset.x > 0 ? "right" : "left";
-			const exitX = direction === "right" ? 500 : -500;
+			if (shouldSwipeX) {
+				// Animate out with velocity
+				const direction = info.offset.x > 0 ? "right" : "left";
+				const exitX = direction === "right" ? 500 : -500;
 
-			triggerHaptic("heavy");
-			animate(x, exitX, {
-				duration: 0.3,
-				ease: "easeOut",
-			});
+				triggerHaptic("heavy");
+				animate(x, exitX, {
+					duration: 0.3,
+					ease: "easeOut",
+				});
 
-			setTimeout(() => onSwipe(room.id, direction), 100);
-		} else if (shouldSwipeY) {
-			// For vertical swipes we only want to show a short 'peek' and then
-			// return the card to the center, because "up" opens details (doesn't
-			// remove the card) and "down" currently doesn't remove it either.
-			const direction = info.offset.y > 0 ? "down" : "up";
+				setTimeout(() => onSwipe(room.id, direction), 100);
+			} else if (shouldSwipeY) {
+				// For vertical swipes we only want to show a short 'peek' and then
+				// return the card to the center, because "up" opens details (doesn't
+				// remove the card) and "down" currently doesn't remove it either.
+				const direction = info.offset.y > 0 ? "down" : "up";
 
-			triggerHaptic("heavy");
+				triggerHaptic("heavy");
 
-			// Small quick translation to give feedback, then spring back to center.
-			const peek = direction === "down" ? 180 : -180;
-			animate(y, peek, {
-				duration: 0.12,
-				ease: "easeOut",
-			});
+				// Small quick translation to give feedback, then spring back to center.
+				const peek = direction === "down" ? 180 : -180;
+				animate(y, peek, {
+					duration: 0.12,
+					ease: "easeOut",
+				});
 
-			setTimeout(() => {
-				// Return to center smoothly
+				setTimeout(() => {
+					// Return to center smoothly
+					animate(y, 0, {
+						damping: 30,
+						stiffness: 300,
+						type: "spring",
+					});
+
+					// Trigger the action (e.g. open details for "up") after the peek
+					onSwipe(room.id, direction);
+				}, 140);
+			} else {
+				// Smooth return to center
+				hasTriggeredHaptic.current = false;
+				animate(x, 0, {
+					damping: 30,
+					stiffness: 300,
+					type: "spring",
+				});
 				animate(y, 0, {
 					damping: 30,
 					stiffness: 300,
 					type: "spring",
 				});
-
-				// Trigger the action (e.g. open details for "up") after the peek
-				onSwipe(room.id, direction);
-			}, 140);
-		} else {
-			// Smooth return to center
+			}
+		} catch (error) {
+			logger.error("Error in handleDragEnd (iOS Safari issue?)", error);
+			// Fallback: reset card position
 			hasTriggeredHaptic.current = false;
-			animate(x, 0, {
-				damping: 30,
-				stiffness: 300,
-				type: "spring",
-			});
-			animate(y, 0, {
-				damping: 30,
-				stiffness: 300,
-				type: "spring",
-			});
+			try {
+				animate(x, 0, { duration: 0.3 });
+				animate(y, 0, { duration: 0.3 });
+			} catch (animateError) {
+				logger.error("Error resetting card position", animateError);
+			}
 		}
 	};
 
