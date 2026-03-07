@@ -1,12 +1,10 @@
 import { CalendarAdd01Icon, Location01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Heart, ImageOff, Loader2 } from "lucide-react";
-import { memo, useState } from "react";
-import { Link } from "react-router";
+import { memo } from "react";
 import type { Room } from "~/entities/room/room";
 import { Card, CardContent } from "~/shared/components/ui/card";
-import { cn } from "~/shared/utils/utils";
-import { useRoomFavoriteToggle } from "../hooks/useRoomFavoriteToggle";
+import { OptimizedImage } from "~/shared/components/ui/optimized-image";
+import { PrefetchLink } from "~/shared/components/ui/prefetch-link";
 
 type Props = Pick<Room, "id" | "title" | "description"> & {
   image: string;
@@ -25,46 +23,16 @@ export const RoomGridCard = memo(function RoomGridCard({
   location,
   availableFrom,
 }: Props) {
-
-
-  const [imageError, setImageError] = useState(false);
-  const [imageLoading, setImageLoading] = useState(true);
-
   return (
     <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 border-border/50 hover:border-primary/50">
-      <Link className="block" to={`/room/${id}`}>
-        <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-          {imageError ? (
-            <div className="w-full h-full flex items-center justify-center bg-muted">
-              <ImageOff className="w-12 h-12 text-muted-foreground/50" />
-            </div>
-          ) : (
-            <>
-              {imageLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-muted">
-                  <Loader2 className="w-8 h-8 animate-spin text-muted-foreground/50" />
-                </div>
-              )}
-              <img
-                alt={title}
-                className={cn(
-                  "w-full h-full object-cover transition-transform duration-300 group-hover:scale-105",
-                  imageLoading && "opacity-0",
-                )}
-                decoding="async"
-                loading="lazy"
-                onError={() => {
-                  setImageError(true);
-                  setImageLoading(false);
-                }}
-                onLoad={() => setImageLoading(false)}
-                src={image}
-              />
-            </>
-          )}
-
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        </div>
+      <PrefetchLink className="block" to={`/room/${id}`}>
+        <OptimizedImage
+          alt={title}
+          aspectRatio="video"
+          className="group-hover:scale-105 transition-transform duration-300"
+          src={image}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <CardContent className="p-4 space-y-3">
           <div className="space-y-1">
             <div className="flex items-start justify-between gap-2">
@@ -103,7 +71,7 @@ export const RoomGridCard = memo(function RoomGridCard({
             )}
           </div>
         </CardContent>
-      </Link>
+      </PrefetchLink>
     </Card>
   );
 });

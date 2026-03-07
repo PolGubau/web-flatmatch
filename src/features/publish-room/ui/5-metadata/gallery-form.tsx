@@ -10,6 +10,7 @@ import type { UseFormSetValue } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import type { EditableRoom } from "~/entities/room/editable-room";
+import { compressImage } from "~/shared/utils/image-compression";
 import { logger } from "~/shared/utils/logger";
 import { cn } from "~/shared/utils/utils";
 import type { Step5SchemaType } from "./step";
@@ -61,12 +62,11 @@ export function GalleryForm({
 
 	// Validar y procesar archivos
 	const processFiles = useCallback(
-		(fileList: FileList | File[]) => {
+		async (fileList: FileList | File[]) => {
 			setIsProcessing(true);
 			const files = Array.from(fileList);
 
 			try {
-				const validFiles: File[] = [];
 				const errors: string[] = [];
 
 				// Verificar límite de imágenes
@@ -78,10 +78,13 @@ export function GalleryForm({
 							max: MAX_IMAGES,
 						}),
 					);
+					setIsProcessing(false);
+					toast.error(errors.join("\n"));
 					return;
 				}
 
-				for (const file of files) {
+				// Procesar archivos en paralelo
+				const processPromises = files.map(async (file) => {
 					// Validar tipo
 					if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
 						errors.push(
@@ -93,28 +96,61 @@ export function GalleryForm({
 						logger.warn(`File ${file.name} has invalid type`, {
 							type: file.type,
 						});
-						continue;
+						return null;
 					}
 
-					// Validar tamaño
-					if (file.size > MAX_FILE_SIZE) {
-						const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+					// Validar tamaño antes de comprimir
+					if (file.size > MAX_FILE_SIZE * 2) {
+						// Si es más del doble, avisar
+						logger.warn(`File ${file.name} is very large, compressing...`, {
+							size: file.size,
+							sizeMB: (file.size / (1024 * 1024)).toFixed(2),
+						});
+					}
+
+					try {
+						// Comprimir imagen
+						const compressedFile = await compressImage(file, {
+							maxSizeMB: 1,
+							maxWidthOrHeight: 1920,
+							quality: 0.85,
+						});
+
+						// Validar tamaño después de comprimir
+						if (compressedFile.size > MAX_FILE_SIZE) {
+							const sizeMB = (compressedFile.size / (1024 * 1024)).toFixed(2);
+							errors.push(
+								t("file_too_large", {
+									defaultValue: `${file.name}: File too large (${sizeMB}MB)`,
+									fileName: file.name,
+									size: sizeMB,
+								}),
+							);
+							logger.warn(`File ${file.name} still too large after compression`, {
+								maxSize: MAX_FILE_SIZE,
+								size: compressedFile.size,
+							});
+							return null;
+						}
+
+						return compressedFile;
+					} catch (error) {
+						logger.error(`Error compressing ${file.name}`, error);
 						errors.push(
-							t("file_too_large", {
-								defaultValue: `${file.name}: File too large (${sizeMB}MB)`,
+							t("error_compressing_image", {
+								defaultValue: `${file.name}: Error processing image`,
 								fileName: file.name,
-								size: sizeMB,
 							}),
 						);
-						logger.warn(`File ${file.name} exceeds size limit`, {
-							maxSize: MAX_FILE_SIZE,
-							size: file.size,
-						});
-						continue;
+						return null;
 					}
+				});
 
-					validFiles.push(file);
-				}
+				// Esperar a que todas las imágenes se procesen
+				const processedFiles = await Promise.all(processPromises);
+				const successfulFiles = processedFiles.filter(
+					(file): file is File => file !== null,
+				);
 
 				// Mostrar errores si los hay
 				if (errors.length > 0) {
@@ -124,16 +160,16 @@ export function GalleryForm({
 				}
 
 				// Añadir archivos válidos a los existentes
-				if (validFiles.length > 0) {
-					const newImages = [...images, ...validFiles];
+				if (successfulFiles.length > 0) {
+					const newImages = [...images, ...successfulFiles];
 					onChangeImages("images.gallery", newImages, {
 						shouldValidate: true,
 					});
 
 					toast.success(
 						t("images_added", {
-							count: validFiles.length,
-							defaultValue: `${validFiles.length} image(s) added`,
+							count: successfulFiles.length,
+							defaultValue: `${successfulFiles.length} image(s) added and optimized`,
 						}),
 					);
 				}

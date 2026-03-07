@@ -1,4 +1,5 @@
-import { CardSkeleton } from "~/shared/components/ui/card-skeleton";
+import { RoomCardSkeleton } from "~/shared/components/ui/card-skeleton";
+import { Skeleton } from "~/shared/components/ui/skeleton";
 import { cn } from "~/shared/utils/utils";
 
 interface RoomGridSkeletonProps {
@@ -7,6 +8,10 @@ interface RoomGridSkeletonProps {
   showTitle?: boolean;
 }
 
+/**
+ * Skeleton para el grid de habitaciones
+ * Coincide exactamente con RoomGrid para evitar CLS
+ */
 export const RoomGridSkeleton = ({
   count = 6,
   className,
@@ -15,21 +20,18 @@ export const RoomGridSkeleton = ({
   return (
     <div className={cn("space-y-6", className)}>
       {showTitle && (
-        <div className="space-y-2">
-          <div className="h-8 w-32 bg-foreground/10 rounded-lg animate-pulse" />
-          <div className="h-4 w-48 bg-foreground/5 rounded animate-pulse" />
+        <div className="space-y-2 animate-pulse">
+          <Skeleton className="h-8 w-32" />
+          <Skeleton className="h-4 w-48" />
         </div>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Array.from({ length: count }).map((_, i) => (
-          <CardSkeleton
+          <RoomCardSkeleton
             key={`room-skeleton-${
               // biome-ignore lint/suspicious/noArrayIndexKey: skeleton index is fine
               i
               }`}
-            lines={3}
-            showHeader
-            showImage
           />
         ))}
       </div>
