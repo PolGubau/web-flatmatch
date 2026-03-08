@@ -335,8 +335,8 @@ export function GalleryForm({
 							{isDragging
 								? t("drop_images_here", { defaultValue: "Drop images here" })
 								: t("click_or_drag_images", {
-										defaultValue: "Click to upload or drag and drop",
-									})}
+									defaultValue: "Click to upload or drag and drop",
+								})}
 						</p>
 						<p className="text-sm text-foreground/60">
 							{t("image_requirements", {
@@ -347,7 +347,6 @@ export function GalleryForm({
 
 					<input
 						accept={ACCEPTED_IMAGE_TYPES.join(",")}
-						capture="environment"
 						disabled={!canAddMore || isProcessing}
 						hidden
 						multiple
@@ -390,7 +389,7 @@ export function GalleryForm({
 										"relative group aspect-square rounded-lg overflow-hidden transition-all",
 										"hover:shadow-lg hover:scale-[1.02]",
 										isMain &&
-											"ring-4 ring-primary ring-offset-2 ring-offset-background",
+										"ring-4 ring-primary ring-offset-2 ring-offset-background",
 									)}
 									// biome-ignore lint/suspicious/noArrayIndexKey: ok
 									key={`image-${i}`}

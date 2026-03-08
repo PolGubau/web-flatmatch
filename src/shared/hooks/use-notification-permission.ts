@@ -3,27 +3,41 @@
  * Funciona sin backend, solo usa Notifications API nativa
  */
 export function useNotificationPermission() {
+	const isBrowser = typeof window !== "undefined";
+	const isSupported = isBrowser && "Notification" in window;
+
+	const getPermission = (): NotificationPermission => {
+		if (!isSupported) {
+			return "default";
+		}
+		return window.Notification.permission;
+	};
+
 	const requestPermission = async (): Promise<NotificationPermission> => {
-		if (!("Notification" in window)) {
+		if (!isSupported) {
 			console.warn("Este navegador no soporta notificaciones");
 			return "denied";
 		}
 
-		if (Notification.permission === "granted") {
+		if (window.Notification.permission === "granted") {
 			return "granted";
 		}
 
-		if (Notification.permission !== "denied") {
-			const permission = await Notification.requestPermission();
+		if (window.Notification.permission !== "denied") {
+			const permission = await window.Notification.requestPermission();
 			return permission;
 		}
 
-		return Notification.permission;
+		return window.Notification.permission;
 	};
 
 	const showNotification = (title: string, options?: NotificationOptions) => {
-		if (Notification.permission === "granted") {
-			new Notification(title, {
+		if (!isSupported) {
+			return;
+		}
+
+		if (window.Notification.permission === "granted") {
+			new window.Notification(title, {
 				badge: "/favicon.ico",
 				icon: "/favicon.ico",
 				...options,
@@ -32,9 +46,8 @@ export function useNotificationPermission() {
 	};
 
 	return {
-		isSupported: typeof window !== "undefined" && "Notification" in window,
-		permission:
-			typeof window !== "undefined" ? Notification.permission : "default",
+		isSupported,
+		permission: getPermission(),
 		requestPermission,
 		showNotification,
 	};

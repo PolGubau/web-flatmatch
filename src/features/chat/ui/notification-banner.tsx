@@ -13,15 +13,23 @@ export function NotificationBanner() {
 	const [isVisible, setIsVisible] = useState(false);
 
 	useEffect(() => {
-		// Verificar si ya se mostró y rechazó antes
-		const wasDismissed = localStorage.getItem("notification-banner-dismissed");
+		// Verificar si ya se mostro y rechazo antes
+		let wasDismissed: string | null = null;
+		try {
+			wasDismissed = window.localStorage.getItem(
+				"notification-banner-dismissed",
+			);
+		} catch {
+			wasDismissed = null;
+		}
+
 		if (wasDismissed) {
 			setDismissed(true);
 		}
 
 		// Mostrar banner solo si el permiso es "default" y no fue rechazado
 		if (isSupported && permission === "default" && !wasDismissed) {
-			// Delay para mostrar después de que cargue la app
+			// Delay para mostrar despues de que cargue la app
 			setTimeout(() => setIsVisible(true), 2000);
 		}
 	}, [permission, isSupported]);
@@ -32,7 +40,11 @@ export function NotificationBanner() {
 	};
 
 	const handleDismiss = () => {
-		localStorage.setItem("notification-banner-dismissed", "true");
+		try {
+			window.localStorage.setItem("notification-banner-dismissed", "true");
+		} catch {
+			// Puede fallar en algunos modos de privacidad
+		}
 		setDismissed(true);
 		setIsVisible(false);
 	};
