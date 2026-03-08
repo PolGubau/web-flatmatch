@@ -122,43 +122,58 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 		isWheelchairAccessible: isWheelchairAccessible ?? false,
 	});
 
-	const handleAmenityToggle = useCallback((amenity: AmenityKey, checked: boolean) => {
-		setSelectedAmenities((prev) => ({ ...prev, [amenity]: checked }));
-	}, []);
+	const handleAmenityToggle = useCallback(
+		(amenity: AmenityKey, checked: boolean) => {
+			setSelectedAmenities((prev) => ({ ...prev, [amenity]: checked }));
+		},
+		[],
+	);
 
-	const handleSubmit = useCallback((event: React.FormEvent) => {
-		event.preventDefault();
-		const formData = new FormData(event.target as HTMLFormElement);
-		const afterDateValue = formData.get("afterDate") as string | null;
+	const handleSubmit = useCallback(
+		(event: React.FormEvent) => {
+			event.preventDefault();
+			const formData = new FormData(event.target as HTMLFormElement);
+			const afterDateValue = formData.get("afterDate") as string | null;
 
-		const filters: Filters = {
-			afterDate: afterDateValue ? new Date(afterDateValue) : null,
-			hasAirConditioning: selectedAmenities.hasAirConditioning || null,
-			hasBalcony: selectedAmenities.hasBalcony || null,
-			hasDishwasher: selectedAmenities.hasDishwasher || null,
-			hasElevator: selectedAmenities.hasElevator || null,
-			hasGarden: selectedAmenities.hasGarden || null,
-			hasHeating: selectedAmenities.hasHeating || null,
-			hasLaundry: selectedAmenities.hasLaundry || null,
-			hasParking: selectedAmenities.hasParking || null,
-			hasPool: selectedAmenities.hasPool || null,
-			hasPrivateBathroom: selectedAmenities.hasPrivateBathroom || null,
-			hasTerrace: selectedAmenities.hasTerrace || null,
-			hasTV: selectedAmenities.hasTV || null,
-			// Amenidades
-			hasWifi: selectedAmenities.hasWifi || null,
-			hasWorkingDesk: selectedAmenities.hasWorkingDesk || null,
-			isFurnished: selectedAmenities.isFurnished || null,
-			isWheelchairAccessible: selectedAmenities.isWheelchairAccessible || null,
-			location: selectedLocation,
-			// Solo agregar a URL si difieren de los defaults
-			maxPrice: maxPrice === DEFAULT_FILTER_VALUES.maxPrice ? null : maxPrice,
-			minPrice: minPrice === DEFAULT_FILTER_VALUES.minPrice ? null : minPrice,
-			rentType: selectedType,
-		};
-		onSubmit(filters);
-		setFilters(filters);
-	}, [selectedLocation, selectedType, minPrice, maxPrice, selectedAmenities, onSubmit, setFilters]);
+			const filters: Filters = {
+				afterDate: afterDateValue ? new Date(afterDateValue) : null,
+				hasAirConditioning: selectedAmenities.hasAirConditioning || null,
+				hasBalcony: selectedAmenities.hasBalcony || null,
+				hasDishwasher: selectedAmenities.hasDishwasher || null,
+				hasElevator: selectedAmenities.hasElevator || null,
+				hasGarden: selectedAmenities.hasGarden || null,
+				hasHeating: selectedAmenities.hasHeating || null,
+				hasLaundry: selectedAmenities.hasLaundry || null,
+				hasParking: selectedAmenities.hasParking || null,
+				hasPool: selectedAmenities.hasPool || null,
+				hasPrivateBathroom: selectedAmenities.hasPrivateBathroom || null,
+				hasTerrace: selectedAmenities.hasTerrace || null,
+				hasTV: selectedAmenities.hasTV || null,
+				// Amenidades
+				hasWifi: selectedAmenities.hasWifi || null,
+				hasWorkingDesk: selectedAmenities.hasWorkingDesk || null,
+				isFurnished: selectedAmenities.isFurnished || null,
+				isWheelchairAccessible:
+					selectedAmenities.isWheelchairAccessible || null,
+				location: selectedLocation,
+				// Solo agregar a URL si difieren de los defaults
+				maxPrice: maxPrice === DEFAULT_FILTER_VALUES.maxPrice ? null : maxPrice,
+				minPrice: minPrice === DEFAULT_FILTER_VALUES.minPrice ? null : minPrice,
+				rentType: selectedType,
+			};
+			onSubmit(filters);
+			setFilters(filters);
+		},
+		[
+			selectedLocation,
+			selectedType,
+			minPrice,
+			maxPrice,
+			selectedAmenities,
+			onSubmit,
+			setFilters,
+		],
+	);
 
 	return (
 		<form className="flex flex-col gap-4" onSubmit={handleSubmit}>

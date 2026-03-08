@@ -13,7 +13,5 @@ export type Updates<T extends keyof PublicSchema["Tables"]> =
 export type Enums<T extends keyof PublicSchema["Enums"]> =
 	PublicSchema["Enums"][T];
 
-export type Functions <T extends keyof PublicSchema["Functions"]> =
+export type Functions<T extends keyof PublicSchema["Functions"]> =
 	PublicSchema["Functions"][T]["Returns"];
-
-	

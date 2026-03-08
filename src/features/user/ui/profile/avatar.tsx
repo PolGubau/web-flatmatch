@@ -35,13 +35,15 @@ export const ProfileAvatar = ({
 	if (!avatarUrl) {
 		return (
 			<div className={className}>
-				{name?.length > 0 ? <span>{name.split("")[0]}</span>
-					:
+				{name?.length > 0 ? (
+					<span>{name.split("")[0]}</span>
+				) : (
 					<HugeiconsIcon
 						icon={UserIcon}
 						size={size === "md" ? 90 : size === "lg" ? 60 : 20}
 						stroke="currentColor"
-					/>}
+					/>
+				)}
 			</div>
 		);
 	}

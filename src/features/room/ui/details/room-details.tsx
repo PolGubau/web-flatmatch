@@ -11,7 +11,7 @@ import { TenantPreferencesCard } from "./components/TenantPreferencesCard";
 import { useRoomDetailsActions } from "./hooks/useRoomDetailsActions";
 import { useRoomDetailsData } from "./hooks/useRoomDetailsData";
 import "./room-details.css";
-import { ChattingIcon, Search01Icon } from "@hugeicons/core-free-icons";
+import { ChattingIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { SearchIcon } from "lucide-react";
 import { Link } from "react-router";
@@ -98,11 +98,8 @@ export default function RoomDetails({ room }: Props) {
 								size={"sm"}
 								variant="secondary"
 							>
-
 								<SearchIcon className="size-4" />
-								<span className="max-md:hidden">
-									{t("view_profile")}
-								</span>
+								<span className="max-md:hidden">{t("view_profile")}</span>
 							</Button>
 						</Link>
 						<Button
@@ -111,11 +108,8 @@ export default function RoomDetails({ room }: Props) {
 							size={"sm"}
 							variant="default"
 						>
-
 							<HugeiconsIcon icon={ChattingIcon} size={20} />
-							<span className="max-md:hidden">
-								{t("start_chatting")}
-							</span>
+							<span className="max-md:hidden">{t("start_chatting")}</span>
 						</Button>
 					</div>
 				</section>
@@ -133,7 +127,7 @@ export default function RoomDetails({ room }: Props) {
 						.map((key) => {
 							const value =
 								room.commodities?.whole?.appliances[
-								key as keyof typeof room.commodities.whole.appliances
+									key as keyof typeof room.commodities.whole.appliances
 								];
 							const match = commoditiesMap[key as keyof typeof commoditiesMap];
 							return {
@@ -153,7 +147,7 @@ export default function RoomDetails({ room }: Props) {
 						.map((key) => {
 							const value =
 								room.commodities.whole.extras[
-								key as keyof typeof room.commodities.whole.extras
+									key as keyof typeof room.commodities.whole.extras
 								];
 							const match = extrasMap[key as keyof typeof extrasMap];
 							return {

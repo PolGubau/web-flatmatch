@@ -1,7 +1,6 @@
 import type { EditableRoom } from "~/entities/room/editable-room";
 import type { Interaction, Room, RoomWithMetadata } from "~/entities/room/room";
 import type { AbstractRepository } from "~/shared/abstracts/repo";
-import type { RentType } from "~/shared/types/common";
 import type { RoomAction } from "../types/common";
 import type { Filters } from "../ui/feed/filters/filters-form";
 import {

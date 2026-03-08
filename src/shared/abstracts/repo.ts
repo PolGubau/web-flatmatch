@@ -18,7 +18,11 @@ export type Update<T, EditableT = T> = (
 	data: Partial<EditableT>,
 ) => Promise<T>;
 
-export type AbstractRepository<T, EditableT = T, Filters = typeof init_filters> = {
+export type AbstractRepository<
+	T,
+	EditableT = T,
+	Filters = typeof init_filters,
+> = {
 	findById: FindById<T>;
 	findMany: FindMany<T, Filters>;
 	findAll: FindAll<T, Filters>;

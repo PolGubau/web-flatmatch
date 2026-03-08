@@ -50,4 +50,3 @@ export function useIntersectionObserver<T extends HTMLElement = HTMLDivElement>(
 
 	return { isIntersecting, ref: targetRef };
 }
-

@@ -66,7 +66,13 @@ export const OptimizedImage = ({
 	}
 
 	return (
-		<div className={cn("relative overflow-hidden", aspectRatioClasses[aspectRatio], className)}>
+		<div
+			className={cn(
+				"relative overflow-hidden",
+				aspectRatioClasses[aspectRatio],
+				className,
+			)}
+		>
 			{/* Loading placeholder */}
 			{isLoading && (
 				<div className="absolute inset-0 flex items-center justify-center bg-muted animate-pulse">
@@ -76,19 +82,18 @@ export const OptimizedImage = ({
 
 			{/* Imagen optimizada */}
 			<img
-				src={src}
 				alt={alt}
-				loading={priority ? "eager" : "lazy"}
-				decoding="async"
-				onLoad={handleLoad}
-				onError={handleError}
 				className={cn(
 					"w-full h-full transition-opacity duration-300",
 					objectFit === "cover" ? "object-cover" : "object-contain",
 					isLoading ? "opacity-0" : "opacity-100",
 				)}
+				decoding="async"
+				loading={priority ? "eager" : "lazy"}
+				onError={handleError}
+				onLoad={handleLoad}
+				src={src}
 			/>
 		</div>
 	);
 };
-

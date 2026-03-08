@@ -4,130 +4,130 @@ import { errorHandler } from "~/shared/utils/error-handler";
 import { ErrorBoundary } from "./error-boundary";
 
 vi.mock("~/shared/utils/error-handler", () => ({
-  errorHandler: {
-    logError: vi.fn(),
-  },
+	errorHandler: {
+		logError: vi.fn(),
+	},
 }));
 
 vi.mock("~/shared/utils/logger", () => ({
-  logger: {
-    error: vi.fn(),
-  },
+	logger: {
+		error: vi.fn(),
+	},
 }));
 
 const ThrowError = ({ shouldThrow }: { shouldThrow: boolean }) => {
-  if (shouldThrow) {
-    throw new Error("Test error");
-  }
-  return <div>No error</div>;
+	if (shouldThrow) {
+		throw new Error("Test error");
+	}
+	return <div>No error</div>;
 };
 
 describe("ErrorBoundary", () => {
-  it("should render children when no error occurs", () => {
-    render(
-      <ErrorBoundary>
-        <div>Test content</div>
-      </ErrorBoundary>,
-    );
+	it("should render children when no error occurs", () => {
+		render(
+			<ErrorBoundary>
+				<div>Test content</div>
+			</ErrorBoundary>,
+		);
 
-    expect(screen.getByText("Test content")).toBeInTheDocument();
-  });
+		expect(screen.getByText("Test content")).toBeInTheDocument();
+	});
 
-  it("should render error fallback when error occurs", () => {
-    const consoleError = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => { });
+	it("should render error fallback when error occurs", () => {
+		const consoleError = vi
+			.spyOn(console, "error")
+			.mockImplementation(() => {});
 
-    render(
-      <ErrorBoundary>
-        <ThrowError shouldThrow={true} />
-      </ErrorBoundary>,
-    );
+		render(
+			<ErrorBoundary>
+				<ThrowError shouldThrow={true} />
+			</ErrorBoundary>,
+		);
 
-    // Check that error fallback is rendered by looking for the error message
-    expect(screen.getByText(/test error/i)).toBeInTheDocument();
-    expect(errorHandler.logError).toHaveBeenCalled();
+		// Check that error fallback is rendered by looking for the error message
+		expect(screen.getByText(/test error/i)).toBeInTheDocument();
+		expect(errorHandler.logError).toHaveBeenCalled();
 
-    consoleError.mockRestore();
-  });
+		consoleError.mockRestore();
+	});
 
-  it("should render custom fallback when provided", () => {
-    const consoleError = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => { });
+	it("should render custom fallback when provided", () => {
+		const consoleError = vi
+			.spyOn(console, "error")
+			.mockImplementation(() => {});
 
-    render(
-      <ErrorBoundary fallback={<div>Custom error message</div>}>
-        <ThrowError shouldThrow={true} />
-      </ErrorBoundary>,
-    );
+		render(
+			<ErrorBoundary fallback={<div>Custom error message</div>}>
+				<ThrowError shouldThrow={true} />
+			</ErrorBoundary>,
+		);
 
-    expect(screen.getByText("Custom error message")).toBeInTheDocument();
+		expect(screen.getByText("Custom error message")).toBeInTheDocument();
 
-    consoleError.mockRestore();
-  });
+		consoleError.mockRestore();
+	});
 
-  it("should call onReset when reset button is clicked", () => {
-    const consoleError = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => { });
-    const onReset = vi.fn();
+	it("should call onReset when reset button is clicked", () => {
+		const consoleError = vi
+			.spyOn(console, "error")
+			.mockImplementation(() => {});
+		const onReset = vi.fn();
 
-    render(
-      <ErrorBoundary onReset={onReset}>
-        <ThrowError shouldThrow={true} />
-      </ErrorBoundary>,
-    );
+		render(
+			<ErrorBoundary onReset={onReset}>
+				<ThrowError shouldThrow={true} />
+			</ErrorBoundary>,
+		);
 
-    // Get the button (it's the only button)
-    const resetButton = screen.getByRole("button");
-    resetButton.click();
+		// Get the button (it's the only button)
+		const resetButton = screen.getByRole("button");
+		resetButton.click();
 
-    expect(onReset).toHaveBeenCalled();
+		expect(onReset).toHaveBeenCalled();
 
-    consoleError.mockRestore();
-  });
+		consoleError.mockRestore();
+	});
 
-  it("should reset error state after clicking reset", () => {
-    const consoleError = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => { });
+	it("should reset error state after clicking reset", () => {
+		const consoleError = vi
+			.spyOn(console, "error")
+			.mockImplementation(() => {});
 
-    const { rerender } = render(
-      <ErrorBoundary>
-        <ThrowError shouldThrow={true} />
-      </ErrorBoundary>,
-    );
+		const { rerender } = render(
+			<ErrorBoundary>
+				<ThrowError shouldThrow={true} />
+			</ErrorBoundary>,
+		);
 
-    expect(screen.getByText(/test error/i)).toBeInTheDocument();
+		expect(screen.getByText(/test error/i)).toBeInTheDocument();
 
-    const resetButton = screen.getByRole("button");
-    resetButton.click();
+		const resetButton = screen.getByRole("button");
+		resetButton.click();
 
-    rerender(
-      <ErrorBoundary>
-        <ThrowError shouldThrow={false} />
-      </ErrorBoundary>,
-    );
+		rerender(
+			<ErrorBoundary>
+				<ThrowError shouldThrow={false} />
+			</ErrorBoundary>,
+		);
 
-    expect(screen.getByText("No error")).toBeInTheDocument();
+		expect(screen.getByText("No error")).toBeInTheDocument();
 
-    consoleError.mockRestore();
-  });
+		consoleError.mockRestore();
+	});
 
-  it("should display error message in fallback", () => {
-    const consoleError = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => { });
+	it("should display error message in fallback", () => {
+		const consoleError = vi
+			.spyOn(console, "error")
+			.mockImplementation(() => {});
 
-    render(
-      <ErrorBoundary>
-        <ThrowError shouldThrow={true} />
-      </ErrorBoundary>,
-    );
+		render(
+			<ErrorBoundary>
+				<ThrowError shouldThrow={true} />
+			</ErrorBoundary>,
+		);
 
-    expect(screen.getByText(/test error/i)).toBeInTheDocument();
+		expect(screen.getByText(/test error/i)).toBeInTheDocument();
 
-    consoleError.mockRestore();
-  });
+		consoleError.mockRestore();
+	});
 });

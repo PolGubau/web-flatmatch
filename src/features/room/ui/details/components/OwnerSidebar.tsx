@@ -6,113 +6,113 @@ import { ProfileAvatar } from "~/features/user/ui/profile/avatar";
 import { Badge } from "~/shared/components/ui/badge";
 import { Button } from "~/shared/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
 } from "~/shared/components/ui/card";
 import { Separator } from "~/shared/components/ui/separator";
 import { getRoomPath } from "~/shared/utils/path/get-room-path";
 import { ContactButtons } from "../footer/contact-buttons";
 
 type OwnerSidebarProps = {
-  owner: Owner;
-  roomId: string;
-  roomTitle: string;
-  contactEmail?: string;
-  contactPhone?: string;
-  roommates: {
-    female: number;
-    male: number;
-    other: number;
-    total: number;
-  };
-  onStartChat: () => void;
+	owner: Owner;
+	roomId: string;
+	roomTitle: string;
+	contactEmail?: string;
+	contactPhone?: string;
+	roommates: {
+		female: number;
+		male: number;
+		other: number;
+		total: number;
+	};
+	onStartChat: () => void;
 };
 
 export const OwnerSidebar = ({
-  owner,
-  roomId,
-  roomTitle,
-  contactEmail,
-  contactPhone,
-  roommates,
-  onStartChat,
+	owner,
+	roomId,
+	roomTitle,
+	contactEmail,
+	contactPhone,
+	roommates,
+	onStartChat,
 }: OwnerSidebarProps) => {
-  const { t } = useTranslation();
+	const { t } = useTranslation();
 
-  return (
-    <aside className="w-full space-y-4 md:space-y-6">
-      <Card className="lg:sticky lg:top-6">
-        <CardHeader>
-          <CardTitle>{t("published_by")}</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center gap-3">
-            <ProfileAvatar
-              avatarUrl={owner.avatar}
-              name={owner.name}
-              size="lg"
-            />
-            <div>
-              <h3 className="font-semibold text-lg">{owner.name}</h3>
-              <p className="text-sm text-muted-foreground">{t("landlord")}</p>
-            </div>
-          </div>
+	return (
+		<aside className="w-full space-y-4 md:space-y-6">
+			<Card className="lg:sticky lg:top-6">
+				<CardHeader>
+					<CardTitle>{t("published_by")}</CardTitle>
+				</CardHeader>
+				<CardContent className="space-y-4">
+					<div className="flex items-center gap-3">
+						<ProfileAvatar
+							avatarUrl={owner.avatar}
+							name={owner.name}
+							size="lg"
+						/>
+						<div>
+							<h3 className="font-semibold text-lg">{owner.name}</h3>
+							<p className="text-sm text-muted-foreground">{t("landlord")}</p>
+						</div>
+					</div>
 
-          <Separator />
+					<Separator />
 
-          <Button className="w-full" onClick={onStartChat} size="lg">
-            <HugeiconsIcon icon={ChattingIcon} size={20} />
-            {t("message_landlord")}
-          </Button>
+					<Button className="w-full" onClick={onStartChat} size="lg">
+						<HugeiconsIcon icon={ChattingIcon} size={20} />
+						{t("message_landlord")}
+					</Button>
 
-          <ContactButtons
-            email={contactEmail}
-            infoMessage={t("contact_message", {
-              name: roomTitle,
-              url: getRoomPath(roomId),
-            })}
-            phone={contactPhone}
-          />
-        </CardContent>
-      </Card>
+					<ContactButtons
+						email={contactEmail}
+						infoMessage={t("contact_message", {
+							name: roomTitle,
+							url: getRoomPath(roomId),
+						})}
+						phone={contactPhone}
+					/>
+				</CardContent>
+			</Card>
 
-      {/* Current Tenants Info */}
-      {roommates.total > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle>{t("current_roommates")}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {roommates.female > 0 && (
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">{t("female")}</span>
-                  <Badge>{roommates.female}</Badge>
-                </div>
-              )}
-              {roommates.male > 0 && (
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">{t("male")}</span>
-                  <Badge>{roommates.male}</Badge>
-                </div>
-              )}
-              {roommates.other > 0 && (
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Other</span>
-                  <Badge>{roommates.other}</Badge>
-                </div>
-              )}
-              <Separator />
-              <div className="flex items-center justify-between font-semibold">
-                <span className="text-sm">Total</span>
-                <Badge variant="secondary">{roommates.total}</Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-    </aside>
-  );
+			{/* Current Tenants Info */}
+			{roommates.total > 0 && (
+				<Card>
+					<CardHeader>
+						<CardTitle>{t("current_roommates")}</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<div className="space-y-3">
+							{roommates.female > 0 && (
+								<div className="flex items-center justify-between">
+									<span className="text-sm">{t("female")}</span>
+									<Badge>{roommates.female}</Badge>
+								</div>
+							)}
+							{roommates.male > 0 && (
+								<div className="flex items-center justify-between">
+									<span className="text-sm">{t("male")}</span>
+									<Badge>{roommates.male}</Badge>
+								</div>
+							)}
+							{roommates.other > 0 && (
+								<div className="flex items-center justify-between">
+									<span className="text-sm">Other</span>
+									<Badge>{roommates.other}</Badge>
+								</div>
+							)}
+							<Separator />
+							<div className="flex items-center justify-between font-semibold">
+								<span className="text-sm">Total</span>
+								<Badge variant="secondary">{roommates.total}</Badge>
+							</div>
+						</div>
+					</CardContent>
+				</Card>
+			)}
+		</aside>
+	);
 };

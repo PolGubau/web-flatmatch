@@ -34,7 +34,7 @@ export function RoomTinderCardUI({
 		const restImages = gallery?.filter((path) => path !== cover) || [];
 		return [cover, ...restImages];
 	}, [cover, gallery]);
-	
+
 	const [currentImageIdx, setCurrentImageIndex] = useState(0);
 	const [isImageLoading, setIsImageLoading] = useState(false);
 	const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0])); // Primera imagen pre-cargada
@@ -104,8 +104,9 @@ export function RoomTinderCardUI({
 			<nav className="absolute top-4 left-1/2 -translate-x-1/2 z-20 flex gap-2 pointer-events-none">
 				{sortedImages.map((url, idx) => (
 					<span
-						className={`h-1 w-6 rounded-full ${idx === currentImageIdx ? "bg-background" : "bg-background/20"
-							}`}
+						className={`h-1 w-6 rounded-full ${
+							idx === currentImageIdx ? "bg-background" : "bg-background/20"
+						}`}
 						key={url}
 					/>
 				))}
@@ -184,8 +185,9 @@ export function RoomTinderCardUI({
 
 			<img
 				alt={title}
-				className={`inset-0 absolute h-full object-cover object-bottom pointer-events-none transition-opacity duration-300 ${isImageLoading ? "opacity-0" : "opacity-100"
-					}`}
+				className={`inset-0 absolute h-full object-cover object-bottom pointer-events-none transition-opacity duration-300 ${
+					isImageLoading ? "opacity-0" : "opacity-100"
+				}`}
 				onLoad={() => setIsImageLoading(false)}
 				src={sortedImages[currentImageIdx]}
 			/>

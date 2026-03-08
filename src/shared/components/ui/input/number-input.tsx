@@ -36,7 +36,8 @@ export function NumberInput({
 	size = "md",
 	onValueChange,
 	value,
-	defaultValue, step = 1,
+	defaultValue,
+	step = 1,
 	id,
 	...props
 }: NumberInputProps) {

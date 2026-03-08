@@ -54,7 +54,7 @@ export const RoomTinderCard = ({
 	// Usar useTransform con valores estáticos en lugar de callback con .get()
 	const rotate = useTransform(
 		rotateRaw,
-		(value) => `${value + staticOffset}deg`
+		(value) => `${value + staticOffset}deg`,
 	);
 
 	// Trigger haptic feedback when crossing threshold

@@ -28,17 +28,17 @@ export const getMenuItems = (
 	unreadCount = 0,
 	isLoading = false,
 ): FooterMenuItem[] => [
-		{ href: "/", icon: Home01Icon, label: "home" },
-		{ href: "/favs", icon: FavouriteIcon, label: "favourites" },
-		{
-			badge: unreadCount || undefined,
-			href: "/chat",
-			icon: Message01Icon,
-			isLoadingBadge: isLoading,
-			label: "chat",
-		},
-		{ href: "/profile", icon: UserIcon, label: "profile" },
-	];
+	{ href: "/", icon: Home01Icon, label: "home" },
+	{ href: "/favs", icon: FavouriteIcon, label: "favourites" },
+	{
+		badge: unreadCount || undefined,
+		href: "/chat",
+		icon: Message01Icon,
+		isLoadingBadge: isLoading,
+		label: "chat",
+	},
+	{ href: "/profile", icon: UserIcon, label: "profile" },
+];
 
 const MainLayout = ({ children }: PropsWithChildren) => {
 	const { t } = useTranslation();

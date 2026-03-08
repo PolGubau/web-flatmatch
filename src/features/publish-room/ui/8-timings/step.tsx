@@ -4,7 +4,6 @@ import {
 	InformationCircleIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { t } from "i18next";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -102,7 +101,11 @@ export function TimingsForm() {
 							{/* Disponible hasta */}
 							<div className="space-y-2">
 								<DatePicker
-									hidden={{ before: availableFrom ? new Date(availableFrom) : new Date() }}
+									hidden={{
+										before: availableFrom
+											? new Date(availableFrom)
+											: new Date(),
+									}}
 									label="available_until"
 									mode="single"
 									placeholder="no_end_date"
@@ -174,16 +177,16 @@ export function TimingsForm() {
 								<p className="font-medium">
 									{hasEndDate
 										? t("room_available_from_to", {
-											defaultValue: "Room available from {{from}} to {{to}}",
-											from: new Date(availableFrom).toLocaleDateString(),
-											to: availableUntil
-												? new Date(availableUntil).toLocaleDateString()
-												: "",
-										})
+												defaultValue: "Room available from {{from}} to {{to}}",
+												from: new Date(availableFrom).toLocaleDateString(),
+												to: availableUntil
+													? new Date(availableUntil).toLocaleDateString()
+													: "",
+											})
 										: t("room_available_from", {
-											defaultValue: "Room available from {{from}}",
-											from: new Date(availableFrom).toLocaleDateString(),
-										})}
+												defaultValue: "Room available from {{from}}",
+												from: new Date(availableFrom).toLocaleDateString(),
+											})}
 								</p>
 								{showMaxStay && maxStayValue && (
 									<p className="text-foreground/70">

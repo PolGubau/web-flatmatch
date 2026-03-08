@@ -83,8 +83,8 @@ async function compressImageNative(
 										}
 
 										const compressedFile = new File([newBlob], file.name, {
-											type: file.type,
 											lastModified: Date.now(),
+											type: file.type,
 										});
 
 										resolve(compressedFile);
@@ -94,8 +94,8 @@ async function compressImageNative(
 								);
 							} else {
 								const compressedFile = new File([blob], file.name, {
-									type: file.type,
 									lastModified: Date.now(),
+									type: file.type,
 								});
 
 								resolve(compressedFile);
@@ -157,4 +157,3 @@ export async function compressImage(
 		return file;
 	}
 }
-

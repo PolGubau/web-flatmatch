@@ -30,4 +30,3 @@ export const PrefetchLink = ({
 		</Link>
 	);
 };
-

@@ -8,7 +8,7 @@ import {
 	Clock,
 	Pin,
 	UserSearch,
-	WashingMachine
+	WashingMachine,
 } from "lucide-react";
 import { Outlet, useLocation } from "react-router";
 import { GoHomeButton } from "~/shared/components/go-home-button";

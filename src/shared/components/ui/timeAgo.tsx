@@ -56,9 +56,9 @@ export const TimeAgo = ({ timestamp, realTime = true }: TimeAgoProps) => {
 		} catch {
 			try {
 				const formatter = new Intl.DateTimeFormat(i18n.language || "en", {
-					year: "numeric",
-					month: "short",
 					day: "numeric",
+					month: "short",
+					year: "numeric",
 				});
 				return formatter.format(safeTimestamp);
 			} catch {

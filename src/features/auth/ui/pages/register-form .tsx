@@ -1,12 +1,5 @@
 import { LockIcon, Mail01Icon } from "@hugeicons/core-free-icons";
-import {
-	AlertCircleIcon,
-	CheckCircle2,
-	Eye,
-	EyeOff,
-	Loader2,
-	Lock,
-} from "lucide-react";
+import { AlertCircleIcon, CheckCircle2, Loader2 } from "lucide-react";
 import type React from "react";
 import { useMemo, useState } from "react";
 import { Alert, AlertTitle } from "~/shared/components/ui/alert";
@@ -154,19 +147,21 @@ export default function RegisterForm({ onSubmit, error, loading }: Props) {
 									)}
 								/>
 								<div
-									className={`h-1 flex-1 rounded-full transition-all duration-300 ${passwordStrength === "strong" ? "bg-green-500" : "bg-muted"
-										}`}
+									className={`h-1 flex-1 rounded-full transition-all duration-300 ${
+										passwordStrength === "strong" ? "bg-green-500" : "bg-muted"
+									}`}
 								/>
 							</div>
 							<p className="text-xs text-muted-foreground">
 								Password strength:{" "}
 								<span
-									className={`font-medium ${passwordStrength === "weak"
-										? "text-red-500"
-										: passwordStrength === "medium"
-											? "text-yellow-500"
-											: "text-green-500"
-										}`}
+									className={`font-medium ${
+										passwordStrength === "weak"
+											? "text-red-500"
+											: passwordStrength === "medium"
+												? "text-yellow-500"
+												: "text-green-500"
+									}`}
 								>
 									{passwordStrength.charAt(0).toUpperCase() +
 										passwordStrength.slice(1)}
@@ -179,8 +174,9 @@ export default function RegisterForm({ onSubmit, error, loading }: Props) {
 						<li className="space-y-1 text-xs animate-in fade-in slide-in-from-top-1 duration-200">
 							{passwordRequirements.map((req, idx) => (
 								<div
-									className={`flex items-center gap-1.5 ${req.met ? "text-green-600" : "text-muted-foreground"
-										}`}
+									className={`flex items-center gap-1.5 ${
+										req.met ? "text-green-600" : "text-muted-foreground"
+									}`}
 									// biome-ignore lint/suspicious/noArrayIndexKey: Ok
 									key={idx}
 								>
@@ -204,7 +200,6 @@ export default function RegisterForm({ onSubmit, error, loading }: Props) {
 						required
 						value={confirmPassword}
 					/>
-
 
 					{showPasswordMismatch && (
 						<p className="text-xs text-error animate-in fade-in slide-in-from-top-1 duration-200">

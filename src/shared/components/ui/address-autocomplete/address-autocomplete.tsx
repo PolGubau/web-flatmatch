@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { fetchPredictions } from "~/features/publish-room/infra/fetch-predictions";
-import { FormFooterButtons } from "~/features/publish-room/ui/shared/form-footer-buttons";
 import { AutoComplete } from "~/shared/components/ui/autocomplete";
 import { useDebounce } from "~/shared/hooks/use-debounce";
 import { Button } from "../button";

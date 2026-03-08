@@ -45,7 +45,10 @@ export const ConversationItem = ({
 			<div className="flex-1 min-w-0 text-left">
 				<div className="flex justify-between items-start gap-2 mb-1">
 					<h3
-						className={cn("font-medium truncate line-clamp-1", isUnread && "font-semibold")}
+						className={cn(
+							"font-medium truncate line-clamp-1",
+							isUnread && "font-semibold",
+						)}
 					>
 						{otherParticipant.name}
 					</h3>

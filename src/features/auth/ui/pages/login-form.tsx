@@ -1,5 +1,5 @@
 import { Mail01Icon } from "@hugeicons/core-free-icons";
-import { AlertCircle, AlertCircleIcon, Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
+import { AlertCircle, AlertCircleIcon, Loader2 } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import { Link } from "react-router";
@@ -17,7 +17,7 @@ type Props = {
 	loading: boolean;
 };
 export default function LoginForm({ onSubmit, error, loading }: Props) {
-	const [showPassword, setShowPassword] = useState(false);
+	const [_showPassword, _setShowPassword] = useState(false);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [emailError, setEmailError] = useState("");

@@ -151,7 +151,7 @@ function SelectContent({
 					// Base
 					"bg-background text-foreground relative z-50 min-w-[8rem] overflow-x-hidden overflow-y-auto rounded-xl border-2 border-foreground/30 shadow-md",
 					position === "popper" &&
-					"data-[side=bottom]:translate-y-[2px] data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+						"data-[side=bottom]:translate-y-[2px] data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
 					"origin-(--radix-select-content-transform-origin) max-h-(--radix-select-content-available-height)",
 					className,
 				)}
@@ -164,7 +164,7 @@ function SelectContent({
 					className={cn(
 						"p-1",
 						position === "popper" &&
-						"h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1",
+							"h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1",
 					)}
 				>
 					{children}
