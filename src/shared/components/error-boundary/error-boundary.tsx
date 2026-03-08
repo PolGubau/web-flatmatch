@@ -1,12 +1,24 @@
 import { Alert01Icon } from "@hugeicons/core-free-icons";
-import { Component, type ReactNode } from "react";
+import {
+  cloneElement,
+  Component,
+  isValidElement,
+  type ReactNode,
+} from "react";
 import { errorHandler } from "~/shared/utils/error-handler";
 import { logger } from "~/shared/utils/logger";
 import { ErrorSection } from "../error-section";
 
+type ErrorBoundaryFallbackProps = {
+  error?: Error;
+  errorId?: string;
+  componentName?: string;
+  onReset: () => void;
+};
+
 interface ErrorBoundaryProps {
   children: ReactNode;
-  fallback?: ReactNode;
+  fallback?: ReactNode | ((props: ErrorBoundaryFallbackProps) => ReactNode);
   onReset?: () => void;
   /** Nombre del componente/sección para mejor tracking */
   name?: string;
@@ -129,6 +141,24 @@ class ErrorBoundaryClass extends Component<
   render() {
     if (this.state.hasError) {
       if (this.props.fallback) {
+        const fallbackProps: ErrorBoundaryFallbackProps = {
+          componentName: this.props.name,
+          error: this.state.error,
+          errorId: this.state.errorId,
+          onReset: this.handleReset,
+        };
+
+        if (typeof this.props.fallback === "function") {
+          return this.props.fallback(fallbackProps);
+        }
+
+        if (isValidElement(this.props.fallback)) {
+          return cloneElement(
+            this.props.fallback,
+            fallbackProps as Record<string, unknown>,
+          );
+        }
+
         return this.props.fallback;
       }
 

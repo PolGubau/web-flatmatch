@@ -12,11 +12,14 @@ type TimeAgoProps = {
 export const TimeAgo = ({ timestamp, realTime = true }: TimeAgoProps) => {
 	const { i18n } = useTranslation();
 	const [now, setNow] = useState(() => new Date());
+	const safeTimestamp =
+		timestamp instanceof Date && !Number.isNaN(timestamp.getTime())
+			? timestamp
+			: new Date();
 
 	let refreshInterval = 1000;
 
-	const diff = (timestamp.getTime() - now.getTime()) / 1000; // segundos
-	const rtf = new Intl.RelativeTimeFormat(i18n.language, { numeric: "auto" });
+	const diff = (safeTimestamp.getTime() - now.getTime()) / 1000; // segundos
 
 	let value: number;
 	let unit: Intl.RelativeTimeFormatUnit;
@@ -44,5 +47,25 @@ export const TimeAgo = ({ timestamp, realTime = true }: TimeAgoProps) => {
 		return () => clearInterval(interval);
 	}, [refreshInterval, realTime]);
 
-	return <span>{rtf.format(value, unit)}</span>;
+	const formatRelativeTime = () => {
+		try {
+			const rtf = new Intl.RelativeTimeFormat(i18n.language || "en", {
+				numeric: "auto",
+			});
+			return rtf.format(value, unit);
+		} catch {
+			try {
+				const formatter = new Intl.DateTimeFormat(i18n.language || "en", {
+					year: "numeric",
+					month: "short",
+					day: "numeric",
+				});
+				return formatter.format(safeTimestamp);
+			} catch {
+				return safeTimestamp.toISOString().slice(0, 10);
+			}
+		}
+	};
+
+	return <span>{formatRelativeTime()}</span>;
 };

@@ -9,6 +9,8 @@ type RoomCardsStackProps = {
   onSwipe: (roomId: string, direction: SwipeDirection) => void;
 };
 
+const MAX_VISIBLE_CARDS = 3;
+
 export const RoomCardsStack = ({ rooms, onSwipe }: RoomCardsStackProps) => {
   const handleReset = () => {
     logger.info("RoomCardsStack error boundary reset");
@@ -22,7 +24,7 @@ export const RoomCardsStack = ({ rooms, onSwipe }: RoomCardsStackProps) => {
       onReset={handleReset}
     >
       <div className="relative h-full w-full max-w-lg grid justify-center">
-        {rooms.map((room, index) => (
+        {rooms.slice(0, MAX_VISIBLE_CARDS).map((room, index) => (
           <RoomTinderCard
             index={index}
             key={room.id}
