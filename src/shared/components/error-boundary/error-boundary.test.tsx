@@ -36,7 +36,7 @@ describe("ErrorBoundary", () => {
 	it("should render error fallback when error occurs", () => {
 		const consoleError = vi
 			.spyOn(console, "error")
-			.mockImplementation(() => {});
+			.mockImplementation(() => { });
 
 		render(
 			<ErrorBoundary>
@@ -54,7 +54,7 @@ describe("ErrorBoundary", () => {
 	it("should render custom fallback when provided", () => {
 		const consoleError = vi
 			.spyOn(console, "error")
-			.mockImplementation(() => {});
+			.mockImplementation(() => { });
 
 		render(
 			<ErrorBoundary fallback={<div>Custom error message</div>}>
@@ -70,7 +70,7 @@ describe("ErrorBoundary", () => {
 	it("should call onReset when reset button is clicked", () => {
 		const consoleError = vi
 			.spyOn(console, "error")
-			.mockImplementation(() => {});
+			.mockImplementation(() => { });
 		const onReset = vi.fn();
 
 		render(
@@ -79,8 +79,8 @@ describe("ErrorBoundary", () => {
 			</ErrorBoundary>,
 		);
 
-		// Get the button (it's the only button)
-		const resetButton = screen.getByRole("button");
+		// Get the retry button by text
+		const resetButton = screen.getByText(/retry/i);
 		resetButton.click();
 
 		expect(onReset).toHaveBeenCalled();
@@ -91,7 +91,7 @@ describe("ErrorBoundary", () => {
 	it("should reset error state after clicking reset", () => {
 		const consoleError = vi
 			.spyOn(console, "error")
-			.mockImplementation(() => {});
+			.mockImplementation(() => { });
 
 		const { rerender } = render(
 			<ErrorBoundary>
@@ -101,7 +101,7 @@ describe("ErrorBoundary", () => {
 
 		expect(screen.getByText(/test error/i)).toBeInTheDocument();
 
-		const resetButton = screen.getByRole("button");
+		const resetButton = screen.getByText(/retry/i);
 		resetButton.click();
 
 		rerender(
@@ -118,7 +118,7 @@ describe("ErrorBoundary", () => {
 	it("should display error message in fallback", () => {
 		const consoleError = vi
 			.spyOn(console, "error")
-			.mockImplementation(() => {});
+			.mockImplementation(() => { });
 
 		render(
 			<ErrorBoundary>
