@@ -96,7 +96,7 @@ export function NumberInput({
 			<div className="relative">
 				{icon && (
 					<HugeiconsIcon
-						className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/60"
+						className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
 						icon={icon}
 						size={22}
 					/>
@@ -113,24 +113,22 @@ export function NumberInput({
 					{...props}
 				/>
 
-				<div className="flex gap-1 absolute right-2 top-1/2 -translate-y-1/2">
+				<div className="flex pl-1 absolute border-l border-muted right-1.5 top-1/2 -translate-y-1/2">
 					<Button
-						disabled={
-							props.min !== undefined && internalValue <= Number(props.min)
-						}
+						className="rounded-full"
+						disabled={props.min !== undefined && internalValue <= Number(props.min)}
 						onClick={subtractOne}
-						size="icon"
+						size="icon-sm"
 						type="button"
 						variant="ghost"
 					>
 						<Minus size={18} />
 					</Button>
 					<Button
-						disabled={
-							props.max !== undefined && internalValue >= Number(props.max)
-						}
+						className="rounded-full"
+						disabled={props.max !== undefined && internalValue >= Number(props.max)}
 						onClick={addOne}
-						size="icon"
+						size="icon-sm"
 						type="button"
 						variant="ghost"
 					>

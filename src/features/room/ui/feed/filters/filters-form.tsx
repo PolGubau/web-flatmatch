@@ -16,8 +16,10 @@ import {
 } from "~/shared/components/ui/collapsible";
 import { DatePicker } from "~/shared/components/ui/date-picker";
 import { NumberInput } from "~/shared/components/ui/input/number-input";
+import { inputTheme } from "~/shared/components/ui/input/theme";
 import { Select } from "~/shared/components/ui/select";
 import type { RentType } from "~/shared/types/common";
+import { cn } from "~/shared/utils/utils";
 import type { AmenityKey } from "../../../model/constants/filter-amenities";
 import { AmenitiesFilter } from "./amenities-filter";
 
@@ -240,9 +242,9 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 			/>
 
 			{/* Amenidades con collapsible */}
-			<Collapsible className="border-2 rounded-lg border-muted overflow-hidden">
+			<Collapsible className={cn(inputTheme, "p-0 flex-col overflow-hidden cursor-pointer")}>
 				<CollapsibleTrigger asChild>
-					<div className="w-full justify-between flex items-center  bg-transparent px-3 py-2 text-sm data-[state=open]:bg-muted">
+					<div className="w-full justify-between flex items-center  bg-background transition-all px-3 py-2 text-sm data-[state=open]:bg-muted">
 						<span>{t("caracteristics")}</span>
 						<span className="flex gap-1 items-center text-xs text-muted-foreground">
 							{Object.values(selectedAmenities).filter(Boolean).length}{" "}
@@ -259,7 +261,6 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 				</CollapsibleContent>
 			</Collapsible>
 
-			{/*  */}
 			<footer className="w-full flex justify-end sticky bottom-0 bg-background pt-4 mt-4">
 				<Button type="submit">
 					{t("apply")}

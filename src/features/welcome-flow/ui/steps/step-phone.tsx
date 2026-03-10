@@ -65,7 +65,7 @@ export const StepPhone = ({
 					/>
 				</div>
 				<h2 className="text-2xl font-bold">What's your phone number?</h2>
-				<p className="text-sm text-foreground/60">
+				<p className="text-sm text-muted-foreground">
 					We'll use this to help you connect with potential roommates
 				</p>
 			</div>

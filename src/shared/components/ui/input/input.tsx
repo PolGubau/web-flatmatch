@@ -33,7 +33,7 @@ function Input({
 			<div className="relative">
 				{icon && (
 					<HugeiconsIcon
-						className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/60"
+						className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
 						icon={icon}
 						size={22}
 					/>

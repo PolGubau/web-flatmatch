@@ -5,7 +5,7 @@ import { t } from "i18next";
 export const MapPlaceholder = () => {
 	return (
 		<div className="w-full bg-foreground/5 grid place-items-center h-full min-h-64 rounded-lg overflow-hidden">
-			<div className="flex flex-col items-center gap-2 text-foreground/60">
+			<div className="flex flex-col items-center gap-2 text-muted-foreground">
 				<HugeiconsIcon icon={MapsIcon} size={60} />
 				<p className="max-w-xs px-6 text-center text-pretty">
 					{t("choose_location_to_display_on_map")}

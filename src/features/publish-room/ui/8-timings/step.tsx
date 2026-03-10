@@ -91,7 +91,7 @@ export function TimingsForm() {
 									required
 									{...register("timings.availableFrom")}
 								/>
-								<p className="text-xs text-foreground/60">
+								<p className="text-xs text-muted-foreground">
 									{t("when_room_becomes_available", {
 										defaultValue: "When does the room become available?",
 									})}
@@ -111,7 +111,7 @@ export function TimingsForm() {
 									placeholder="no_end_date"
 									{...register("timings.availableUntil")}
 								/>
-								<p className="text-xs text-foreground/60">
+								<p className="text-xs text-muted-foreground">
 									{t("leave_empty_indefinite", {
 										defaultValue: "Leave empty if available indefinitely",
 									})}
@@ -156,7 +156,7 @@ export function TimingsForm() {
 										})}
 									/>
 								</div>
-								<div className="text-sm text-foreground/60 pb-3">
+								<div className="text-sm text-muted-foreground pb-3">
 									{t("months_unit", { defaultValue: "month(s)" })}
 								</div>
 							</div>
@@ -177,16 +177,16 @@ export function TimingsForm() {
 								<p className="font-medium">
 									{hasEndDate
 										? t("room_available_from_to", {
-												defaultValue: "Room available from {{from}} to {{to}}",
-												from: new Date(availableFrom).toLocaleDateString(),
-												to: availableUntil
-													? new Date(availableUntil).toLocaleDateString()
-													: "",
-											})
+											defaultValue: "Room available from {{from}} to {{to}}",
+											from: new Date(availableFrom).toLocaleDateString(),
+											to: availableUntil
+												? new Date(availableUntil).toLocaleDateString()
+												: "",
+										})
 										: t("room_available_from", {
-												defaultValue: "Room available from {{from}}",
-												from: new Date(availableFrom).toLocaleDateString(),
-											})}
+											defaultValue: "Room available from {{from}}",
+											from: new Date(availableFrom).toLocaleDateString(),
+										})}
 								</p>
 								{showMaxStay && maxStayValue && (
 									<p className="text-foreground/70">

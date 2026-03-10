@@ -1,5 +1,3 @@
-"use client";
-
 import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { t } from "i18next";
@@ -54,33 +52,36 @@ export function DatePicker({
 				onChange={(e) => setDate(e.target.value)}
 				value={date ?? undefined}
 			/>
+			<button
+				className={cn(inputTheme, "outline-0 justify-between")}
+				data-size={size}
+				id="date"
+				onClick={() => setOpen(true)}
+				type="button"
+			>
+				<span className="text-foreground/70 text-base md:text-sm">
+					{date
+						? new Date(date).toLocaleDateString(i18n.language)
+						: t(placeholder)}
+				</span>
+				<HugeiconsIcon className="size-3.5" icon={ArrowDown01Icon} />
+			</button>
 			<Popover onOpenChange={setOpen} open={open}>
-				<PopoverTrigger asChild>
-					<Button
-						className={cn(inputTheme, "justify-between")}
-						data-size={size}
-						id="date"
-						variant="outline"
-					>
-						<span className="text-foreground/70 text-base md:text-sm">
-							{date
-								? new Date(date).toLocaleDateString(i18n.language)
-								: t(placeholder)}
-						</span>
-						<HugeiconsIcon className="size-3.5" icon={ArrowDown01Icon} />
-					</Button>
-				</PopoverTrigger>
 				<PopoverContent align="start" className="w-auto overflow-hidden p-0">
-					<Calendar
-						{...props}
-						captionLayout="dropdown"
-						mode="single"
-						onSelect={(date) => {
-							setDate(date?.toISOString() ?? null);
-							setOpen(false);
-						}}
-						selected={date ? new Date(date) : undefined}
-					/>
+					<div>
+						<div>
+							<Calendar
+								{...props}
+								captionLayout="dropdown"
+								mode="single"
+								onSelect={(date) => {
+									setDate(date?.toISOString() ?? null);
+									setOpen(false);
+								}}
+								selected={date ? new Date(date) : undefined}
+							/>
+						</div>
+					</div>
 				</PopoverContent>
 			</Popover>
 		</div>

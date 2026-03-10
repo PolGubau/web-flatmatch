@@ -41,7 +41,7 @@ export const PasswordInput = ({
 				<div className="relative w-full flex-1 h-full flex justify-start items-center">
 					{icon && (
 						<HugeiconsIcon
-							className="absolute left-0 top-1/2 -translate-y-1/2 text-foreground/60! size-[22px]"
+							className="absolute left-0 top-1/2 -translate-y-1/2 text-muted-foreground! size-[22px]"
 							icon={icon}
 						/>
 					)}

@@ -281,7 +281,7 @@ export function GalleryForm({
 			{/* Header con contador */}
 			<div className="flex items-center justify-between">
 				<h3 className="text-lg font-semibold">{t("upload_images")}</h3>
-				<span className="text-sm text-foreground/60">
+				<span className="text-sm text-muted-foreground">
 					{images.length} / {MAX_IMAGES}
 				</span>
 			</div>
@@ -323,7 +323,7 @@ export function GalleryForm({
 						<HugeiconsIcon
 							className={cn(
 								"transition-colors",
-								isDragging ? "text-primary" : "text-foreground/60",
+								isDragging ? "text-primary" : "text-muted-foreground",
 							)}
 							icon={isDragging ? ImageUpload01Icon : Camera01Icon}
 							size={32}
@@ -338,7 +338,7 @@ export function GalleryForm({
 									defaultValue: "Click to upload or drag and drop",
 								})}
 						</p>
-						<p className="text-sm text-foreground/60">
+						<p className="text-sm text-muted-foreground">
 							{t("image_requirements", {
 								defaultValue: "PNG, JPG, WEBP up to 5MB",
 							})}
@@ -361,7 +361,7 @@ export function GalleryForm({
 					<div className="absolute inset-0 bg-background/80 backdrop-blur-sm rounded-lg flex items-center justify-center">
 						<div className="flex flex-col items-center gap-2">
 							<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-							<p className="text-sm text-foreground/60">
+							<p className="text-sm text-muted-foreground">
 								{t("processing_images", { defaultValue: "Processing..." })}
 							</p>
 						</div>

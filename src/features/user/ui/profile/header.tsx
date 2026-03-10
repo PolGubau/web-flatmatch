@@ -31,7 +31,7 @@ export default function ProfileHeader({
 					<p className="text-foreground/80 max-md:text-sm">
 						{aboutMe ?? "No description provided."}
 					</p>
-					<small className="flex gap-1 text-foreground/60 text-xs items-center line-clamp-1">
+					<small className="flex gap-1 text-muted-foreground text-xs items-center line-clamp-1">
 						{t("registered")}:<TimeAgo realTime={false} timestamp={hereSince} />
 					</small>
 				</div>

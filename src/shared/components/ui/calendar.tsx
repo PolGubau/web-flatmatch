@@ -54,7 +54,7 @@ function Calendar({
 					"select-none font-medium",
 					captionLayout === "label"
 						? "text-sm"
-						: "rounded-lg pl-2 pr-1 flex items-center gap-1 text-sm h-8 [&>svg]:text-foreground/60 [&>svg]:size-3.5",
+						: "rounded-lg pl-2 pr-1 flex items-center gap-1 text-sm h-8 [&>svg]:text-muted-foreground [&>svg]:size-3.5",
 					defaultClassNames.caption_label,
 				),
 				day: cn(
@@ -109,7 +109,7 @@ function Calendar({
 				),
 				week: cn("flex w-full mt-2", defaultClassNames.week),
 				week_number: cn(
-					"text-[0.8rem] select-none text-foreground/60",
+					"text-[0.8rem] select-none text-muted-foreground",
 					defaultClassNames.week_number,
 				),
 				week_number_header: cn(
@@ -117,7 +117,7 @@ function Calendar({
 					defaultClassNames.week_number_header,
 				),
 				weekday: cn(
-					"text-foreground/60 rounded-lg flex-1 font-normal text-[0.8rem] select-none",
+					"text-muted-foreground rounded-lg flex-1 font-normal text-[0.8rem] select-none",
 					defaultClassNames.weekday,
 				),
 				weekdays: cn("flex", defaultClassNames.weekdays),

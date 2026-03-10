@@ -15,7 +15,7 @@ export const EmptyRoomsState = ({
 	const { t } = useTranslation();
 
 	return (
-		<div className="text-center form text-foreground/60 max-w-md items-center">
+		<div className="text-center form text-muted-foreground max-w-md items-center">
 			{t("there_are_no_more_rooms")}
 			<Button className="group" disabled={isLoading} onClick={onRefetch}>
 				<HugeiconsIcon

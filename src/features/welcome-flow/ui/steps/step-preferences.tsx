@@ -25,10 +25,10 @@ interface StepPreferencesProps {
 }
 
 const ROOM_TYPES = [
-	{ value: "private", label: "Private room" },
-	{ value: "shared", label: "Shared room" },
-	{ value: "studio", label: "Studio/Apartment" },
-	{ value: "any", label: "Any type" },
+	{ label: "Private room", value: "private" },
+	{ label: "Shared room", value: "shared" },
+	{ label: "Studio/Apartment", value: "studio" },
+	{ label: "Any type", value: "any" },
 ];
 
 const POPULAR_CITIES = [
@@ -83,10 +83,10 @@ export const StepPreferences = ({
 		<form className="form space-y-6" onSubmit={handleSubmit}>
 			<div className="text-center space-y-2">
 				<div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
-					<HugeiconsIcon icon={Home01Icon} size={32} className="text-primary" />
+					<HugeiconsIcon className="text-primary" icon={Home01Icon} size={32} />
 				</div>
 				<h2 className="text-2xl font-bold">What are you looking for?</h2>
-				<p className="text-sm text-foreground/60">
+				<p className="text-sm text-muted-foreground">
 					Help us find the perfect room for you
 				</p>
 			</div>
@@ -94,22 +94,22 @@ export const StepPreferences = ({
 			<div className="space-y-4">
 				{/* Ciudad */}
 				<div className="space-y-2">
-					<Label htmlFor="city" className="flex items-center gap-2">
+					<Label className="flex items-center gap-2" htmlFor="city">
 						<HugeiconsIcon icon={Location01Icon} size={16} />
 						City
 					</Label>
 					<Input
+						className={cn(error && !city && "border-destructive")}
+						disabled={isLoading}
 						id="city"
-						type="text"
-						placeholder="e.g., Barcelona"
-						value={city}
+						list="cities"
 						onChange={(e) => {
 							setCity(e.target.value);
 							if (error) setError("");
 						}}
-						list="cities"
-						className={cn(error && !city && "border-destructive")}
-						disabled={isLoading}
+						placeholder="e.g., Barcelona"
+						type="text"
+						value={city}
 					/>
 					<datalist id="cities">
 						{POPULAR_CITIES.map((c) => (
@@ -120,29 +120,29 @@ export const StepPreferences = ({
 
 				{/* Presupuesto */}
 				<div className="space-y-2">
-					<Label htmlFor="budget" className="flex items-center gap-2">
+					<Label className="flex items-center gap-2" htmlFor="budget">
 						<EuroIcon size={16} />
 						Maximum budget (per month)
 					</Label>
 					<div className="relative">
 						<Input
-							id="budget"
-							type="number"
-							placeholder="500"
-							value={maxBudget}
-							onChange={(e) => {
-								setMaxBudget(e.target.value);
-								if (error) setError("");
-							}}
-							min="0"
-							step="50"
 							className={cn(
 								"pr-12",
 								error && !maxBudget && "border-destructive",
 							)}
 							disabled={isLoading}
+							id="budget"
+							min="0"
+							onChange={(e) => {
+								setMaxBudget(e.target.value);
+								if (error) setError("");
+							}}
+							placeholder="500"
+							step="50"
+							type="number"
+							value={maxBudget}
 						/>
-						<span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-foreground/60">
+						<span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
 							€/mo
 						</span>
 					</div>
@@ -152,16 +152,16 @@ export const StepPreferences = ({
 				<div className="space-y-2">
 					<Label htmlFor="room-type">Room type</Label>
 					<Select
-						value={roomType}
+						disabled={isLoading}
 						onValueChange={(value) => {
 							setRoomType(value);
 							if (error) setError("");
 						}}
-						disabled={isLoading}
+						value={roomType}
 					>
 						<SelectTrigger
-							id="room-type"
 							className={cn(error && !roomType && "border-destructive")}
+							id="room-type"
 						>
 							<SelectValue placeholder="Select room type" />
 						</SelectTrigger>
@@ -176,29 +176,22 @@ export const StepPreferences = ({
 				</div>
 
 				{error && (
-					<p className="text-xs text-destructive animate-in fade-in">
-						{error}
-					</p>
+					<p className="text-xs text-destructive animate-in fade-in">{error}</p>
 				)}
 			</div>
 
 			<div className="space-y-3">
-				<Button
-					type="submit"
-					className="w-full"
-					disabled={isLoading}
-					size="lg"
-				>
+				<Button className="w-full" disabled={isLoading} size="lg" type="submit">
 					{isLoading ? "Saving..." : "Continue"}
 				</Button>
 
 				{onSkip && (
 					<Button
+						className="w-full"
+						disabled={isLoading}
+						onClick={onSkip}
 						type="button"
 						variant="ghost"
-						className="w-full"
-						onClick={onSkip}
-						disabled={isLoading}
 					>
 						Skip for now
 					</Button>
@@ -207,4 +200,3 @@ export const StepPreferences = ({
 		</form>
 	);
 };
-

@@ -138,11 +138,11 @@ export const ErrorSection = ({
 							<Button className="w-full text-xs" size="sm" variant="ghost">
 								{showDetails
 									? t("hide_technical_details", {
-											defaultValue: "Hide technical details",
-										})
+										defaultValue: "Hide technical details",
+									})
 									: t("show_technical_details", {
-											defaultValue: "Show technical details",
-										})}
+										defaultValue: "Show technical details",
+									})}
 							</Button>
 						</CollapsibleTrigger>
 
@@ -153,7 +153,7 @@ export const ErrorSection = ({
 										<span className="font-semibold text-foreground/70">
 											Component:
 										</span>
-										<span className="ml-2 font-mono text-foreground/60">
+										<span className="ml-2 font-mono text-muted-foreground">
 											{componentName}
 										</span>
 									</div>
@@ -163,7 +163,7 @@ export const ErrorSection = ({
 									<span className="font-semibold text-foreground/70">
 										Type:
 									</span>
-									<span className="ml-2 font-mono text-foreground/60">
+									<span className="ml-2 font-mono text-muted-foreground">
 										{error.name}
 									</span>
 								</div>
@@ -172,7 +172,7 @@ export const ErrorSection = ({
 									<span className="font-semibold text-foreground/70">
 										Message:
 									</span>
-									<p className="mt-1 font-mono text-foreground/60 break-words">
+									<p className="mt-1 font-mono text-muted-foreground break-words">
 										{error.message}
 									</p>
 								</div>

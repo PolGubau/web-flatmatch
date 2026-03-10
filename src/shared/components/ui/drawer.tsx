@@ -65,7 +65,7 @@ export const Drawer = ({
 									<D.Title className="text-lg font-semibold">{title}</D.Title>
 								)}
 								{description && (
-									<D.Description className="text-sm text-foreground/60">
+									<D.Description className="text-sm text-muted-foreground">
 										{description}
 									</D.Description>
 								)}

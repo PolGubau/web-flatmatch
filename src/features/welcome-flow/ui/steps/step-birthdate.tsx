@@ -87,7 +87,7 @@ export const StepBirthdate = ({
 					/>
 				</div>
 				<h2 className="text-2xl font-bold">When's your birthday?</h2>
-				<p className="text-sm text-foreground/60">
+				<p className="text-sm text-muted-foreground">
 					You must be at least 18 years old to use Flatmatch
 				</p>
 			</div>
@@ -115,7 +115,7 @@ export const StepBirthdate = ({
 						</p>
 					)}
 					{age !== null && age >= 18 && (
-						<p className="text-xs text-foreground/60 text-center animate-in fade-in">
+						<p className="text-xs text-muted-foreground text-center animate-in fade-in">
 							You're {age} years old
 						</p>
 					)}

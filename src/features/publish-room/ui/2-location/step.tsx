@@ -66,31 +66,31 @@ export function LocationForm() {
 						{location.address && (
 							<ul className="flex flex-col gap-2 text-sm text-foreground/80">
 								<li className="grid grid-cols-2 gap-2">
-									<span className="capitalize text-foreground/60">
+									<span className="capitalize text-muted-foreground">
 										{t("city")}
 									</span>
 									<span>{location.city}</span>
 								</li>
 								<li className="grid grid-cols-2 gap-2">
-									<span className="capitalize text-foreground/60">
+									<span className="capitalize text-muted-foreground">
 										{t("country")}
 									</span>
 									<span>{location.country}</span>
 								</li>
 								<li className="grid grid-cols-2 gap-2">
-									<span className="capitalize text-foreground/60">
+									<span className="capitalize text-muted-foreground">
 										{t("postal_code")}
 									</span>
 									<span>{location.postalCode}</span>
 								</li>
 								<li className="grid grid-cols-2 gap-2">
-									<span className="capitalize text-foreground/60">
+									<span className="capitalize text-muted-foreground">
 										{t("latitude")}
 									</span>
 									<span>{location.lat}</span>
 								</li>
 								<li className="grid grid-cols-2 gap-2">
-									<span className="capitalize text-foreground/60">
+									<span className="capitalize text-muted-foreground">
 										{t("longitude")}
 									</span>
 									<span>{location.lng}</span>

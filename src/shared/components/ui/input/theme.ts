@@ -7,10 +7,11 @@ export const inputTheme = cn(
 	"disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed ",
 
 	// Focus
-	"focus-visible:ring-2 focus-visible:border-foreground/50 focus-visible:ring-foreground/30",
+	"focus-visible:ring-2 focus-visible:border-foreground/50 focus-visible:ring-border-muted-foreground",
 
 	// Border
-	"border-2 border-foreground/30 ",
+	"border-2 border-muted",
+	"hover:border-muted-foreground/50",
 
 	// Base - text-base (16px) en móvil para prevenir zoom en iOS, text-sm en desktop
 	"flex items-center justify-between gap-2 rounded-xl w-full min-w-0 transition-[color,box-shadow] outline-none whitespace-nowrap bg-transparent text-base md:text-sm shadow-xs text-foreground",
