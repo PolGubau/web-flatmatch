@@ -70,7 +70,7 @@ export default function HomePage() {
 				<div className="flex-1 flex items-center justify-center min-h-0">
 					{thereAreRooms ? (
 						<>
-							<div className="flex flex-col gap-6 w-full h-full md:h-full md:max-h-[1000px] items-center justify-center min-h-0">
+							<div className="flex flex-col gap-2 md:gap-6 w-full h-full md:h-full md:max-h-[1000px] items-center justify-center min-h-0">
 								<div className="flex-1 w-full min-h-0 flex items-center justify-center">
 									<RoomCardsStack onSwipe={onSwipe} rooms={rooms} />
 								</div>

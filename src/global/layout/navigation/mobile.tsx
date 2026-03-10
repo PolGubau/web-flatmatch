@@ -32,8 +32,8 @@ export const MobileNavigation = ({ items }: MobileNavigationProps) => {
 							className={({ isActive }) =>
 								cn(
 									// Base styles
-									"relative flex flex-col items-center justify-center gap-1.5",
-									"py-2.5 px-2 min-h-[60px]",
+									"relative flex flex-col items-center justify-center gap-0.5 md:gap-1.5",
+									"pb-0.5 py-2 px-2 min-h-[50px]",
 									"transition-all duration-200 ease-out",
 									"active:scale-95 active:brightness-90",
 									// Text styles
@@ -65,8 +65,8 @@ export const MobileNavigation = ({ items }: MobileNavigationProps) => {
 										)}
 									>
 										<HugeiconsIcon
+											className="size-4.5 md:size-6"
 											icon={item.icon}
-											size={22}
 											strokeWidth={isActive ? 2 : 1.5}
 										/>
 

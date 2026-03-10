@@ -33,7 +33,7 @@ export const SwipeActions = ({
 	};
 
 	return (
-		<nav className="flex gap-2 justify-between mx-auto w-[85vw] max-w-lg relative z-20">
+		<nav className="gap-2 grid grid-cols-4 md:grid-cols-[1fr_2fr_2fr_1fr] w-[90vw] max-w-lg relative z-20">
 			{/* Reject - Left Arrow or A */}
 			<Tooltip
 				label={
@@ -44,7 +44,7 @@ export const SwipeActions = ({
 			>
 				<Button
 					aria-label={t("reject")}
-					className="bg-destructive/10 size-12 md:size-14 backdrop-blur-md"
+					className="h-12 w-full flex flex-1 bg-destructive/10 backdrop-blur-md"
 					disabled={disabled}
 					onClick={() => handleSwipe("left")}
 					size={"icon-lg"}
@@ -65,7 +65,7 @@ export const SwipeActions = ({
 			>
 				<Button
 					aria-label={t("see_details")}
-					className="min-w-12 w-full h-12 md:min-w-14 md:h-14 flex-1"
+					className="h-12 w-full flex-1 flex backdrop-blur-md"
 					disabled={disabled}
 					onClick={() => handleSwipe("up")}
 					title="See details (↑ or W)"
@@ -86,19 +86,17 @@ export const SwipeActions = ({
 					</div>
 				}
 			>
-				<div>
-					<Button
-						className="bg-green-500/20 size-12 md:size-14 backdrop-blur-md"
-						disabled={disabled}
-						onClick={() => handleSwipe("right")}
-						size={"icon-lg"}
-						title="Like (→ or D)"
-						variant={"ghost"}
-					>
-						<HugeiconsIcon aria-hidden="true" icon={ArrowRight01Icon} />
-						<span className="sr-only">{t("like")}</span>
-					</Button>
-				</div>
+				<Button
+					className="h-12 w-full flex-1 flex backdrop-blur-md bg-green-500/20"
+					disabled={disabled}
+					onClick={() => handleSwipe("right")}
+					size={"icon-lg"}
+					title="Like (→ or D)"
+					variant={"ghost"}
+				>
+					<HugeiconsIcon aria-hidden="true" icon={ArrowRight01Icon} />
+					<span className="sr-only">{t("like")}</span>
+				</Button>
 			</Tooltip>
 		</nav>
 	);

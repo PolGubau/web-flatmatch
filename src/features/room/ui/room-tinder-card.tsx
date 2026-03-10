@@ -158,7 +158,7 @@ export const RoomTinderCard = ({
 
 	return (
 		<motion.div
-			className="h-full bg-neutral-500 backdrop-blur-md overflow-hidden w-[85vw] max-w-lg rounded-3xl hover:cursor-grab active:cursor-grabbing origin-bottom shadow-lg shadow-neutral-500/20 relative touch-none"
+			className="h-full bg-foreground/10 backdrop-blur-md overflow-hidden w-[90vw] max-w-lg rounded-2xl md:rounded-3xl hover:cursor-grab active:cursor-grabbing origin-bottom shadow-lg shadow-foreground/10 relative touch-none"
 			drag
 			dragConstraints={{ bottom: 0, left: 0, right: 0, top: 0 }}
 			dragElastic={0.7}
@@ -189,7 +189,7 @@ export const RoomTinderCard = ({
 
 			{/* Like emoji (right swipe) */}
 			<motion.div
-				className="absolute top-1/2 right-8 -translate-y-1/2 z-50 pointer-events-none text-8xl select-none"
+				className="absolute top-1/2 left-8 -translate-y-1/2 z-50 pointer-events-none text-8xl select-none"
 				style={{
 					opacity: likeEmojiOpacity,
 					scale: likeEmojiScale,
@@ -200,7 +200,7 @@ export const RoomTinderCard = ({
 
 			{/* Dislike emoji (left swipe) */}
 			<motion.div
-				className="absolute top-1/2 left-8 -translate-y-1/2 z-50 pointer-events-none text-8xl select-none"
+				className="absolute top-1/2 right-8 -translate-y-1/2 z-50 pointer-events-none text-8xl select-none"
 				style={{
 					opacity: dislikeEmojiOpacity,
 					scale: dislikeEmojiScale,

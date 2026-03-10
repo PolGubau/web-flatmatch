@@ -28,17 +28,17 @@ export const getMenuItems = (
 	unreadCount = 0,
 	isLoading = false,
 ): FooterMenuItem[] => [
-	{ href: "/", icon: Home01Icon, label: "home" },
-	{ href: "/favs", icon: FavouriteIcon, label: "favourites" },
-	{
-		badge: unreadCount || undefined,
-		href: "/chat",
-		icon: Message01Icon,
-		isLoadingBadge: isLoading,
-		label: "chat",
-	},
-	{ href: "/profile", icon: UserIcon, label: "profile" },
-];
+		{ href: "/", icon: Home01Icon, label: "home" },
+		{ href: "/favs", icon: FavouriteIcon, label: "favourites" },
+		{
+			badge: unreadCount || undefined,
+			href: "/chat",
+			icon: Message01Icon,
+			isLoadingBadge: isLoading,
+			label: "chat",
+		},
+		{ href: "/profile", icon: UserIcon, label: "profile" },
+	];
 
 const MainLayout = ({ children }: PropsWithChildren) => {
 	const { t } = useTranslation();
@@ -47,7 +47,7 @@ const MainLayout = ({ children }: PropsWithChildren) => {
 	const menuItems = getMenuItems(unreadCount, isLoading);
 
 	return (
-		<div className="grid grid-rows-[auto_1fr_auto] md:grid-rows-[auto_1fr] relative flex-col h-dvh gap-4 overflow-hidden bg-background text-foreground">
+		<div className="grid grid-rows-[auto_1fr_auto] md:grid-rows-[auto_1fr] relative flex-col h-dvh gap-2 md:gap-4 overflow-hidden bg-background text-foreground">
 			<header
 				className="p-2 md:p-4 pl-4 flex justify-between items-center backdrop-blur-md"
 				style={{ zIndex: 11 }}

@@ -23,7 +23,6 @@ export const FiltersModal = () => {
 
 	return (
 		<>
-			{" "}
 			<Tooltip
 				aria-label={t("filters")}
 				label={
@@ -33,7 +32,7 @@ export const FiltersModal = () => {
 				}
 			>
 				<Button
-					className="min-w-14 h-14 flex-1"
+					className="h-12 w-full flex-1 flex backdrop-blur-md"
 					onClick={() => setIsOpen(true)}
 					variant={"secondary"}
 				>
