@@ -1,6 +1,7 @@
 import { FilterIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { t } from "i18next";
+import { ChevronDown } from "lucide-react";
 import { useCallback, useState } from "react";
 import { RENT_TYPES } from "~/features/publish-room/ui/1-type/step";
 import {
@@ -15,12 +16,10 @@ import {
 } from "~/shared/components/ui/collapsible";
 import { DatePicker } from "~/shared/components/ui/date-picker";
 import { NumberInput } from "~/shared/components/ui/input/number-input";
-import { inputTheme } from "~/shared/components/ui/input/theme";
 import { Select } from "~/shared/components/ui/select";
 import type { RentType } from "~/shared/types/common";
 import type { AmenityKey } from "../../../model/constants/filter-amenities";
 import { AmenitiesFilter } from "./amenities-filter";
-import { OptionList } from "./options-list/list";
 
 export const availableLocations = [
 	"barcelona",
@@ -194,11 +193,12 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 
 			<fieldset>
 				<legend>{t("price_range")}</legend>
-				<div className="grid gap-4 md:grid-cols-2">
+				<div className="grid gap-4 grid-cols-2">
 					<NumberInput
 						defaultValue={minPrice}
 						label={"min_price"}
 						max={maxPrice ?? undefined}
+						min={0}
 						name="minPrice"
 						onValueChange={setMinPrice}
 						placeholder={t("any")}
@@ -207,6 +207,7 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 					<NumberInput
 						defaultValue={maxPrice}
 						label={"max_price"}
+						max={10000}
 						min={minPrice ?? undefined}
 						name="maxPrice"
 						onValueChange={setMaxPrice}
@@ -239,21 +240,18 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 			/>
 
 			{/* Amenidades con collapsible */}
-			<Collapsible>
+			<Collapsible className="border-2 rounded-lg border-muted overflow-hidden">
 				<CollapsibleTrigger asChild>
-					<Button
-						className="w-full justify-between"
-						type="button"
-						variant="outline"
-					>
-						<span>{t("amenities")}</span>
-						<span className="text-xs text-muted-foreground">
+					<div className="w-full justify-between flex items-center  bg-transparent px-3 py-2 text-sm data-[state=open]:bg-muted">
+						<span>{t("caracteristics")}</span>
+						<span className="flex gap-1 items-center text-xs text-muted-foreground">
 							{Object.values(selectedAmenities).filter(Boolean).length}{" "}
 							{t("selected")}
+							<ChevronDown size={16} />
 						</span>
-					</Button>
+					</div>
 				</CollapsibleTrigger>
-				<CollapsibleContent className="pt-4">
+				<CollapsibleContent className="p-2">
 					<AmenitiesFilter
 						onAmenityToggle={handleAmenityToggle}
 						selectedAmenities={selectedAmenities}

@@ -42,24 +42,31 @@ export const AmenitiesFilter = ({
 						{t(group.label)}
 					</h4>
 					<div className="grid grid-cols-2 gap-3">
-						{group.amenities.map((amenity) => (
-							<Label
-								className="flex items-center gap-2 cursor-pointer"
-								htmlFor={amenity}
-								key={amenity}
-							>
-								<Checkbox
-									checked={selectedAmenities[amenity] ?? false}
-									id={amenity}
-									onCheckedChange={(checked: boolean | "indeterminate") =>
-										onAmenityToggle(amenity, checked === true)
-									}
-								/>
-								<span className="text-sm">
-									{t(FILTERABLE_AMENITIES[amenity])}
-								</span>
-							</Label>
-						))}
+						{group.amenities.map((amenity) => {
+
+							const isChecked = selectedAmenities[amenity] ?? false;
+							const label = t(FILTERABLE_AMENITIES[amenity]);
+							function handleChange(checked: boolean | "indeterminate") {
+								onAmenityToggle(amenity, checked === true);
+							}
+
+							return (
+								<Label
+									className="flex items-center gap-2 cursor-pointer"
+									htmlFor={amenity}
+									key={amenity}
+								>
+									<Checkbox
+										checked={isChecked}
+										id={amenity}
+										onCheckedChange={handleChange}
+									/>
+									<span className="text-sm">
+										{label}
+									</span>
+								</Label>
+							)
+						})}
 					</div>
 				</div>
 			))}
