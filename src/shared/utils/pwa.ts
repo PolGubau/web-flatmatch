@@ -1,3 +1,6 @@
+import { t } from "i18next";
+import { toast } from "~/shared/components/ui/sonner";
+
 /**
  * Service Worker Registration
  * Registers the service worker for PWA functionality
@@ -50,9 +53,14 @@ export function registerServiceWorker() {
 }
 
 function showUpdateNotification() {
-	if (confirm("A new version of Flatmatch is available! Reload to update?")) {
-		window.location.reload();
-	}
+	toast.info(t("new_version_available"), {
+		action: {
+			label: t("reload"),
+			onClick: () => window.location.reload(),
+		},
+		description: t("new_version_available_description"),
+		duration: Number.POSITIVE_INFINITY, // No auto-dismiss
+	});
 }
 
 export function isStandalone(): boolean {

@@ -187,6 +187,8 @@
 	"mutation_error": "Mutation error",
 	"new_message": "New message",
 	"new_messages": "{{count}} new messages",
+	"new_version_available": "New version available!",
+	"new_version_available_description": "A new version of Flatmatch is available. Reload to update.",
 	"next": "Next",
 	"nice_to_meet_you": "Nice to meet you",
 	"no_conversation_id": "No conversation ID",
