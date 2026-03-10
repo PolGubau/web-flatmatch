@@ -62,6 +62,14 @@ export const listYourRoomsService = async (): Promise<RoomWithMetadata[]> => {
 	return dtoList;
 };
 
+export const listUserRoomsService = async (
+	userId: string,
+): Promise<RoomWithMetadata[]> => {
+	if (!userId) throw new Error("User ID is required");
+	const dtoList = await RoomRepository.findByUserId(userId);
+	return dtoList;
+};
+
 export const interactWithRoomService = async (
 	roomId: Room["id"],
 	action: RoomAction,

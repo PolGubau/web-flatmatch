@@ -65,6 +65,27 @@ export const getYourRooms: FindAll<RoomWithMetadata> = async () => {
 };
 
 /**
+ * Obtiene las rooms de un usuario específico por su ID
+ */
+export const getUserRooms = async (
+	targetUserId: string,
+): Promise<RoomWithMetadata[]> => {
+	// Obtener el usuario actual para las interacciones (puede ser null si no está autenticado)
+	const currentUser = await authUtils.getCurrentUser();
+	const currentUserId = currentUser?.id ?? null;
+
+	const data = await getRoomsWithMetadata({
+		createdBy: targetUserId,
+		userId: currentUserId ?? undefined,
+	});
+
+	const roomWithMetadata = data.map((item) =>
+		roomBDtoDomainAndMetadata(item as unknown as RoomWithMetadataDB),
+	);
+	return roomWithMetadata;
+};
+
+/**
  * Devuelve una room por id con verificación
  */
 export const getOneRoom: FindById<RoomWithMetadata> = async (id) => {

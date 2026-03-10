@@ -5,6 +5,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { useTranslation } from "react-i18next";
 import { Navigate } from "react-router";
+import { UserRooms } from "~/features/room/ui/user-rooms/user-rooms";
 import { YourRooms } from "~/features/room/ui/your-rooms/your-rooms";
 import { useUser } from "~/features/user/model/use-user";
 import type { Item } from "~/features/user/ui/profile/chips/chip-item";
@@ -95,7 +96,7 @@ export default function ProfilePage({ userId, isYours }: Props) {
 							userId={user.id}
 						/>
 					)}
-					<YourRooms />
+					{isYours ? <YourRooms /> : <UserRooms userId={userId} />}
 				</section>
 			</div>
 		</ErrorBoundary>

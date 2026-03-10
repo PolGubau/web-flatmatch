@@ -10,6 +10,7 @@ import {
 	getFeed,
 	getManyRooms,
 	getOneRoom,
+	getUserRooms,
 	getYourRooms,
 	interactRoom,
 	removeInteraction,
@@ -48,12 +49,14 @@ type RoomRepository = Omit<
 	interact: InteractApi;
 	removeInteraction: RemoveInteractionApi;
 	findYours: () => Promise<RoomWithMetadata[]>;
+	findByUserId: (userId: string) => Promise<RoomWithMetadata[]>;
 };
 export const RoomRepository: RoomRepository = {
 	create: (data) => createRoom(data),
 	delete: (id) => deleteRoom(id),
 	findAll: getFeed,
 	findById: (id) => getOneRoom(id),
+	findByUserId: (userId) => getUserRooms(userId),
 	findFavorites: () => getFavoriteRooms(),
 	findMany: (ids) => getManyRooms(ids),
 	findYours: () => getYourRooms(),
