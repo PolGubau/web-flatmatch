@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { useEffect, useRef } from "react";
 import { useNotificationPermission } from "~/shared/hooks/use-notification-permission";
 import { useUnreadMessages } from "./use-unread-messages";
@@ -17,9 +18,11 @@ export function useChatNotifications() {
 			const newMessages = unreadCount - previousCount.current;
 
 			showNotification(
-				newMessages === 1 ? "Nuevo mensaje" : `${newMessages} mensajes nuevos`,
+				newMessages === 1
+					? t("new_message")
+					: t("new_messages", { count: newMessages }),
 				{
-					body: "Tienes mensajes sin leer en Flatmatch",
+					body: t("unread_messages_notification"),
 					requireInteraction: false,
 					silent: false,
 					tag: "chat-message", // Agrupa notificaciones del mismo tipo

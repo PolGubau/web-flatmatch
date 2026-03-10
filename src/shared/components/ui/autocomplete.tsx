@@ -25,7 +25,7 @@ type Props<T extends string> = HTMLAttributes<HTMLInputElement> & {
 	onSearchValueChange: (value: string) => void;
 	items: { value: T; label: string }[];
 	isLoading?: boolean;
-	emptyMessage?: string;
+	emptyMessage?: TranslationKey;
 	placeholder: TranslationKey;
 	rightContent?: React.ReactNode;
 };
@@ -37,7 +37,7 @@ export function AutoComplete<T extends string>({
 	onSearchValueChange,
 	items,
 	isLoading,
-	emptyMessage = "No items.",
+	emptyMessage = "no_items",
 	placeholder = "search",
 	rightContent,
 	...rest
@@ -121,11 +121,11 @@ export function AutoComplete<T extends string>({
 							{isLoading && (
 								<CommandPrimitive.Loading>
 									<div className="p-1 flex flex-col gap-1">
-										<Skeleton className="w-full min-h-8">Loading...</Skeleton>
-										<Skeleton className="w-full min-h-8">Loading...</Skeleton>
-										<Skeleton className="w-full min-h-8">Loading...</Skeleton>
-										<Skeleton className="w-full min-h-8">Loading...</Skeleton>
-										<Skeleton className="w-full min-h-8">Loading...</Skeleton>
+										<Skeleton className="w-full min-h-8">{t("loading_text")}</Skeleton>
+										<Skeleton className="w-full min-h-8">{t("loading_text")}</Skeleton>
+										<Skeleton className="w-full min-h-8">{t("loading_text")}</Skeleton>
+										<Skeleton className="w-full min-h-8">{t("loading_text")}</Skeleton>
+										<Skeleton className="w-full min-h-8">{t("loading_text")}</Skeleton>
 									</div>
 								</CommandPrimitive.Loading>
 							)}
@@ -154,7 +154,7 @@ export function AutoComplete<T extends string>({
 								</CommandGroup>
 							) : null}
 							{!isLoading ? (
-								<CommandEmpty>{emptyMessage ?? "No items."}</CommandEmpty>
+								<CommandEmpty>{t(emptyMessage)}</CommandEmpty>
 							) : null}
 						</CommandList>
 					</PopoverContent>

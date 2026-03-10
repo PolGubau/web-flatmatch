@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { toast } from "~/shared/components/ui/sonner";
 import { logger } from "./logger";
 
@@ -25,13 +26,14 @@ export const errorHandler = {
 	getErrorMessage: (error: unknown): string => {
 		if (error instanceof Error) return error.message;
 		if (typeof error === "string") return error;
-		return "An unexpected error occurred";
+		return t("an_unexpected_error_occurred");
 	},
 	/**
 	 * Handle API errors and show appropriate user feedback
 	 */
-	handleApiError: (error: unknown, fallbackMessage = "An error occurred") => {
-		logger.error("API Error", error);
+	handleApiError: (error: unknown, fallbackMessage?: string) => {
+		const defaultMessage = fallbackMessage ?? t("an_error_occurred");
+		logger.error(t("api_error"), error);
 
 		if (error instanceof AppError) {
 			toast.error(error.message);
@@ -39,12 +41,12 @@ export const errorHandler = {
 		}
 
 		if (error instanceof Error) {
-			toast.error(error.message || fallbackMessage);
+			toast.error(error.message || defaultMessage);
 			return new AppError(error.message, "UNKNOWN_ERROR");
 		}
 
-		toast.error(fallbackMessage);
-		return new AppError(fallbackMessage, "UNKNOWN_ERROR");
+		toast.error(defaultMessage);
+		return new AppError(defaultMessage, "UNKNOWN_ERROR");
 	},
 
 	/**

@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
 	isRouteErrorResponse,
@@ -10,7 +11,7 @@ import {
 	Scripts,
 	ScrollRestoration,
 } from "react-router";
-import { CACHE_CONFIG } from "~/global/constants";
+import { CACHE_CONFIG, constants } from "~/global/constants";
 import MainLayout from "~/global/layout/main-layout";
 import { AuthContextProvider } from "~/global/supabase/auth-context";
 import { LoadingSection } from "~/shared/components/pages/LoadingSection";
@@ -55,10 +56,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 					name="apple-mobile-web-app-status-bar-style"
 				/>
 				<meta content="Flatmatch" name="apple-mobile-web-app-title" />
-				<meta
-					content="Find your perfect roommate and flat sharing experience"
-					name="description"
-				/>
+				<meta content={constants.description} name="description" />
 				<meta content="telephone=no" name="format-detection" />
 				<meta content="yes" name="mobile-web-app-capable" />
 				<meta content="#000000" name="theme-color" />
@@ -141,15 +139,16 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-	let message = "Oops!";
-	let details = "An unexpected error occurred.";
+	const { t } = useTranslation();
+	let message = t("error_boundary_oops");
+	let details = t("error_boundary_unexpected");
 	let stack: string | undefined;
 
 	if (isRouteErrorResponse(error)) {
-		message = error.status === 404 ? "404" : "Error";
+		message = error.status === 404 ? t("error_boundary_404") : "Error";
 		details =
 			error.status === 404
-				? "The requested page could not be found."
+				? t("error_boundary_page_not_found")
 				: error.statusText || details;
 	} else if (import.meta.env.DEV && error && error instanceof Error) {
 		details = error.message;
