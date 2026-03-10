@@ -6,8 +6,11 @@ import { t } from "i18next";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 import type { TranslationKey } from "~/shared/i18n/i18n";
+import type { Breakpoints } from "~/shared/types/common";
+import { cn } from "~/shared/utils/utils";
 import { Button } from "./button";
 import { Calendar } from "./calendar";
+import { inputTheme } from "./input/theme";
 import { Label } from "./label";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
@@ -20,6 +23,7 @@ export type DatePickerProps = Omit<
 	required?: boolean;
 	defaultIsoValue?: string | null;
 	label?: TranslationKey;
+	size?: Breakpoints;
 };
 export function DatePicker({
 	className,
@@ -27,6 +31,7 @@ export function DatePicker({
 	placeholder = "select_option",
 	label,
 	required = false,
+	size = "md",
 	defaultIsoValue,
 	...props
 }: DatePickerProps) {
@@ -52,14 +57,17 @@ export function DatePicker({
 			<Popover onOpenChange={setOpen} open={open}>
 				<PopoverTrigger asChild>
 					<Button
-						className=" justify-between font-normal h-12"
+						className={cn(inputTheme, "justify-between")}
+						data-size={size}
 						id="date"
 						variant="outline"
 					>
-						{date
-							? new Date(date).toLocaleDateString(i18n.language)
-							: t(placeholder)}
-						<HugeiconsIcon icon={ArrowDown01Icon} />
+						<span className="text-foreground/70 text-base md:text-sm">
+							{date
+								? new Date(date).toLocaleDateString(i18n.language)
+								: t(placeholder)}
+						</span>
+						<HugeiconsIcon className="size-3.5" icon={ArrowDown01Icon} />
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent align="start" className="w-auto overflow-hidden p-0">

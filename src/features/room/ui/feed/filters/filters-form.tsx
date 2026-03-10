@@ -15,6 +15,8 @@ import {
 } from "~/shared/components/ui/collapsible";
 import { DatePicker } from "~/shared/components/ui/date-picker";
 import { NumberInput } from "~/shared/components/ui/input/number-input";
+import { inputTheme } from "~/shared/components/ui/input/theme";
+import { Select } from "~/shared/components/ui/select";
 import type { RentType } from "~/shared/types/common";
 import type { AmenityKey } from "../../../model/constants/filter-amenities";
 import { AmenitiesFilter } from "./amenities-filter";
@@ -177,18 +179,18 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 
 	return (
 		<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-			<fieldset>
-				<legend>{t("location")}</legend>
-				<OptionList
-					name="location"
-					onSelectOption={setSelectedLocation}
-					options={availableLocations.map((location) => ({
-						label: location,
-						value: location,
-					}))}
-					selectedOption={selectedLocation}
-				/>
-			</fieldset>
+			<Select
+				allowClear
+				clearLabel="any"
+				label="location"
+				onChange={(value) => setSelectedLocation((value as Location) || null)}
+				options={availableLocations.map((location) => ({
+					label: location,
+					value: location,
+				}))}
+				placeholder="select_option"
+				value={selectedLocation || ""}
+			/>
 
 			<fieldset>
 				<legend>{t("price_range")}</legend>
@@ -215,26 +217,26 @@ export const FiltersForm = ({ onSubmit }: Props) => {
 			</fieldset>
 			<fieldset>
 				<legend>{t("when_do_you_want_to_move")}</legend>
-				<div className="grid gap-4 md:grid-cols-2">
-					<DatePicker
-						defaultIsoValue={afterDate?.toISOString()}
-						label={"after_date"}
-						name="afterDate"
-					/>
-				</div>
-			</fieldset>
-			<fieldset>
-				<legend>{t("type")}</legend>
-				<OptionList
-					name="type"
-					onSelectOption={setSelectedType}
-					options={RENT_TYPES.map((rentType) => ({
-						label: rentType.label,
-						value: rentType.value,
-					}))}
-					selectedOption={selectedType}
+
+				<DatePicker
+					defaultIsoValue={afterDate?.toISOString()}
+					label={"after_date"}
+					name="afterDate"
 				/>
 			</fieldset>
+
+			<Select
+				allowClear
+				clearLabel="any"
+				label="type"
+				onChange={(value) => setSelectedType((value as RentType) || null)}
+				options={RENT_TYPES.map((rentType) => ({
+					label: rentType.label,
+					value: rentType.value,
+				}))}
+				placeholder="select_option"
+				value={selectedType || ""}
+			/>
 
 			{/* Amenidades con collapsible */}
 			<Collapsible>

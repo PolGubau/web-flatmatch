@@ -25,14 +25,28 @@ export type SelectProps = Omit<
 	placeholder?: TranslationKey;
 	onChange?: (value: string) => void;
 	options: Option[];
+	allowClear?: boolean;
+	clearLabel?: TranslationKey;
 };
+
+const CLEAR_VALUE = "__clear__";
 
 function Select({
 	label,
 	placeholder = "select_option",
 	options,
+	allowClear = false,
+	clearLabel = "any",
 	...props
 }: SelectProps) {
+	const handleValueChange = (value: string) => {
+		if (value === CLEAR_VALUE) {
+			props.onChange?.("");
+		} else {
+			props.onChange?.(value);
+		}
+	};
+
 	return (
 		<div className="flex flex-col gap-1">
 			{label && (
@@ -43,12 +57,17 @@ function Select({
 			<SelectPrimitive.Root
 				data-slot="select"
 				{...props}
-				onValueChange={props.onChange}
+				onValueChange={handleValueChange}
 			>
 				<SelectTrigger className="">
 					<SelectValue placeholder={t(placeholder)} />
 				</SelectTrigger>
 				<SelectContent>
+					{allowClear && (
+						<SelectItem value={CLEAR_VALUE}>
+							<span className="text-muted-foreground">{t(clearLabel)}</span>
+						</SelectItem>
+					)}
 					{options.map((option) => (
 						<SelectItem key={option.value} value={option.value}>
 							{t(option.label)}
@@ -151,7 +170,7 @@ function SelectContent({
 					// Base
 					"bg-background text-foreground relative z-50 min-w-[8rem] overflow-x-hidden overflow-y-auto rounded-xl border-2 border-foreground/30 shadow-md",
 					position === "popper" &&
-						"data-[side=bottom]:translate-y-[2px] data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+					"data-[side=bottom]:translate-y-[2px] data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
 					"origin-(--radix-select-content-transform-origin) max-h-(--radix-select-content-available-height)",
 					className,
 				)}
@@ -164,7 +183,7 @@ function SelectContent({
 					className={cn(
 						"p-1",
 						position === "popper" &&
-							"h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1",
+						"h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1",
 					)}
 				>
 					{children}

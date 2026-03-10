@@ -20,7 +20,7 @@
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-	@apply dark:invert dark:brightness-200 text-foreground stroke-foreground fill-foreground;
+	@apply text-foreground stroke-foreground fill-foreground;
 }
 
 /* Remove spinner buttons from number inputs */
